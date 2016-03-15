@@ -83,7 +83,7 @@ d3.selection.prototype.moveToBack = function(){
     }); 
 };
 
-var ip_address = "128.46.137.79:9005";
+var ip_address = "128.46.137.79:9006";
 
 Globe = function(){
 	

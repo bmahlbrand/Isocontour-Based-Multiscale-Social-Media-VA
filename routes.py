@@ -326,6 +326,7 @@ def query():
             
     return json.dumps({'tweets':rst_new})
 
+
 @app.route('/search', method="POST")
 def query():
     start_time = TimeFunc.time_func_solr_date_to_python_date('2015-05-13T00:00:00Z')
@@ -348,24 +349,28 @@ def query():
     response.content_type = "application/json"
     return dumps(rst)
 
+
 @app.get('/<filename:path>', method="GET")
 def server_static(filename):
     print(filename)
     return static_file(filename, root='Static')
 
+
 @app.route('/')
 def index():
     return static_file('Static/main.html', '')
+
 
 @app.route('/map')
 def index():
     return static_file('Static/map_test/map_d3_test.html', '')
 
+
 if __name__ == '__main__':
     wg_manager = WordGraphManager.WordGraphManager(search)
     srl_manager = SRLGraphManager.SRLGraphManager(search)
     awg_manager = AugmentedWordGraphManager.AugmentedWordGraphManager(search)
-    run(app, host='128.46.137.79', port=9005, debug=True)
+    run(app, host='128.46.137.79', port=9006, debug=True)
 #     rst = []
 #     rst = json.load(codecs.open('boston_ori.json', 'r', 'utf-8-sig'))
 #          

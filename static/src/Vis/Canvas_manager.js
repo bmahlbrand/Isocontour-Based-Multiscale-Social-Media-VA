@@ -145,7 +145,7 @@ Canvas_manager.prototype.pixel_bbox_to_geo_bbox = function(pixel_bbox, pixel_tol
 };
 
 
-Canvas_manager.prototype.update = function(flag){
+Canvas_manager.prototype.update = function(){
 
 	// var cp_this = this;
 
@@ -167,7 +167,7 @@ Canvas_manager.prototype.update = function(flag){
     if( this.topic_lense_manager.size() <= 0)
     	return;
 
-    this.topic_lense_manager.update(flag);
+    this.topic_lense_manager.update();
     
 };
 

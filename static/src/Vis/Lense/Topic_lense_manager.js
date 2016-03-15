@@ -46,10 +46,10 @@ Topic_lense_manager.prototype.add_topic = function(topic, id){
 
 };
 
-Topic_lense_manager.prototype.update = function(flag){
+Topic_lense_manager.prototype.update = function(){
 
 	this.lense_db.forEach( function(entry){
-		entry.update(flag);
+		entry.update();
 	});
 
 };
