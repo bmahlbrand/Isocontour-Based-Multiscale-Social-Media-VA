@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Concave hull debug page</title>
+    <script src="../dist/hull.js"></script>
+    <script src="./data/ua874.js"></script>
+    <script src="./data/horse13k.js"></script>
+    <script src="./data/horse26k.js"></script>
+    <script src="./data/horse52k.js"></script>
+    <script src="./data/horse131k.js"></script>
+    <script src="./data/owl15k.js"></script>
+    <script src="./data/owl30k.js"></script>
+    <script src="./data/owl58k.js"></script>
+    <script src="./data/owl102k.js"></script>
+</head>
+<body>
+    <canvas id="canv" width="1024" height="1024" style="border: 1px solid black; position: absolute; left: 0px; top: 0px;"></canvas>
+
+    <script>
+    window.onload = function() {
+        var c = document.getElementById('canv'),
+            ctx = c.getContext('2d'),
+            pointset = horse13k;
+
+        c.onclick = function(e) {
+            console.log('[' + e.offsetX + ', ' + e.offsetY + ']');
+        }
+
+        // draw all pixels
+        ctx.fillStyle="black";
+        for (var i = 0; i < pointset.length; i++) {
+            ctx.beginPath();
+            ctx.arc(pointset[i][0], pointset[i][1], 1, 0, 2 * Math.PI, true);
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+        // get and draw hull
+        console.time('hull');
+        var pts = hull(pointset, 20);
+        console.timeEnd('hull');
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        pts.forEach(function(px) {
+            // console.log('[' + px[0] + ',' + px[1] + ']');
+            ctx.lineTo(px[0], px[1]);
+            ctx.moveTo(px[0], px[1]);
+        });
+        ctx.stroke();
+        ctx.closePath();
+    }
+    </script>
+</body>
+</html>

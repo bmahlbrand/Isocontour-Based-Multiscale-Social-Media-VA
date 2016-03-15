@@ -1,0 +1,59 @@
+div#LDAoutput.ldadiv {
+  font-family: Consolas, monospace, serif;
+  color: #09f;
+  overflow: hidden;
+  position: relative;
+}
+div#LDAoutput.ldadiv a {
+  color: inherit;
+  text-decoration: none;
+}
+div#LDAoutput.ldadiv a:hover {
+  color: #0df;
+}
+div#LDAoutput.ldadiv a:hover {
+  color: #0cf;
+}
+div#LDAoutput.ldadiv span {
+  padding: 0;
+}
+div#LDAoutput.ldadiv span.w10 {
+  font-size: 54px;
+  color: #0cf;
+}
+div#LDAoutput.ldadiv span.w9 {
+  font-size: 44px;
+  color: #0cf;
+}
+div#LDAoutput.ldadiv span.w8 {
+  font-size: 40px;
+  color: #0cf;
+}
+div#LDAoutput.ldadiv span.w7 {
+  font-size: 46px;
+  color: #39d;
+}
+div#LDAoutput.ldadiv span.w6 {
+  font-size: 34px;
+  color: #90c5f0;
+}
+div#LDAoutput.ldadiv span.w5 {
+  font-size: 30px;
+  color: #90a0dd;
+}
+div#LDAoutput.ldadiv span.w4 {
+  font-size: 28px;
+  color: #90c5f0;
+}
+div#LDAoutput.ldadiv span.w3 {
+  font-size: 26px;
+  color: #a0ddff;
+}
+div#LDAoutput.ldadiv span.w2 {
+  font-size: 22px;
+  color: #99ccee;
+}
+div#LDAoutput.ldadiv span.w1 {
+  font-size: 18px;
+  color: #aab5f0;
+}

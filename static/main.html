@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="css/context.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/tree.css">
+	<link rel="stylesheet" href="css/timeseries.css">
+	<link rel="stylesheet" href="css/tooltip.css">
+			<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/simple-sidebar.css" rel="stylesheet">
+	<link href="css/contextmenu/d3-context-menu.css" rel="stylesheet">
+	<link href="css/tablestyle.css" rel="stylesheet">
+	
+			<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<title>Twitter Navigator</title>
+
+	<!--external resources-->
+	<!-- jquery ui-->
+	<script type="text/javascript" src="lib/jQuery/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-ui-1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="lib/jquery-ui-1.11.4/jquery-ui.css">
+	<script type="text/javascript" src="lib/numeric-1.2.6.min.js"></script>
+	<script type="text/javascript" src="lib/d3/d3.min.js" charset="utf-8"></script>
+
+	<script type="text/javascript" src="lib/contextmenu/d3-context-menu.js"></script>
+	<script type="text/javascript" src="lib/xDate.js"></script>
+	<script type="text/javascript" src="lib/bootstrap/bootstrap.js"></script>
+
+	<!--d3 tooltip-->
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+	<!-- spatial clustering-->
+	<script type="text/javascript" src="lib/node_modules/density-clustering/lib/DBSCAN.js"></script>
+	<script type="text/javascript" src="src/Model/SpatialClustering.js"></script>
+
+	<!-- spatial analysis toolkit: TURF.JS -->
+	<!--<script type="text/javascript" src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
+	
+	<!--extend d3-->
+	<script type="text/javascript" src="constant.js"></script>
+
+	<script type="text/javascript" src="lib/OpenLayers-2.13.1/OpenLayers.js"></script>
+
+    <script type="text/javascript" src="lib/taffydb-master/taffy.js"></script>
+
+	<script type="text/javascript" src="src/Vis/OlMapView.js"></script>
+	<script type="text/javascript" src="src/Vis/OlMapViewHelper.js"></script>
+
+	<script type="text/javascript" src="src/Vis/TweetsHeatmapManager.js"></script>
+	<script type="text/javascript" src="src/Vis/PolygonLayerManager.js"></script>
+
+	<script type="text/javascript" src="src/Vis/ContextBrush.js"></script>
+	<script type="text/javascript" src="src/Vis/Canvas_manager.js"></script>
+	
+	<script type="text/javascript" src="src/Vis/Lense/Topic_lense.js"></script>
+	<script type="text/javascript" src="src/Vis/Lense/Topic_lense_model.js"></script>
+	<script type="text/javascript" src="src/Vis/Lense/Topic_lense_manager.js"></script>
+
+	<script type="text/javascript" src="lib/heatmap/heatmap.js"></script>
+	<script type="text/javascript" src="lib/heatmap/heatmap-openlayers-renderer.js"></script>
+
+	<script type="text/javascript" src="src/Model/EMTerms.js"></script>
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	<script type="text/javascript" src="src/Controller/app_controller.js"></script>
+	<script type="text/javascript" src="src/Controller/autoresize_directive.js"></script>
+
+	<script type="text/javascript" src="src/Model/TweetsDataManager.js"></script>
+	<script type="text/javascript" src="src/Model/Obj.js"></script>
+
+	<script type="text/javascript" src="src/Vis/Tree/EMTree.js"></script>
+
+	<script type="text/javascript" src="src/Vis/Time-series/multi-timeseries.js"></script>
+	<script type="text/javascript" src="src/Vis/Time-series/timeseriesmanager.js"></script>
+
+	<script type="text/javascript" src="src/Vis/table/EMTable.js"></script>
+
+	<!-- Concave Hull -->
+	<script type="text/javascript" src="lib/hull-master/dist/hull.js"></script>
+
+	<script type="text/javascript" src="http://requirejs.org/docs/release/2.1.22/minified/require.js"></script>
+
+	<style>
+
+	text {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		cursor: pointer;
+	}
+
+	h4 {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		font-size: 22px;
+
+	}
+	select {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+
+	}
+	input {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+
+	}
+	h5 {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		font-size: 18px;
+
+	}
+
+	span {
+
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+	}
+
+	.cluster_circle {
+		cursor: pointer;
+	}
+
+	.cluster_pie_chart {
+		cursor: pointer;
+	}
+
+	.hull {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 2px;
+	  stroke-linejoin: round;
+	}
+	.tmp_hull {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 2px;
+	  stroke-linejoin: round;
+	}
+
+	.line {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
+
+	</style>
+
+	<script type="text/javascript">
+
+		$(function() {
+			$("#EM_Tree_container").draggable();
+		});
+
+		$(function() {
+    		$( "#EM_Tree_container" ).draggable({ cancel: "div.noSupportDrag" });
+  		});
+
+  		$(function() {
+			$("#table_container").draggable();
+		});
+
+		$(function() {
+    		$( "#table_container" ).draggable({ cancel: "div.noSupportDrag" });
+  		});
+
+		$(function() {
+			$("#controlpanel").draggable();
+		});
+
+		$(function() {
+			$("#timeseries").draggable();
+		});
+
+		$(function() {
+    		$( "#timeseries" ).draggable({ cancel: "div.noSupportDrag" });
+  		});
+		
+		// $(function() {
+		// 	$("#timeseries").draggable();
+		// });
+		var person = prompt("Please enter a number, 0 for purdue shooting, 1 for boston bombing, 2 for hurricane sandy", "1");
+    
+    	if (person != null){
+        	default_case = parseInt(person);
+
+			var r = confirm("Press OK to load real-time mode, and Cancel to load historical mode");
+	    	if (r == true) {
+	        	setTimeout(function(){ enable_realtime(); }, 3000);
+	    	} else {
+	        	setTimeout(function(){ enable_his(); }, 3000);
+	    	}
+	    }
+
+		function enable_his() {
+			var data = case_study[default_case];
+			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
+			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
+			$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
+			$('[ng-controller="map_controller"]').scope().refresh_map(false);
+		}
+
+		function enable_realtime(){
+
+			var data = case_study[default_case];
+			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
+
+			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
+			
+			var start_date = new Date(Date.parse(case_study[default_case].start_time));
+
+			globe.x_start = new XDate(start_date);
+			globe.x_end = new XDate(start_date);
+
+			//utc issue;
+			globe.x_start.addHours(case_study[default_case].time_offset);
+			globe.x_end.addHours(case_study[default_case].time_offset);
+			
+			globe.x_end.addSeconds(globe.data_inc);
+
+			start_timing();
+
+		}
+
+		function start_timing(){
+			
+			if(globe.interval_id != null)
+				return;
+
+			globe.interval_id = setInterval(function(){
+
+				var s = globe.x_start.toString("i")+"Z";
+				var e = globe.x_end.toString("i")+"Z";
+
+				if(globe.flag == true){
+					$('[ng-controller="map_controller"]').scope().load_data(s, e, true);
+					$('[ng-controller="map_controller"]').scope().refresh_map(false);
+				}else
+					$('[ng-controller="map_controller"]').scope().load_data(s, e, false);
+
+				console.log("real-time mode: "+ s + ", " + e);
+
+				//alert(s+" "+e+" "+flag);
+
+				globe.flag = false;
+				
+				//move slide bar;
+				var slide_start = new XDate(globe.x_end);
+				slide_start.addMinutes(-1*globe.time_window);
+				slide_start.addHours(-4);
+
+				//time zone change;
+				var tmp_e = new XDate(globe.x_end);
+				tmp_e.addHours(-4);
+				
+				$('[ng-controller="ts_controller"]').scope().set_time_range_manually(slide_start, tmp_e);
+				
+				globe.x_start.addSeconds(globe.data_inc);
+				globe.x_end.addSeconds(globe.data_inc);
+
+			}, globe.data_fetch_timing*1000);
+		}
+
+		function stop_timing(){
+
+			if(globe.interval_id == null)
+				return;
+
+			clearInterval(globe.interval_id);
+			globe.interval_id = null;
+
+		}
+
+		function increaseSize(){
+			Topic_lense.glyph_size_delta++;
+		}
+
+		function decreaseSize(){
+			Topic_lense.glyph_size_delta--;
+		}
+
+
+	</script>
+
+</head>
+<!-- onload="init()"  -->
+	<body ng-app="twittNavApp" ng-controller="app_controller">
+
+	<!--
+	   <nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Twitter Navigator</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<form class="navbar-form navbar-right" ng-controller="form_controller" ng-submit="processForm()">
+					<div class="form-group">
+					   <input id="search" type="text" placeholder="enter query..." class="form-control" ng-model="formData.queryText" >
+					   <button id="query" class="btn btn-success">add topics</button>
+                       <input id="clusterSize" type="number" placeholder="# of NN" min="1" max="100">
+                    </div>
+
+                    <div ng-controller="selection_controller">
+  						<label><input type="checkbox" ng-model="flag" ng-change="switch_selection()"><font color="white">enable selection</font></label>
+  						<label><input type="checkbox" ng-model="enable_active" ng-change="switch_active()"><font color="white">switch active</font></label>
+					</div>
+				</form>
+			</div>
+		</div>
+	   </nav>
+	-->
+	<!-- <div id="wrapper"> -->
+        <!-- Sidebar -->
+        <!-- <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">Twitter Navigator</a>
+                </li>
+                <li>
+                	<a href="#">Map</a>
+                	<div ng-controller="selection_controller">
+  						<input type="checkbox" ng-model="flag" ng-change="switch_selection()"><font color="white">enable selection</font>
+  						<input type="checkbox" ng-model="enable_active" ng-change="switch_active()"><font color="white">switch active</font>
+						<button type="button" onclick="load_data();">load data</button>
+					</div>
+                </li>
+                <li>
+                	<div id="EM_Tree" style="width:100%;height:500px;background-color:#ddd;overflow:hidden;" ng-controller="EMTree_controller">
+                	</div>
+                </li>
+                <li>
+	                <div>
+		                <textarea rows="10" cols="60" id="output">
+						</textarea>
+					</div>
+				</li>
+            </ul>
+        </div> -->
+        <!-- /#sidebar-wrapper -->
+	
+		<!-- <div id="page-content-wrapper"> -->
+		    <!-- <div class="container-fluid">
+		        <div class="row">
+		            <div class="col-lg-12"> -->
+		                <!-- <div id="mapView" ng-controller="map_controller"></div> -->
+		            <!-- </div>
+		        </div>
+		    </div> -->
+		<!-- </div> -->
+
+	<!-- </div> -->
+
+	<div id="EM_Tree_container" style="left:50px;top:420px;width:660px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
+	
+	<h4 align="center" style="cursor: pointer">EMTerms Tree</h4>
+
+	<!--background-color: rgba(247, 251, 255, 0.6);-->
+		<div style="width:1000px;height:400px" class="noSupportDrag">
+			<div id="EM_Tree" style="width:500px;height:400px;" ng-controller="EMTree_controller"></div>
+		</div>
+	</div>
+
+	<div id="table_container" style="left:680px;top:420px;width:400px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
+	
+	<h4 align="center" style="cursor: pointer">Message Table</h4>
+
+
+	<!--background-color: rgba(247, 251, 255, 0.6);-->
+		<div style="height:400px" class="noSupportDrag">
+			<div id="container" ng-controller="EMTable_controller">
+				<div align="center">
+				<span >
+					<input type='radio' ng-model="sort.mode" value='time_desc' ng-change="toggleSort()" />
+					Created at
+				</span>
+				<span >
+					<input type='radio' ng-model="sort.mode" value='summarized' ng-change="toggleSort()" />
+					Most Relevant Tweets
+				</span>
+				</div>
+				<div id="EM_Table" style="overflow:hidden;width:400px;height:380px;padding:5px 30px 30px 30px;" onmouseover="$('#EM_Table').css('overflow-y', 'scroll');" onmouseout="$('#EM_Table').css('overflow-y', 'hidden');">
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!--<div id="EM_Tree" style="left:50px;top:400px;width:700px;height:420px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;" ng-controller="EMTree_controller"></div>-->
+
+	<div id="mapView" ng-controller="map_controller" style="height:100%;width:100%;"></div>
+	<div id="mapViewHelper" style="height:200%;width:200%;position:absolute;display:none;"></div>
+	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
+
+	<div id="controlpanel" style="left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;" ng-controller="panel_controller" >
+		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
+		<h4 align="center" style="cursor: pointer">Control Panel</h4>
+			
+			<h5 align="center">Search:</h5>
+			<input type="text" name="search" size="10"><br>
+
+			<h5 align="center">Glyph Type</h5>
+		    <select name="glyphType" ng-model="data.glyphType" ng-change="glyph_change()">
+		      <option value="0">Option A</option>
+		      <option value="1">Option B</option>
+		      <option value="2">Option C</option>
+		    </select><br>
+
+			<h5 align="center">Display Mode</h5>
+		    <select name="glyphType" ng-model="data.displayMode" ng-change="display_mode_change()">
+				<option value="0">all</option>
+				<option value="1">glyph</option>
+				<option value="2">heatmap</option>
+				<option value="3">dot</option>
+		    </select><br>
+			<h5 align="center">Real-time Options</h5>
+		    <input type="radio" ng-model="data.realtime_mode" value="resume" ng-change="realtime_mode_change()"><span>resume</span><br>
+		    <input type="radio" ng-model="data.realtime_mode" value="stop" ng-change="realtime_mode_change()"><span>stop</span><br>
+		    
+		    <span align="center">Time Window:</span>
+    		 <select name="singleSelect" id="singleSelect" ng-model="data.time_window" width="110" style="width:110px" ng-change="time_window_change()">
+		      <option value="10">&nbsp;&nbsp;&nbsp;&nbsp;10</option>
+		      <option value="30" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;30</option>
+		      <option value="60">&nbsp;&nbsp;&nbsp;&nbsp;60</option>
+		    </select><br>
+
+		    <h5 align="center">Spatial Transition</h5>
+		    <span align="center">Convex hull:</span>
+    			<input type="checkbox" ng-model="data.showHull" ng-change="null_change()"><br/>
+
+    		<span align="center">Spatial transition:</span>
+    			<input type="checkbox" ng-model="data.transition" ng-change="transition_change()"><br/>
+
+    		<span align="center">Glyph Size</span>
+    			<button onclick="increaseSize()">Increase</button><button onclick="decreaseSize()">Decrease</button>
+
+
+	</div>
+
+
+	<div id="timeseries" style="left:250px;top:50px;width:830px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999; font-size:12px;">
+      <h4 align="center" style="cursor: pointer">Time Series Chart</h4>
+      
+<!--       <div align="center">
+        <div align="center" class="btn-group" data-toggle="buttons">
+        <label class="btn btn-default btn-xs" id="sbar">
+          <input type="radio" name="options"> Bar
+        </label>
+        <label class="btn btn-default btn-xs" id="line">
+          <input type="radio" name="options"> Line
+        </label>
+        <label class="btn btn-default active btn-xs" id="area">
+          <input type="radio" name="options"> Area
+        </label>
+        <label class="btn btn-default btn-xs" id="strm">
+          <input type="radio" name="options"> Stream
+        </label>
+      </div>
+	  </div> -->
+
+
+      <div id="ts_container" class="noSupportDrag" style="width:800px;height:300px;" ng-controller="ts_controller">
+      	<!--onmouseover="$('#ts_container').css('overflow-y', 'scroll');" onmouseout="$('#ts_container').css('overflow-y', 'hidden');-->
+      <!-- <div id="timeseries_chart" ng-controller="ts_controller" style="border:2px solid #999;"></div> -->
+  		</div>
+    </div>
+
+    <script>
+
+        // var time_series = new Time_series_chart();
+        // var date = new XDate();
+        // var data = [];
+
+        // for(var i=0;i<100; i++)
+        //   data.push({});
+
+        // data.forEach(function(d){
+        //   d.datetime = date.toString('yyyy');
+        //   date.addYears(1);
+        //   d.T01 = Math.floor(Math.random()*1000);
+        //   d.T02 = Math.floor(Math.random()*1000);
+        // });
+
+        // time_series.draw_lineChart(data);
+
+        $( ".btn" ).click(function() {
+
+        	var time_series = $('[ng-controller="ts_controller"]').scope().get_ts();
+
+          if (this.id == 'sbar') {
+            time_series.set_mode(Time_series_manager.MODE.BAR);
+          } else if (this.id == 'line') {
+            time_series.set_mode(Time_series_manager.MODE.LINE);
+          } else if (this.id == 'area') {
+            time_series.set_mode(Time_series_manager.MODE.AREA);
+          } else {
+            time_series.set_mode(Time_series_manager.MODE.STREAM);
+          }
+        });
+
+    </script>
+
+</body>
+</html>

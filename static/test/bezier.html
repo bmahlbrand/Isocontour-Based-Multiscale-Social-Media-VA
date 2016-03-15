@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400' rel='stylesheet' type='text/css'>
+<style>
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .curve, .line {
+    fill: none;
+    stroke-width: 1px;
+  }
+  .curve {
+    stroke: red;
+    stroke-width: 3px;
+  }
+  .control {
+    fill: #ccc;
+    stroke: #000;
+    stroke-width: .5px;
+  }
+  .t, .controltext {
+    font-family: "Yanone Kaffeesatz";
+    font-weight: 400;
+    font-size: 1em;
+  }
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+  var w = 700,
+      h = 700,
+      t = .5,
+      delta = .01,
+      padding = 10,
+      points = [{x: 20, y: 250}, {x: 20, y: 30}, {x: 200, y: 250}, {x:   
+225, y: 125}],
+      bezier = {},
+      line = d3.svg.line().x(x).y(y),
+      n = 3,
+      orders = d3.range(4, n + 2);
+  var vis = d3.select("body").selectAll("svg")
+      .data(orders)
+    .enter().append("svg:svg")
+		.attr("id", "canvas")
+      .attr("width", w + 2 * padding)
+      .attr("height", h + 2 * padding)
+    .append("svg:g")
+      .attr("transform", "translate(" + padding + "," + padding + ")");
+	  
+	var num_of_piece = 6;
+	var center_x = 350, center_y = 350;
+	var ddt = 2*Math.PI / num_of_piece;
+	var start = 0;
+	var margin = 0;
+	var rr = 300;
+	
+	var gg = d3.select("#canvas").append("svg:g")
+				.attr("transform", "translate(" + center_x + "," + center_y + ")");
+	
+	for(var i=0; i<num_of_piece; i++){
+
+		var arc = d3.svg.arc()
+					   	.innerRadius(rr)
+					    .outerRadius(302)
+					    .startAngle( start + margin )
+					    .endAngle( start + ddt - margin )
+
+		gg.append("path")
+			.attr("id", "topic_arc_"+i)
+			.attr("d", arc)
+			.style("fill", "#000000")
+			.style("stroke", "#000000");
+		gg.append('svg:line')
+	            .attr('x1', 0)
+	            .attr('y1', 0)
+				.attr('x2', 0 - Math.cos(start)*rr)
+	            .attr('y2', 0 - Math.sin(start)*rr)
+	            .attr('stroke', '#000000')
+				.attr("fill", '#000000');
+				
+		start += ddt;
+	}			
+		gg.append('svg:circle')
+	            .attr('cx', 0)
+	            .attr('cy', 0)
+	            .attr('r', 3)
+	            .attr('stroke', '#000000')
+				.attr("fill", '#000000');		
+	gg.append('svg:circle')
+	            .attr('cx', 100)
+	            .attr('cy', 30)
+	            .attr('r', 10)
+	            .attr('stroke', '#000000')
+				.attr("fill", '#ffffff');
+	  
+	  
+  update();
+
+  vis.selectAll("circle.control")
+      .data(function(d) { return points.slice(0, d) })
+    .enter().append("svg:circle")
+      .attr("class", "control")
+      .attr("r", 5)
+      .attr("cx", x)
+      .attr("cy", y)
+      .call(d3.behavior.drag()
+        .on("dragstart", function(d) {
+          this.__origin__ = [d.x, d.y];
+        })
+        .on("drag", function(d) {
+          d.x = Math.min(w, Math.max(0, this.__origin__[0] += d3.event.dx));
+          d.y = Math.min(h, Math.max(0, this.__origin__[1] += d3.event.dy));
+          bezier = {};
+          update();
+          vis.selectAll("circle.control")
+            .attr("cx", x)
+            .attr("cy", y);
+        })
+        .on("dragend", function() {
+          delete this.__origin__;
+        }));
+
+  vis.append("svg:text")
+    .attr("class", "t")
+    .attr("x", w / 2)
+    .attr("y", h)
+    .attr("text-anchor", "middle");
+
+  vis.selectAll("text.controltext")
+      .data(function(d) { return points.slice(0, d); })
+    .enter().append("svg:text")
+      .attr("class", "controltext")
+      .attr("dx", "20px")
+      .attr("dy", ".4em")
+      .text(function(d, i) { return "P" + i });
+  var last = 0;
+  d3.timer(function(elapsed) {
+    t = (t + (elapsed - last) / 5000) % 1;
+	t = 1;
+    last = elapsed;
+    update();
+  });
+
+  function update() {
+    var interpolation = vis.selectAll("g")
+        .data(function(d) { return getLevels(d, t); });
+    interpolation.enter().append("svg:g")
+        .style("fill", colour)
+        .style("stroke", colour);
+
+    var circle = interpolation.selectAll("circle")
+        .data(Object);
+    circle.enter().append("svg:circle")
+        .attr("r", 3);
+    circle
+        .attr("cx", x)
+        .attr("cy", y);
+
+    var path = interpolation.selectAll("path")
+        .data(function(d) { return [d]; });
+    path.enter().append("svg:path")
+        .attr("class", "line")
+        .attr("d", line);
+    path.attr("d", line);
+
+    var curve = vis.selectAll("path.curve")
+        .data(getCurve);
+    curve.enter().append("svg:path")
+        .attr("class", "curve");
+    curve.attr("d", line);
+
+    vis.selectAll("text.controltext")
+        .attr("x", x)
+        .attr("y", y);
+  }
+
+  function interpolate(d, p) {
+    if (arguments.length < 2) p = t;
+    var r = [];
+    for (var i=1; i<d.length; i++) {
+      var d0 = d[i-1], d1 = d[i];
+      r.push({x: d0.x + (d1.x - d0.x) * p, y: d0.y + (d1.y - d0.y) * p});
+    }
+    return r;
+  }
+
+
+  function getLevels(d, t_) {
+    if (arguments.length < 2) t_ = t;
+    var x = [points.slice(0, d)];
+    for (var i=1; i<d; i++) {
+      x.push(interpolate(x[x.length-1], t_));
+    }
+    return x;
+  }
+
+  function getCurve(d) {
+    var curve = bezier[d];
+    if (!curve) {
+      curve = bezier[d] = [];
+      for (var t_=0; t_<=1; t_+=delta) {
+        var x = getLevels(d, t_);
+        curve.push(x[x.length-1][0]);
+      }
+    }
+    return [curve.slice(0, t / delta + 1)];
+  }
+
+  function x(d) { return d.x; }
+  function y(d) { return d.y; }
+  function colour(d, i) {
+    return d.length > 1 ? ["#ccc", "yellow", "blue", "green"][i] : "red";
+  }
+
+  var static = function(event) { event.preventDefault(); } 
+  document.body.addEventListener('touchmove', static, false);
+</script>

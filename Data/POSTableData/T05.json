@@ -1,0 +1,6879 @@
+{
+    "!": {
+        "forms": [],
+        "term": "!"
+    },
+    "!!": {
+        "forms": [],
+        "term": "!!"
+    },
+    "#abflood": {
+        "forms": [],
+        "term": "#abflood"
+    },
+    "#coloradoflood": {
+        "forms": [],
+        "term": "#coloradoflood"
+    },
+    "#fire": {
+        "forms": [],
+        "term": "#fire"
+    },
+    "#highparkfire": {
+        "forms": [],
+        "term": "#highparkfire"
+    },
+    "#reliefph": {
+        "forms": [],
+        "term": "#reliefph"
+    },
+    "#rescueph": {
+        "forms": [],
+        "term": "#rescueph"
+    },
+    "#salvationarmy": {
+        "forms": [],
+        "term": "#salvationarmy"
+    },
+    "$": {
+        "forms": [],
+        "term": "$"
+    },
+    "${Number}": {
+        "forms": [],
+        "term": "${Number}"
+    },
+    "${Number}.{Number}": {
+        "forms": [],
+        "term": "${Number}.{Number}"
+    },
+    "${Number}k": {
+        "forms": [],
+        "term": "${Number}k"
+    },
+    "${Number}m": {
+        "forms": [],
+        "term": "${Number}m"
+    },
+    "${Number}mn": {
+        "forms": [],
+        "term": "${Number}mn"
+    },
+    "+": {
+        "forms": [],
+        "term": "+"
+    },
+    "accept": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "acceptation",
+                        0.5
+                    ],
+                    [
+                        "acceptance",
+                        0.3125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "acceptable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "acceptable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "accept"
+    },
+    "account": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "account",
+                        0.3076923076923077
+                    ],
+                    [
+                        "report",
+                        0.3076923076923077
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "historic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "historic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "accounting",
+                        0.2857142857142857
+                    ],
+                    [
+                        "account",
+                        0.21428571428571427
+                    ],
+                    [
+                        "report",
+                        0.21428571428571427
+                    ],
+                    [
+                        "calculation",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "accountable",
+                        0.5
+                    ],
+                    [
+                        "descriptive",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "accountable",
+                        0.5
+                    ],
+                    [
+                        "descriptive",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "account"
+    },
+    "aeroplan": {
+        "forms": [],
+        "term": "aeroplan"
+    },
+    "affect": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "affect",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shammer",
+                        0.13333333333333333
+                    ],
+                    [
+                        "pretense",
+                        0.13333333333333333
+                    ],
+                    [
+                        "impact",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "affect"
+    },
+    "aid": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "help",
+                        0.5555555555555556
+                    ],
+                    [
+                        "assist",
+                        0.16666666666666666
+                    ],
+                    [
+                        "aid",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "help",
+                        0.4166666666666667
+                    ],
+                    [
+                        "aid",
+                        0.16666666666666666
+                    ],
+                    [
+                        "helper",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "assistive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "assistive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "aid"
+    },
+    "allocate": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "allocation",
+                        0.6
+                    ],
+                    [
+                        "allocator",
+                        0.2
+                    ],
+                    [
+                        "apportionment",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "apportionable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "allocable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "allocatable",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "apportionable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "allocable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "allocatable",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "allocate"
+    },
+    "american": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "Americanize",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "American",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "American",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "America",
+                        0.5
+                    ],
+                    [
+                        "American",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "Americanize",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "America",
+                        0.5
+                    ],
+                    [
+                        "American",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "Americanize",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "american"
+    },
+    "amount": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "measure",
+                        0.3333333333333333
+                    ],
+                    [
+                        "amount",
+                        0.2222222222222222
+                    ],
+                    [
+                        "total",
+                        0.2222222222222222
+                    ],
+                    [
+                        "summate",
+                        0.1111111111111111
+                    ],
+                    [
+                        "sum",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "number",
+                        0.42857142857142855
+                    ],
+                    [
+                        "amount",
+                        0.2857142857142857
+                    ],
+                    [
+                        "total",
+                        0.2857142857142857
+                    ]
+                ]
+            }
+        ],
+        "term": "amount"
+    },
+    "appeal": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "appeal",
+                        0.6666666666666666
+                    ],
+                    [
+                        "charm",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "appealing",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "appealing",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "appeal",
+                        0.36363636363636365
+                    ],
+                    [
+                        "attraction",
+                        0.2727272727272727
+                    ],
+                    [
+                        "invocation",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "appellant",
+                        0.4
+                    ],
+                    [
+                        "appealable",
+                        0.4
+                    ],
+                    [
+                        "attractive",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "appellant",
+                        0.4
+                    ],
+                    [
+                        "appealable",
+                        0.4
+                    ],
+                    [
+                        "attractive",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "appeal"
+    },
+    "appearance": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "appear",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "showy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "showy",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "appearance"
+    },
+    "areas": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "areal",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "areal",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "areas"
+    },
+    "assist": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "help",
+                        0.625
+                    ],
+                    [
+                        "assist",
+                        0.375
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "help",
+                        0.2
+                    ],
+                    [
+                        "helper",
+                        0.13333333333333333
+                    ],
+                    [
+                        "assist",
+                        0.13333333333333333
+                    ],
+                    [
+                        "assistant",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "assistant",
+                        0.5
+                    ],
+                    [
+                        "assistive",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "assistant",
+                        0.5
+                    ],
+                    [
+                        "assistive",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "assist"
+    },
+    "assistance": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "help",
+                        0.7142857142857143
+                    ],
+                    [
+                        "assist",
+                        0.21428571428571427
+                    ]
+                ]
+            }
+        ],
+        "term": "assistance"
+    },
+    "auction": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "auction",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "auctioneer",
+                        0.6666666666666666
+                    ],
+                    [
+                        "auction",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "auction"
+    },
+    "authorities": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "govern",
+                        0.2
+                    ],
+                    [
+                        "authorise",
+                        0.2
+                    ],
+                    [
+                        "sanction",
+                        0.2
+                    ],
+                    [
+                        "authorize",
+                        0.2
+                    ],
+                    [
+                        "dominate",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "sure",
+                        0.3333333333333333
+                    ],
+                    [
+                        "potent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "self-confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "official",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "sure",
+                        0.3333333333333333
+                    ],
+                    [
+                        "potent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "self-confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "official",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "authorities"
+    },
+    "benefit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "benefit",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "beneficial",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "beneficial",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "benefit",
+                        0.4
+                    ],
+                    [
+                        "gainer",
+                        0.2
+                    ],
+                    [
+                        "do-gooder",
+                        0.2
+                    ],
+                    [
+                        "profit",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "beneficent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "beneficent",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "benefit"
+    },
+    "billion": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "billion",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "billion",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "billion",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "billion",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "billion"
+    },
+    "birdie": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "shuttlecock",
+                        0.5
+                    ],
+                    [
+                        "birdie",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "birdie",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "birdie"
+    },
+    "bring": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "conveyer",
+                        0.4
+                    ],
+                    [
+                        "conveyance",
+                        0.4
+                    ],
+                    [
+                        "addition",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "workable",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "workable",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "bring"
+    },
+    "budget": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "budget",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "budgetary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "budgetary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "budget",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "budget"
+    },
+    "business": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "patronage",
+                        0.5
+                    ],
+                    [
+                        "occupy",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "business"
+    },
+    "buy": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "buy",
+                        0.6666666666666666
+                    ],
+                    [
+                        "bargain",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "purchase",
+                        0.18181818181818182
+                    ],
+                    [
+                        "buy",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "bribable",
+                        0.5
+                    ],
+                    [
+                        "corruptible",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "bribable",
+                        0.5
+                    ],
+                    [
+                        "corruptible",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "buy"
+    },
+    "calamity": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "cataclysmal",
+                        0.16666666666666666
+                    ],
+                    [
+                        "calamitous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "cataclysmic",
+                        0.16666666666666666
+                    ],
+                    [
+                        "disastrous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragic",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "cataclysmal",
+                        0.16666666666666666
+                    ],
+                    [
+                        "calamitous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "cataclysmic",
+                        0.16666666666666666
+                    ],
+                    [
+                        "disastrous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragic",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "calamity"
+    },
+    "call": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "call",
+                        0.5789473684210527
+                    ],
+                    [
+                        "shout",
+                        0.15789473684210525
+                    ],
+                    [
+                        "yell",
+                        0.10526315789473684
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "call",
+                        0.17857142857142858
+                    ],
+                    [
+                        "caller",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "predictive",
+                        0.25
+                    ],
+                    [
+                        "prognosticative",
+                        0.25
+                    ],
+                    [
+                        "callable",
+                        0.25
+                    ],
+                    [
+                        "anticipatory",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "predictive",
+                        0.25
+                    ],
+                    [
+                        "prognosticative",
+                        0.25
+                    ],
+                    [
+                        "callable",
+                        0.25
+                    ],
+                    [
+                        "anticipatory",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "call"
+    },
+    "car": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "automobile",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "car"
+    },
+    "cash": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cash",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cash",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "cashable",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "cashable",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "cash"
+    },
+    "center": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "center",
+                        0.42857142857142855
+                    ],
+                    [
+                        "centre",
+                        0.14285714285714285
+                    ],
+                    [
+                        "summate",
+                        0.14285714285714285
+                    ],
+                    [
+                        "middle",
+                        0.14285714285714285
+                    ],
+                    [
+                        "snap",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "central",
+                        0.3076923076923077
+                    ],
+                    [
+                        "centrical",
+                        0.15384615384615385
+                    ],
+                    [
+                        "centric",
+                        0.15384615384615385
+                    ],
+                    [
+                        "center",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "central",
+                        0.3076923076923077
+                    ],
+                    [
+                        "centrical",
+                        0.15384615384615385
+                    ],
+                    [
+                        "centric",
+                        0.15384615384615385
+                    ],
+                    [
+                        "center",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        0.2727272727272727
+                    ],
+                    [
+                        "concentration",
+                        0.18181818181818182
+                    ],
+                    [
+                        "centering",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "center"
+    },
+    "change": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "change",
+                        0.875
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "change",
+                        0.4827586206896552
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "variable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "modifiable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "variant",
+                        0.16666666666666666
+                    ],
+                    [
+                        "alterable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "convertible",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "variable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "modifiable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "variant",
+                        0.16666666666666666
+                    ],
+                    [
+                        "alterable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "convertible",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "change"
+    },
+    "channel": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "channel",
+                        0.36363636363636365
+                    ],
+                    [
+                        "channelize",
+                        0.36363636363636365
+                    ],
+                    [
+                        "groove",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "channel",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "conductive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "conductive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "channel"
+    },
+    "charge": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "charge",
+                        0.7142857142857143
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "cathectic",
+                        0.5
+                    ],
+                    [
+                        "accusatorial",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "cathectic",
+                        0.5
+                    ],
+                    [
+                        "accusatorial",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "charge",
+                        0.49019607843137253
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "appointive",
+                        0.2222222222222222
+                    ],
+                    [
+                        "accusatory",
+                        0.1111111111111111
+                    ],
+                    [
+                        "excitant",
+                        0.1111111111111111
+                    ],
+                    [
+                        "accusive",
+                        0.1111111111111111
+                    ],
+                    [
+                        "blamable",
+                        0.1111111111111111
+                    ],
+                    [
+                        "accusative",
+                        0.1111111111111111
+                    ],
+                    [
+                        "blameable",
+                        0.1111111111111111
+                    ],
+                    [
+                        "agitative",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "appointive",
+                        0.2222222222222222
+                    ],
+                    [
+                        "accusatory",
+                        0.1111111111111111
+                    ],
+                    [
+                        "excitant",
+                        0.1111111111111111
+                    ],
+                    [
+                        "accusive",
+                        0.1111111111111111
+                    ],
+                    [
+                        "blamable",
+                        0.1111111111111111
+                    ],
+                    [
+                        "accusative",
+                        0.1111111111111111
+                    ],
+                    [
+                        "blameable",
+                        0.1111111111111111
+                    ],
+                    [
+                        "agitative",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "charge"
+    },
+    "charity": {
+        "forms": [],
+        "term": "charity"
+    },
+    "citizen": {
+        "forms": [],
+        "term": "citizen"
+    },
+    "claim": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "claim",
+                        0.8333333333333334
+                    ],
+                    [
+                        "title",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "titulary",
+                        0.5
+                    ],
+                    [
+                        "titular",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "titulary",
+                        0.5
+                    ],
+                    [
+                        "titular",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "claim",
+                        0.625
+                    ],
+                    [
+                        "claimant",
+                        0.25
+                    ],
+                    [
+                        "arrogator",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "claim"
+    },
+    "clean-up": {
+        "forms": [],
+        "term": "clean-up"
+    },
+    "club": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "club",
+                        0.8
+                    ],
+                    [
+                        "order",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "clubby",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "clubby",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "club",
+                        0.6666666666666666
+                    ],
+                    [
+                        "bludgeoner",
+                        0.16666666666666666
+                    ],
+                    [
+                        "bludgeon",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "club"
+    },
+    "coffee": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "umber",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "umber",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "coffee"
+    },
+    "collect": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "collection",
+                        0.23076923076923078
+                    ],
+                    [
+                        "collecting",
+                        0.23076923076923078
+                    ],
+                    [
+                        "compilation",
+                        0.15384615384615385
+                    ],
+                    [
+                        "accumulation",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "accumulative",
+                        0.6666666666666666
+                    ],
+                    [
+                        "collectible",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "accumulative",
+                        0.6666666666666666
+                    ],
+                    [
+                        "collectible",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "collect"
+    },
+    "comedy": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "clown",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "comic",
+                        0.4
+                    ],
+                    [
+                        "comical",
+                        0.4
+                    ],
+                    [
+                        "funny",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "comic",
+                        0.4
+                    ],
+                    [
+                        "comical",
+                        0.4
+                    ],
+                    [
+                        "funny",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "comedy"
+    },
+    "compensation": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "compensate",
+                        0.9090909090909091
+                    ]
+                ]
+            }
+        ],
+        "term": "compensation"
+    },
+    "concert": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "concertise",
+                        0.5
+                    ],
+                    [
+                        "concertize",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "concert"
+    },
+    "confirm": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "confirmation",
+                        0.45454545454545453
+                    ],
+                    [
+                        "substantiation",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "confirmatory",
+                        0.25
+                    ],
+                    [
+                        "corroboratory",
+                        0.125
+                    ],
+                    [
+                        "corroborative",
+                        0.125
+                    ],
+                    [
+                        "sustainable",
+                        0.125
+                    ],
+                    [
+                        "affirmable",
+                        0.125
+                    ],
+                    [
+                        "substantiative",
+                        0.125
+                    ],
+                    [
+                        "confirmative",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "confirmatory",
+                        0.25
+                    ],
+                    [
+                        "corroboratory",
+                        0.125
+                    ],
+                    [
+                        "corroborative",
+                        0.125
+                    ],
+                    [
+                        "sustainable",
+                        0.125
+                    ],
+                    [
+                        "affirmable",
+                        0.125
+                    ],
+                    [
+                        "substantiative",
+                        0.125
+                    ],
+                    [
+                        "confirmative",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "confirm"
+    },
+    "contribute": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "contribution",
+                        0.42857142857142855
+                    ],
+                    [
+                        "giving",
+                        0.2857142857142857
+                    ],
+                    [
+                        "addition",
+                        0.14285714285714285
+                    ],
+                    [
+                        "contributor",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "contributive",
+                        0.3333333333333333
+                    ],
+                    [
+                        "contributory",
+                        0.3333333333333333
+                    ],
+                    [
+                        "conducive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "contributive",
+                        0.3333333333333333
+                    ],
+                    [
+                        "contributory",
+                        0.3333333333333333
+                    ],
+                    [
+                        "conducive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "contribute"
+    },
+    "contribution": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "contribute",
+                        0.6
+                    ],
+                    [
+                        "donate",
+                        0.4
+                    ]
+                ]
+            }
+        ],
+        "term": "contribution"
+    },
+    "corruption": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "deprave",
+                        0.5
+                    ],
+                    [
+                        "subvert",
+                        0.25
+                    ],
+                    [
+                        "corrupt",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "putrid",
+                        0.2857142857142857
+                    ],
+                    [
+                        "rotten",
+                        0.2857142857142857
+                    ],
+                    [
+                        "corrupt",
+                        0.14285714285714285
+                    ],
+                    [
+                        "depraved",
+                        0.14285714285714285
+                    ],
+                    [
+                        "putrescent",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "putrid",
+                        0.2857142857142857
+                    ],
+                    [
+                        "rotten",
+                        0.2857142857142857
+                    ],
+                    [
+                        "corrupt",
+                        0.14285714285714285
+                    ],
+                    [
+                        "depraved",
+                        0.14285714285714285
+                    ],
+                    [
+                        "putrescent",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "corruption"
+    },
+    "cost": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cost",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "costly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "costly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cost",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "cost"
+    },
+    "court": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "court",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "courtly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "courtly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "romance",
+                        0.25
+                    ],
+                    [
+                        "courting",
+                        0.25
+                    ],
+                    [
+                        "wooer",
+                        0.25
+                    ],
+                    [
+                        "wooing",
+                        0.125
+                    ],
+                    [
+                        "court",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "court"
+    },
+    "cover": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cover",
+                        0.75
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cover",
+                        0.1836734693877551
+                    ],
+                    [
+                        "covering",
+                        0.12244897959183673
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "comprehensive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "comprehensive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "cover"
+    },
+    "cross": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cross",
+                        0.3125
+                    ],
+                    [
+                        "hybridize",
+                        0.1875
+                    ],
+                    [
+                        "crisscross",
+                        0.1875
+                    ],
+                    [
+                        "mark",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "hybrid",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "hybrid",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "crossing",
+                        0.1935483870967742
+                    ],
+                    [
+                        "cross",
+                        0.12903225806451613
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "intersectant",
+                        0.5
+                    ],
+                    [
+                        "frustrative",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "intersectant",
+                        0.5
+                    ],
+                    [
+                        "frustrative",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "crossness",
+                        0.125
+                    ],
+                    [
+                        "crab",
+                        0.125
+                    ],
+                    [
+                        "crabbedness",
+                        0.125
+                    ],
+                    [
+                        "grumpiness",
+                        0.125
+                    ],
+                    [
+                        "grump",
+                        0.125
+                    ],
+                    [
+                        "crabbiness",
+                        0.125
+                    ],
+                    [
+                        "fussiness",
+                        0.125
+                    ],
+                    [
+                        "grouch",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "crossness",
+                        0.125
+                    ],
+                    [
+                        "crab",
+                        0.125
+                    ],
+                    [
+                        "crabbedness",
+                        0.125
+                    ],
+                    [
+                        "grumpiness",
+                        0.125
+                    ],
+                    [
+                        "grump",
+                        0.125
+                    ],
+                    [
+                        "crabbiness",
+                        0.125
+                    ],
+                    [
+                        "fussiness",
+                        0.125
+                    ],
+                    [
+                        "grouch",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "cross"
+    },
+    "crown": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "crown",
+                        0.3333333333333333
+                    ],
+                    [
+                        "coronate",
+                        0.2222222222222222
+                    ],
+                    [
+                        "top",
+                        0.2222222222222222
+                    ],
+                    [
+                        "summit",
+                        0.1111111111111111
+                    ],
+                    [
+                        "crest",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "crown",
+                        0.5
+                    ],
+                    [
+                        "Crown",
+                        0.3333333333333333
+                    ],
+                    [
+                        "coronation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "crown"
+    },
+    "cruelly": {
+        "forms": [],
+        "term": "cruelly"
+    },
+    "currency": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "up-to-date",
+                        0.5
+                    ],
+                    [
+                        "current",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "up-to-date",
+                        0.5
+                    ],
+                    [
+                        "current",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "currency"
+    },
+    "czech": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "Czech",
+                        0.75
+                    ],
+                    [
+                        "Czechoslovakian",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "Czech",
+                        0.75
+                    ],
+                    [
+                        "Czechoslovakian",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Czech",
+                        0.6
+                    ],
+                    [
+                        "Czechoslovakia",
+                        0.2
+                    ],
+                    [
+                        "Czechoslovakian",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Czech",
+                        0.6
+                    ],
+                    [
+                        "Czechoslovakia",
+                        0.2
+                    ],
+                    [
+                        "Czechoslovakian",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "czech"
+    },
+    "day's": {
+        "forms": [],
+        "term": "day's"
+    },
+    "day`s": {
+        "forms": [],
+        "term": "day`s"
+    },
+    "deadly": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "deadliness",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "deadliness",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "deadly"
+    },
+    "demand": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "demand",
+                        0.625
+                    ],
+                    [
+                        "require",
+                        0.25
+                    ],
+                    [
+                        "need",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "demand",
+                        0.4166666666666667
+                    ],
+                    [
+                        "demander",
+                        0.16666666666666666
+                    ],
+                    [
+                        "necessity",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "demand"
+    },
+    "deposit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "deposit",
+                        0.75
+                    ],
+                    [
+                        "sediment",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "sedimentary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "sedimentary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "deposit",
+                        0.2
+                    ],
+                    [
+                        "bank",
+                        0.2
+                    ],
+                    [
+                        "depositor",
+                        0.1
+                    ],
+                    [
+                        "lodging",
+                        0.1
+                    ],
+                    [
+                        "deposition",
+                        0.1
+                    ],
+                    [
+                        "position",
+                        0.1
+                    ],
+                    [
+                        "banking",
+                        0.1
+                    ],
+                    [
+                        "lodgement",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "bankable",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "bankable",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "deposit"
+    },
+    "devasted": {
+        "forms": [],
+        "term": "devasted"
+    },
+    "disaster": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "cataclysmal",
+                        0.16666666666666666
+                    ],
+                    [
+                        "calamitous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "cataclysmic",
+                        0.16666666666666666
+                    ],
+                    [
+                        "disastrous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragic",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "cataclysmal",
+                        0.16666666666666666
+                    ],
+                    [
+                        "calamitous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "cataclysmic",
+                        0.16666666666666666
+                    ],
+                    [
+                        "disastrous",
+                        0.16666666666666666
+                    ],
+                    [
+                        "tragic",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "disaster"
+    },
+    "displace": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "movement",
+                        0.2
+                    ],
+                    [
+                        "mover",
+                        0.2
+                    ],
+                    [
+                        "move",
+                        0.1
+                    ],
+                    [
+                        "dismissal",
+                        0.1
+                    ],
+                    [
+                        "sacking",
+                        0.1
+                    ],
+                    [
+                        "sack",
+                        0.1
+                    ],
+                    [
+                        "firing",
+                        0.1
+                    ],
+                    [
+                        "dismission",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "movable",
+                        0.5
+                    ],
+                    [
+                        "dismissible",
+                        0.25
+                    ],
+                    [
+                        "moveable",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "movable",
+                        0.5
+                    ],
+                    [
+                        "dismissible",
+                        0.25
+                    ],
+                    [
+                        "moveable",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "displace"
+    },
+    "dollar": {
+        "forms": [],
+        "term": "dollar"
+    },
+    "donate": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "donation",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "donate"
+    },
+    "donate-a-load": {
+        "forms": [],
+        "term": "donate-a-load"
+    },
+    "donation": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "donate",
+                        0.5
+                    ],
+                    [
+                        "contribute",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "donation"
+    },
+    "donations{Number}": {
+        "forms": [],
+        "term": "donations{Number}"
+    },
+    "drive": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "drive",
+                        0.7954545454545454
+                    ],
+                    [
+                        "ride",
+                        0.13636363636363635
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "drive",
+                        0.576271186440678
+                    ],
+                    [
+                        "driver",
+                        0.11864406779661017
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "repulsive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "repulsive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "drive"
+    },
+    "drop": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "drop",
+                        0.6363636363636364
+                    ],
+                    [
+                        "fall",
+                        0.2727272727272727
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "beady",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "beady",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "drop",
+                        0.2413793103448276
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "omissible",
+                        0.25
+                    ],
+                    [
+                        "omissive",
+                        0.25
+                    ],
+                    [
+                        "degenerative",
+                        0.25
+                    ],
+                    [
+                        "expensive",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "omissible",
+                        0.25
+                    ],
+                    [
+                        "omissive",
+                        0.25
+                    ],
+                    [
+                        "degenerative",
+                        0.25
+                    ],
+                    [
+                        "expensive",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "drop"
+    },
+    "earnings": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pay",
+                        0.5
+                    ],
+                    [
+                        "earn",
+                        0.125
+                    ],
+                    [
+                        "remunerate",
+                        0.125
+                    ],
+                    [
+                        "profit",
+                        0.125
+                    ],
+                    [
+                        "net",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "gainer",
+                        0.3333333333333333
+                    ],
+                    [
+                        "earnings",
+                        0.3333333333333333
+                    ],
+                    [
+                        "earner",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "earnings"
+    },
+    "earth": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "ground",
+                        0.4666666666666667
+                    ],
+                    [
+                        "land",
+                        0.3333333333333333
+                    ],
+                    [
+                        "earth",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "earthly",
+                        0.4
+                    ],
+                    [
+                        "earthy",
+                        0.2
+                    ],
+                    [
+                        "global",
+                        0.2
+                    ],
+                    [
+                        "worldly",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "earthly",
+                        0.4
+                    ],
+                    [
+                        "earthy",
+                        0.2
+                    ],
+                    [
+                        "global",
+                        0.2
+                    ],
+                    [
+                        "worldly",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "earth",
+                        0.75
+                    ],
+                    [
+                        "earthing",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "earth"
+    },
+    "earthquake": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "quake",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "seismic",
+                        0.5
+                    ],
+                    [
+                        "seismal",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "seismic",
+                        0.5
+                    ],
+                    [
+                        "seismal",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "earthquake"
+    },
+    "effort": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "drive",
+                        0.38461538461538464
+                    ]
+                ]
+            }
+        ],
+        "term": "effort"
+    },
+    "efforts/donations": {
+        "forms": [],
+        "term": "efforts/donations"
+    },
+    "emergency": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "exigent",
+                        0.5
+                    ],
+                    [
+                        "emergent",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "exigent",
+                        0.5
+                    ],
+                    [
+                        "emergent",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "emergency"
+    },
+    "emg": {
+        "forms": [],
+        "term": "emg"
+    },
+    "estimated": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "estimation",
+                        0.2
+                    ],
+                    [
+                        "estimate",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "calculable",
+                        0.5
+                    ],
+                    [
+                        "approximative",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "calculable",
+                        0.5
+                    ],
+                    [
+                        "approximative",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "estimated"
+    },
+    "euromillion": {
+        "forms": [],
+        "term": "euromillion"
+    },
+    "event": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "result",
+                        0.4
+                    ],
+                    [
+                        "effect",
+                        0.2
+                    ],
+                    [
+                        "eventuate",
+                        0.2
+                    ],
+                    [
+                        "effectuate",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "consequent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "consequent",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "event"
+    },
+    "exchange": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "exchange",
+                        0.625
+                    ],
+                    [
+                        "commute",
+                        0.25
+                    ],
+                    [
+                        "substitute",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "central",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "central",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "exchange",
+                        0.29411764705882354
+                    ],
+                    [
+                        "commutation",
+                        0.17647058823529413
+                    ],
+                    [
+                        "switch",
+                        0.11764705882352941
+                    ],
+                    [
+                        "substitution",
+                        0.11764705882352941
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "convertible",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "convertible",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "exchange"
+    },
+    "fake": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "fake",
+                        0.5384615384615384
+                    ],
+                    [
+                        "sham",
+                        0.3076923076923077
+                    ],
+                    [
+                        "pretend",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "fake",
+                        0.5
+                    ],
+                    [
+                        "sham",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "fake",
+                        0.5
+                    ],
+                    [
+                        "sham",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fake",
+                        0.21739130434782608
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fake",
+                        0.4
+                    ],
+                    [
+                        "phoney",
+                        0.2
+                    ],
+                    [
+                        "bastard",
+                        0.2
+                    ],
+                    [
+                        "phony",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fake",
+                        0.4
+                    ],
+                    [
+                        "phoney",
+                        0.2
+                    ],
+                    [
+                        "bastard",
+                        0.2
+                    ],
+                    [
+                        "phony",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "fake"
+    },
+    "family": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "classify",
+                        0.4
+                    ],
+                    [
+                        "categorize",
+                        0.2
+                    ],
+                    [
+                        "class",
+                        0.2
+                    ],
+                    [
+                        "home",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "familial",
+                        0.3333333333333333
+                    ],
+                    [
+                        "categoric",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorial",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "kin",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "familial",
+                        0.3333333333333333
+                    ],
+                    [
+                        "categoric",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorial",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "kin",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "family"
+    },
+    "federal": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "Federal",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "Federal",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Federal",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Federal",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "federal"
+    },
+    "fee": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "tip",
+                        0.5
+                    ],
+                    [
+                        "tipper",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "fee"
+    },
+    "fellow": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "associate",
+                        0.5
+                    ],
+                    [
+                        "companion",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "comradely",
+                        0.5
+                    ],
+                    [
+                        "familiar",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "comradely",
+                        0.5
+                    ],
+                    [
+                        "familiar",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "fellow"
+    },
+    "financial": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "finance",
+                        0.75
+                    ],
+                    [
+                        "fisc",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "finance",
+                        0.75
+                    ],
+                    [
+                        "fisc",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "financial"
+    },
+    "firefighting": {
+        "forms": [],
+        "term": "firefighting"
+    },
+    "flood": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flood",
+                        0.42857142857142855
+                    ],
+                    [
+                        "inundate",
+                        0.21428571428571427
+                    ],
+                    [
+                        "deluge",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flood",
+                        0.5
+                    ],
+                    [
+                        "inundation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flood"
+    },
+    "follower": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "follow",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "follower"
+    },
+    "ford": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "ford",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "ford",
+                        0.6666666666666666
+                    ],
+                    [
+                        "fording",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "ford"
+    },
+    "foreign": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "extraneousness",
+                        0.5
+                    ],
+                    [
+                        "foreignness",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "extraneousness",
+                        0.5
+                    ],
+                    [
+                        "foreignness",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "foreign"
+    },
+    "full": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fuller",
+                        0.5
+                    ],
+                    [
+                        "waxing",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fullness",
+                        0.5714285714285714
+                    ],
+                    [
+                        "totality",
+                        0.14285714285714285
+                    ],
+                    [
+                        "wideness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "entireness",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fullness",
+                        0.5714285714285714
+                    ],
+                    [
+                        "totality",
+                        0.14285714285714285
+                    ],
+                    [
+                        "wideness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "entireness",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "full"
+    },
+    "fund": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "stock",
+                        0.4444444444444444
+                    ],
+                    [
+                        "fund",
+                        0.4444444444444444
+                    ],
+                    [
+                        "store",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fund",
+                        0.6666666666666666
+                    ],
+                    [
+                        "funding",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "fund"
+    },
+    "funding": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "fund",
+                        0.4
+                    ],
+                    [
+                        "support",
+                        0.2
+                    ],
+                    [
+                        "back",
+                        0.2
+                    ],
+                    [
+                        "finance",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fund",
+                        0.6666666666666666
+                    ],
+                    [
+                        "funding",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "funding"
+    },
+    "fundraise": {
+        "forms": [],
+        "term": "fundraise"
+    },
+    "fundraiser": {
+        "forms": [],
+        "term": "fundraiser"
+    },
+    "fundraising": {
+        "forms": [],
+        "term": "fundraising"
+    },
+    "galore": {
+        "forms": [],
+        "term": "galore"
+    },
+    "generously": {
+        "forms": [],
+        "term": "generously"
+    },
+    "gift": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "gift",
+                        0.5
+                    ],
+                    [
+                        "give",
+                        0.375
+                    ],
+                    [
+                        "endow",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "gift",
+                        0.5
+                    ],
+                    [
+                        "giver",
+                        0.125
+                    ],
+                    [
+                        "endowment",
+                        0.125
+                    ],
+                    [
+                        "presenter",
+                        0.125
+                    ],
+                    [
+                        "giving",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "gift"
+    },
+    "goods/donations": {
+        "forms": [],
+        "term": "goods/donations"
+    },
+    "gouging": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "gouge",
+                        0.375
+                    ],
+                    [
+                        "gouger",
+                        0.25
+                    ],
+                    [
+                        "extortion",
+                        0.25
+                    ],
+                    [
+                        "squeeze",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "gouging"
+    },
+    "government": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "govern",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "government"
+    },
+    "govt": {
+        "forms": [],
+        "term": "govt"
+    },
+    "in-game": {
+        "forms": [],
+        "term": "in-game"
+    },
+    "insurance": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "insure",
+                        0.6666666666666666
+                    ],
+                    [
+                        "indemnify",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "insurance"
+    },
+    "lakh": {
+        "forms": [],
+        "term": "lakh"
+    },
+    "launch": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "launch",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "launcher",
+                        0.25
+                    ],
+                    [
+                        "launch",
+                        0.25
+                    ],
+                    [
+                        "founder",
+                        0.125
+                    ],
+                    [
+                        "founding",
+                        0.125
+                    ],
+                    [
+                        "establishment",
+                        0.125
+                    ],
+                    [
+                        "foundation",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "launch"
+    },
+    "loss": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "depart",
+                        0.42857142857142855
+                    ],
+                    [
+                        "expire",
+                        0.14285714285714285
+                    ],
+                    [
+                        "exit",
+                        0.14285714285714285
+                    ],
+                    [
+                        "go",
+                        0.14285714285714285
+                    ],
+                    [
+                        "pass",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "lossy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "lossy",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "loss"
+    },
+    "lost": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "doomed",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "doomed",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "loser",
+                        0.5
+                    ],
+                    [
+                        "losings",
+                        0.25
+                    ],
+                    [
+                        "receding",
+                        0.125
+                    ],
+                    [
+                        "recession",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "confusedness",
+                        0.5
+                    ],
+                    [
+                        "helplessness",
+                        0.25
+                    ],
+                    [
+                        "preoccupancy",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "confusedness",
+                        0.5
+                    ],
+                    [
+                        "helplessness",
+                        0.25
+                    ],
+                    [
+                        "preoccupancy",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "lost"
+    },
+    "ls": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "fifty",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "fifty",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "ls"
+    },
+    "marathon": {
+        "forms": [],
+        "term": "marathon"
+    },
+    "meal": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "mealy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "mealy",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "meal"
+    },
+    "memorial": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "memorialize",
+                        0.4
+                    ],
+                    [
+                        "remember",
+                        0.4
+                    ],
+                    [
+                        "commemorate",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "monumental",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "monumental",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "memorial"
+    },
+    "miles": {
+        "forms": [],
+        "term": "miles"
+    },
+    "milli": {
+        "forms": [],
+        "term": "milli"
+    },
+    "money": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "monetary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "monetary",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "money"
+    },
+    "month": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "monthly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "monthly",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "month"
+    },
+    "month's": {
+        "forms": [],
+        "term": "month's"
+    },
+    "number": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "number",
+                        0.8
+                    ],
+                    [
+                        "act",
+                        0.12
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "numerical",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "numerical",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "number",
+                        0.5405405405405406
+                    ],
+                    [
+                        "counter",
+                        0.10810810810810811
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "countable",
+                        0.5
+                    ],
+                    [
+                        "numerable",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "countable",
+                        0.5
+                    ],
+                    [
+                        "numerable",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "number"
+    },
+    "offer": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "offer",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "offer",
+                        0.4117647058823529
+                    ],
+                    [
+                        "offering",
+                        0.17647058823529413
+                    ]
+                ]
+            }
+        ],
+        "term": "offer"
+    },
+    "officers": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "officer",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "officer",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "officers"
+    },
+    "oil": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "oil",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "oily",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "oily",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "oil",
+                        0.2857142857142857
+                    ],
+                    [
+                        "inunction",
+                        0.14285714285714285
+                    ],
+                    [
+                        "anointer",
+                        0.14285714285714285
+                    ],
+                    [
+                        "anointment",
+                        0.14285714285714285
+                    ],
+                    [
+                        "embrocation",
+                        0.14285714285714285
+                    ],
+                    [
+                        "oiler",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "oil"
+    },
+    "pay": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pay",
+                        0.6666666666666666
+                    ],
+                    [
+                        "earn",
+                        0.16666666666666666
+                    ],
+                    [
+                        "remunerate",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "payment",
+                        0.2857142857142857
+                    ],
+                    [
+                        "pay",
+                        0.19047619047619047
+                    ],
+                    [
+                        "payer",
+                        0.19047619047619047
+                    ],
+                    [
+                        "yield",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "pay"
+    },
+    "payment": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pay",
+                        0.6666666666666666
+                    ],
+                    [
+                        "defray",
+                        0.2222222222222222
+                    ],
+                    [
+                        "requite",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "payment"
+    },
+    "philippine": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "Philippine",
+                        0.5
+                    ],
+                    [
+                        "Filipino",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "Philippine",
+                        0.5
+                    ],
+                    [
+                        "Filipino",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Filipino",
+                        0.6666666666666666
+                    ],
+                    [
+                        "Philippine",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "Filipino",
+                        0.6666666666666666
+                    ],
+                    [
+                        "Philippine",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "philippine"
+    },
+    "php": {
+        "forms": [],
+        "term": "php"
+    },
+    "pickup": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pick_up",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "pickup"
+    },
+    "pledge": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pledge",
+                        0.6666666666666666
+                    ],
+                    [
+                        "toast",
+                        0.16666666666666666
+                    ],
+                    [
+                        "assure",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "pledge",
+                        0.2857142857142857
+                    ],
+                    [
+                        "pledger",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "pledge"
+    },
+    "pls": {
+        "forms": [],
+        "term": "pls"
+    },
+    "police": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "police",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "patrol",
+                        0.6
+                    ],
+                    [
+                        "patroller",
+                        0.2
+                    ],
+                    [
+                        "police",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "police"
+    },
+    "pool": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pool",
+                        0.3333333333333333
+                    ],
+                    [
+                        "puddle",
+                        0.3333333333333333
+                    ],
+                    [
+                        "syndicate",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "pool",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "pool"
+    },
+    "price": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cost",
+                        0.5
+                    ],
+                    [
+                        "price",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "costly",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricey",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "costly",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricey",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "price",
+                        0.5
+                    ],
+                    [
+                        "pricing",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "price"
+    },
+    "prize": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "plunder",
+                        0.5
+                    ],
+                    [
+                        "award",
+                        0.16666666666666666
+                    ],
+                    [
+                        "loot",
+                        0.16666666666666666
+                    ],
+                    [
+                        "pillage",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "respect",
+                        0.21428571428571427
+                    ],
+                    [
+                        "esteem",
+                        0.21428571428571427
+                    ],
+                    [
+                        "lever",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "valuable",
+                        0.75
+                    ],
+                    [
+                        "appreciative",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "valuable",
+                        0.75
+                    ],
+                    [
+                        "appreciative",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "choiceness",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "choiceness",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "prize"
+    },
+    "profit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "profit",
+                        0.6666666666666666
+                    ],
+                    [
+                        "net",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "profit",
+                        0.5
+                    ],
+                    [
+                        "benefit",
+                        0.25
+                    ],
+                    [
+                        "gainer",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "profit"
+    },
+    "province": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "provincial",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "provincial",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "province"
+    },
+    "p{Number}m": {
+        "forms": [],
+        "term": "p{Number}m"
+    },
+    "quake": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "quake",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "seismic",
+                        0.5
+                    ],
+                    [
+                        "seismal",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "seismic",
+                        0.5
+                    ],
+                    [
+                        "seismal",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "quiver",
+                        0.2857142857142857
+                    ],
+                    [
+                        "quaker",
+                        0.14285714285714285
+                    ],
+                    [
+                        "palpitation",
+                        0.14285714285714285
+                    ],
+                    [
+                        "tremor",
+                        0.14285714285714285
+                    ],
+                    [
+                        "quivering",
+                        0.14285714285714285
+                    ],
+                    [
+                        "quake",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "palpitant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "palpitant",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "quake"
+    },
+    "rain": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "rain",
+                        0.6666666666666666
+                    ],
+                    [
+                        "pelt",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "rainy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "rainy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "rain",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "rain"
+    },
+    "raise": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "raise",
+                        0.38461538461538464
+                    ],
+                    [
+                        "lift",
+                        0.23076923076923078
+                    ],
+                    [
+                        "climb",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "acclivitous",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "acclivitous",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "lift",
+                        0.12307692307692308
+                    ],
+                    [
+                        "elevation",
+                        0.1076923076923077
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "evocative",
+                        0.3333333333333333
+                    ],
+                    [
+                        "provocative",
+                        0.3333333333333333
+                    ],
+                    [
+                        "enhancive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "evocative",
+                        0.3333333333333333
+                    ],
+                    [
+                        "provocative",
+                        0.3333333333333333
+                    ],
+                    [
+                        "enhancive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "raise"
+    },
+    "raiser": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "raise",
+                        0.4
+                    ],
+                    [
+                        "grow",
+                        0.4
+                    ],
+                    [
+                        "cultivate",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "raiser"
+    },
+    "rate": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pace",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "rating",
+                        0.23076923076923078
+                    ],
+                    [
+                        "grade",
+                        0.15384615384615385
+                    ],
+                    [
+                        "gradation",
+                        0.15384615384615385
+                    ]
+                ]
+            }
+        ],
+        "term": "rate"
+    },
+    "ration": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "ration",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "ration",
+                        0.8
+                    ],
+                    [
+                        "rationing",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "ration"
+    },
+    "rebuild": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "reconstruction",
+                        0.5
+                    ],
+                    [
+                        "rebuilding",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "rebuild"
+    },
+    "record": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "record",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "record",
+                        0.2222222222222222
+                    ],
+                    [
+                        "recorder",
+                        0.16666666666666666
+                    ],
+                    [
+                        "reading",
+                        0.1111111111111111
+                    ],
+                    [
+                        "memorial",
+                        0.1111111111111111
+                    ],
+                    [
+                        "tape",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "commemorative",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "commemorative",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "record"
+    },
+    "recovery": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "recover",
+                        0.42857142857142855
+                    ],
+                    [
+                        "recuperate",
+                        0.2857142857142857
+                    ],
+                    [
+                        "retrieve",
+                        0.14285714285714285
+                    ],
+                    [
+                        "convalesce",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "convalescent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "convalescent",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "recovery"
+    },
+    "red": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "bolshevise",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "red",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "red",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "redness",
+                        0.2
+                    ],
+                    [
+                        "red",
+                        0.1
+                    ],
+                    [
+                        "scarlet",
+                        0.1
+                    ],
+                    [
+                        "violence",
+                        0.1
+                    ],
+                    [
+                        "cherry",
+                        0.1
+                    ],
+                    [
+                        "carmine",
+                        0.1
+                    ],
+                    [
+                        "cerise",
+                        0.1
+                    ],
+                    [
+                        "ruddiness",
+                        0.1
+                    ],
+                    [
+                        "crimson",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "redness",
+                        0.2
+                    ],
+                    [
+                        "red",
+                        0.1
+                    ],
+                    [
+                        "scarlet",
+                        0.1
+                    ],
+                    [
+                        "violence",
+                        0.1
+                    ],
+                    [
+                        "cherry",
+                        0.1
+                    ],
+                    [
+                        "carmine",
+                        0.1
+                    ],
+                    [
+                        "cerise",
+                        0.1
+                    ],
+                    [
+                        "ruddiness",
+                        0.1
+                    ],
+                    [
+                        "crimson",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "red"
+    },
+    "redcross": {
+        "forms": [],
+        "term": "redcross"
+    },
+    "refuse": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "refusal",
+                        0.3333333333333333
+                    ],
+                    [
+                        "turndown",
+                        0.2222222222222222
+                    ],
+                    [
+                        "reject",
+                        0.1111111111111111
+                    ],
+                    [
+                        "rejection",
+                        0.1111111111111111
+                    ],
+                    [
+                        "denier",
+                        0.1111111111111111
+                    ],
+                    [
+                        "declination",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "resistant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "resistant",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "refuse"
+    },
+    "release": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "release",
+                        0.24242424242424243
+                    ],
+                    [
+                        "spill",
+                        0.12121212121212122
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "release",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "release"
+    },
+    "relief": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "ease",
+                        0.2631578947368421
+                    ],
+                    [
+                        "substitute",
+                        0.10526315789473684
+                    ],
+                    [
+                        "alleviate",
+                        0.10526315789473684
+                    ],
+                    [
+                        "rest",
+                        0.10526315789473684
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "substitute",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "substitute",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "relief"
+    },
+    "request": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "request",
+                        0.8
+                    ],
+                    [
+                        "petition",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "petitionary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "petitionary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "request",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "request"
+    },
+    "revenue": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "tax",
+                        0.5
+                    ],
+                    [
+                        "gross",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "gross",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "gross",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "revenue"
+    },
+    "salary": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pay",
+                        0.6666666666666666
+                    ],
+                    [
+                        "earn",
+                        0.16666666666666666
+                    ],
+                    [
+                        "remunerate",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "salary"
+    },
+    "sale": {
+        "forms": [],
+        "term": "sale"
+    },
+    "school": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "school",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "scholastic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "scholastic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "school",
+                        0.5454545454545454
+                    ]
+                ]
+            }
+        ],
+        "term": "school"
+    },
+    "shirt": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "shirt",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shirt",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "shirt"
+    },
+    "short": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "short",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "short",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shortness",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shortness",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "short"
+    },
+    "small": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "smallness",
+                        0.5
+                    ],
+                    [
+                        "littleness",
+                        0.2
+                    ],
+                    [
+                        "lowness",
+                        0.1
+                    ],
+                    [
+                        "modestness",
+                        0.1
+                    ],
+                    [
+                        "humbleness",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "smallness",
+                        0.5
+                    ],
+                    [
+                        "littleness",
+                        0.2
+                    ],
+                    [
+                        "lowness",
+                        0.1
+                    ],
+                    [
+                        "modestness",
+                        0.1
+                    ],
+                    [
+                        "humbleness",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "small"
+    },
+    "spare": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "sparer",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "redundancy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "spareness",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "redundancy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "spareness",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "spare"
+    },
+    "start": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "start",
+                        0.7878787878787878
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "jumpy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "jumpy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "start",
+                        0.4807692307692308
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "initiative",
+                        0.2
+                    ],
+                    [
+                        "originative",
+                        0.2
+                    ],
+                    [
+                        "protrusive",
+                        0.2
+                    ],
+                    [
+                        "protrusible",
+                        0.2
+                    ],
+                    [
+                        "initiatory",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "initiative",
+                        0.2
+                    ],
+                    [
+                        "originative",
+                        0.2
+                    ],
+                    [
+                        "protrusive",
+                        0.2
+                    ],
+                    [
+                        "protrusible",
+                        0.2
+                    ],
+                    [
+                        "initiatory",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "start"
+    },
+    "store": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "stock",
+                        0.4444444444444444
+                    ],
+                    [
+                        "shop",
+                        0.3333333333333333
+                    ],
+                    [
+                        "store",
+                        0.2222222222222222
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "store",
+                        0.5
+                    ],
+                    [
+                        "storage",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "store"
+    },
+    "subscription/renewal": {
+        "forms": [],
+        "term": "subscription/renewal"
+    },
+    "support": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "support",
+                        0.6363636363636364
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "support",
+                        0.2708333333333333
+                    ],
+                    [
+                        "supporter",
+                        0.14583333333333334
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "supportive",
+                        0.2
+                    ],
+                    [
+                        "corroboratory",
+                        0.13333333333333333
+                    ],
+                    [
+                        "corroborative",
+                        0.13333333333333333
+                    ],
+                    [
+                        "tolerant",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "supportive",
+                        0.2
+                    ],
+                    [
+                        "corroboratory",
+                        0.13333333333333333
+                    ],
+                    [
+                        "corroborative",
+                        0.13333333333333333
+                    ],
+                    [
+                        "tolerant",
+                        0.13333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "support"
+    },
+    "swiss": {
+        "forms": [],
+        "term": "swiss"
+    },
+    "text": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "textual",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "textual",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "text"
+    },
+    "tmrw": {
+        "forms": [],
+        "term": "tmrw"
+    },
+    "trust": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "trust",
+                        0.5714285714285714
+                    ],
+                    [
+                        "confide",
+                        0.14285714285714285
+                    ],
+                    [
+                        "combine",
+                        0.14285714285714285
+                    ],
+                    [
+                        "rely",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "trusty",
+                        0.5
+                    ],
+                    [
+                        "trustful",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confidential",
+                        0.16666666666666666
+                    ],
+                    [
+                        "trusting",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "trusty",
+                        0.5
+                    ],
+                    [
+                        "trustful",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confidential",
+                        0.16666666666666666
+                    ],
+                    [
+                        "trusting",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hope",
+                        0.25
+                    ],
+                    [
+                        "trust",
+                        0.2
+                    ],
+                    [
+                        "trustee",
+                        0.1
+                    ],
+                    [
+                        "desire",
+                        0.1
+                    ],
+                    [
+                        "reliance",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "reliant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "reliant",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "trust"
+    },
+    "typhoon": {
+        "forms": [],
+        "term": "typhoon"
+    },
+    "urgent": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "urgency",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "urge",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "urgency",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "urge",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "urgent"
+    },
+    "urgently": {
+        "forms": [],
+        "term": "urgently"
+    },
+    "us$": {
+        "forms": [],
+        "term": "us$"
+    },
+    "victim": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "victimize",
+                        0.5
+                    ],
+                    [
+                        "victimise",
+                        0.375
+                    ],
+                    [
+                        "dupe",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "victim"
+    },
+    "volunteer": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "volunteer",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "voluntary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "voluntary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "voluntary",
+                        0.3333333333333333
+                    ],
+                    [
+                        "offer",
+                        0.3333333333333333
+                    ],
+                    [
+                        "volunteer",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "volunteer"
+    },
+    "volunteers/donations": {
+        "forms": [],
+        "term": "volunteers/donations"
+    },
+    "wildfire": {
+        "forms": [],
+        "term": "wildfire"
+    },
+    "work": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "work",
+                        0.7272727272727273
+                    ],
+                    [
+                        "study",
+                        0.2727272727272727
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "studious",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "studious",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "work",
+                        0.16326530612244897
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "workable",
+                        0.5
+                    ],
+                    [
+                        "exploitive",
+                        0.1
+                    ],
+                    [
+                        "operant",
+                        0.1
+                    ],
+                    [
+                        "operative",
+                        0.1
+                    ],
+                    [
+                        "exploitatory",
+                        0.1
+                    ],
+                    [
+                        "exploitative",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "workable",
+                        0.5
+                    ],
+                    [
+                        "exploitive",
+                        0.1
+                    ],
+                    [
+                        "operant",
+                        0.1
+                    ],
+                    [
+                        "operative",
+                        0.1
+                    ],
+                    [
+                        "exploitatory",
+                        0.1
+                    ],
+                    [
+                        "exploitative",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "work"
+    },
+    "worldwide": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "globe",
+                        0.3333333333333333
+                    ],
+                    [
+                        "universe",
+                        0.3333333333333333
+                    ],
+                    [
+                        "universality",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "universalize",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "globe",
+                        0.3333333333333333
+                    ],
+                    [
+                        "universe",
+                        0.3333333333333333
+                    ],
+                    [
+                        "universality",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "universalize",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "worldwide"
+    },
+    "worth": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "worth",
+                        0.6666666666666666
+                    ],
+                    [
+                        "worthy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "worth",
+                        0.6666666666666666
+                    ],
+                    [
+                        "worthy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "worth",
+                        0.6666666666666666
+                    ],
+                    [
+                        "deservingness",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "worth",
+                        0.6666666666666666
+                    ],
+                    [
+                        "deservingness",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "worth"
+    },
+    "w{Number}": {
+        "forms": [],
+        "term": "w{Number}"
+    },
+    "{Number}%": {
+        "forms": [],
+        "term": "{Number}%"
+    },
+    "{Number}-{Number}pm": {
+        "forms": [],
+        "term": "{Number}-{Number}pm"
+    },
+    "{Number}.{Number}": {
+        "forms": [],
+        "term": "{Number}.{Number}"
+    },
+    "{Number}m": {
+        "forms": [],
+        "term": "{Number}m"
+    }
+}

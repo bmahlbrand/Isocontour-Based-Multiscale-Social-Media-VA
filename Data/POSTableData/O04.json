@@ -1,0 +1,265 @@
+{
+    "affect": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "affect",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shammer",
+                        0.13333333333333333
+                    ],
+                    [
+                        "pretense",
+                        0.13333333333333333
+                    ],
+                    [
+                        "impact",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "affect"
+    },
+    "aftermath": {
+        "forms": [],
+        "term": "aftermath"
+    },
+    "bears": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "bearer",
+                        0.10810810810810811
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "tolerant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "bearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "continent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "expectant",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "tolerant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "bearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "continent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "expectant",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "bears"
+    },
+    "bopha/pablo": {
+        "forms": [],
+        "term": "bopha/pablo"
+    },
+    "flood": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flood",
+                        0.42857142857142855
+                    ],
+                    [
+                        "inundate",
+                        0.21428571428571427
+                    ],
+                    [
+                        "deluge",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flood",
+                        0.5
+                    ],
+                    [
+                        "inundation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flood"
+    },
+    "haiyan": {
+        "forms": [],
+        "term": "haiyan"
+    },
+    "impact": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "impact",
+                        0.4
+                    ],
+                    [
+                        "impinge",
+                        0.2
+                    ],
+                    [
+                        "encroach",
+                        0.2
+                    ],
+                    [
+                        "shock",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "impact",
+                        0.6666666666666666
+                    ],
+                    [
+                        "impaction",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "impact"
+    },
+    "ministries/churches": {
+        "forms": [],
+        "term": "ministries/churches"
+    },
+    "ton": {
+        "forms": [],
+        "term": "ton"
+    },
+    "typhoon": {
+        "forms": [],
+        "term": "typhoon"
+    }
+}

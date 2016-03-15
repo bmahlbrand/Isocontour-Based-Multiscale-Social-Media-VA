@@ -1,0 +1,51 @@
+
+.gradient-style
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	text-align: left;
+	border-collapse: collapse;
+	border-spacing:0;
+}
+.gradient-style th
+{
+	font-weight: normal;
+	background: #b9c9fe;
+	border-top: 2px solid #d3ddff;
+	border-bottom: 1px solid #fff;
+	color: #039;
+	opacity:1; 
+}
+.gradient-style td
+{
+	border-bottom: 1px solid #fff;
+	color: #669;
+	border-top: 1px solid #fff;
+	background: #e8edff;
+	opacity:1; 
+	padding:0px;
+	margin:0px;
+}
+
+td.twitterBg
+{
+background: #e8edff;
+}
+
+td.instagramBg
+{
+background: #D8DBC8;
+}
+
+.gradient-style tfoot tr td
+{
+	background: #e8edff;
+	color: #99c;
+	opacity:1; 
+}
+.gradient-style tbody tr:hover td
+{
+	background: #d0dafd;
+	color: #339;
+	opacity:1; 
+}
+

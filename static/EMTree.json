@@ -1,0 +1,33 @@
+{
+   "name": "EM Terms",
+   "children": [
+    {
+     "name": "Cate T", "cate":"T",
+     "children": [
+      {"cate":"T02", "name": "T02: Injured People", "size": 1},
+      {"cate":"T03", "name": "T03: Dead People", "size": 1},
+      {"cate":"T04", "name": "T04: Infrastructure Damage", "size": 1},
+      {"cate":"T09", "name": "T09: Displaced and evacuated people", "size": 1},
+      {"cate":"T11", "name": "T11: Personal Response", "size": 1}
+      ]
+    },
+    {
+     "name": "Cate C", "cate":"C",
+     "children": [
+      {"cate":"C07", "name": "C07: Safety and security", "size": 1}
+      ]
+    },
+    {
+     "name": "Cate O", "cate":"O",
+     "children": [
+      {"cate":"O02", "name": "O02: Response agencies in place", "size": 1}
+      ]
+    },
+    {
+     "name": "Cate E", "cate":"E",
+     "children": [
+      {"cate":"E01", "name": "E01: Event Specific", "size": 1}
+     ]
+    }
+   ]
+}

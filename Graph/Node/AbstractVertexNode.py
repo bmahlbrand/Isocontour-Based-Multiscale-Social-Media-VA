@@ -1,0 +1,2 @@
+class AbstractVertexNode(dict):
+    pass

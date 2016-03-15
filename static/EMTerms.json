@@ -1,0 +1,43 @@
+{
+   "name": "EM Terms",
+   "children": [
+    {
+     "name": "Cate T", "cate":"T",
+     "children": [
+      {"cate":"T01", "name": "T01: Caution & Advice", "size": 1},
+      {"cate":"T02", "name": "T02: Injured People", "size": 1},
+      {"cate":"T03", "name": "T03: Dead People", "size": 1},
+      {"cate":"T04", "name": "T04: Infrastructure Damage", "size": 1},
+      {"cate":"T05", "name": "T05: Money", "size": 1},
+      {"cate":"T06", "name": "T06: Supplies needed or offered", "size": 1},
+      {"cate":"T07", "name": "T07: Services needed or offered", "size": 1},
+      {"cate":"T08", "name": "T08: Missing, found, or trapped people", "size": 1},
+      {"cate":"T09", "name": "T09: Displaced and evacuated people", "size": 1},
+      {"cate":"T10", "name": "T10: Animal management", "size": 1},
+      {"cate":"T11", "name": "T11: Personal updates, sympathy", "size": 1}
+     ]
+    },
+    {
+     "name": "Cate C", "cate":"C",
+     "children": [
+      {"cate":"C01", "name": "C01: Children and education", "size": 1},
+      {"cate":"C02", "name": "C02: Food and nutrition", "size": 1},
+      {"cate":"C03", "name": "C03: Health", "size": 1},
+      {"cate":"C04", "name": "C04: Logistics and transportation", "size": 1},
+      {"cate":"C05", "name": "C05: Camp and shelter", "size": 1},
+      {"cate":"C06", "name": "C06: Water, sanitation, and hygiene", "size": 1},
+      {"cate":"C07", "name": "C07: Safety and security", "size": 1},
+      {"cate":"C08", "name": "C08: Telecommunications", "size": 1}
+     ]
+    },
+    {
+     "name": "Cate O", "cate":"O",
+     "children": [
+      {"cate":"O01", "name": "O01: Weather", "size": 1},
+      {"cate":"O02", "name": "O02: Response agencies in place", "size": 1},
+      {"cate":"O03", "name": "O03: Witnesses’ accounts", "size": 1},
+      {"cate":"O04", "name": "O04: Impact of the crisis", "size": 1}
+     ]
+    }
+   ]
+}

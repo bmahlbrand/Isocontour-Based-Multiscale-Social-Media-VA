@@ -1,0 +1,37 @@
+
+.gradient-style
+{
+	font-family: "Times New Roman", Georgia, Serif;
+	border-collapse: collapse;
+}
+.gradient-style th
+{
+	font-weight: normal;
+	color: #000;
+	opacity:1;
+	border: 1px solid black;
+}
+.gradient-style td
+{
+	padding: 5px;
+	color: #000;
+	opacity:1;
+	border: 1px solid black;
+	font-size: 18px;
+}
+.gradient-style tr
+{
+	outline: thin #999;
+}
+
+.gradient-style tfoot tr td
+{
+	color: #000;
+	opacity:1; 
+}
+.gradient-style tbody tr:hover td
+{
+	color: #000;
+	opacity:1;
+}
+

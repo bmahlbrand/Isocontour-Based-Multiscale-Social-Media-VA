@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenLayers & D3</title>
+  <script src="http://openlayers.org/api/OpenLayers.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+<style>
+body {
+  margin: 0em 0em;
+}
+
+#map {
+  width: 960px;
+  height: 500px;
+}
+
+path {
+  fill: #000;
+  fill-opacity: .2;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+path:hover {
+  fill: brown;
+  fill-opacity: .7;
+}
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+
+var map = new OpenLayers.Map('map');
+var wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+              "http://vmap0.tiles.osgeo.org/wms/vmap0", {layers:'basic'} );
+map.addLayer(wms);
+map.setCenter(new OpenLayers.LonLat(-96.9, 37.8), 4);
+
+d3.json("us-states.json", function(err, collection) {
+    var path = d3.geo.path().projection(project),
+        vector = new OpenLayers.Layer.Vector( "states" );
+
+    vector.afterAdd = function() {
+        var div = d3.select("#"+vector.div.id);
+        div.selectAll("svg").remove();
+
+        var states = div.append("svg")
+                        .attr("width", 960)
+                        .attr("height", 500)
+                        .append("g")
+                        .selectAll("path")
+                        .data(collection.features)
+                    .enter().append("path");
+
+        reset();
+
+        function reset() {
+            states.attr("d", path);
+        };
+
+        //map.events.register("moveend", map, reset);
+    };
+    map.addLayer(vector);
+
+   function project(x) {
+       var point = map.getViewPortPxFromLonLat( new OpenLayers.LonLat(x[0], x[1]));
+       return [ point.x, point.y ];
+   }
+});
+
+</script>
+</body>
+</html>

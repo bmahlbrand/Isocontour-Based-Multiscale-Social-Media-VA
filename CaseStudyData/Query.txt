@@ -1,0 +1,22 @@
+//sandy
+SELECT [tweet_id],[user_id],[created_at],
+REPLACE(REPLACE(REPLACE([tweet_text], CHAR(13), '. '), CHAR(10), '. '), '\t', ' ') as txt,
+[geo_lat],[geo_long]
+FROM [sns_viz].[dbo].[tweet_nyc_sandy]
+WHERE created_at between '2012-10-28 00:00:00' and '2012-11-01 00:00:00'
+
+//purdue shooting
+SELECT [tweet_id],[user_id],[created_at],
+REPLACE(REPLACE(REPLACE([tweet_text], CHAR(13), '. '), CHAR(10), '. '), '\t', ' ') as txt,
+[geo_lat],[geo_long]
+FROM [sns_viz].[dbo].[tweet_us_2014_1_3]
+WHERE created_at between '2014-01-21 00:00:00' and '2014-01-23 00:00:00'
+and geo_lat between 37.87 and 41.59 and geo_long between -87.45 and -84.98
+
+//boston bombing
+SELECT [tweet_id],[user_id],[created_at],
+REPLACE(REPLACE(REPLACE([tweet_text], CHAR(13), '. '), CHAR(10), '. '), '\t', ' ') as txt,
+[geo_lat],[geo_long]
+FROM [sns_viz].[dbo].[tweet_us_2013_4_6]
+WHERE created_at between '2013-04-15 00:00:00' and '2013-04-16 00:00:00'
+and geo_lat between 42.332814 and 42.37569 and geo_long between -71.118273 and -71.005873

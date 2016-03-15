@@ -1,0 +1,2817 @@
+{
+    "#fracking": {
+        "forms": [],
+        "term": "#fracking"
+    },
+    "#reliefph": {
+        "forms": [],
+        "term": "#reliefph"
+    },
+    "#rescueph": {
+        "forms": [],
+        "term": "#rescueph"
+    },
+    "-no": {
+        "forms": [],
+        "term": "-no"
+    },
+    "advisory": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "advise",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "advisory",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "advisory",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "advisory",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "consult",
+                        0.8571428571428571
+                    ],
+                    [
+                        "advise",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "advisory",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "consult",
+                        0.8571428571428571
+                    ],
+                    [
+                        "advise",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "advisory"
+    },
+    "aid": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "help",
+                        0.5555555555555556
+                    ],
+                    [
+                        "assist",
+                        0.16666666666666666
+                    ],
+                    [
+                        "aid",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "help",
+                        0.4166666666666667
+                    ],
+                    [
+                        "aid",
+                        0.16666666666666666
+                    ],
+                    [
+                        "helper",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "assistive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "assistive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "aid"
+    },
+    "bite": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "bite",
+                        0.5
+                    ],
+                    [
+                        "snack",
+                        0.16666666666666666
+                    ],
+                    [
+                        "chomp",
+                        0.16666666666666666
+                    ],
+                    [
+                        "sting",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "pungent",
+                        0.6666666666666666
+                    ],
+                    [
+                        "racy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "pungent",
+                        0.6666666666666666
+                    ],
+                    [
+                        "racy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "stinger",
+                        0.3
+                    ],
+                    [
+                        "bite",
+                        0.3
+                    ],
+                    [
+                        "sting",
+                        0.2
+                    ],
+                    [
+                        "biter",
+                        0.1
+                    ],
+                    [
+                        "burn",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "bite"
+    },
+    "boil": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "boil",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "boiler",
+                        0.5
+                    ],
+                    [
+                        "boil",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "boil"
+    },
+    "bottled": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "bottle",
+                        0.75
+                    ],
+                    [
+                        "bottler",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "bottled"
+    },
+    "camp": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "camp",
+                        0.6
+                    ],
+                    [
+                        "canton",
+                        0.2
+                    ],
+                    [
+                        "bivouac",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "campy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "campy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "camp",
+                        0.3
+                    ],
+                    [
+                        "bivouac",
+                        0.2
+                    ],
+                    [
+                        "tenting",
+                        0.1
+                    ],
+                    [
+                        "tent",
+                        0.1
+                    ],
+                    [
+                        "camper",
+                        0.1
+                    ],
+                    [
+                        "camping",
+                        0.1
+                    ],
+                    [
+                        "encampment",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "camp",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "camp",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "camp"
+    },
+    "clean": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cleaning",
+                        0.42857142857142855
+                    ],
+                    [
+                        "cleaner",
+                        0.2857142857142857
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cleanness",
+                        0.5454545454545454
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cleanness",
+                        0.5454545454545454
+                    ]
+                ]
+            }
+        ],
+        "term": "clean"
+    },
+    "concern": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "worry",
+                        0.3333333333333333
+                    ],
+                    [
+                        "concern",
+                        0.2222222222222222
+                    ],
+                    [
+                        "fear",
+                        0.2222222222222222
+                    ],
+                    [
+                        "care",
+                        0.1111111111111111
+                    ],
+                    [
+                        "vex",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "concern",
+                        0.2857142857142857
+                    ],
+                    [
+                        "pertinence",
+                        0.14285714285714285
+                    ],
+                    [
+                        "occupation",
+                        0.14285714285714285
+                    ],
+                    [
+                        "reference",
+                        0.14285714285714285
+                    ],
+                    [
+                        "pertinency",
+                        0.14285714285714285
+                    ],
+                    [
+                        "interest",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "pertinent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "pertinent",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "concern"
+    },
+    "contaminated": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "contamination",
+                        0.5
+                    ],
+                    [
+                        "pollution",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "contaminative",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "contaminative",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "contaminated"
+    },
+    "converge": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "convergence",
+                        0.4
+                    ],
+                    [
+                        "convergency",
+                        0.3
+                    ],
+                    [
+                        "converging",
+                        0.3
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "convergent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "convergent",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "converge"
+    },
+    "damage": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "damage",
+                        0.25
+                    ],
+                    [
+                        "price",
+                        0.25
+                    ],
+                    [
+                        "harm",
+                        0.25
+                    ],
+                    [
+                        "wrong",
+                        0.125
+                    ],
+                    [
+                        "impair",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "wrong",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricey",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "wrong",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricy",
+                        0.3333333333333333
+                    ],
+                    [
+                        "pricey",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "damage",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "damage"
+    },
+    "disposal": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "dispose",
+                        0.75
+                    ],
+                    [
+                        "administer",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "disposal"
+    },
+    "drink": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "drink",
+                        0.875
+                    ],
+                    [
+                        "swallow",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "crapulous",
+                        0.5
+                    ],
+                    [
+                        "crapulent",
+                        0.25
+                    ],
+                    [
+                        "potable",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "crapulous",
+                        0.5
+                    ],
+                    [
+                        "crapulent",
+                        0.25
+                    ],
+                    [
+                        "potable",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "drink",
+                        0.20833333333333334
+                    ],
+                    [
+                        "drinker",
+                        0.125
+                    ],
+                    [
+                        "drinking",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "drink"
+    },
+    "drinking": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "drink",
+                        0.7142857142857143
+                    ],
+                    [
+                        "imbibe",
+                        0.2857142857142857
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "crapulous",
+                        0.6666666666666666
+                    ],
+                    [
+                        "crapulent",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "crapulous",
+                        0.6666666666666666
+                    ],
+                    [
+                        "crapulent",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "drink",
+                        0.20833333333333334
+                    ],
+                    [
+                        "drinker",
+                        0.125
+                    ],
+                    [
+                        "drinking",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "drinking"
+    },
+    "dry": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "drier",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "dryness",
+                        0.8
+                    ],
+                    [
+                        "irony",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "dryness",
+                        0.8
+                    ],
+                    [
+                        "irony",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "dry"
+    },
+    "electricity": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "electrify",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "electric",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "electric",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "electricity"
+    },
+    "exceed": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "transcendence",
+                        0.2857142857142857
+                    ],
+                    [
+                        "topper",
+                        0.2857142857142857
+                    ],
+                    [
+                        "transcendency",
+                        0.14285714285714285
+                    ],
+                    [
+                        "top",
+                        0.14285714285714285
+                    ],
+                    [
+                        "exceedance",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "transcendent",
+                        0.6666666666666666
+                    ],
+                    [
+                        "excessive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "transcendent",
+                        0.6666666666666666
+                    ],
+                    [
+                        "excessive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "exceed"
+    },
+    "filtration": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "filter",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "filtration"
+    },
+    "flash": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flash",
+                        0.8888888888888888
+                    ],
+                    [
+                        "ostentate",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "flash",
+                        0.3333333333333333
+                    ],
+                    [
+                        "ostentatious",
+                        0.3333333333333333
+                    ],
+                    [
+                        "flashy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "flash",
+                        0.3333333333333333
+                    ],
+                    [
+                        "ostentatious",
+                        0.3333333333333333
+                    ],
+                    [
+                        "flashy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flash",
+                        0.25925925925925924
+                    ],
+                    [
+                        "flasher",
+                        0.14814814814814814
+                    ],
+                    [
+                        "scooter",
+                        0.14814814814814814
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "garishness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "gaudiness",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "garishness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "gaudiness",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "flash"
+    },
+    "flood": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flood",
+                        0.42857142857142855
+                    ],
+                    [
+                        "inundate",
+                        0.21428571428571427
+                    ],
+                    [
+                        "deluge",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flood",
+                        0.5
+                    ],
+                    [
+                        "inundation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flood"
+    },
+    "flooding": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flood",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flood",
+                        0.5
+                    ],
+                    [
+                        "inundation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flooding"
+    },
+    "flush": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flush",
+                        0.4166666666666667
+                    ],
+                    [
+                        "thrill",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "flush",
+                        0.5
+                    ],
+                    [
+                        "rosy",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "flush",
+                        0.5
+                    ],
+                    [
+                        "rosy",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flush",
+                        0.3333333333333333
+                    ],
+                    [
+                        "blusher",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "wealth",
+                        0.3333333333333333
+                    ],
+                    [
+                        "affluence",
+                        0.16666666666666666
+                    ],
+                    [
+                        "flush",
+                        0.16666666666666666
+                    ],
+                    [
+                        "affluent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wealthiness",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "wealth",
+                        0.3333333333333333
+                    ],
+                    [
+                        "affluence",
+                        0.16666666666666666
+                    ],
+                    [
+                        "flush",
+                        0.16666666666666666
+                    ],
+                    [
+                        "affluent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wealthiness",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flush"
+    },
+    "food": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "nutrify",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "nutrient",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "nutrient",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "food"
+    },
+    "full": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fuller",
+                        0.5
+                    ],
+                    [
+                        "waxing",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fullness",
+                        0.5714285714285714
+                    ],
+                    [
+                        "totality",
+                        0.14285714285714285
+                    ],
+                    [
+                        "wideness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "entireness",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "fullness",
+                        0.5714285714285714
+                    ],
+                    [
+                        "totality",
+                        0.14285714285714285
+                    ],
+                    [
+                        "wideness",
+                        0.14285714285714285
+                    ],
+                    [
+                        "entireness",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "full"
+    },
+    "gallon": {
+        "forms": [],
+        "term": "gallon"
+    },
+    "harvest": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "harvest",
+                        0.5714285714285714
+                    ],
+                    [
+                        "crop",
+                        0.42857142857142855
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "harvest",
+                        0.3333333333333333
+                    ],
+                    [
+                        "reaper",
+                        0.2222222222222222
+                    ],
+                    [
+                        "harvester",
+                        0.2222222222222222
+                    ],
+                    [
+                        "gleaner",
+                        0.1111111111111111
+                    ],
+                    [
+                        "harvesting",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "harvest"
+    },
+    "high": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "high",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "high",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "high",
+                        0.36363636363636365
+                    ],
+                    [
+                        "highness",
+                        0.2727272727272727
+                    ],
+                    [
+                        "game",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "high",
+                        0.36363636363636365
+                    ],
+                    [
+                        "highness",
+                        0.2727272727272727
+                    ],
+                    [
+                        "game",
+                        0.18181818181818182
+                    ]
+                ]
+            }
+        ],
+        "term": "high"
+    },
+    "hit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "hit",
+                        0.7692307692307693
+                    ],
+                    [
+                        "collide",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hit",
+                        0.16666666666666666
+                    ],
+                    [
+                        "hitting",
+                        0.16666666666666666
+                    ],
+                    [
+                        "strike",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "hit"
+    },
+    "india's": {
+        "forms": [],
+        "term": "india's"
+    },
+    "infrastructure": {
+        "forms": [],
+        "term": "infrastructure"
+    },
+    "level": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "level",
+                        0.6666666666666666
+                    ],
+                    [
+                        "layer",
+                        0.16666666666666666
+                    ],
+                    [
+                        "grade",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "level",
+                        0.5
+                    ],
+                    [
+                        "razing",
+                        0.25
+                    ],
+                    [
+                        "leveller",
+                        0.125
+                    ],
+                    [
+                        "leveler",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "evenness",
+                        0.25
+                    ],
+                    [
+                        "flatness",
+                        0.25
+                    ],
+                    [
+                        "planeness",
+                        0.25
+                    ],
+                    [
+                        "plane",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "evenness",
+                        0.25
+                    ],
+                    [
+                        "flatness",
+                        0.25
+                    ],
+                    [
+                        "planeness",
+                        0.25
+                    ],
+                    [
+                        "plane",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "level"
+    },
+    "material": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "materiality",
+                        0.375
+                    ],
+                    [
+                        "reality",
+                        0.125
+                    ],
+                    [
+                        "substantialness",
+                        0.125
+                    ],
+                    [
+                        "corporeality",
+                        0.125
+                    ],
+                    [
+                        "substance",
+                        0.125
+                    ],
+                    [
+                        "substantiality",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "materiality",
+                        0.375
+                    ],
+                    [
+                        "reality",
+                        0.125
+                    ],
+                    [
+                        "substantialness",
+                        0.125
+                    ],
+                    [
+                        "corporeality",
+                        0.125
+                    ],
+                    [
+                        "substance",
+                        0.125
+                    ],
+                    [
+                        "substantiality",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "material"
+    },
+    "medical": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "medical",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "medical",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "medicine",
+                        0.6
+                    ],
+                    [
+                        "medical",
+                        0.2
+                    ],
+                    [
+                        "Aesculapius",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "medicine",
+                        0.6
+                    ],
+                    [
+                        "medical",
+                        0.2
+                    ],
+                    [
+                        "Aesculapius",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "medical"
+    },
+    "mile": {
+        "forms": [],
+        "term": "mile"
+    },
+    "muddy": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "muddiness",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "muddiness",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "muddy"
+    },
+    "open-air": {
+        "forms": [],
+        "term": "open-air"
+    },
+    "order": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "order",
+                        0.8260869565217391
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "clubby",
+                        0.5
+                    ],
+                    [
+                        "orderly",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "clubby",
+                        0.5
+                    ],
+                    [
+                        "orderly",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "order",
+                        0.32608695652173914
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "prescriptive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "prescriptive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "order"
+    },
+    "pollute": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "pollution",
+                        0.3333333333333333
+                    ],
+                    [
+                        "contamination",
+                        0.3333333333333333
+                    ],
+                    [
+                        "polluter",
+                        0.1111111111111111
+                    ],
+                    [
+                        "pollutant",
+                        0.1111111111111111
+                    ],
+                    [
+                        "contaminant",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "contaminative",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "contaminative",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "pollute"
+    },
+    "pollution": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "pollute",
+                        0.42857142857142855
+                    ],
+                    [
+                        "contaminate",
+                        0.2857142857142857
+                    ],
+                    [
+                        "defile",
+                        0.14285714285714285
+                    ],
+                    [
+                        "befoul",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "pollution"
+    },
+    "pond": {
+        "forms": [],
+        "term": "pond"
+    },
+    "private": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "privateness",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "privateness",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "private"
+    },
+    "purification": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "purify",
+                        0.5
+                    ],
+                    [
+                        "refine",
+                        0.375
+                    ],
+                    [
+                        "purge",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "purification"
+    },
+    "quality": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "qualify",
+                        0.5833333333333334
+                    ],
+                    [
+                        "characterise",
+                        0.16666666666666666
+                    ],
+                    [
+                        "characterize",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "tonal",
+                        0.5
+                    ],
+                    [
+                        "characteristic",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "tonal",
+                        0.5
+                    ],
+                    [
+                        "characteristic",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "choiceness",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "choiceness",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "quality"
+    },
+    "rain": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "rain",
+                        0.6666666666666666
+                    ],
+                    [
+                        "pelt",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "rainy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "rainy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "rain",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "rain"
+    },
+    "recede": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "receding",
+                        0.42857142857142855
+                    ],
+                    [
+                        "recession",
+                        0.2857142857142857
+                    ],
+                    [
+                        "withdrawal",
+                        0.14285714285714285
+                    ],
+                    [
+                        "pullback",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "recede"
+    },
+    "release": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "release",
+                        0.24242424242424243
+                    ],
+                    [
+                        "spill",
+                        0.12121212121212122
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "release",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "release"
+    },
+    "reservoir": {
+        "forms": [],
+        "term": "reservoir"
+    },
+    "restore": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "restoration",
+                        0.23809523809523808
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "restorative",
+                        0.6666666666666666
+                    ],
+                    [
+                        "reconstructive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "restorative",
+                        0.6666666666666666
+                    ],
+                    [
+                        "reconstructive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "restore"
+    },
+    "river": {
+        "forms": [],
+        "term": "river"
+    },
+    "road": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "route",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "road"
+    },
+    "sanitation": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "sanitize",
+                        0.3333333333333333
+                    ],
+                    [
+                        "sanitate",
+                        0.3333333333333333
+                    ],
+                    [
+                        "sanitise",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "sanitation"
+    },
+    "search": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "search",
+                        0.6666666666666666
+                    ],
+                    [
+                        "hunt",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "searcher",
+                        0.4375
+                    ],
+                    [
+                        "search",
+                        0.25
+                    ],
+                    [
+                        "research",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "explorative",
+                        0.5
+                    ],
+                    [
+                        "exploratory",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "explorative",
+                        0.5
+                    ],
+                    [
+                        "exploratory",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "search"
+    },
+    "sewage": {
+        "forms": [],
+        "term": "sewage"
+    },
+    "shower": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "shower",
+                        0.8
+                    ],
+                    [
+                        "exhibit",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "showery",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "showery",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shower",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "shower"
+    },
+    "snake": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "snake",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "snaky",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "snaky",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "snake",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "snake"
+    },
+    "supply": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "supply",
+                        0.6666666666666666
+                    ],
+                    [
+                        "provide",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "supply",
+                        0.3888888888888889
+                    ],
+                    [
+                        "provider",
+                        0.1111111111111111
+                    ],
+                    [
+                        "provision",
+                        0.1111111111111111
+                    ],
+                    [
+                        "issue",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "supply"
+    },
+    "system": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "organise",
+                        0.3333333333333333
+                    ],
+                    [
+                        "systemize",
+                        0.2222222222222222
+                    ],
+                    [
+                        "organize",
+                        0.2222222222222222
+                    ],
+                    [
+                        "systemise",
+                        0.2222222222222222
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "systematic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "systematic",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "system"
+    },
+    "tainted": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "infection",
+                        0.5
+                    ],
+                    [
+                        "cloud",
+                        0.25
+                    ],
+                    [
+                        "taint",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "infective",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "infective",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "tainted"
+    },
+    "torrent": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "deluge",
+                        0.42857142857142855
+                    ],
+                    [
+                        "inundate",
+                        0.14285714285714285
+                    ],
+                    [
+                        "pelt",
+                        0.14285714285714285
+                    ],
+                    [
+                        "soak",
+                        0.14285714285714285
+                    ],
+                    [
+                        "flood",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "torrent"
+    },
+    "trap": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "trap",
+                        0.2857142857142857
+                    ],
+                    [
+                        "ambush",
+                        0.2857142857142857
+                    ],
+                    [
+                        "snare",
+                        0.14285714285714285
+                    ],
+                    [
+                        "bunker",
+                        0.14285714285714285
+                    ],
+                    [
+                        "ambuscade",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "trap",
+                        0.25
+                    ],
+                    [
+                        "immobilisation",
+                        0.125
+                    ],
+                    [
+                        "trapper",
+                        0.125
+                    ],
+                    [
+                        "immobilization",
+                        0.125
+                    ],
+                    [
+                        "snare",
+                        0.125
+                    ],
+                    [
+                        "immobilizing",
+                        0.125
+                    ],
+                    [
+                        "snarer",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "immobile",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "immobile",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "trap"
+    },
+    "undrinkable": {
+        "forms": [],
+        "term": "undrinkable"
+    },
+    "usage": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "use",
+                        0.5
+                    ],
+                    [
+                        "exercise",
+                        0.2
+                    ],
+                    [
+                        "utilize",
+                        0.1
+                    ],
+                    [
+                        "employ",
+                        0.1
+                    ],
+                    [
+                        "utilise",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "customary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "customary",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "usage"
+    },
+    "vaccine": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "vaccinate",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "vaccine"
+    },
+    "wash": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "wash",
+                        0.6666666666666666
+                    ],
+                    [
+                        "lave",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "wash",
+                        0.3181818181818182
+                    ],
+                    [
+                        "washer",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "washable",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "washable",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "wash"
+    },
+    "waste": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "waste",
+                        0.875
+                    ],
+                    [
+                        "dissipate",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "wasteful",
+                        0.5
+                    ],
+                    [
+                        "thriftless",
+                        0.16666666666666666
+                    ],
+                    [
+                        "barren",
+                        0.16666666666666666
+                    ],
+                    [
+                        "waste",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "wasteful",
+                        0.5
+                    ],
+                    [
+                        "thriftless",
+                        0.16666666666666666
+                    ],
+                    [
+                        "barren",
+                        0.16666666666666666
+                    ],
+                    [
+                        "waste",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "waste",
+                        0.21212121212121213
+                    ],
+                    [
+                        "devastation",
+                        0.12121212121212122
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "wild",
+                        0.3333333333333333
+                    ],
+                    [
+                        "waste",
+                        0.3333333333333333
+                    ],
+                    [
+                        "wilderness",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "wild",
+                        0.3333333333333333
+                    ],
+                    [
+                        "waste",
+                        0.3333333333333333
+                    ],
+                    [
+                        "wilderness",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "waste"
+    },
+    "water": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "water",
+                        0.3333333333333333
+                    ],
+                    [
+                        "piss",
+                        0.16666666666666666
+                    ],
+                    [
+                        "urinate",
+                        0.16666666666666666
+                    ],
+                    [
+                        "piddle",
+                        0.16666666666666666
+                    ],
+                    [
+                        "pee",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "watery",
+                        0.6666666666666666
+                    ],
+                    [
+                        "urinary",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "watery",
+                        0.6666666666666666
+                    ],
+                    [
+                        "urinary",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "waterer",
+                        0.375
+                    ],
+                    [
+                        "water",
+                        0.25
+                    ],
+                    [
+                        "watering",
+                        0.25
+                    ],
+                    [
+                        "irrigation",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "water"
+    },
+    "webpage": {
+        "forms": [],
+        "term": "webpage"
+    }
+}

@@ -1,0 +1,3662 @@
+{
+    "#bostonmarathon": {
+        "forms": [],
+        "term": "#bostonmarathon"
+    },
+    "#floods": {
+        "forms": [],
+        "term": "#floods"
+    },
+    "#highparkfire": {
+        "forms": [],
+        "term": "#highparkfire"
+    },
+    "#rescueph": {
+        "forms": [],
+        "term": "#rescueph"
+    },
+    "&": {
+        "forms": [],
+        "term": "&"
+    },
+    "@savethechildren": {
+        "forms": [],
+        "term": "@savethechildren"
+    },
+    "accept": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "acceptation",
+                        0.5
+                    ],
+                    [
+                        "acceptance",
+                        0.3125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "acceptable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptive",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "acceptable",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "acceptive",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "accept"
+    },
+    "adoption": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "accept",
+                        0.4444444444444444
+                    ],
+                    [
+                        "adopt",
+                        0.4444444444444444
+                    ],
+                    [
+                        "espouse",
+                        0.1111111111111111
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "acceptant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "acceptant",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "adoption"
+    },
+    "advise": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "notifiable",
+                        0.25
+                    ],
+                    [
+                        "advisory",
+                        0.25
+                    ],
+                    [
+                        "advisable",
+                        0.25
+                    ],
+                    [
+                        "suggestible",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "notifiable",
+                        0.25
+                    ],
+                    [
+                        "advisory",
+                        0.25
+                    ],
+                    [
+                        "advisable",
+                        0.25
+                    ],
+                    [
+                        "suggestible",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "advise"
+    },
+    "affect": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "affect",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "affectional",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shammer",
+                        0.13333333333333333
+                    ],
+                    [
+                        "pretense",
+                        0.13333333333333333
+                    ],
+                    [
+                        "impact",
+                        0.13333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "impressive",
+                        0.5
+                    ],
+                    [
+                        "impressible",
+                        0.25
+                    ],
+                    [
+                        "affective",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "affect"
+    },
+    "asap": {
+        "forms": [],
+        "term": "asap"
+    },
+    "assistance": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "help",
+                        0.7142857142857143
+                    ],
+                    [
+                        "assist",
+                        0.21428571428571427
+                    ]
+                ]
+            }
+        ],
+        "term": "assistance"
+    },
+    "authorities": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "govern",
+                        0.2
+                    ],
+                    [
+                        "authorise",
+                        0.2
+                    ],
+                    [
+                        "sanction",
+                        0.2
+                    ],
+                    [
+                        "authorize",
+                        0.2
+                    ],
+                    [
+                        "dominate",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "sure",
+                        0.3333333333333333
+                    ],
+                    [
+                        "potent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "self-confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "official",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "sure",
+                        0.3333333333333333
+                    ],
+                    [
+                        "potent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "self-confident",
+                        0.16666666666666666
+                    ],
+                    [
+                        "official",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "authorities"
+    },
+    "babies'll": {
+        "forms": [],
+        "term": "babies'll"
+    },
+    "baby": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "baby",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "baby",
+                        0.1111111111111111
+                    ],
+                    [
+                        "indulging",
+                        0.1111111111111111
+                    ],
+                    [
+                        "pamperer",
+                        0.1111111111111111
+                    ],
+                    [
+                        "coddler",
+                        0.1111111111111111
+                    ],
+                    [
+                        "pampering",
+                        0.1111111111111111
+                    ],
+                    [
+                        "mollycoddle",
+                        0.1111111111111111
+                    ],
+                    [
+                        "indulgence",
+                        0.1111111111111111
+                    ],
+                    [
+                        "mollycoddler",
+                        0.1111111111111111
+                    ],
+                    [
+                        "spoiler",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "baby"
+    },
+    "bear": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "bearer",
+                        0.10810810810810811
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "tolerant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "bearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "continent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "expectant",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "tolerant",
+                        0.3333333333333333
+                    ],
+                    [
+                        "bearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "continent",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wearable",
+                        0.16666666666666666
+                    ],
+                    [
+                        "expectant",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "bear"
+    },
+    "break": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "break",
+                        0.5161290322580645
+                    ],
+                    [
+                        "fracture",
+                        0.16129032258064516
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "break",
+                        0.17142857142857143
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "breakable",
+                        0.5714285714285714
+                    ],
+                    [
+                        "violable",
+                        0.14285714285714285
+                    ],
+                    [
+                        "offensive",
+                        0.14285714285714285
+                    ],
+                    [
+                        "violative",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "breakable",
+                        0.5714285714285714
+                    ],
+                    [
+                        "violable",
+                        0.14285714285714285
+                    ],
+                    [
+                        "offensive",
+                        0.14285714285714285
+                    ],
+                    [
+                        "violative",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "break"
+    },
+    "cancel": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cancel",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "cancellation",
+                        0.42857142857142855
+                    ],
+                    [
+                        "deletion",
+                        0.2857142857142857
+                    ],
+                    [
+                        "offset",
+                        0.14285714285714285
+                    ],
+                    [
+                        "cancel",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "cancel"
+    },
+    "caneled": {
+        "forms": [],
+        "term": "caneled"
+    },
+    "center": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "center",
+                        0.42857142857142855
+                    ],
+                    [
+                        "centre",
+                        0.14285714285714285
+                    ],
+                    [
+                        "summate",
+                        0.14285714285714285
+                    ],
+                    [
+                        "middle",
+                        0.14285714285714285
+                    ],
+                    [
+                        "snap",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "central",
+                        0.3076923076923077
+                    ],
+                    [
+                        "centrical",
+                        0.15384615384615385
+                    ],
+                    [
+                        "centric",
+                        0.15384615384615385
+                    ],
+                    [
+                        "center",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "central",
+                        0.3076923076923077
+                    ],
+                    [
+                        "centrical",
+                        0.15384615384615385
+                    ],
+                    [
+                        "centric",
+                        0.15384615384615385
+                    ],
+                    [
+                        "center",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        0.2727272727272727
+                    ],
+                    [
+                        "concentration",
+                        0.18181818181818182
+                    ],
+                    [
+                        "centering",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "center",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "center"
+    },
+    "child": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "child"
+    },
+    "class": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "classify",
+                        0.8
+                    ],
+                    [
+                        "categorize",
+                        0.1
+                    ],
+                    [
+                        "class",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "categoric",
+                        0.25
+                    ],
+                    [
+                        "categorial",
+                        0.25
+                    ],
+                    [
+                        "categorical",
+                        0.25
+                    ],
+                    [
+                        "classy",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "categoric",
+                        0.25
+                    ],
+                    [
+                        "categorial",
+                        0.25
+                    ],
+                    [
+                        "categorical",
+                        0.25
+                    ],
+                    [
+                        "classy",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "class",
+                        0.3125
+                    ],
+                    [
+                        "classification",
+                        0.1875
+                    ],
+                    [
+                        "sort",
+                        0.125
+                    ],
+                    [
+                        "sorter",
+                        0.125
+                    ],
+                    [
+                        "sorting",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "classificatory",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "classificatory",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "class"
+    },
+    "clear": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "clear",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "clear",
+                        0.6666666666666666
+                    ],
+                    [
+                        "open",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "clear",
+                        0.6666666666666666
+                    ],
+                    [
+                        "open",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "clearing",
+                        0.16129032258064516
+                    ],
+                    [
+                        "clear",
+                        0.12903225806451613
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "elucidative",
+                        0.25
+                    ],
+                    [
+                        "exculpatory",
+                        0.25
+                    ],
+                    [
+                        "exonerative",
+                        0.25
+                    ],
+                    [
+                        "solvent",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "elucidative",
+                        0.25
+                    ],
+                    [
+                        "exculpatory",
+                        0.25
+                    ],
+                    [
+                        "exonerative",
+                        0.25
+                    ],
+                    [
+                        "solvent",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "clearness",
+                        0.4230769230769231
+                    ],
+                    [
+                        "clarity",
+                        0.2692307692307692
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "perceive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "clearness",
+                        0.4230769230769231
+                    ],
+                    [
+                        "clarity",
+                        0.2692307692307692
+                    ]
+                ]
+            },
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "perceive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "clear"
+    },
+    "closed": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "closing",
+                        0.4
+                    ],
+                    [
+                        "closure",
+                        0.23333333333333334
+                    ],
+                    [
+                        "close",
+                        0.13333333333333333
+                    ],
+                    [
+                        "shutter",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "closed"
+    },
+    "closure": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "close",
+                        0.4583333333333333
+                    ],
+                    [
+                        "block",
+                        0.2916666666666667
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "closure",
+                        0.5
+                    ],
+                    [
+                        "cloture",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "closure"
+    },
+    "cluster": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "cluster",
+                        0.5
+                    ],
+                    [
+                        "bunch",
+                        0.25
+                    ],
+                    [
+                        "clump",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "bunchy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "bunchy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "clustering",
+                        0.16666666666666666
+                    ],
+                    [
+                        "bundle",
+                        0.16666666666666666
+                    ],
+                    [
+                        "constellation",
+                        0.16666666666666666
+                    ],
+                    [
+                        "cluster",
+                        0.16666666666666666
+                    ],
+                    [
+                        "clump",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "cluster"
+    },
+    "collapse": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "collapse",
+                        0.7142857142857143
+                    ],
+                    [
+                        "crash",
+                        0.14285714285714285
+                    ],
+                    [
+                        "flop",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "floppy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "floppy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "collapse",
+                        0.625
+                    ],
+                    [
+                        "breakdown",
+                        0.125
+                    ],
+                    [
+                        "cave_in",
+                        0.125
+                    ],
+                    [
+                        "crack-up",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "collapsible",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "collapsible",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "collapse"
+    },
+    "college": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "collegial",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "collegial",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "college"
+    },
+    "debris": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "dust",
+                        0.5
+                    ],
+                    [
+                        "junk",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "debris"
+    },
+    "declare": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "declaration",
+                        0.4
+                    ],
+                    [
+                        "announcer",
+                        0.2
+                    ],
+                    [
+                        "declarer",
+                        0.2
+                    ],
+                    [
+                        "announcement",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "declarative",
+                        0.5714285714285714
+                    ],
+                    [
+                        "declaratory",
+                        0.2857142857142857
+                    ],
+                    [
+                        "annunciatory",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "declarative",
+                        0.5714285714285714
+                    ],
+                    [
+                        "declaratory",
+                        0.2857142857142857
+                    ],
+                    [
+                        "annunciatory",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "declare"
+    },
+    "displace": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "movement",
+                        0.2
+                    ],
+                    [
+                        "mover",
+                        0.2
+                    ],
+                    [
+                        "move",
+                        0.1
+                    ],
+                    [
+                        "dismissal",
+                        0.1
+                    ],
+                    [
+                        "sacking",
+                        0.1
+                    ],
+                    [
+                        "sack",
+                        0.1
+                    ],
+                    [
+                        "firing",
+                        0.1
+                    ],
+                    [
+                        "dismission",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "movable",
+                        0.5
+                    ],
+                    [
+                        "dismissible",
+                        0.25
+                    ],
+                    [
+                        "moveable",
+                        0.25
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "movable",
+                        0.5
+                    ],
+                    [
+                        "dismissible",
+                        0.25
+                    ],
+                    [
+                        "moveable",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "displace"
+    },
+    "donate": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "donation",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "donate"
+    },
+    "donation": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "donate",
+                        0.5
+                    ],
+                    [
+                        "contribute",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "donation"
+    },
+    "emano": {
+        "forms": [],
+        "term": "emano"
+    },
+    "emergency": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "exigent",
+                        0.5
+                    ],
+                    [
+                        "emergent",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "exigent",
+                        0.5
+                    ],
+                    [
+                        "emergent",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "emergency"
+    },
+    "extend": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "extent",
+                        0.13636363636363635
+                    ],
+                    [
+                        "prolongation",
+                        0.13636363636363635
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "extendible",
+                        0.4166666666666667
+                    ],
+                    [
+                        "extensible",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "extendible",
+                        0.4166666666666667
+                    ],
+                    [
+                        "extensible",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "extend"
+    },
+    "families/friends": {
+        "forms": [],
+        "term": "families/friends"
+    },
+    "family": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "classify",
+                        0.4
+                    ],
+                    [
+                        "categorize",
+                        0.2
+                    ],
+                    [
+                        "class",
+                        0.2
+                    ],
+                    [
+                        "home",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "familial",
+                        0.3333333333333333
+                    ],
+                    [
+                        "categoric",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorial",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "kin",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "familial",
+                        0.3333333333333333
+                    ],
+                    [
+                        "categoric",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorial",
+                        0.16666666666666666
+                    ],
+                    [
+                        "categorical",
+                        0.16666666666666666
+                    ],
+                    [
+                        "kin",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "family"
+    },
+    "fertilizer": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "fertilize",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "fertilizer"
+    },
+    "flood": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "flood",
+                        0.42857142857142855
+                    ],
+                    [
+                        "inundate",
+                        0.21428571428571427
+                    ],
+                    [
+                        "deluge",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "torrential",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "flood",
+                        0.5
+                    ],
+                    [
+                        "inundation",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "flood"
+    },
+    "football": {
+        "forms": [],
+        "term": "football"
+    },
+    "friend": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "support",
+                        0.3333333333333333
+                    ],
+                    [
+                        "ally",
+                        0.16666666666666666
+                    ],
+                    [
+                        "champion",
+                        0.16666666666666666
+                    ],
+                    [
+                        "admire",
+                        0.16666666666666666
+                    ],
+                    [
+                        "boost",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "friendly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "friendly",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "friend"
+    },
+    "haul": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "haul",
+                        0.6666666666666666
+                    ],
+                    [
+                        "draw",
+                        0.16666666666666666
+                    ],
+                    [
+                        "catch",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "haul",
+                        0.18181818181818182
+                    ],
+                    [
+                        "dragger",
+                        0.18181818181818182
+                    ],
+                    [
+                        "hauling",
+                        0.18181818181818182
+                    ],
+                    [
+                        "haulage",
+                        0.18181818181818182
+                    ],
+                    [
+                        "hauler",
+                        0.18181818181818182
+                    ]
+                ]
+            }
+        ],
+        "term": "haul"
+    },
+    "haze": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "fog",
+                        0.3333333333333333
+                    ],
+                    [
+                        "haze",
+                        0.3333333333333333
+                    ],
+                    [
+                        "daze",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "hazy",
+                        0.6666666666666666
+                    ],
+                    [
+                        "foggy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "hazy",
+                        0.6666666666666666
+                    ],
+                    [
+                        "foggy",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "haze",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "haze"
+    },
+    "high": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "high",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "high",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "high",
+                        0.36363636363636365
+                    ],
+                    [
+                        "highness",
+                        0.2727272727272727
+                    ],
+                    [
+                        "game",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "high",
+                        0.36363636363636365
+                    ],
+                    [
+                        "highness",
+                        0.2727272727272727
+                    ],
+                    [
+                        "game",
+                        0.18181818181818182
+                    ]
+                ]
+            }
+        ],
+        "term": "high"
+    },
+    "hit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "hit",
+                        0.7692307692307693
+                    ],
+                    [
+                        "collide",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hit",
+                        0.16666666666666666
+                    ],
+                    [
+                        "hitting",
+                        0.16666666666666666
+                    ],
+                    [
+                        "strike",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "hit"
+    },
+    "hook": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "hook",
+                        0.75
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hook",
+                        0.32
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "addictive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "addictive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "hook"
+    },
+    "hungry": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hunger",
+                        0.3333333333333333
+                    ],
+                    [
+                        "hungriness",
+                        0.3333333333333333
+                    ],
+                    [
+                        "thirstiness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "thirst",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "hunger",
+                        0.3333333333333333
+                    ],
+                    [
+                        "hungriness",
+                        0.3333333333333333
+                    ],
+                    [
+                        "thirstiness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "thirst",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "hungry"
+    },
+    "injured": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "injury",
+                        0.2727272727272727
+                    ],
+                    [
+                        "spite",
+                        0.18181818181818182
+                    ],
+                    [
+                        "wound",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "offensive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "offensive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "injured"
+    },
+    "kid": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "banter",
+                        0.5
+                    ],
+                    [
+                        "jolly",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "kid"
+    },
+    "kids": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "childly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "banter",
+                        0.5
+                    ],
+                    [
+                        "jolly",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "kids"
+    },
+    "kill": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "kill",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "kill",
+                        0.3333333333333333
+                    ],
+                    [
+                        "killer",
+                        0.26666666666666666
+                    ],
+                    [
+                        "killing",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "killable",
+                        0.5
+                    ],
+                    [
+                        "obliterable",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "killable",
+                        0.5
+                    ],
+                    [
+                        "obliterable",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "kill"
+    },
+    "kit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "kit",
+                        0.6666666666666666
+                    ],
+                    [
+                        "outfit",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "kit",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "kit"
+    },
+    "lesson": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "exemplary",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "exemplary",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "lesson"
+    },
+    "list": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "list",
+                        0.6
+                    ],
+                    [
+                        "lean",
+                        0.2
+                    ],
+                    [
+                        "tilt",
+                        0.1
+                    ],
+                    [
+                        "incline",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "listing",
+                        0.3125
+                    ],
+                    [
+                        "list",
+                        0.25
+                    ],
+                    [
+                        "number",
+                        0.25
+                    ],
+                    [
+                        "lister",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "list"
+    },
+    "milk": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "milk",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "milky",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "milky",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "milk",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "milk"
+    },
+    "month": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "monthly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "monthly",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "month"
+    },
+    "movie": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "film",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "movie"
+    },
+    "national": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "subject",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "national",
+                        0.5
+                    ],
+                    [
+                        "subject",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "national",
+                        0.5
+                    ],
+                    [
+                        "subject",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "nationality",
+                        0.8571428571428571
+                    ],
+                    [
+                        "national",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "nationality",
+                        0.8571428571428571
+                    ],
+                    [
+                        "national",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "national"
+    },
+    "nov.": {
+        "forms": [],
+        "term": "nov."
+    },
+    "nursery": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "nurse",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "nursery"
+    },
+    "office": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "officiate",
+                        0.5454545454545454
+                    ],
+                    [
+                        "place",
+                        0.2727272727272727
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "official",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "official",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "office"
+    },
+    "pine": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "pining",
+                        0.25
+                    ],
+                    [
+                        "yearning",
+                        0.25
+                    ],
+                    [
+                        "yearner",
+                        0.25
+                    ],
+                    [
+                        "yen",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "pine"
+    },
+    "plant": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "plant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "plantal",
+                        0.5
+                    ],
+                    [
+                        "floral",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "plantal",
+                        0.5
+                    ],
+                    [
+                        "floral",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "implantation",
+                        0.1875
+                    ],
+                    [
+                        "planting",
+                        0.125
+                    ],
+                    [
+                        "plant",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "plant"
+    },
+    "private": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "privateness",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "privateness",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "private"
+    },
+    "public": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "publicity",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "publicity",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "public"
+    },
+    "rama": {
+        "forms": [],
+        "term": "rama"
+    },
+    "receive": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "receiver",
+                        0.2727272727272727
+                    ],
+                    [
+                        "reception",
+                        0.18181818181818182
+                    ],
+                    [
+                        "experience",
+                        0.18181818181818182
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "receptive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "receptive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "receive"
+    },
+    "reception": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "receive",
+                        0.6666666666666666
+                    ],
+                    [
+                        "receipt",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "reception"
+    },
+    "recover": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "recovery",
+                        0.3
+                    ],
+                    [
+                        "recoverer",
+                        0.1
+                    ],
+                    [
+                        "regaining",
+                        0.1
+                    ],
+                    [
+                        "convalescent",
+                        0.1
+                    ],
+                    [
+                        "recuperation",
+                        0.1
+                    ],
+                    [
+                        "convalescence",
+                        0.1
+                    ],
+                    [
+                        "reclamation",
+                        0.1
+                    ],
+                    [
+                        "retrieval",
+                        0.1
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "recuperative",
+                        0.5
+                    ],
+                    [
+                        "convalescent",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "recuperative",
+                        0.5
+                    ],
+                    [
+                        "convalescent",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "recover"
+    },
+    "relief": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "ease",
+                        0.2631578947368421
+                    ],
+                    [
+                        "substitute",
+                        0.10526315789473684
+                    ],
+                    [
+                        "alleviate",
+                        0.10526315789473684
+                    ],
+                    [
+                        "rest",
+                        0.10526315789473684
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "substitute",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "substitute",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "relief"
+    },
+    "rescue": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "deliver",
+                        0.6666666666666666
+                    ],
+                    [
+                        "rescue",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "deliverer",
+                        0.2
+                    ],
+                    [
+                        "delivery",
+                        0.2
+                    ],
+                    [
+                        "rescue",
+                        0.2
+                    ],
+                    [
+                        "rescuer",
+                        0.2
+                    ],
+                    [
+                        "deliverance",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "rescue"
+    },
+    "resume": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "resume",
+                        0.3333333333333333
+                    ],
+                    [
+                        "sketch",
+                        0.3333333333333333
+                    ],
+                    [
+                        "survey",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "sketchy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "sketchy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "summary",
+                        0.3333333333333333
+                    ],
+                    [
+                        "resume",
+                        0.16666666666666666
+                    ],
+                    [
+                        "summarization",
+                        0.16666666666666666
+                    ],
+                    [
+                        "summarisation",
+                        0.16666666666666666
+                    ],
+                    [
+                        "resumption",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "resume"
+    },
+    "return": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "return",
+                        0.45
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "recurrent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "recurrent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "return",
+                        0.3333333333333333
+                    ],
+                    [
+                        "yield",
+                        0.14814814814814814
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "reversive",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "reversive",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "return"
+    },
+    "sandy": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "sand",
+                        0.5
+                    ],
+                    [
+                        "sandiness",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "sand",
+                        0.5
+                    ],
+                    [
+                        "sandiness",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "sandy"
+    },
+    "school": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "school",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "scholastic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "scholastic",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "school",
+                        0.5454545454545454
+                    ]
+                ]
+            }
+        ],
+        "term": "school"
+    },
+    "search": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "search",
+                        0.6666666666666666
+                    ],
+                    [
+                        "hunt",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "searcher",
+                        0.4375
+                    ],
+                    [
+                        "search",
+                        0.25
+                    ],
+                    [
+                        "research",
+                        0.125
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "explorative",
+                        0.5
+                    ],
+                    [
+                        "exploratory",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "explorative",
+                        0.5
+                    ],
+                    [
+                        "exploratory",
+                        0.5
+                    ]
+                ]
+            }
+        ],
+        "term": "search"
+    },
+    "sem": {
+        "forms": [],
+        "term": "sem"
+    },
+    "shelter": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "shelter",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "shelter",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "shelter"
+    },
+    "start": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "start",
+                        0.7878787878787878
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "jumpy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "jumpy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "start",
+                        0.4807692307692308
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "initiative",
+                        0.2
+                    ],
+                    [
+                        "originative",
+                        0.2
+                    ],
+                    [
+                        "protrusive",
+                        0.2
+                    ],
+                    [
+                        "protrusible",
+                        0.2
+                    ],
+                    [
+                        "initiatory",
+                        0.2
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "initiative",
+                        0.2
+                    ],
+                    [
+                        "originative",
+                        0.2
+                    ],
+                    [
+                        "protrusive",
+                        0.2
+                    ],
+                    [
+                        "protrusible",
+                        0.2
+                    ],
+                    [
+                        "initiatory",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "start"
+    },
+    "strong": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "potency",
+                        0.3333333333333333
+                    ],
+                    [
+                        "secureness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "solidness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "substantialness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "impregnability",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "potency",
+                        0.3333333333333333
+                    ],
+                    [
+                        "secureness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "solidness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "substantialness",
+                        0.16666666666666666
+                    ],
+                    [
+                        "impregnability",
+                        0.16666666666666666
+                    ]
+                ]
+            }
+        ],
+        "term": "strong"
+    },
+    "student": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "educate",
+                        0.5
+                    ],
+                    [
+                        "study",
+                        0.5
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "scholarly",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "scholarly",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "student"
+    },
+    "suspend": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "suspension",
+                        0.7
+                    ],
+                    [
+                        "freeze",
+                        0.1
+                    ],
+                    [
+                        "suspender",
+                        0.1
+                    ],
+                    [
+                        "debarment",
+                        0.1
+                    ]
+                ]
+            }
+        ],
+        "term": "suspend"
+    },
+    "suspension": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "suspend",
+                        0.5384615384615384
+                    ],
+                    [
+                        "pause",
+                        0.15384615384615385
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "abeyant",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "abeyant",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "suspension"
+    },
+    "teacher": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "teach",
+                        0.8
+                    ],
+                    [
+                        "instruct",
+                        0.2
+                    ]
+                ]
+            }
+        ],
+        "term": "teacher"
+    },
+    "team": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "team",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "team",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "team"
+    },
+    "tent": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "tent",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "camp",
+                        0.2222222222222222
+                    ],
+                    [
+                        "bivouac",
+                        0.2222222222222222
+                    ],
+                    [
+                        "tenting",
+                        0.1111111111111111
+                    ],
+                    [
+                        "tent",
+                        0.1111111111111111
+                    ],
+                    [
+                        "camper",
+                        0.1111111111111111
+                    ],
+                    [
+                        "camping",
+                        0.1111111111111111
+                    ],
+                    [
+                        "encampment",
+                        0.1111111111111111
+                    ]
+                ]
+            }
+        ],
+        "term": "tent"
+    },
+    "tomorrow": {
+        "forms": [],
+        "term": "tomorrow"
+    },
+    "tragedy": {
+        "forms": [
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "tragic",
+                        0.2857142857142857
+                    ],
+                    [
+                        "cataclysmal",
+                        0.14285714285714285
+                    ],
+                    [
+                        "calamitous",
+                        0.14285714285714285
+                    ],
+                    [
+                        "tragical",
+                        0.14285714285714285
+                    ],
+                    [
+                        "cataclysmic",
+                        0.14285714285714285
+                    ],
+                    [
+                        "disastrous",
+                        0.14285714285714285
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "tragic",
+                        0.2857142857142857
+                    ],
+                    [
+                        "cataclysmal",
+                        0.14285714285714285
+                    ],
+                    [
+                        "calamitous",
+                        0.14285714285714285
+                    ],
+                    [
+                        "tragical",
+                        0.14285714285714285
+                    ],
+                    [
+                        "cataclysmic",
+                        0.14285714285714285
+                    ],
+                    [
+                        "disastrous",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "tragedy"
+    },
+    "trauma": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "hurt",
+                        0.3333333333333333
+                    ],
+                    [
+                        "traumatize",
+                        0.3333333333333333
+                    ],
+                    [
+                        "traumatise",
+                        0.16666666666666666
+                    ],
+                    [
+                        "injure",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "traumatic",
+                        0.6666666666666666
+                    ],
+                    [
+                        "injurious",
+                        0.3333333333333333
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "traumatic",
+                        0.6666666666666666
+                    ],
+                    [
+                        "injurious",
+                        0.3333333333333333
+                    ]
+                ]
+            }
+        ],
+        "term": "trauma"
+    },
+    "truck": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "truck",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "truckage",
+                        0.25
+                    ],
+                    [
+                        "truck",
+                        0.25
+                    ],
+                    [
+                        "trucking",
+                        0.25
+                    ],
+                    [
+                        "trucker",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "truck"
+    },
+    "typhoon": {
+        "forms": [],
+        "term": "typhoon"
+    },
+    "unit": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "unitize",
+                        0.7857142857142857
+                    ],
+                    [
+                        "unify",
+                        0.21428571428571427
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "whole",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "whole",
+                        1.0
+                    ]
+                ]
+            }
+        ],
+        "term": "unit"
+    },
+    "updated": {
+        "forms": [
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "updating",
+                        0.75
+                    ],
+                    [
+                        "update",
+                        0.25
+                    ]
+                ]
+            }
+        ],
+        "term": "updated"
+    },
+    "victim": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "victimize",
+                        0.5
+                    ],
+                    [
+                        "victimise",
+                        0.375
+                    ],
+                    [
+                        "dupe",
+                        0.125
+                    ]
+                ]
+            }
+        ],
+        "term": "victim"
+    },
+    "victim's": {
+        "forms": [],
+        "term": "victim's"
+    },
+    "w/": {
+        "forms": [],
+        "term": "w/"
+    },
+    "wind": {
+        "forms": [
+            {
+                "pos": "v",
+                "terms": [
+                    [
+                        "fart",
+                        0.3333333333333333
+                    ],
+                    [
+                        "tip",
+                        0.16666666666666666
+                    ],
+                    [
+                        "steer",
+                        0.16666666666666666
+                    ],
+                    [
+                        "hint",
+                        0.16666666666666666
+                    ],
+                    [
+                        "wind",
+                        0.16666666666666666
+                    ]
+                ]
+            },
+            {
+                "pos": "a",
+                "terms": [
+                    [
+                        "windy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "s",
+                "terms": [
+                    [
+                        "windy",
+                        1.0
+                    ]
+                ]
+            },
+            {
+                "pos": "n",
+                "terms": [
+                    [
+                        "winder",
+                        0.19047619047619047
+                    ],
+                    [
+                        "lift",
+                        0.14285714285714285
+                    ]
+                ]
+            }
+        ],
+        "term": "wind"
+    }
+}

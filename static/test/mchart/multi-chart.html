@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="lib/d3.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="../../lib/xDate.js"></script>
+    <script src="lib/bootstrap.js"></script>
+    <script src="lib/chart.js"></script>
+    <style>
+      body {
+        font: sans-serif;
+        color: #121401;
+      }
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #121401;
+        stroke-width: 2px;
+        shape-rendering: crispEdges;
+      }
+      .point {
+        stroke: grey;
+        stroke-width: 1px;
+        opacity: 0;
+      }
+      .point:hover{
+        opacity: .5;
+      }
+    </style>
+  </head>
+  <body>
+
+
+    <div id="timeseries" style="left:50px;top:50px;width:1000px;height:600px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;">
+      <h4 align="center">Time series</h4>
+      
+      <div align="center">
+        <div align="center" class="btn-group" data-toggle="buttons">
+        <label class="btn btn-default btn-xs" id="sbar">
+          <input type="radio" name="options"> Bar
+        </label>
+        <label class="btn btn-default active btn-xs" id="line">
+          <input type="radio" name="options"> Line
+        </label>
+        <label class="btn btn-default btn-xs" id="area">
+          <input type="radio" name="options"> Area
+        </label>
+        <label class="btn btn-default btn-xs" id="strm">
+          <input type="radio" name="options"> Stream
+        </label>
+      </div>
+
+      </div>
+      <div id="chart" style="border:2px solid #999;"></div>
+    </div>
+    
+    <script>
+
+        var time_series = new Time_series_chart();
+        var date = new XDate();
+        var data = [];
+
+        for(var i=0;i<800; i++)
+          data.push({});
+
+        data.forEach(function(d){
+          d.datetime = date.toString('yyyy');
+          date.addYears(1);
+          d.T01 = Math.floor(Math.random()*1000);
+          d.T02 = Math.floor(Math.random()*1000);
+        });
+
+        time_series.draw_lineChart(data);
+
+        $( ".btn" ).click(function() {
+          if (this.id == 'sbar') {
+            time_series.draw_stackBarChart($.extend(true, [], data));
+          } else if (this.id == 'line') {
+            time_series.draw_lineChart(data);
+          } else if (this.id == 'area') {
+            time_series.draw_stackChart(data, 'zero');
+          } else {
+            time_series.draw_stackChart(data, 'wiggle');
+          }
+        });
+
+    </script>
+
+  
+  </body>
+</html>
