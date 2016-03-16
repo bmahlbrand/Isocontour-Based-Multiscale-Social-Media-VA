@@ -193,26 +193,22 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	$scope.init();
 
 	//flag: true, zoom, false, pan or other interaction;
-	$scope.refresh_map = function(flag) {
+	$scope.refresh_map = function() {
 	
 		if (typeof $rootScope.mapView == 'undefined')
 			return;
 		
 		var first_lense = $scope.get_first_lense();
 
-		if( first_lense != null)
-			first_lense.update_geo_bbox();
-
-
-		$rootScope.mapView.render_heatmap();
-		$rootScope.mapView.render_dots();
+		// $rootScope.mapView.render_heatmap();
+		// $rootScope.mapView.render_dots();
 		
-		var clusters = $rootScope.mapView.tweetsHeatmapManager.get_clusters();
-		TweetsDataManager.instance().set_geo_clusters(clusters);
+		// var clusters = $rootScope.mapView.tweetsHeatmapManager.get_clusters();
+		//TweetsDataManager.instance().set_geo_clusters(clusters);
 
 		// var cluster_dist = TweetsDataManager.instance().get_geo_cluster_dist();
 		// $('[ng-controller="histogram_controller"]').scope().update_histogram(cluster_dist);
-		Canvas_manager.instance().update(flag);
+		Canvas_manager.instance().update();
 	
 	};
 

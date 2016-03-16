@@ -137,22 +137,11 @@ OlMapView.prototype.init = function(div) {
 	*/
 	this.map.addControl(new OpenLayers.Control.LayerSwitcher());
 
-	this.map.events.register("moveend", copyThis.map,  function(e) {
+	this.map.events.register("moveend", copyThis.map, function(e) {
 		
 		Canvas_manager.instance().mapHelper.config(copyThis.map.getCenter(), e.object.zoom+1);
 
-		if(e.object.zoom > OlMapView.zoomLevel){
-			//zoom in;
-			$('[ng-controller="map_controller"]').scope().refresh_map(OlMapView.INTERACTION.ZOOM_IN);
-		}else if(e.object.zoom < OlMapView.zoomLevel){
-			//zoom out
-			$('[ng-controller="map_controller"]').scope().refresh_map(OlMapView.INTERACTION.ZOOM_OUT);
-		}else{
-			//pan
-			$('[ng-controller="map_controller"]').scope().refresh_map(OlMapView.INTERACTION.PAN);
-		}
-
-		OlMapView.zoomLevel = e.object.zoom;
+		$('[ng-controller="map_controller"]').scope().refresh_map();
 
 	});
 

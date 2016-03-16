@@ -191,12 +191,13 @@
     	if (person != null){
         	default_case = parseInt(person);
 
-			var r = confirm("Press OK to load real-time mode, and Cancel to load historical mode");
-	    	if (r == true) {
-	        	setTimeout(function(){ enable_realtime(); }, 3000);
-	    	} else {
-	        	setTimeout(function(){ enable_his(); }, 3000);
-	    	}
+			// var r = confirm("Press OK to load real-time mode, and Cancel to load historical mode");
+	  //   	if (r == true) {
+	  //       	setTimeout(function(){ enable_realtime(); }, 3000);
+	  //   	} else {
+	  //       	setTimeout(function(){ enable_his(); }, 3000);
+	  //   	}
+	  		setTimeout(function(){ enable_his(); }, 3000);
 	    }
 
 		function enable_his() {
@@ -363,7 +364,7 @@
 
 	<!-- </div> -->
 
-	<div id="EM_Tree_container" style="left:50px;top:420px;width:660px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
+	<div id="EM_Tree_container" style="display:none;left:50px;top:420px;width:660px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
 	
 	<h4 align="center" style="cursor: pointer">EMTerms Tree</h4>
 
@@ -373,7 +374,7 @@
 		</div>
 	</div>
 
-	<div id="table_container" style="left:680px;top:420px;width:400px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
+	<div id="table_container" style="display:none;left:680px;top:420px;width:400px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">
 	
 	<h4 align="center" style="cursor: pointer">Message Table</h4>
 
@@ -401,11 +402,11 @@
 	</div>
 	<!--<div id="EM_Tree" style="left:50px;top:400px;width:700px;height:420px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;" ng-controller="EMTree_controller"></div>-->
 
-	<div id="mapView" ng-controller="map_controller" style="height:100%;width:100%;"></div>
-	<div id="mapViewHelper" style="height:200%;width:200%;position:absolute;display:none;"></div>
+	<div id="mapView" ng-controller="map_controller" style="height:1024px;width:1024px;"></div>
+	<div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div>
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
-	<div id="controlpanel" style="left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;" ng-controller="panel_controller" >
+	<div id="controlpanel" style="display:none;left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;" ng-controller="panel_controller" >
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
 			
@@ -446,12 +447,9 @@
 
     		<span align="center">Glyph Size</span>
     			<button onclick="increaseSize()">Increase</button><button onclick="decreaseSize()">Decrease</button>
-
-
 	</div>
 
-
-	<div id="timeseries" style="left:250px;top:50px;width:830px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999; font-size:12px;">
+	<div id="timeseries" style="display:none;left:250px;top:50px;width:830px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999; font-size:12px;">
       <h4 align="center" style="cursor: pointer">Time Series Chart</h4>
       
 <!--       <div align="center">
@@ -472,7 +470,7 @@
 	  </div> -->
 
 
-      <div id="ts_container" class="noSupportDrag" style="width:800px;height:300px;" ng-controller="ts_controller">
+      <div id="ts_container" class="noSupportDrag" style="display:none;width:800px;height:300px;" ng-controller="ts_controller">
       	<!--onmouseover="$('#ts_container').css('overflow-y', 'scroll');" onmouseout="$('#ts_container').css('overflow-y', 'hidden');-->
       <!-- <div id="timeseries_chart" ng-controller="ts_controller" style="border:2px solid #999;"></div> -->
   		</div>
