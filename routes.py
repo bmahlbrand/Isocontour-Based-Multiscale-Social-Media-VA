@@ -299,21 +299,6 @@ def query():
         fname = 'keene.json'
         
     with open(fname) as data_file:
-        
-#         cate = ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08']
-#         cate = ['T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08', 'T09', 'T10', 'T11']
-#         db = json.load(data_file)
-#         for c in cate:
-#             fil_db = [ tweet for tweet in db['tweets'] if c in tweet['cate'] ]
-#             fil_db = sorted(fil_db, key=lambda k: k['created_at'])
-#             
-#             f = csv.writer(open(c+".csv", "w", encoding="utf8"))
-# 
-#             # Write CSV Header, If you dont need that, remove this line
-#             f.writerow(["created_at", "text"])
-#             
-#             for x in fil_db:
-#                 f.writerow([x['created_at'], x['text']])
         rst = json.load(data_file)
         rst_new = []
         

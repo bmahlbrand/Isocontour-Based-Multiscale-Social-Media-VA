@@ -186,10 +186,10 @@
 		// $(function() {
 		// 	$("#timeseries").draggable();
 		// });
-		var person = prompt("Please enter a number, 0 for purdue shooting, 1 for boston bombing, 2 for hurricane sandy", "1");
+		//var person = prompt("Please enter a number, 0 for purdue shooting, 1 for boston bombing, 2 for hurricane sandy", "1");
     
-    	if (person != null){
-        	default_case = parseInt(person);
+    	//if (person != null){
+        	//default_case = parseInt(person);
 
 			// var r = confirm("Press OK to load real-time mode, and Cancel to load historical mode");
 	  //   	if (r == true) {
@@ -197,15 +197,16 @@
 	  //   	} else {
 	  //       	setTimeout(function(){ enable_his(); }, 3000);
 	  //   	}
-	  		setTimeout(function(){ enable_his(); }, 3000);
-	    }
+	  default_case = 1;
+	  setTimeout(function(){ enable_his(); }, 3000);
+	    //}
 
 		function enable_his() {
 			var data = case_study[default_case];
 			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
 			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
-			$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
-			$('[ng-controller="map_controller"]').scope().refresh_map(false);
+			//$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
+			$('[ng-controller="map_controller"]').scope().refresh_map();
 		}
 
 		function enable_realtime(){
@@ -398,12 +399,11 @@
 			</div>
 		</div>
 
-
 	</div>
 	<!--<div id="EM_Tree" style="left:50px;top:400px;width:700px;height:420px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;" ng-controller="EMTree_controller"></div>-->
 
 	<div id="mapView" ng-controller="map_controller" style="height:1024px;width:1024px;"></div>
-	<div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div>
+	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
 	<div id="controlpanel" style="display:none;left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;" ng-controller="panel_controller" >

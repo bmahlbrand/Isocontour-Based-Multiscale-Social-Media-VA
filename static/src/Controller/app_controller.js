@@ -178,9 +178,11 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		$rootScope.mapView =  new OlMapView();
 		$rootScope.mapView.init(document.getElementById("mapView"));
 		
-		//initialize map helper;
-		$rootScope.mapViewHelper = new OlMapViewHelper();
-		$rootScope.mapViewHelper.config($rootScope.mapView.getMap().getCenter(), $rootScope.mapView.getMap().getZoom()+1);
+		//generate multiple scale coordinates;
+		// $rootScope.mapViewHelper = new OlMapViewHelper($rootScope.mapView.getMap().getCenter(), $rootScope.mapView.getMap().getZoom());
+		// $rootScope.mapViewHelper.initData();
+		// $rootScope.mapViewHelper.genMultiScaleCoords();
+
 
 		//initialize polygon selection:
 		$rootScope.polygon_layer = new PolygonLayerManager($rootScope.mapView.getMap());

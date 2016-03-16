@@ -138,8 +138,6 @@ OlMapView.prototype.init = function(div) {
 	this.map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 	this.map.events.register("moveend", copyThis.map, function(e) {
-		
-		Canvas_manager.instance().mapHelper.config(copyThis.map.getCenter(), e.object.zoom+1);
 
 		$('[ng-controller="map_controller"]').scope().refresh_map();
 
