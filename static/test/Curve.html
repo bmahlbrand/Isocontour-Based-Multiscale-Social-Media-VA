@@ -50,7 +50,20 @@ circle {
 var width = 1200,
     height = 1000;
 
-var points = [[1094,471],[1089,505],[1060,555],[999,580],[976,608],[907,640],[898,659],[877,674],[806,667],[785,658],[767,622],[759,577],[757,550],[776,547],[791,552],[813,548],[822,541],[841,535],[855,536],[879,531],[898,537],[919,518],[935,513],[954,437],[947,429],[968,442],[1043,429],[1060,408]];
+var points = [[1000,300],[400,700],[500,700],[1000,400]];
+
+var mid_x = 0.25 * (points[0][0]+points[1][0]+points[2][0]+points[3][0]);
+var mid_y = 0.25 * (points[0][1]+points[1][1]+points[2][1]+points[3][1]);
+
+var points_new = [];
+points.forEach(function(point){
+
+  var x = ( point[0] - mid_x) * 0.5 + mid_x;
+  var y = ( point[1] - mid_y) * 0.5 + mid_y;
+  points_new.push([x,y])
+});
+
+points = points_new;
 
 var dragged = null,
     selected = points[0];

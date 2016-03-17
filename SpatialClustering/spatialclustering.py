@@ -27,16 +27,20 @@ class SpatialClustering:
             print('fatal error')
             raise
 
-        mapping = []
-        for i in range(len(labels)):
-            mapping.append([ids[i], labels[i].item()])
-
         # Number of clusters in labels, ignoring noise if present.
-        n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+        numClusters = len(set(labels)) - (1 if -1 in labels else 0)
 
-        print('# of clusters:', n_clusters_)
+        print('# of clusters:', numClusters)
 
-        return mapping
+        clusters = []
+        for i in range(numClusters):
+            clusters.append([])
+
+        for i in range(len(labels)):
+            if labels[i].item() > -1:
+                clusters[labels[i].item()].append(ids[i])
+
+        return clusters
 
 # # Plot result
 # import matplotlib.pyplot as plt
@@ -75,6 +79,11 @@ class SpatialClustering:
 # local_max = X.max()
 # local_min = X.min()
 
+def contains(s,l):
+    s = set(s)
+    l = set(l)
+    return s.issubset(l)
+
 if __name__ == '__main__':
 
     sc = SpatialClustering()
@@ -83,18 +92,69 @@ if __name__ == '__main__':
     with open('multiscale.json') as data_file:
         rst = json.load(data_file)
 
-        for i in range(len(rst)):
-            level = rst[i]
+    for i in range(len(rst)):
+        level = rst[i]
 
-            data = []
-            ids = []
-            for pt in level['pts']:
-                data.append([pt[1], pt[2]])
-                ids.append(pt[0])
+        print('processing level', level['zoom'])
+        data = []
+        ids = []
+        for pt in level['pts']:
+            data.append([pt[1], pt[2]])
+            ids.append(pt[0])
 
-            data = np.array(data)
-            cluster = sc.cluster(data, ids)
-            output.append({'zoom': level['zoom'], 'cluster': cluster})
+        data = np.array(data)
+        clusters = sc.cluster(data, ids)
 
-    with open('cluster.json', 'w') as outfile:
-        json.dump(output, outfile)
+        for i, cluster in enumerate(clusters):
+            c = {}
+            c['zoom'] = level['zoom']
+            c['ids'] = list(set(cluster))
+            c['clusterId'] = str(level['zoom']) + "_" + str(i)
+            clusters[i] = c
+
+        output = output + clusters
+        # output.append({'zoom': level['zoom'], 'cluster': cluster, 'idSet': list(set(ids))})
+
+    # list of clusters;
+    with open('cluster_list.json', 'w') as outfile:
+        json.dump(output, outfile, indent=True)
+
+    # furthermore, generate the tree structure (dendrogram) for clusters
+
+    # add children field in each node;
+    root = {'children': []}
+    for i, cluster in enumerate(output):
+        cluster['children'] = []
+        output[i] = cluster
+
+    zooms = [level['zoom'] for level in rst]
+    zooms.sort()
+
+    for zoom in zooms:
+        # loop each zoom level, from the abstract(higher) to detailed(lower) level
+        currClusters = [cluster for cluster in output if cluster['zoom'] == zoom]
+        preClusters = [cluster for cluster in output if cluster['zoom'] == zoom-1]
+
+        if zoom == min(zooms):
+            root['children'] = root['children'] + [c['clusterId'] for c in currClusters]
+        else:
+            # for each cluster, find its parent cluster
+            for currCluster in currClusters:
+                ids = currCluster['ids']
+                clusterId = currCluster['clusterId']
+
+                target = []
+                # nested loop for previous level clusters
+                for preCluster in preClusters:
+                    preIds = preCluster['ids']
+                    if contains(ids, preIds):
+                        target.append(preCluster)
+
+                if len(target) == 1:
+                    target[0]['children'].append(clusterId)
+                else:
+                    print('fatal error')
+
+    # cluster tree;
+    with open('cluster_tree.json', 'w') as outfile:
+        json.dump(output, outfile, indent=True)

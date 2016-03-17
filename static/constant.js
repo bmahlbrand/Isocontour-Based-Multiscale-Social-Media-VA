@@ -27,7 +27,9 @@ var case_study = [
 					start_time: "2013-04-15T15:00:00Z",
 					end_time: "2013-04-16T16:00:00Z",
 					zoom: 12,
-					time_offset:4
+					time_offset:4,
+					startLevel:-2,
+					endLevel:2
 				},
 				//hurricane sandy;
 				{

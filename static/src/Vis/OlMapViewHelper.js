@@ -54,8 +54,8 @@ OlMapViewHelper.prototype.getMap = function(){
 	return this.map;
 };
 
-OlMapViewHelper.startLevel = -2;
-OlMapViewHelper.endLevel = 2;
+OlMapViewHelper.startLevel = case_study[default_case].startLevel;
+OlMapViewHelper.endLevel = case_study[default_case].endLevel;
 
 OlMapViewHelper.fromProjection = new OpenLayers.Projection("EPSG:4326");
 OlMapViewHelper.toProjection   = new OpenLayers.Projection("EPSG:900913");

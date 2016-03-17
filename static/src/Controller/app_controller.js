@@ -178,11 +178,15 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		$rootScope.mapView =  new OlMapView();
 		$rootScope.mapView.init(document.getElementById("mapView"));
 		
-		//generate multiple scale coordinates;
+		/************************************************************************************/
+		/*************generate multiple scale coordinates************************************/
+		/********after generating the file, the server side will perform clustering**********/
+		/************************************************************************************/
+
 		// $rootScope.mapViewHelper = new OlMapViewHelper($rootScope.mapView.getMap().getCenter(), $rootScope.mapView.getMap().getZoom());
 		// $rootScope.mapViewHelper.initData();
 		// $rootScope.mapViewHelper.genMultiScaleCoords();
-
+		/************************************************************************************/
 
 		//initialize polygon selection:
 		$rootScope.polygon_layer = new PolygonLayerManager($rootScope.mapView.getMap());

@@ -350,6 +350,25 @@ def index():
 def index():
     return static_file('Static/map_test/map_d3_test.html', '')
 
+##########################################################################################
+# cluster functions
+
+@app.route('/getCluster', method="GET")
+def query():
+
+    with open('cluster_tree.json') as data_file:
+        rst = json.load(data_file)
+
+    return json.dumps(rst)
+
+
+
+
+
+
+
+#########################################################################################
+
 
 if __name__ == '__main__':
     wg_manager = WordGraphManager.WordGraphManager(search)

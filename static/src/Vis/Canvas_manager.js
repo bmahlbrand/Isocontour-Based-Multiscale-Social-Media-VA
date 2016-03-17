@@ -61,16 +61,9 @@ Canvas_manager.prototype.get_map = function(){
 	return this.map;
 };
 
-Canvas_manager.prototype.geo_p_to_pixel_p = function(vec, zoomLevel){
+Canvas_manager.prototype.geo_p_to_pixel_p = function(vec){
 
-	var map;
-	if( typeof(zoomLevel) === 'undefined' || zoomLevel == null ){
-		map = this.map;
-	}
-	else{
-		map = this.getMapHelper(zoomLevel);
-	}
-
+	var map = this.map
 	var pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(vec.x, vec.y).transform("EPSG:4326", "EPSG:900913"));
     var rst = new Vector2();
     rst.set(pixel.x, pixel.y);
@@ -81,15 +74,9 @@ Canvas_manager.prototype.getMapHelper = function(zoomLevel){
 	return this.mapHelper.getMap();
 };
 
-Canvas_manager.prototype.pixel_p_to_geo_p = function(vec, zoomLevel){
+Canvas_manager.prototype.pixel_p_to_geo_p = function(vec){
 
-	var map;
-	if( typeof(zoomLevel) === 'undefined' || zoomLevel == null ){
-		map = this.map;
-	}
-	else{
-		map = this.getMapHelper(zoomLevel);
-	}
+	var map = this.map;
 
     var lonlat = map.getLonLatFromPixel(vec);
 	var lonlatTransf = lonlat.transform("EPSG:900913", "EPSG:4326");

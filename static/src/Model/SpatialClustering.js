@@ -1,13 +1,8 @@
 SpatialClustering = function(p_rst, ids, g_rst, convertToCurrMap){
 	
 	var dbscan = new DBSCAN();
-
-	var cluster;
-	// if(Canvas_manager.instance().map.getZoom() <= 16)
-		cluster = dbscan.run(p_rst, 20, 2);
-	// else
-	// 	cluster = dbscan.run(p_rst, 14, 2);
-
+	var cluster = dbscan.run(p_rst, 15, 3);
+	
 	var rst = [];
 	var sizes = [];
 
@@ -20,7 +15,6 @@ SpatialClustering = function(p_rst, ids, g_rst, convertToCurrMap){
 		var pixels_for_poly = [];
 
 		//average of pixel coordinates;
-		var g_avg = [0,0];
 		var p_avg = [0,0];
 
 		ele.forEach(function(e){
@@ -41,76 +35,61 @@ SpatialClustering = function(p_rst, ids, g_rst, convertToCurrMap){
 
 			pixels_for_poly.push([ p_rst[e][0], p_rst[e][1] ]);
 
-			g_avg = [ g_avg[0] + g_rst[e][0], g_avg[1] + g_rst[e][1] ];
-			p_avg = [ p_avg[0] + p_rst[e][0], p_avg[1] + p_rst[e][1] ];
+			p_avg = [ p_avg[0] + pts[0], p_avg[1] + pts[1] ];
 
 		});
 
-		g_avg = [ g_avg[0] / ele.length, g_avg[1] / ele.length ];
 		p_avg = [ p_avg[0] / ele.length, p_avg[1] / ele.length ];
 
 		var geo_bbox = SpatialClustering.getBBox(geos);
 		var pixel_bbox = SpatialClustering.getBBox(pixels);
 
-		rst.push({
-			geo_bbox: geo_bbox,
-			pixel_bbox: pixel_bbox,
-			ids: _ids,
-			geo_pts: geos,
-			pix_pts: pixels,
-			size: ele.length,
-			g_center: [ g_avg[0], g_avg[1] ],
-			p_center: [ p_avg[0], p_avg[1] ],
-			g_poly:null
-		});
+		var poly = SpatialClustering.getPoly(pixels_for_poly);
 
+		//when detecting the poly, we still want to do it based on the original map(next scale).
+		//then we get the pixel position of the point in the current map scale(current scale);
+		if(convertToCurrMap)
+			poly = SpatialClustering.convertPolyBetweenScale(poly, 1);
+		else{
+			poly = poly;
+		}
 
-		// var poly = SpatialClustering.getPoly(pixels_for_poly);
+		poly = SpatialClustering.smoothPoly(poly);
 
-		// //when detecting the poly, we still want to do it based on the original map(next scale).
-		// //then we get the pixel position of the point in the current map scale(current scale);
-		// if(convertToCurrMap)
-		// 	poly = SpatialClustering.convertPolyBetweenScale(poly, 1);
-		// else{
-		// 	poly = poly;
-		// }
-
-		// poly = SpatialClustering.smoothPoly(poly);
-
-		// if(poly.length > 2){
+		if(poly.length > 2){
 			
-		// 	rst.push({
-		// 		geo_bbox: geo_bbox,
-		// 		pixel_bbox: pixel_bbox,
-		// 		ids: _ids,
-		// 		geo_pts: geos,
-		// 		pix_pts: pixels,
-		// 		size: ele.length,
-		// 		poly: poly,
-		// 		center: [ p_avg[0], p_avg[1] ],
-		// 		child: convertToCurrMap?true:false
-		// 	});
-		// }
-		// else{
+			rst.push({
+				geo_bbox: geo_bbox,
+				pixel_bbox: pixel_bbox,
+				ids: _ids,
+				geo_pts: geos,
+				pix_pts: pixels,
+				size: ele.length,
+				poly: poly,
+				center: [ p_avg[0], p_avg[1] ],
+				child: convertToCurrMap?true:false
+			});
+		}
+		else{
 
-		// 	if(!convertToCurrMap){
+			if(!convertToCurrMap){
 
-		// 	//here we deal with clusters that have cover tiny region, usually a set of points of the same location.
-		// 	//since we cannot generate poly for this case. We manually draw a circle of fixed size to represent the region.
-		// 	//Note that for this case, we do not deal with multi-scale, since even at different scale, they still have no valid poly.
-		// 		rst.push({
-		// 			geo_bbox: geo_bbox,
-		// 			pixel_bbox: pixel_bbox,
-		// 			ids: _ids,
-		// 			geo_pts: geos,
-		// 			pix_pts: pixels,
-		// 			size: ele.length,
-		// 			poly: SpatialClustering.forceGeneratePoly([p_avg[0], p_avg[1]]),
-		// 			center: [ p_avg[0], p_avg[1] ],
-		// 			child: convertToCurrMap?true:false
-		// 		});
-		// 	}
-		// }
+			//here we deal with clusters that have cover tiny region, usually a set of points of the same location.
+			//since we cannot generate poly for this case. We manually draw a circle of fixed size to represent the region.
+			//Note that for this case, we do not deal with multi-scale, since even at different scale, they still have no valid poly.
+				rst.push({
+					geo_bbox: geo_bbox,
+					pixel_bbox: pixel_bbox,
+					ids: _ids,
+					geo_pts: geos,
+					pix_pts: pixels,
+					size: ele.length,
+					poly: SpatialClustering.forceGeneratePoly([p_avg[0], p_avg[1]]),
+					center: [ p_avg[0], p_avg[1] ],
+					child: convertToCurrMap?true:false
+				});
+			}
+		}
 
 	});
 	return rst;
