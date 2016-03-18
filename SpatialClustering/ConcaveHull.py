@@ -5,6 +5,10 @@ from shapely.ops import cascaded_union, polygonize
 from scipy.spatial import Delaunay
 import numpy as np
 import math
+import json
+import os
+
+os.chdir('E:\Jiawei\Research\Projects\IsoContour_Multiscale_Social_Media_VA')
 
 class ConcaveHull:
 
@@ -18,21 +22,35 @@ class ConcaveHull:
     #
     #     self.plot_polygon(point_collection.envelope)
 
-    def plot_polygon(self, polygon):
+    def plot_polygons(self, polygons):
 
         fig = pl.figure(figsize=(10, 10))
         ax = fig.add_subplot(111)
         margin = .3
-        x_min, y_min, x_max, y_max = polygon.bounds
-        ax.set_xlim([x_min-margin, x_max+margin])
-        ax.set_ylim([y_min-margin, y_max+margin])
-        patch = PolygonPatch(polygon, fc='#999999',
-                             ec='#000000', fill=True,
-                             zorder=-1)
-        ax.add_patch(patch)
+
+        x_min = []
+        y_min = []
+        x_max = []
+        y_max = []
+
+        for polygon in polygons:
+            a, b, c, d = polygon.bounds
+            x_min.append(a)
+            y_min.append(b)
+            x_max.append(c)
+            y_max.append(d)
+
+        ax.set_xlim([min(x_min)-margin, max(x_max)+margin])
+        ax.set_ylim([min(y_min)-margin, max(y_max)+margin])
+
+        for polygon in polygons:
+            patch = PolygonPatch(polygon, fc='#999999',
+                                ec='#000000', fill=True,
+                                zorder=-1)
+            ax.add_patch(patch)
         return fig
 
-    def genConcaveHull(self, points, alpha):
+    def genConcaveHull(self, points, ids, alpha):
         """
         Compute the alpha shape (concave hull) of a set
         of points.
@@ -61,7 +79,11 @@ class ConcaveHull:
         # coords = np.array([point.coords[0] for point in points])
         coords = np.array(points)
 
-        tri = Delaunay(coords)
+        try:
+            tri = Delaunay(coords)
+        except:
+            return None, None
+
         edges = set()
         edge_points = []
         # loop over triangles:
@@ -85,22 +107,76 @@ class ConcaveHull:
                 add_edge(edges, edge_points, coords, ia, ib)
                 add_edge(edges, edge_points, coords, ib, ic)
                 add_edge(edges, edge_points, coords, ic, ia)
+
         m = geometry.MultiLineString(edge_points)
         triangles = list(polygonize(m))
 
-        return cascaded_union(triangles), edge_points
+        hull = cascaded_union(triangles)
+        x = hull.boundary.coords.xy[0]
+        y = hull.boundary.coords.xy[1]
+
+        endpointIds = []
+
+        for i, val in enumerate(x):
+
+            for j, point in enumerate(points):
+                if abs(point[0] - x[i]) < 0.1 and abs(point[1] - y[i]) < 0.1:
+                    endpointIds.append(ids[j])
+                    break
+
+        if len(x) != len(endpointIds):
+            print("fatal error")
+
+        return hull, endpointIds
 
 if __name__ == '__main__':
 
     ch = ConcaveHull()
 
-    points = [[0, 0], [0, 1], [1, 0], [0.2, 0.2], [0.4, 0.4]]
-    points = [[p[0]*10, p[1]*10] for p in points]
-    concave_hull, edge_points = ch.genConcaveHull(points, 0.4)
+    # load points from file;
+    with open('multiscale.json') as data_file:
+        db = json.load(data_file)
 
-    x = [p[0] for p in points]
-    y = [p[1] for p in points]
+    with open('cluster_list.json') as data_file:
+        clusters = json.load(data_file)
 
-    ch.plot_polygon(concave_hull)
-    _ = pl.plot(x, y, 'o', color='#f16824')
+    zoom = 14
+
+    data = [dat['pts'] for dat in db if dat['zoom'] == zoom]
+    data = data[0]
+
+    dataCache = dict()
+    for d in data:
+        dataCache[d[0]] = [d[1], d[2]]
+
+    clusters = [cluster['ids'] for cluster in clusters if cluster['zoom'] == zoom]
+
+    pointsDB = []
+    idsDB = []
+
+    for cluster in clusters:
+        points = []
+        ids = []
+        for id in cluster:
+            points.append(dataCache[id])
+            ids.append(id)
+
+        idsDB.append(ids)
+        pointsDB.append(points)
+
+    concave_hulls = []
+    for i, points in enumerate(pointsDB):
+
+        concave_hull, endpointIds = ch.genConcaveHull(points, idsDB[i], 0.15)
+
+        if concave_hull is not None:
+            concave_hulls.append(concave_hull)
+
+        x = [p[0] for p in points]
+        y = [p[1] for p in points]
+
+        pl.plot(x, y, 'o', color='#f16824')
+
+    print("# of polys", len(concave_hulls), "; # of clusters", len(pointsDB))
+    ch.plot_polygons(concave_hulls)
     pl.show()
