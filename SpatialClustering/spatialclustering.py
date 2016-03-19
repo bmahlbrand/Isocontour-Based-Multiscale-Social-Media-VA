@@ -1,6 +1,6 @@
 import json
 import os
-from .ConcaveHull import ConcaveHull
+from SpatialClustering.ConcaveHull import ConcaveHull
 
 import numpy as np
 
@@ -88,6 +88,7 @@ def contains(s,l):
 
 if __name__ == '__main__':
 
+    global_stat = 0
     sc = SpatialClustering()
 
     output = []
@@ -120,15 +121,23 @@ if __name__ == '__main__':
 
             # concave hull generation
             points = []
+            ids = []
             for id in c['ids']:
                 points.append(dataDict[id])
-            print(points)
-            concave_hull, edge_points = sc.ch.genConcaveHull(points, 0.4)
+                ids.append(id)
 
+            concave_hull, ids = sc.ch.genConcaveHull(points, ids, 0.15)
 
+            if concave_hull is None:
+                c['hullIds'] = []
+                global_stat = global_stat + 1
+            else:
+                c['hullIds'] = ids
 
         output = output + clusters
         # output.append({'zoom': level['zoom'], 'cluster': cluster, 'idSet': list(set(ids))})
+
+    print("stat:", global_stat)
 
     # list of clusters;
     with open('cluster_list.json', 'w') as outfile:

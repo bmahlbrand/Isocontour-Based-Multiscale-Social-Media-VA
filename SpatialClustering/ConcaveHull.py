@@ -111,6 +111,9 @@ class ConcaveHull:
         m = geometry.MultiLineString(edge_points)
         triangles = list(polygonize(m))
 
+        if len(triangles) <= 0:
+            return None, None
+
         hull = cascaded_union(triangles)
         x = hull.boundary.coords.xy[0]
         y = hull.boundary.coords.xy[1]
@@ -133,6 +136,8 @@ if __name__ == '__main__':
 
     ch = ConcaveHull()
 
+    global_stat = 0
+
     # load points from file;
     with open('multiscale.json') as data_file:
         db = json.load(data_file)
@@ -140,7 +145,7 @@ if __name__ == '__main__':
     with open('cluster_list.json') as data_file:
         clusters = json.load(data_file)
 
-    zoom = 14
+    zoom = 10
 
     data = [dat['pts'] for dat in db if dat['zoom'] == zoom]
     data = data[0]
@@ -171,6 +176,8 @@ if __name__ == '__main__':
 
         if concave_hull is not None:
             concave_hulls.append(concave_hull)
+        else:
+            global_stat = global_stat + 1
 
         x = [p[0] for p in points]
         y = [p[1] for p in points]
@@ -178,5 +185,7 @@ if __name__ == '__main__':
         pl.plot(x, y, 'o', color='#f16824')
 
     print("# of polys", len(concave_hulls), "; # of clusters", len(pointsDB))
+    print("stat:", global_stat)
+
     ch.plot_polygons(concave_hulls)
     pl.show()
