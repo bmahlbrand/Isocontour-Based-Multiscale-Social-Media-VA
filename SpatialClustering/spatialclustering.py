@@ -126,7 +126,15 @@ if __name__ == '__main__':
                 points.append(dataDict[id])
                 ids.append(id)
 
-            concave_hull, ids = sc.ch.genConcaveHull(points, ids, 0.15)
+            # alpha decrease, concave -> convex
+            # concave_hull and ids are arrays that can contain mulitple polygons
+
+            # adapt rdp epsilon based on zoom level;
+            # rdpeps = 2*pow(2, 10-zoom)
+            # fixed epsilon
+            rdpeps = 1
+
+            concave_hull, ids = sc.ch.genConcaveHull(points, ids, alpha=0.3, rdpeps=rdpeps)
 
             if concave_hull is None:
                 c['hullIds'] = []

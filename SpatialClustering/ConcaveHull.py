@@ -1,12 +1,14 @@
 import shapely.geometry as geometry
 from descartes import PolygonPatch
 import pylab as pl
+import shapely
 from shapely.ops import cascaded_union, polygonize
 from scipy.spatial import Delaunay
 import numpy as np
 import math
 import json
 import os
+from rdp import rdp
 
 os.chdir('E:\Jiawei\Research\Projects\IsoContour_Multiscale_Social_Media_VA')
 
@@ -50,7 +52,7 @@ class ConcaveHull:
             ax.add_patch(patch)
         return fig
 
-    def genConcaveHull(self, points, ids, alpha):
+    def genConcaveHull(self, points, ids, alpha=0.3, rdpeps=1):
         """
         Compute the alpha shape (concave hull) of a set
         of points.
@@ -114,23 +116,59 @@ class ConcaveHull:
         if len(triangles) <= 0:
             return None, None
 
+        if len(triangles) == 12:
+            print(len(triangles))
+
         hull = cascaded_union(triangles)
-        x = hull.boundary.coords.xy[0]
-        y = hull.boundary.coords.xy[1]
 
-        endpointIds = []
+        hulls = []
+        # sometimes the hull is a multi-polygon type.
+        if type(hull) is shapely.geometry.polygon.Polygon:
+            hulls.append(hull)
+        else:
+            hulls = hull
 
-        for i, val in enumerate(x):
+        hullsRst = []
+        endpointsRst = []
 
-            for j, point in enumerate(points):
-                if abs(point[0] - x[i]) < 0.1 and abs(point[1] - y[i]) < 0.1:
-                    endpointIds.append(ids[j])
-                    break
+        for hull in hulls:
 
-        if len(x) != len(endpointIds):
-            print("fatal error")
+            x = hull.boundary.coords.xy[0]
+            y = hull.boundary.coords.xy[1]
 
-        return hull, endpointIds
+            # simplify the boundary, xy = [[x1,y1]...]
+            xy = [list(a) for a in zip(x, y)]
+
+            xy = rdp(xy, epsilon=rdpeps)
+            xy = rdp(xy, epsilon=rdpeps)
+            xy = rdp(xy, epsilon=rdpeps)
+
+            # after simplification, not a polygon
+            if len(xy) < 3:
+                continue
+
+            x = [t[0] for t in xy]
+            y = [t[1] for t in xy]
+
+            hull = geometry.Polygon(xy)
+            # simplify the boundary, xy = [[x1,y1]...]
+
+            endpoints = []
+
+            for i, val in enumerate(x):
+
+                for j, point in enumerate(points):
+                    if abs(point[0] - x[i]) < 0.1 and abs(point[1] - y[i]) < 0.1:
+                        endpoints.append(ids[j])
+                        break
+
+            if len(x) != len(endpoints):
+                print("fatal error")
+
+            hullsRst.append(hull)
+            endpointsRst.append(endpoints)
+
+        return hullsRst, endpointsRst
 
 if __name__ == '__main__':
 
@@ -145,7 +183,7 @@ if __name__ == '__main__':
     with open('cluster_list.json') as data_file:
         clusters = json.load(data_file)
 
-    zoom = 10
+    zoom = 13
 
     data = [dat['pts'] for dat in db if dat['zoom'] == zoom]
     data = data[0]
@@ -172,12 +210,17 @@ if __name__ == '__main__':
     concave_hulls = []
     for i, points in enumerate(pointsDB):
 
-        concave_hull, endpointIds = ch.genConcaveHull(points, idsDB[i], 0.15)
+        # adapt rdp epsilon based on zoom level;
+        # rdpeps = 2*pow(2, 10-zoom)
+        # fixed epsilon
+        rdpeps = 4
+
+        concave_hull, endpointIds = ch.genConcaveHull(points, idsDB[i], alpha=0.3, rdpeps=rdpeps)
 
         if concave_hull is not None:
-            concave_hulls.append(concave_hull)
+            concave_hulls = concave_hulls + concave_hull
         else:
-            global_stat = global_stat + 1
+            global_stat += 1
 
         x = [p[0] for p in points]
         y = [p[1] for p in points]
