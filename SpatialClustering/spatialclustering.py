@@ -86,9 +86,18 @@ def contains(s,l):
     l = set(l)
     return s.issubset(l)
 
+def intersetPoly(polys):
+
+    for i, val in enumerate(polys):
+        for j, val in enumerate(polys):
+            if i < j and polys[i].intersects(polys[j]):
+                print("overlapping detected")
+                return True
+
+    return False
+
 if __name__ == '__main__':
 
-    global_stat = 0
     sc = SpatialClustering()
 
     output = []
@@ -112,40 +121,56 @@ if __name__ == '__main__':
         data = np.array(data)
         clusters = sc.cluster(data, ids)
 
-        for ii, cluster in enumerate(clusters):
-            c = dict()
-            c['zoom'] = level['zoom']
-            c['ids'] = list(set(cluster))
-            c['clusterId'] = str(level['zoom']) + "_" + str(ii)
-            clusters[ii] = c
+        # loop through different concavity value and find the max that doesn't produce overlapping
+        concavity = 0.05
 
-            # concave hull generation
-            points = []
-            ids = []
-            for id in c['ids']:
-                points.append(dataDict[id])
-                ids.append(id)
+        while True:
 
-            # alpha decrease, concave -> convex
-            # concave_hull and ids are arrays that can contain mulitple polygons
+            hulls = []
+            clusterRst = []
 
-            # adapt rdp epsilon based on zoom level;
-            # rdpeps = 2*pow(2, 10-zoom)
-            # fixed epsilon
-            rdpeps = 1
+            for ii, cluster in enumerate(clusters):
+                c = dict()
+                c['zoom'] = level['zoom']
+                c['ids'] = list(set(cluster))
+                c['clusterId'] = str(level['zoom']) + "_" + str(ii)
+                # clusters[ii] = c
+                clusterRst.append(c)
 
-            concave_hull, ids = sc.ch.genConcaveHull(points, ids, alpha=0.3, rdpeps=rdpeps)
+                # concave hull generation
+                points = []
+                ids = []
+                for id in c['ids']:
+                    points.append(dataDict[id])
+                    ids.append(id)
 
-            if concave_hull is None:
-                c['hullIds'] = []
-                global_stat = global_stat + 1
+                # alpha decrease, concave -> convex
+                # concave_hull and ids are arrays that can contain mulitple polygons
+
+                # adapt rdp epsilon based on zoom level;
+                # simplify = 2*pow(2, 10-zoom)
+                # fixed epsilon
+                simplify = 1.5
+
+                concave_hull, ids = sc.ch.genConcaveHull(points, ids, alpha=concavity, simplify=simplify)
+
+                # hulls contains all cluster in the current zoom level
+                if concave_hull is not None:
+                    hulls = hulls + concave_hull
+
+                if concave_hull is None:
+                    c['hullIds'] = []
+                else:
+                    c['hullIds'] = ids
+
+            if intersetPoly(hulls):
+                concavity += 0.01
             else:
-                c['hullIds'] = ids
+                break
+            # end of the concavity loop
 
-        output = output + clusters
+        output = output + clusterRst
         # output.append({'zoom': level['zoom'], 'cluster': cluster, 'idSet': list(set(ids))})
-
-    print("stat:", global_stat)
 
     # list of clusters;
     with open('cluster_list.json', 'w') as outfile:

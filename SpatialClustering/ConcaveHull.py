@@ -52,7 +52,7 @@ class ConcaveHull:
             ax.add_patch(patch)
         return fig
 
-    def genConcaveHull(self, points, ids, alpha=0.3, rdpeps=1):
+    def genConcaveHull(self, points, ids, alpha=0.3, simplify=1):
         """
         Compute the alpha shape (concave hull) of a set
         of points.
@@ -116,9 +116,6 @@ class ConcaveHull:
         if len(triangles) <= 0:
             return None, None
 
-        if len(triangles) == 12:
-            print(len(triangles))
-
         hull = cascaded_union(triangles)
 
         hulls = []
@@ -139,9 +136,19 @@ class ConcaveHull:
             # simplify the boundary, xy = [[x1,y1]...]
             xy = [list(a) for a in zip(x, y)]
 
-            xy = rdp(xy, epsilon=rdpeps)
-            xy = rdp(xy, epsilon=rdpeps)
-            xy = rdp(xy, epsilon=rdpeps)
+            # before simplification, not a polygon
+            if len(xy) < 3:
+                continue
+
+            # xy = rdp(xy, epsilon=simplify)
+
+            tmp = geometry.Polygon(xy)
+            simplified = tmp.simplify(tolerance=simplify, preserve_topology=True)
+
+            x = simplified.boundary.coords.xy[0]
+            y = simplified.boundary.coords.xy[1]
+
+            xy = [list(a) for a in zip(x, y)]
 
             # after simplification, not a polygon
             if len(xy) < 3:
@@ -183,7 +190,7 @@ if __name__ == '__main__':
     with open('cluster_list.json') as data_file:
         clusters = json.load(data_file)
 
-    zoom = 13
+    zoom = 11
 
     data = [dat['pts'] for dat in db if dat['zoom'] == zoom]
     data = data[0]
