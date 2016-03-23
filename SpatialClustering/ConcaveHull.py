@@ -52,7 +52,7 @@ class ConcaveHull:
             ax.add_patch(patch)
         return fig
 
-    def genConcaveHull(self, points, ids, alpha=0.3, simplify=1):
+    def genConcaveHull(self, points, ids, alpha, simplify):
         """
         Compute the alpha shape (concave hull) of a set
         of points.
@@ -105,7 +105,7 @@ class ConcaveHull:
             circum_r = a*b*c/(4.0*area)
             # Here's the radius filter.
             # print circum_r
-            if circum_r < 1.0/alpha:
+            if alpha < 0.00000001 or circum_r < 1.0/alpha:
                 add_edge(edges, edge_points, coords, ia, ib)
                 add_edge(edges, edge_points, coords, ib, ic)
                 add_edge(edges, edge_points, coords, ic, ia)
@@ -140,8 +140,10 @@ class ConcaveHull:
             if len(xy) < 3:
                 continue
 
+            # simplify method 1: rdp
             # xy = rdp(xy, epsilon=simplify)
 
+            # simplify method 2: shapely simplify
             tmp = geometry.Polygon(xy)
             simplified = tmp.simplify(tolerance=simplify, preserve_topology=True)
 
@@ -170,7 +172,7 @@ class ConcaveHull:
                         break
 
             if len(x) != len(endpoints):
-                print("fatal error")
+                print("fatal error in concave hull generation")
 
             hullsRst.append(hull)
             endpointsRst.append(endpoints)

@@ -17,10 +17,10 @@ class SpatialClustering:
         print('init spatial clustering')
         self.ch = ConcaveHull()
 
-    def cluster(self, data, ids):
+    def cluster(self, data, ids, eps, min_sample):
 
         # Compute DBSCAN
-        db = DBSCAN(eps=3, min_samples=5).fit(data)
+        db = DBSCAN(eps=eps, min_samples=min_sample).fit(data)
         core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
         core_samples_mask[db.core_sample_indices_] = True
         labels = db.labels_
@@ -86,21 +86,24 @@ def contains(s,l):
     l = set(l)
     return s.issubset(l)
 
+# return indexes of polys that overlaps with each other
 def intersetPoly(polys):
 
+    rst = []
     for i, val in enumerate(polys):
         for j, val in enumerate(polys):
             if i < j and polys[i].intersects(polys[j]):
-                print("overlapping detected")
-                return True
+                rst.append(i)
+                rst.append(j)
 
-    return False
+    return list(set(rst))
 
 if __name__ == '__main__':
 
     sc = SpatialClustering()
 
     output = []
+
     with open('multiscale.json') as data_file:
         rst = json.load(data_file)
 
@@ -119,30 +122,30 @@ if __name__ == '__main__':
             dataDict[pt[0]] = [pt[1], pt[2]]
 
         data = np.array(data)
-        clusters = sc.cluster(data, ids)
+        clusters = sc.cluster(data, ids, 5, 5)
 
         # loop through different concavity value and find the max that doesn't produce overlapping
-        concavity = 0.05
+        concavity = 0
+
+        overlapCluster = clusters
+        nonoverlapCluster = []
 
         while True:
 
             hulls = []
             clusterRst = []
 
-            for ii, cluster in enumerate(clusters):
-                c = dict()
-                c['zoom'] = level['zoom']
-                c['ids'] = list(set(cluster))
-                c['clusterId'] = str(level['zoom']) + "_" + str(ii)
-                # clusters[ii] = c
-                clusterRst.append(c)
+            for ii, cluster in enumerate(overlapCluster):
 
                 # concave hull generation
                 points = []
                 ids = []
-                for id in c['ids']:
+                for id in list(set(cluster)):
                     points.append(dataDict[id])
                     ids.append(id)
+
+                # if level['zoom'] == 11 and "324114003951484928" in ids:
+                #     print()
 
                 # alpha decrease, concave -> convex
                 # concave_hull and ids are arrays that can contain mulitple polygons
@@ -150,27 +153,42 @@ if __name__ == '__main__':
                 # adapt rdp epsilon based on zoom level;
                 # simplify = 2*pow(2, 10-zoom)
                 # fixed epsilon
-                simplify = 1.5
+                simplify = 1
 
                 concave_hull, ids = sc.ch.genConcaveHull(points, ids, alpha=concavity, simplify=simplify)
 
-                # hulls contains all cluster in the current zoom level
-                if concave_hull is not None:
-                    hulls = hulls + concave_hull
+                # hulls contain all cluster in the current zoom level
+                hulls = hulls + concave_hull if concave_hull is not None else hulls
 
-                if concave_hull is None:
-                    c['hullIds'] = []
+                c = dict()
+                c['zoom'] = level['zoom']
+                c['ids'] = list(set(cluster))
+                c['clusterId'] = str(level['zoom']) + "_" + str(ii)
+                c['hullIds'] = ids if concave_hull is not None else []
+                clusterRst.append(c)
+
+            tmpOverlap = []
+            overlapIdx = intersetPoly(hulls)
+
+            # update overlap/non-overlap clusters
+            for i, val in enumerate(overlapCluster):
+                if i in overlapIdx:
+                    tmpOverlap.append(overlapCluster[i])
                 else:
-                    c['hullIds'] = ids
+                    nonoverlapCluster.append(overlapCluster[i])
+                    # add cluster in the final output
+                    output.append(clusterRst[i])
 
-            if intersetPoly(hulls):
+
+            # if there still exists overlap clusters
+            if len(overlapIdx) > 0:
+                overlapCluster = tmpOverlap
                 concavity += 0.01
+
+            # no clusters are overlap
             else:
                 break
             # end of the concavity loop
-
-        output = output + clusterRst
-        # output.append({'zoom': level['zoom'], 'cluster': cluster, 'idSet': list(set(ids))})
 
     # list of clusters;
     with open('cluster_list.json', 'w') as outfile:
@@ -210,7 +228,7 @@ if __name__ == '__main__':
                 if len(target) == 1:
                     target[0]['children'].append(clusterId)
                 else:
-                    print('fatal error')
+                    print('fatal error in tree generation', len(target))
 
     # cluster tree;
     with open('cluster_tree.json', 'w') as outfile:
