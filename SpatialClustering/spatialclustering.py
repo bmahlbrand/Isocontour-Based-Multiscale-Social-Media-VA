@@ -100,6 +100,14 @@ def intersetPoly(polys):
 
 if __name__ == '__main__':
 
+    # ########### parameter setup ############### #
+    cluster_eps = 10
+    cluster_min_sample = 5
+    initial_concavity = 0
+    incConcavity = 0.01
+    simplify = 1
+    ##############################################
+
     sc = SpatialClustering()
 
     output = []
@@ -122,10 +130,10 @@ if __name__ == '__main__':
             dataDict[pt[0]] = [pt[1], pt[2]]
 
         data = np.array(data)
-        clusters = sc.cluster(data, ids, 5, 5)
+        clusters = sc.cluster(data, ids, cluster_eps, cluster_min_sample)
 
         # loop through different concavity value and find the max that doesn't produce overlapping
-        concavity = 0
+        concavity = initial_concavity
 
         overlapCluster = clusters
         nonoverlapCluster = []
@@ -144,16 +152,12 @@ if __name__ == '__main__':
                     points.append(dataDict[id])
                     ids.append(id)
 
-                # if level['zoom'] == 11 and "324114003951484928" in ids:
-                #     print()
-
                 # alpha decrease, concave -> convex
                 # concave_hull and ids are arrays that can contain mulitple polygons
 
                 # adapt rdp epsilon based on zoom level;
                 # simplify = 2*pow(2, 10-zoom)
                 # fixed epsilon
-                simplify = 1
 
                 concave_hull, ids = sc.ch.genConcaveHull(points, ids, alpha=concavity, simplify=simplify)
 
@@ -183,7 +187,7 @@ if __name__ == '__main__':
             # if there still exists overlap clusters
             if len(overlapIdx) > 0:
                 overlapCluster = tmpOverlap
-                concavity += 0.01
+                concavity += incConcavity
 
             # no clusters are overlap
             else:

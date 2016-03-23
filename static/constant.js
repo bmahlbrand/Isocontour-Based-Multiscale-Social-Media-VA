@@ -26,10 +26,10 @@ var case_study = [
 					max_y: 42.449,
 					start_time: "2013-04-15T15:00:00Z",
 					end_time: "2013-04-16T16:00:00Z",
-					zoom: 12,
+					zoom: 10,
 					time_offset:4,
-					startLevel:-2,
-					endLevel:2
+					startLevel:0,
+					endLevel:6
 				},
 				//hurricane sandy;
 				{
@@ -69,7 +69,7 @@ var case_study = [
 				}
 ];
 
-var default_case = 0;
+var default_case = 1;
 
 d3.selection.prototype.moveToFront = function(){
 		return this.each(function(){
