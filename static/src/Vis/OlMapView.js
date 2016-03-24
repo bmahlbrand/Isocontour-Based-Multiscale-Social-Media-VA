@@ -196,18 +196,11 @@ OlMapView.prototype.clear_dots = function(){
 	this.dotLayer.removeAllFeatures();
 }
 
-OlMapView.prototype.render_dots = function(db){
+OlMapView.prototype.render_dots = function(tweets, color){
 
+	//this.dotLayer.removeAllFeatures();
 
-	this.dotLayer.removeAllFeatures();
-	
-	var geo_arr = null;
-	if (typeof db !== 'undefined') {
-		geo_arr = db.select("tweet_id", "lat", "lng");
-	}
-	else{
-		geo_arr = Canvas_manager.instance().get_lense_manager().get_geo_points();
-	}
+	var geo_arr = tweets.map(function(t){ return [t.lon, t.lat]; });
 
 	//this.dotLayer.removeAllFeatures();
 
@@ -215,10 +208,15 @@ OlMapView.prototype.render_dots = function(db){
 
 	for(var i = 0; i < geo_arr.length; i++) {
 
-		var point = new OpenLayers.Geometry.Point(geo_arr[i][2], geo_arr[i][1]).transform(this.fromProjection, this.toProjection);
+		var point = new OpenLayers.Geometry.Point(geo_arr[i][0], geo_arr[i][1]).transform(this.fromProjection, this.toProjection);
 
 		var feature = new OpenLayers.Feature.Vector(point);
-		feature.attributes = {color: "red", opacity:0.4, radius:2};
+
+		if(color == "blue")
+			feature.attributes = {color: color, opacity:0.8, radius:2+15.0*i/geo_arr.length};
+		else
+			feature.attributes = {color: color, opacity:0.8, radius:3};
+
 		features_array.push(feature);
 		
 	}

@@ -218,6 +218,10 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	
 	};
 
+	$scope.getMap = function(){
+		return $rootScope.mapView;
+	};
+
 	$scope.load_data = function(start, end, is_his){
 		var first_lense = $scope.get_first_lense();
 		var data_manager = first_lense.topic_lense_data;
@@ -276,8 +280,8 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		}
 	};
 
-	$scope.render_dots = function(db){
-		$rootScope.mapView.render_dots(db);
+	$scope.render_dots = function(geoPts, color){
+		$rootScope.mapView.render_dots(geoPts, color);
 	}
 	$scope.clear_dots = function(){
 		$rootScope.mapView.clear_dots();

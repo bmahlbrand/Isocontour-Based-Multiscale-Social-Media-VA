@@ -1,6 +1,6 @@
 ClusterTree = function(){
 
-	this.clusters = [];
+	this.clusters = {};
 	this.tweets = {};
 
 	this.loadTweets();
@@ -18,7 +18,7 @@ ClusterTree.prototype.loadTweets = function(){
 		url: "http://"+ip_address+"/EMcategory_cache",
 		data: $.param({ start_time: case_study[default_case].start_time,
 						end_time: case_study[default_case].end_time,
-						case_index: default_case 
+						case_index: default_case
 					  }),
 
 		headers : { 'Content-Type': 'application/json' },
@@ -54,7 +54,9 @@ ClusterTree.prototype.loadClusterTree = function(){
 		async: false
 	})
 	.done(function( msg ) {
-		that.clusters = msg;
+		msg.forEach(function(cluster){
+			that.clusters[cluster['clusterId']] = cluster;
+		});
 	});
 
 };
@@ -65,4 +67,28 @@ ClusterTree.prototype.getClusters = function(){
 
 ClusterTree.prototype.getTweets = function(){
 	return this.tweets;
+};
+
+ClusterTree.prototype.getTweetsByIds = function(ids){
+	
+	var that = this;
+	var rst = [];
+
+	ids.forEach(function(id){
+		if(that.tweets[id] !== null )
+			rst.push(that.tweets[id]);
+	});
+
+	return rst;
+};
+
+
+ClusterTree.the_instace = null;
+
+ClusterTree.instance = function(){
+
+	if(ClusterTree.the_instace == null)
+		ClusterTree.the_instace = new ClusterTree();
+	return ClusterTree.the_instace;
+
 };
