@@ -138,6 +138,9 @@ if __name__ == '__main__':
         overlapCluster = clusters
         nonoverlapCluster = []
 
+        # the id that defines the index of the clusters in the same level
+        siblingId = 0
+
         while True:
 
             hulls = []
@@ -167,7 +170,6 @@ if __name__ == '__main__':
                 c = dict()
                 c['zoom'] = level['zoom']
                 c['ids'] = list(set(cluster))
-                c['clusterId'] = str(level['zoom']) + "_" + str(ii)
                 c['hullIds'] = ids if concave_hull is not None else []
                 clusterRst.append(c)
 
@@ -181,8 +183,10 @@ if __name__ == '__main__':
                 else:
                     nonoverlapCluster.append(overlapCluster[i])
                     # add cluster in the final output
+                    # use sibling id here
+                    clusterRst[i]['clusterId'] = str(level['zoom']) + "_" + str(siblingId)
+                    siblingId += 1
                     output.append(clusterRst[i])
-
 
             # if there still exists overlap clusters
             if len(overlapIdx) > 0:
