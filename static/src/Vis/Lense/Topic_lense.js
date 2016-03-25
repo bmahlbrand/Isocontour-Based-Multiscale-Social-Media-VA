@@ -35,6 +35,7 @@ Topic_lense.prototype.update = function(){
 	//copy clusters, do not change the original value;
 	var clusters = Object.keys(ClusterTree.instance().getClusters()).map(function (key) {return ClusterTree.instance().getClusters()[key]});
 
+	var boundaries = [];
 	//calculate the smoothed concave hull;
 	clusters.forEach(function(cluster, i){
 
@@ -60,27 +61,31 @@ Topic_lense.prototype.update = function(){
 
 		//clusters[i]['pixelPts'] = pixelPts;
 		clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
+		boundaries = boundaries.concat(clusters[i]['hulls']);
 
 		//draw concave hulls
-		clusters[i]['hulls'].forEach(function(hull, i){
+		// clusters[i]['hulls'].forEach(function(hull, i){
 			
-			if( hull.length>3 ){
-				var c = that.colorScheme(cluster['zoom']);
-				that.drawConcaveHull(cluster['clusterId'], hull, c);
-			}
-		});		
+		// 	if( hull.length>3 ){
+		// 		var c = that.colorScheme(cluster['zoom']);
+		// 		that.drawConcaveHull(cluster['clusterId'], hull, c);
+		// 	}
+		// });		
 
 
 	});
 
-	// //render the concavehul;
-	// clusters.forEach(function(cluster){
+	//perform overlapping removal;
+	boundaries = HullLayout.minOverlap(boundaries);
 
-	// 	if( cluster['smoothHull'].length>3 ){
-	// 		var c = that.colorScheme(cluster['zoom']);
-	// 		that.drawConcaveHull(cluster['clusterId'], cluster['smoothHull'], c);
-	// 	}
-	// });
+	//Draw concave hulls;
+	boundaries.forEach(function(hull){
+		if( hull.length>3 ){
+			//temporarily, blue color, null id;
+			that.drawConcaveHull(null, hull, "blue");
+		}
+
+	});
 };
 
 Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
