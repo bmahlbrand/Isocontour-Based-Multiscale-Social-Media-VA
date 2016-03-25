@@ -13,7 +13,7 @@ ClusterTree = function(){
 	//hard coded for now
 	this.rootID = "10_0";
 
-	this.clusterTree = this.initClusterTree();
+	this.root = this.initClusterTree();
 	
 };
 
@@ -41,6 +41,9 @@ ClusterTree.prototype.loadClusters = function(){
 };
 
 ClusterTree.prototype.getClusters = function(){
+
+	//this will later add filtering options
+	//TO-DO
 	return this.clusters;
 };
 
@@ -49,11 +52,19 @@ ClusterTree.prototype.getClusters = function(){
 /*************************************************************************************/
 /***************************** cluster tree operation ********************************/
 /*************************************************************************************/
+ClusterTree.prototype.getClusterTree = function(){
+	return this.root;
+};
+
+ClusterTree.prototype.getClustersByLevels = function(){
+	var rst = [];
+	this.root._getClustersByLevels(0, rst);
+	return rst;
+};
 
 ClusterTree.prototype.initClusterTree = function(){
 
 	var rt = new CTreeNode(this.clusters[this.rootID]);
-	rt.setType(CTreeNode.nodeType.ROOT);
 	rt.addChild(this.clusters);
 	return rt;
 };
@@ -69,18 +80,31 @@ CTreeNode.prototype.addChild = function(clusterArr){
 	var that = this;
 	var childIdx = this.cluster['children'];
 
-	if(childIdx.length <= 0)
+	if(childIdx.length <= 0){
 		this.type = CTreeNode.nodeType.LEAF;
-	else{
+
+	}else{
 		this.type = CTreeNode.nodeType.NON_LEAF;
+
 		childIdx.forEach(function(val){
 			var c = new CTreeNode(clusterArr[val]);
 			c.addChild(clusterArr);
 			that.children.push(c);
 		});
-
-
 	}
+};
+
+CTreeNode.prototype._getClustersByLevels = function(level, rst){
+
+	//deal with the current node
+	while(rst.length <= level)
+		rst.push([]);
+
+	rst[level].push(this.cluster);
+
+	this.children.forEach(function(val){
+		val._getClustersByLevels(level+1, rst);
+	});
 
 };
 
@@ -91,7 +115,7 @@ CTreeNode.prototype.setType = function(type){
 	this.type = type;
 };
 
-CTreeNode.nodeType = { ROOT: 0, NON_LEAF: 1, LEAF:2};
+CTreeNode.nodeType = { NON_LEAF: 1, LEAF:2};
 
 /*************************************************************************************/
 

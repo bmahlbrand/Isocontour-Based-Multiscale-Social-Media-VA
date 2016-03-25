@@ -32,64 +32,55 @@ Topic_lense.prototype.update = function(){
 	this.clear();
 
 	var that = this;
-	//copy clusters, do not change the original value;
-	var clusters = Object.keys(ClusterTree.instance().getClusters()).map(function (key) {return ClusterTree.instance().getClusters()[key]});
+
+	// 2d array;
+	var clusterMatrix = ClusterTree.instance().getClustersByLevels();
 
 	var boundaries = [];
-	//calculate the smoothed concave hull;
-	clusters.forEach(function(cluster, i){
 
-		/****************** filter clusters based on zoom level ***************************/
-		// check zoom level
-		// var zoomLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom();
-		// if( Math.abs(zoomLevel - cluster['zoom']) > 1 )
-		// 	return;
-		// if(cluster['zoom'] != 10)
-		// 	return;
-		/****************** filter clusters based on zoom level ***************************/
+	for(var level=0; level<clusterMatrix.length; level++){
 
-		var pixelPts = [];
-		var ids = cluster['ids'];
+		boundaries.push([]);
 
-		// convert geo points to pixel points;
-		// ids.forEach(function(id){
+		var clusters = clusterMatrix[level];
 
-		// 	var tweets = ClusterTree.instance().getTweets();
-		// 	var p = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
-		// 	pixelPts.push([p.x, p.y]);
-		// });
+		//calculate the smoothed concave hull;
+		clusters.forEach(function(cluster, i){
 
-		//clusters[i]['pixelPts'] = pixelPts;
-		clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
-		boundaries = boundaries.concat(clusters[i]['hulls']);
+			/****************** filter clusters based on zoom level ***************************/
+			// check zoom level
+			// var zoomLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom();
+			// if( Math.abs(zoomLevel - cluster['zoom']) > 1 )
+			// 	return;
+			// if(cluster['zoom'] != 10)
+			// 	return;
+			/****************** filter clusters based on zoom level ***************************/
 
-		//draw concave hulls
-		// clusters[i]['hulls'].forEach(function(hull, i){
-			
-		// 	if( hull.length>3 ){
-		// 		var c = that.colorScheme(cluster['zoom']);
-		// 		that.drawConcaveHull(cluster['clusterId'], hull, c);
-		// 	}
-		// });		
+			//clusters[i]['pixelPts'] = pixelPts;
+			clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
+			boundaries[level] = boundaries[level].concat(clusters[i]['hulls']);
 
+		});
 
-	});
+	}
 
 	//perform overlapping removal;
-	boundaries = HullLayout.minOverlap(boundaries);
+	boundaries = HullLayout.minimizeOverlap(boundaries);
 
 	//Draw concave hulls;
-	boundaries.forEach(function(hull){
-		if( hull.length>3 ){
-			//temporarily, blue color, null id;
-			that.drawConcaveHull(null, hull, "blue");
-		}
+	boundaries.forEach(function(hulls){
+
+		hulls.forEach(function(hull){
+			if( hull.length>3 ){
+				//temporarily, blue color, null id;
+				that.drawConcaveHull(null, hull, "blue");
+			}
+		});
 
 	});
 };
 
 Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
-
 
 	var that = this;
 	var svg = this.map_svg;
