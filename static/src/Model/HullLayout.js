@@ -36,25 +36,7 @@ HullLayout.checkIntesect = function(parent, child){
 	return false;
 };
 
-//parents 2d array,  child 1d array;
-HullLayout.minimizeParentChildOverlap = function(parents, child){
-
-	//since one cluster can have multiple polys(rare case), here comes the parents
-	//find the parent that contains the child
-	var parent = [];
-	parents.forEach(function(p){
-		if( HullLayout.checkIntesect(p, child) )
-			parent.push(p);
-	});
-
-	if(parent.length == 0){
-		console.log("find parent error" + parent.length);
-		return child;
-	}
-	parent = parent[0];
-	//parent are already located.
-	//console.log(parent);
-
+HullLayout._moveOutsidePts = function(parent, child){
 
 	for(var i=0; i<child.length/2; i++){
 		
@@ -76,6 +58,68 @@ HullLayout.minimizeParentChildOverlap = function(parents, child){
 	}
 
 	return child;
+
+};
+
+HullLayout.pointEdgeDisThres = 3;
+
+HullLayout.lineCenter = function(x1, y1, x2, y2){
+	return [ (x1+x2)*0.5, (y1+y2)*0.5 ];
+};
+
+
+HullLayout._shrinkPartialPly = function(parent, child){
+
+	var len = child.length/2;
+	for(var i=0; i<len; i++){
+		
+		var x = child[2*i];
+		var y = child[2*i+1];
+
+		var rst = PolyK.ClosestEdge(parent, x, y);
+
+		if(rst.dist < HullLayout.pointEdgeDisThres){
+
+			var left = (i-1+len)%len;
+			var right = (i+1+len)%len;
+
+			var center1 = HullLayout.lineCenter(x, y, child[2*left], child[2*left+1]);
+			var center2 = HullLayout.lineCenter(x, y, child[2*right], child[2*right+1]);
+
+			var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
+
+			child[2*i] = center[0];
+			child[2*i+1] = center[1];
+		}
+	}
+
+	return child;
+
+};
+
+//parents 2d array,  child 1d array;
+HullLayout.minimizeParentChildOverlap = function(parents, child){
+
+	//since one cluster can have multiple polys(rare case), here comes the parents
+	//find the parent that contains the child
+	var parent = [];
+	parents.forEach(function(p){
+		if( HullLayout.checkIntesect(p, child) )
+			parent.push(p);
+	});
+
+	if(parent.length == 0){
+		console.log("find parent error" + parent.length);
+		return [];
+	}
+
+	parent = parent[0];
+	//parent are already located.
+	//console.log(parent);
+	child = HullLayout._moveOutsidePts(parent, child);
+	child = HullLayout._shrinkPartialPly(parent, child);
+
+	return child;
 };
 
 HullLayout.minimizeOverlap = function(clusterMatrix){
@@ -83,28 +127,32 @@ HullLayout.minimizeOverlap = function(clusterMatrix){
 	//polys: 2D matrix;
 	//As is ensured in the server side, hulls in the same level do not have overlapping issues;
 
-	clusterMatrix.forEach(function(clusters, i){
+	clusterMatrix.forEach(function(clusters, level){
 
-		//not parent for level i, no need to minimize overlap
-		if(i == 0)
-			return;
 
+		// create array to store parent polys, note that level i does not have parents.
 		var parentsPolys = [];
-		// i-1 means parent level;
-		clusterMatrix[i-1].forEach(function(cluster){
-			var hulls = cluster['hulls'];
-			parentsPolys = parentsPolys.concat(hulls);
-		});
+		if(level != 0){
+			// i-1 means parent level;
+			clusterMatrix[level-1].forEach(function(cluster){
+				var hulls = cluster['hulls'];
+				parentsPolys = parentsPolys.concat(hulls);
+			});
+		}
 		
 		//perform minimization here;
 		clusters.forEach(function(cluster){
 
 			var hulls = cluster['hulls'];
 
-			hulls.forEach(function(hull, i){
-				var rst = HullLayout.minimizeParentChildOverlap(parentsPolys, hull);
-				hulls[i] = rst;
+			hulls.forEach(function(hull){
 
+				if(level == 0){
+					cluster['optimizedHulls'].push(hull);
+				}else{
+					var rst = HullLayout.minimizeParentChildOverlap(parentsPolys, hull);
+					cluster['optimizedHulls'].push(rst);
+				}
 			});
 
 		});

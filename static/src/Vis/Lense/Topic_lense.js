@@ -56,12 +56,16 @@ Topic_lense.prototype.update = function(){
 			//2d array contains 1d poly
 			clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
 
+			//optimized results save in clusters[i]['optimizedHulls']
+			clusters[i]['optimizedHulls'] = [];
+
 		});
 
 	}
 
 	//perform overlapping removal;
 	if(Topic_lense.minOverlap)
+		//only change clusters[i]['optimizedHulls']
 		clusterMatrix = HullLayout.minimizeOverlap(clusterMatrix);
 
 	//Draw concave hulls;
@@ -69,7 +73,7 @@ Topic_lense.prototype.update = function(){
 
 		clusters.forEach(function(cluster){
 
-			var hulls = cluster['hulls'];
+			var hulls = cluster['optimizedHulls'];
 
 			hulls.forEach(function(hull){
 				
@@ -90,12 +94,21 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 	var that = this;
 	var svg = this.map_svg;
 
-	var lineFunction = d3.svg.line()
-                         .x(function(d) { return d[0]; })
-                         .y(function(d) { return d[1]; })
-                         .interpolate("cardinal-closed")
-                         .tension(Topic_lense.tension);
-                         // .interpolate("basis-closed");
+
+	var lineFunction = null;
+
+	if(Topic_lense.MODE == Topic_lense.INTERMODE.BASIS){
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("basis-closed");
+	}else{
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("cardinal-closed")
+                        .tension(Topic_lense.tension);
+	}
 
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
@@ -210,7 +223,8 @@ Topic_lense.smoothPoly = function(poly){
 };
 
 /******************  parameter setup  **********************/
-Topic_lense.tension = 0.8;
+Topic_lense.tension = 0.7;
 Topic_lense.minOverlap = true;
-
+Topic_lense.INTERMODE = { BASIS:0, CARDINAL:1 };
+Topic_lense.MODE = Topic_lense.INTERMODE.CARDINAL;
 /******************  parameter setup  **********************/

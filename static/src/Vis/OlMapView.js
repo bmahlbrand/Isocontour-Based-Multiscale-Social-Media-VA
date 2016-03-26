@@ -213,7 +213,7 @@ OlMapView.prototype.render_dots = function(tweets, color){
 		var feature = new OpenLayers.Feature.Vector(point);
 
 		if(color == "blue")
-			feature.attributes = {color: color, opacity:0.8, radius:2+15.0*i/geo_arr.length};
+			feature.attributes = {color: color, opacity:0.8, radius:8};
 		else
 			feature.attributes = {color: color, opacity:0.8, radius:3};
 
