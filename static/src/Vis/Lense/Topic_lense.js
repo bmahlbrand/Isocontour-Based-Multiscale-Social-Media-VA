@@ -36,11 +36,7 @@ Topic_lense.prototype.update = function(){
 	// 2d array;
 	var clusterMatrix = ClusterTree.instance().getClustersByLevels();
 
-	var boundaries = [];
-
 	for(var level=0; level<clusterMatrix.length; level++){
-
-		boundaries.push([]);
 
 		var clusters = clusterMatrix[level];
 
@@ -52,35 +48,44 @@ Topic_lense.prototype.update = function(){
 			// var zoomLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom();
 			// if( Math.abs(zoomLevel - cluster['zoom']) > 1 )
 			// 	return;
-			// if(cluster['zoom'] != 10)
+			// if(cluster['zoom'] != 13)
 			// 	return;
 			/****************** filter clusters based on zoom level ***************************/
 
 			//clusters[i]['pixelPts'] = pixelPts;
+			//2d array contains 1d poly
 			clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
-			boundaries[level] = boundaries[level].concat(clusters[i]['hulls']);
 
 		});
 
 	}
 
 	//perform overlapping removal;
-	boundaries = HullLayout.minimizeOverlap(boundaries);
+	if(Topic_lense.minOverlap)
+		clusterMatrix = HullLayout.minimizeOverlap(clusterMatrix);
 
 	//Draw concave hulls;
-	boundaries.forEach(function(hulls){
+	clusterMatrix.forEach(function(clusters){
 
-		hulls.forEach(function(hull){
-			if( hull.length>3 ){
-				//temporarily, blue color, null id;
-				that.drawConcaveHull(null, hull, "blue");
-			}
+		clusters.forEach(function(cluster){
+
+			var hulls = cluster['hulls'];
+
+			hulls.forEach(function(hull){
+				
+				if( hull.length>3 ){
+					//temporarily, blue color, null id;
+					that.drawConcaveHull(cluster['clusterId'], hull, "blue");
+				}
+			});
 		});
 
 	});
 };
 
 Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
+
+	pts = HullLayout.odArrTo2dArr(pts);
 
 	var that = this;
 	var svg = this.map_svg;
@@ -93,7 +98,7 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
                          // .interpolate("basis-closed");
 
     var hull = svg.append("path")
-    				.attr("id", id)
+    				.attr("id", "hull_" + id)
 			    	.attr("class", "concaveHull")
 			    	.attr("d", lineFunction(pts))
 			    	.attr("stroke", color)
@@ -103,16 +108,17 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 			    	.on("mouseover", function(){
 
 			    		//tweets inside the hull;
+			    		var cluster_id = this.id.substring(5,this.id.length);
+			    		console.log(cluster_id);
 
-			    		var ids = ClusterTree.instance().getClusters()[this.id]['ids'];
+			    		var ids = ClusterTree.instance().getClusters()[cluster_id]['ids'];
 			    		var tweets = ClusterTree.instance().getTweetsByIds(ids);
-			    		console.log(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
 			    		//tweets on the boundary:
 			    		var ids = [];
-			    		ClusterTree.instance().getClusters()[this.id]['hullIds'].forEach(function(idlist){
+			    		ClusterTree.instance().getClusters()[cluster_id]['hullIds'].forEach(function(idlist){
 			    			ids = ids.concat(idlist);
 			    		});
 
@@ -158,10 +164,11 @@ Topic_lense.getConcaveHull = function(idsList){
 			var pts = [];
 			ids.forEach(function(id){
 				var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
-				pts.push([pt.x, pt.y]);
+				pts.push(pt.x);
+				pts.push(pt.y)
 			});
 
-			rst.push(pts.slice(0, pts.length-1));
+			rst.push(pts.slice(0, pts.length-2));
 		}
 
 	});
@@ -204,6 +211,6 @@ Topic_lense.smoothPoly = function(poly){
 
 /******************  parameter setup  **********************/
 Topic_lense.tension = 0.8;
-
+Topic_lense.minOverlap = true;
 
 /******************  parameter setup  **********************/
