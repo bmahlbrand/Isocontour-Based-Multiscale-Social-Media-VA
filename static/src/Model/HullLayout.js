@@ -61,7 +61,8 @@ HullLayout._moveOutsidePts = function(parent, child){
 
 };
 
-HullLayout.pointEdgeDisThres = 3;
+HullLayout.pointEdgeDisThres = 5;
+HullLayout.shrinkIteration = 5;
 
 HullLayout.lineCenter = function(x1, y1, x2, y2){
 	return [ (x1+x2)*0.5, (y1+y2)*0.5 ];
@@ -70,28 +71,39 @@ HullLayout.lineCenter = function(x1, y1, x2, y2){
 
 HullLayout._shrinkPartialPly = function(parent, child){
 
-	var len = child.length/2;
-	for(var i=0; i<len; i++){
-		
-		var x = child[2*i];
-		var y = child[2*i+1];
+	var iteration = 0;
+	do{
+		var isChange = false;
+		iteration += 1;
 
-		var rst = PolyK.ClosestEdge(parent, x, y);
+		var len = child.length/2;
+		for(var i=0; i<len; i++){
+			
+			var x = child[2*i];
+			var y = child[2*i+1];
 
-		if(rst.dist < HullLayout.pointEdgeDisThres){
+			var rst = PolyK.ClosestEdge(parent, x, y);
 
-			var left = (i-1+len)%len;
-			var right = (i+1+len)%len;
+			if(rst.dist < HullLayout.pointEdgeDisThres){
 
-			var center1 = HullLayout.lineCenter(x, y, child[2*left], child[2*left+1]);
-			var center2 = HullLayout.lineCenter(x, y, child[2*right], child[2*right+1]);
+				var left = (i-1+len)%len;
+				var right = (i+1+len)%len;
 
-			var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
+				var center1 = HullLayout.lineCenter(x, y, child[2*left], child[2*left+1]);
+				var center2 = HullLayout.lineCenter(x, y, child[2*right], child[2*right+1]);
 
-			child[2*i] = center[0];
-			child[2*i+1] = center[1];
+				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
+
+				child[2*i] = center[0];
+				child[2*i+1] = center[1];
+
+				isChange = true;
+			}
 		}
-	}
+
+		console.log(iteration);
+
+	}while( isChange == true && iteration < HullLayout.shrinkIteration );
 
 	return child;
 
