@@ -61,15 +61,15 @@ HullLayout._moveOutsidePts = function(parent, child){
 
 };
 
-HullLayout.pointEdgeDisThres = 5;
-HullLayout.shrinkIteration = 5;
+HullLayout.pointEdgeDisThres = 3;
+HullLayout.shrinkIteration = 15;
 
 HullLayout.lineCenter = function(x1, y1, x2, y2){
 	return [ (x1+x2)*0.5, (y1+y2)*0.5 ];
 };
 
 
-HullLayout._shrinkPartialPly = function(parent, child){
+HullLayout._shrinkPartialPoly = function(parent, child){
 
 	var iteration = 0;
 	do{
@@ -101,10 +101,9 @@ HullLayout._shrinkPartialPly = function(parent, child){
 			}
 		}
 
-		console.log(iteration);
-
 	}while( isChange == true && iteration < HullLayout.shrinkIteration );
 
+	console.log("iteration time: "+iteration);
 	return child;
 
 };
@@ -129,7 +128,7 @@ HullLayout.minimizeParentChildOverlap = function(parents, child){
 	//parent are already located.
 	//console.log(parent);
 	child = HullLayout._moveOutsidePts(parent, child);
-	child = HullLayout._shrinkPartialPly(parent, child);
+	child = HullLayout._shrinkPartialPoly(parent, child);
 
 	return child;
 };
@@ -154,6 +153,8 @@ HullLayout.minimizeOverlap = function(clusterMatrix){
 		
 		//perform minimization here;
 		clusters.forEach(function(cluster){
+
+			console.log(cluster['clusterId']);
 
 			var hulls = cluster['hulls'];
 

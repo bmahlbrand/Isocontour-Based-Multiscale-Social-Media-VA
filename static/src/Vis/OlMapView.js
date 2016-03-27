@@ -244,7 +244,6 @@ OlMapView.prototype.render_dots = function(tweets, color){
 	// }
 
 	this.dotLayer.addFeatures(features_array);
-	console.log("render dots map");
 
 };
 

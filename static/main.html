@@ -44,6 +44,10 @@
 	<!-- spatial analysis toolkit: TURF.JS -->
 	<!--<script type="text/javascript" src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
 	
+	<!-- spatial clustering-->
+	<script type="text/javascript" src="src/Model/HullLayout.js"></script>
+	<script type="text/javascript" src="src/Model/PolyK.js"></script>
+
 	<!--extend d3-->
 	<script type="text/javascript" src="constant.js"></script>
 
@@ -278,6 +282,19 @@
 			Topic_lense.glyph_size_delta--;
 		}
 
+		function changemode(val){
+			Topic_lense.MODE = val;
+			$('[ng-controller="map_controller"]').scope().refresh_map();
+		}
+
+		function changeTension(val){
+			if(parseInt(val) == 1)
+				Topic_lense.tension += 0.1;
+			else
+				Topic_lense.tension -= 0.1;
+			$('[ng-controller="map_controller"]').scope().refresh_map();
+		}
+
 
 	</script>
 
@@ -395,6 +412,14 @@
 	<div id="mapView" ng-controller="map_controller" style="height:1024px;width:1024px;"></div>
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
+
+	<div id="layoutOption">
+		<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
+		<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
+		<button onclick="changeTension(1)">inc tension</button>
+		<button onclick="changeTension(0)">dec tension</button><br>
+	</div>
+
 
 	<div id="controlpanel" style="display:none;left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;" ng-controller="panel_controller" >
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->

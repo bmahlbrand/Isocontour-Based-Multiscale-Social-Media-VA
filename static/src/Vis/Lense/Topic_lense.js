@@ -33,8 +33,16 @@ Topic_lense.prototype.update = function(){
 
 	var that = this;
 
-	// 2d array;
+	var currRelativeLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom() 
+							- ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
+
+	//only see adjacent 3 levels
+	var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
+	
+	// get the clusters of all levels;
 	var clusterMatrix = ClusterTree.instance().getClustersByLevels();
+	//filter based on vis levels
+	clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
 
 	for(var level=0; level<clusterMatrix.length; level++){
 
@@ -77,7 +85,7 @@ Topic_lense.prototype.update = function(){
 
 			hulls.forEach(function(hull){
 				
-				if( hull.length>3 ){
+				if( that.filterHull(hull) ){
 					//temporarily, blue color, null id;
 					that.drawConcaveHull(cluster['clusterId'], hull, "blue");
 				}
@@ -85,6 +93,20 @@ Topic_lense.prototype.update = function(){
 		});
 
 	});
+};
+
+Topic_lense.prototype.filterHull = function(hull){
+
+	//check valid hull
+	if(hull.length < 6)
+		return false;
+
+	var aabb = PolyK.GetAABB(hull);
+
+	if(aabb.width < 5 || aabb.height < 5 )
+		return false;
+
+	return true;
 };
 
 Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
