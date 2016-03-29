@@ -8,8 +8,6 @@ Topic_lense = function(lense_id, map_svg, overlay_svg, geo_bbox, start_time, end
 
 	this.colorScheme = null;
 
-
-
 	this.initColorScheme();
 };
 
@@ -150,6 +148,9 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 			    		var tweets = ClusterTree.instance().getTweetsByIds(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+
+			    		//cate distribution
+			    		console.log(ClusterTree.instance().distOfCate(tweets));
 
 			    		//tweets on the boundary:
 			    		var ids = [];

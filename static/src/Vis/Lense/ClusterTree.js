@@ -149,6 +149,12 @@ ClusterTree.prototype.loadTweets = function(){
 			t.tweet_id = entry.tweet_id;
 			t.lat = parseFloat(entry.geolocation.lat);
 			t.lon = parseFloat(entry.geolocation.lon);
+			
+			t.cate = {};
+			entry.cate.forEach(function(val){
+				t.cate[val] = true;
+			});
+			
 			tweets[entry.tweet_id] = t;
 
 		});
@@ -173,6 +179,15 @@ ClusterTree.prototype.getTweetsByIds = function(ids){
 
 	return rst;
 };
+
+ClusterTree.prototype.distOfCate = function(tweets){
+	
+	var cateArr = tweets.map(function(val){ return Object.keys(val.cate); });
+	cateArr = cateArr.reduce(function(prev, next){ return prev.concat(next); });
+	return _.countBy(cateArr);
+
+};
+
 
 /***********************************************************************************/
 

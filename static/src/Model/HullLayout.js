@@ -103,7 +103,7 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 
 	}while( isChange == true && iteration < HullLayout.shrinkIteration );
 
-	console.log("iteration time: "+iteration);
+	// console.log("iteration time: "+iteration);
 	return child;
 
 };
@@ -154,7 +154,7 @@ HullLayout.minimizeOverlap = function(clusterMatrix){
 		//perform minimization here;
 		clusters.forEach(function(cluster){
 
-			console.log(cluster['clusterId']);
+			// console.log(cluster['clusterId']);
 
 			var hulls = cluster['hulls'];
 
