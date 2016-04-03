@@ -1,0 +1,1 @@
+ScaleTreeNode = function(){};
