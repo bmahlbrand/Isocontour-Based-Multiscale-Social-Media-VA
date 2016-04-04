@@ -384,9 +384,9 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	
 	$scope.init = function(){
-		$rootScope.scaleTree = new ScaleTree();
-		$rootScope.scaleTree.setData(ClusterTree.instance().getClusterTree());
-		$rootScope.scaleTree.render();
+		$rootScope.stc = new ScaleTreeCanvas();
+		$rootScope.stc.setData(ClusterTree.instance().getClusterTree());
+		$rootScope.stc.render();
 	};
 
 	$scope.init();
