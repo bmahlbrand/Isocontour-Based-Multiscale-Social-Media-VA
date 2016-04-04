@@ -149,6 +149,18 @@ twittNavApp.controller('panel_controller', function($rootScope, $scope) {
 
 });
 
+
+/* controller for scale tree view */
+twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
+	
+	$scope.init = function(){
+		$rootScope.scaleTree = new ScaleTree();
+	};
+
+	$scope.init();
+});
+
+
 twittNavApp.controller('ts_controller', function($rootScope, $scope) {
 
 	$scope.init = function(){
