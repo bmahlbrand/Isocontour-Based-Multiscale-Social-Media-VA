@@ -74,7 +74,10 @@ BBox.prototype = {
 		this.setSep(cx,cy,ex,ey);
 	},
 
-	setBox: function(b) {this.center = b.center; this.extents = b.extents;},
+	setBox: function(bbox) {
+		this.center = new Vector2(bbox.center.x, bbox.center.y);
+		this.extents = new Vector2(bbox.extents.x, bbox.extents.y);
+	},
 	intersects: function(box) {
 		var retVar = false;
 		tmpVect = new Vector2();
@@ -147,5 +150,20 @@ BBox.prototype = {
 		rst.push([this.center.x+this.extents.x, this.center.y+this.extents.y]);
 		rst.push([this.center.x+this.extents.x, this.center.y-this.extents.y]);
 		return rst;
+	},
+
+	getLeft: function(){
+		return this.center.x - this.extents.x;
+	},
+
+	getTop: function(){
+		return this.center.y - this.extents.y;
+	},
+
+	getWidth: function(){
+		return this.extents.x*2;
+	},
+	getHeight: function(){
+		return this.extents.y*2;
 	}
 };

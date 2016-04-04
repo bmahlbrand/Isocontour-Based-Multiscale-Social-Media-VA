@@ -58,7 +58,7 @@ ClusterTree.prototype.getClusterTree = function(){
 
 ClusterTree.prototype.getClustersByLevels = function(){
 	var rst = [];
-	this.root._getClustersByLevels(0, rst);
+	this.root.getClustersByLevels(0, rst);
 	return rst;
 };
 
