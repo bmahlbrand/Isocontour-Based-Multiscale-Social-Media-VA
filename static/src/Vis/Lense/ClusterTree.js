@@ -94,6 +94,18 @@ CTreeNode.prototype.addChild = function(clusterArr){
 	}
 };
 
+CTreeNode.prototype.getHeight = function(){
+	if(this.children.length <= 0)
+		return 1;
+
+	var rst = [];
+	this.children.forEach(function(val){
+		rst.push(val.getHeight());
+	});
+
+	return 1 + Math.max.apply(null, rst);
+};
+
 CTreeNode.prototype._getClustersByLevels = function(level, rst){
 
 	//deal with the current node

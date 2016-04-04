@@ -1,6 +1,0 @@
-ScaleTreeNode = function(){
-
-	
-
-
-};
