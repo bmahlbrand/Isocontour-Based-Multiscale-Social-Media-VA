@@ -42,10 +42,14 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("height", bbox.getHeight())
 	                            .attr("stroke", "#555")
 	                            .attr("fill", "#aaa")
-	                            .on("click", function(){
+	                            .on("mouseover", function(){
 
-	                            	var id = this.id;
-	                            	alert(id);
+	                            	$('[ng-controller="map_controller"]').scope().get_first_lense().hoverHull([id]);
+
+	                            })
+	                            .on("mouseout", function(){
+
+	                            	$('[ng-controller="map_controller"]').scope().get_first_lense().hoverHull([]);
 
 	                            });
 
@@ -77,7 +81,6 @@ ScaleTreeCanvas.prototype.renderBbox = function(){
 ScaleTreeCanvas.prototype.render = function(){
 
 	this.renderBbox();
-
 	console.log("render done");
 
 };

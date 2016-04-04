@@ -93,18 +93,24 @@ Topic_lense.prototype.update = function(){
 	});
 };
 
-Topic_lense.prototype.filterHull = function(hull){
+//if clusterIdlist is empty, reset;
+Topic_lense.prototype.hoverHull = function(clusterIdlist){
 
-	//check valid hull
-	if(hull.length < 6)
-		return false;
+	if(clusterIdlist.length <= 0){
+		d3.selectAll(".concaveHull")
+			.attr("opacity", 1);
+		return;
+	}
 
-	var aabb = PolyK.GetAABB(hull);
+	d3.selectAll(".concaveHull")
+		.attr("opacity", 0);
 
-	if(aabb.width < 5 || aabb.height < 5 )
-		return false;
+	clusterIdlist.forEach(function(val){
 
-	return true;
+		d3.selectAll(".hull_"+val)
+			.attr("opacity", 1);
+	});
+
 };
 
 Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
@@ -113,7 +119,6 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 
 	var that = this;
 	var svg = this.map_svg;
-
 
 	var lineFunction = null;
 
@@ -132,7 +137,7 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
-			    	.attr("class", "concaveHull")
+			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", lineFunction(pts))
 			    	.attr("stroke", color)
 			    	.attr("stroke-width", 2)
@@ -169,6 +174,20 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 
 };
 
+
+Topic_lense.prototype.filterHull = function(hull){
+
+	//check valid hull
+	if(hull.length < 6)
+		return false;
+
+	var aabb = PolyK.GetAABB(hull);
+
+	if(aabb.width < 5 || aabb.height < 5 )
+		return false;
+
+	return true;
+};
 //if not valid, return [];
 Topic_lense.getConcaveHull = function(idsList){
 
@@ -212,38 +231,38 @@ Topic_lense.getConcaveHull = function(idsList){
 	return rst;
 };
 
+// not called in the current version
+// Topic_lense.smoothPoly = function(poly){
 
-Topic_lense.smoothPoly = function(poly){
+// 	if(poly.length <= 0)
+// 		return [];
 
-	if(poly.length <= 0)
-		return [];
+// 	//relax poly --> if two adjacent points are near each other, remove them;
+// 	var len = poly.length;
+// 	var i = 1;
+// 	var thres = 10;
 
-	//relax poly --> if two adjacent points are near each other, remove them;
-	var len = poly.length;
-	var i = 1;
-	var thres = 10;
+// 	while(i<len){
 
-	while(i<len){
+// 		var p0 = poly[i-1];
+// 		var p1 = poly[i];
 
-		var p0 = poly[i-1];
-		var p1 = poly[i];
+// 		//remove points;
+// 		if( Math.abs(p0[0]-p1[0])<=thres && Math.abs(p0[1]-p1[1])<=thres ){
+// 			poly.splice(i,1);
+// 			len--;
+// 		}
+// 		else{
+// 			i++;
+// 		}
+// 	}
 
-		//remove points;
-		if( Math.abs(p0[0]-p1[0])<=thres && Math.abs(p0[1]-p1[1])<=thres ){
-			poly.splice(i,1);
-			len--;
-		}
-		else{
-			i++;
-		}
-	}
+// 	//remove the last point, since it is the same as the first point;
+// 	if(poly.length > 0)
+// 		poly.splice(poly.length-1, 1);
 
-	//remove the last point, since it is the same as the first point;
-	if(poly.length > 0)
-		poly.splice(poly.length-1, 1);
-
-	return poly;
-};
+// 	return poly;
+// };
 
 /******************  parameter setup  **********************/
 Topic_lense.tension = 0.7;

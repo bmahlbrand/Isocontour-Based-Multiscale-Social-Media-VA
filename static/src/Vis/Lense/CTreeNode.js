@@ -98,7 +98,7 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 		//set the bbox for children;
 		var sum = 0;
 		this.children.forEach(function(val){
-			sum += val.getVol();
+			sum += VisComponent.scale()(val.getVol());
 		});
 
 		var left = bbox.getLeft();
@@ -106,10 +106,12 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 		var height = bbox.getHeight();
 
 		this.children.forEach(function(val){
-			var w = width * val.getVol() / sum;
+
+			var w = width * VisComponent.scale()(val.getVol()) / sum;
 			var b = new BBox(left+w/2, bbox.get_center().y + space + height, w/2, height/2 );
 			val.setBbox(b, space);
 			left += w;
+		
 		});
 	}
 
@@ -125,4 +127,24 @@ VisComponent.prototype.setBbox = function(cx, cy, ex, ey){
 
 VisComponent.prototype.getBbox = function(){
 	return this.bbox;
-}
+};
+
+// x between [1, infinity]
+VisComponent.logScale = function(x){
+	return Math.log(x+1);
+};
+
+VisComponent.linearScale = function(x){
+	return x;
+};
+
+VisComponent.scale = function(){
+
+	if(VisComponent.SCALE == VisComponent.SCALEMODE.LOG)
+		return VisComponent.logScale;
+	else if(VisComponent.SCALE == VisComponent.SCALEMODE.LINEAR)
+		return VisComponent.linearScale;
+};
+
+VisComponent.SCALEMODE = {LOG:0, LINEAR:1};
+VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
