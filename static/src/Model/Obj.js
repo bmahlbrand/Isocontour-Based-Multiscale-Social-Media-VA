@@ -1,4 +1,12 @@
-Vector2 = function() { this.x = 0; this.y = 0; };
+Vector2 = function(x, y) { 
+
+	if( x === undefined || y === undefined ){
+          this.x = 0; this.y = 0; 
+    }else{
+    	this.x = x; this.y = y; 
+    }
+
+};
 
 Vector2.prototype = {
 	set: function(x,y){ this.x = x; this.y = y},
@@ -25,9 +33,14 @@ Vector2.prototype = {
     abs: function(){ this.x = Math.abs(this.x); this.y = Math.abs(this.y); }
 };
 
-BBox = function(){
-	this.center = new Vector2();
-	this.extents = new Vector2();
+BBox = function(cx, cy, ex, ey){
+	if( cx === undefined || cy === undefined || ex === undefined || ey === undefined ){
+		this.center = new Vector2();
+		this.extents = new Vector2(); 
+    }else{
+    	this.center = new Vector2(cx, cy);
+		this.extents = new Vector2(ex, ey);
+    }
 };
 
 BBox.prototype = {
