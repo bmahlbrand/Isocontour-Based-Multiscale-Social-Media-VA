@@ -47,7 +47,11 @@ BBox.prototype = {
 	set: function(center,extents) { this.center = center; this.extents = extents; this.force_set_extents(); },
 	setSep: function(cx,cy,ex,ey) { this.center.x = cx; this.center.y = cy; this.extents.x = ex; this.extents.y = ey; this.force_set_extents(); },
 	setCenter: function(cx,cy) { this.center.x = cx; this.center.y = cy;},
-	setExtents: function(ex,ey){ this.extents.x = ex; this.extents.y = ey; this.force_set_extents(); },
+	setExtents: function(ex,ey){ 
+		this.extents.x = ex; 
+		this.extents.y = ey; 
+		//this.force_set_extents(); 
+	},
 
 	//extents cannot be zero
 	force_set_extents: function(){

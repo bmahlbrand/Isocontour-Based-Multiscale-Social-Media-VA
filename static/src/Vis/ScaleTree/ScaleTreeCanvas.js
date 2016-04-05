@@ -68,13 +68,20 @@ ScaleTreeCanvas.prototype.setBbox = function(){
 
 ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 
+	//add margin between adjacent nodes;
+	var margin = 2;
+	var _bbox = new BBox();
+	_bbox.setBox(bbox);
+	_bbox.setExtents( Math.max(_bbox.get_extent().x-margin, 1), _bbox.get_extent().y );
+
+	//draw node;
 	var rectangle = this.canvas.append("rect")
 								.attr("id", "node_"+id)
 								.attr("class", "treeNode")
-	                            .attr("x", bbox.getLeft())
-	                            .attr("y", bbox.getTop())
-	                            .attr("width", bbox.getWidth())
-	                            .attr("height", bbox.getHeight())
+	                            .attr("x", _bbox.getLeft())
+	                            .attr("y", _bbox.getTop())
+	                            .attr("width", _bbox.getWidth())
+	                            .attr("height", _bbox.getHeight())
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
 	                            .attr("fill", ScaleTreeCanvas.nodeFill)
 	                            .on('contextmenu', d3.contextMenu(ScaleTreeCanvas.instance().get_menu(id)) );
