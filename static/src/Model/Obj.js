@@ -159,6 +159,9 @@ BBox.prototype = {
 	getTop: function(){
 		return this.center.y - this.extents.y;
 	},
+	getBottom: function(){
+		return this.center.y + this.extents.y;
+	},
 
 	getWidth: function(){
 		return this.extents.x*2;

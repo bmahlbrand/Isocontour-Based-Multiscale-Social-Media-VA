@@ -50,7 +50,7 @@
 	<script type="text/javascript" src="src/Model/HullLayout.js"></script>
 	<script type="text/javascript" src="src/Model/PolyK.js"></script>
 
-	
+
 	<script type="text/javascript" src="src/Model/Obj.js"></script>
 	<!--extend d3-->
 	<script type="text/javascript" src="constant.js"></script>
@@ -152,6 +152,10 @@
 	  fill: none;
 	  stroke: steelblue;
 	  stroke-width: 1.5px;
+	}
+
+	treeNode:hover {
+		cursor: pointer;
 	}
 
 	</style>
@@ -389,15 +393,21 @@
 
 	<!-- </div> -->
 
-	<div id="ScaleTreeContainer" style="left:1100px;top:50px;width:700px;height:700px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;">
+	<div id="ScaleTreeContainer" style="left:1100px;top:50px;width:700px;height:700px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
 	
 	<h4 align="center" style="cursor: pointer">Scale Tree</h4>
 
 	<!--background-color: rgba(247, 251, 255, 0.6);-->
 		<div style="width:600px;height:600px;margin: 0 auto;" class="noSupportDrag">
-			<div id="ScaleTreeCanvasView" style="width:600px;height:600px;border:1px solid #aaa;" ng-controller="ScaleTreeCtrl"></div>
+			<div id="ScaleTreeCanvasView" style="width:600px;height:600px;" ng-controller="ScaleTreeCtrl"></div>
 		</div>
 	</div>
+
+
+
+
+
+
 
 
 	<div id="EM_Tree_container" style="display:none;left:50px;top:420px;width:660px;height:450px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;">

@@ -74,6 +74,8 @@ Topic_lense.prototype.update = function(){
 		//only change clusters[i]['optimizedHulls']
 		clusterMatrix = HullLayout.minimizeOverlap(clusterMatrix);
 
+
+	var drawedIds = [];
 	//Draw concave hulls;
 	clusterMatrix.forEach(function(clusters){
 
@@ -86,11 +88,17 @@ Topic_lense.prototype.update = function(){
 				if( that.filterHull(hull) ){
 					//temporarily, blue color, null id;
 					that.drawConcaveHull(cluster['clusterId'], hull, "blue");
+					drawedIds.push(cluster['clusterId']);
 				}
 			});
 		});
 
 	});
+
+	//update scale tree view, update activatednode list;
+	ScaleTreeCanvas.instance().setAcNodes(drawedIds);
+	ScaleTreeCanvas.instance().update();
+
 };
 
 //if clusterIdlist is empty, reset;
@@ -186,7 +194,18 @@ Topic_lense.prototype.filterHull = function(hull){
 	if(aabb.width < 5 || aabb.height < 5 )
 		return false;
 
-	return true;
+	//check in the viewport;
+	var flag = false;
+	for(var i=0; i<hull.length/2; i++){
+
+		var x = hull[2*i];
+		var y = hull[2*i+1];
+		if( (x > 0 && x < Topic_lense.DIMENSION) && (y > 0 && y < Topic_lense.DIMENSION) )
+			flag = true;
+
+	}
+
+	return flag;
 };
 //if not valid, return [];
 Topic_lense.getConcaveHull = function(idsList){
@@ -269,4 +288,5 @@ Topic_lense.tension = 0.7;
 Topic_lense.minOverlap = true;
 Topic_lense.INTERMODE = { BASIS:0, CARDINAL:1 };
 Topic_lense.MODE = Topic_lense.INTERMODE.CARDINAL;
+Topic_lense.DIMENSION = 1024;
 /******************  parameter setup  **********************/

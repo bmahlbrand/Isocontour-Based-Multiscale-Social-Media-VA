@@ -64,6 +64,31 @@ CTreeNode.prototype.getNodesByLevels = function(level, rst){
 
 };
 
+CTreeNode.prototype.getNodeById = function(id){
+
+	if(this.cluster.clusterId == id)
+		return this;
+
+	var n = null;
+	this.children.forEach(function(val){
+		n = n || val.getNodeById(id);
+	});
+	return n;
+
+};
+
+CTreeNode.prototype.toList = function(){
+
+	var rst = [this];
+
+	this.children.forEach(function(val){
+		rst = rst.concat(val.toList());
+	});
+
+	return rst;
+
+};
+
 CTreeNode.prototype.getType = function(){
 	return this.type;
 };
@@ -88,8 +113,6 @@ CTreeNode.prototype.getVis = function(){
 
 CTreeNode.prototype.setBbox = function(bbox, space){
 
-
-	console.log( this.cluster.clusterId +"\t"+ bbox.toString());
 	this.vis.setBbox(bbox.center.x, bbox.center.y, bbox.extents.x, bbox.extents.y);
 
 	if(this.children.length <= 0)
@@ -111,11 +134,46 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 			var b = new BBox(left+w/2, bbox.get_center().y + space + height, w/2, height/2 );
 			val.setBbox(b, space);
 			left += w;
-		
 		});
 	}
-
 }
+
+CTreeNode.prototype.drawBbox = function(){
+
+	ScaleTreeCanvas.instance().drawRect(this.cluster.clusterId, this.vis.getBbox());
+
+	this.children.forEach(function(val){
+		val.drawBbox();
+	});
+
+};
+
+CTreeNode.prototype.drawLinkage = function(){
+
+	if(this.children.length <= 0)
+		return;
+
+	var bbox = this.vis.getBbox();
+
+	this.children.forEach(function(val){
+
+		var _bbox = val.getVis().getBbox();
+		var space = _bbox.getTop() - bbox.getBottom();
+		//end points
+		var p1 = [bbox.get_center().x, bbox.getBottom()];
+		var p2 = [_bbox.get_center().x, _bbox.getTop()];
+		//bezier control points
+		var p125 = [bbox.get_center().x, bbox.getBottom()+space*0.5 ];
+		var p175 = [_bbox.get_center().x, _bbox.getTop()-space*0.5 ];
+
+		ScaleTreeCanvas.instance().drawBCurve([p1, p125, p175, p2]);
+		val.drawLinkage();
+
+	});
+
+};
+
+
 
 VisComponent = function(){
 	this.bbox = null;
