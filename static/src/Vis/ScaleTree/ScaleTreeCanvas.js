@@ -183,7 +183,6 @@ ScaleTreeCanvas.nodeFill = "#e0f3f8";
 ScaleTreeCanvas.deAcNodeStroke = "#737373";
 ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
 
-
 ScaleTreeCanvas.linkStroke = "#b2182b";
 
 

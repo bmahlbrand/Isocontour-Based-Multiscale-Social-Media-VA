@@ -296,7 +296,7 @@
 
 		function changemode(val){
 			ContourVis.MODE = val;
-			$('[ng-controller="map_controller"]').scope().refresh_map();
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
 
 		function changeTension(val){
@@ -304,7 +304,7 @@
 				ContourVis.tension += 0.1;
 			else
 				ContourVis.tension -= 0.1;
-			$('[ng-controller="map_controller"]').scope().refresh_map();
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
 
 
@@ -402,6 +402,12 @@
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
+	<div id="layoutOption">
+		<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
+		<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
+		<button onclick="changeTension(1)">inc tension</button>
+		<button onclick="changeTension(0)">dec tension</button><br>
+	</div>
 
 </body>
 </html>
