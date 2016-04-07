@@ -253,7 +253,63 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 
 twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
+	$scope.init = function(){
+
+		//this array contains nodes that are inside the geo-scope of map based on the user's navigation on map.
+		//this array can only be modified by the topic_lense class.
+		$rootScope.activatedNodes = [];
+		
+		//this array contains array that is in the subtree of clicked node;
+		//this array can only be modified by this class;
+		//only store this root of the subtree;
+		$rootScope.highlightedNodes = [];
+
 	
+
+	};
+
+	$scope.init();
+
+	/************************************activated node***************************************/
+	$scope.setAcNodes = function(ns){
+		$rootScope.activatedNodes = ns;
+		$scope.masterUpdate();
+	};
+
+	$scope.getAcNodes = function(){
+		return $rootScope.activatedNodes;
+	};
+	/************************************activated node***************************************/
+	
+	/************************************highlighted node***************************************/
+	$scope.addHlNode = function(val){
+		if($rootScope.highlightedNodes.indexOf(val) == -1)
+			$rootScope.highlightedNodes.push(val);
+	};
+
+	$scope.removeHlNode = function(val){
+		$rootScope.highlightedNodes = $rootScope.highlightedNodes.filter(function(_val){ return val != _val; });
+	};
+
+	$scope.getHlNodes = function(){
+
+		var ids = [];
+		$rootScope.highlightedNodes.forEach(function(val){
+
+			var node = DataCenter.instance().getTree().getNodeById(val);
+			var list = node.toList();
+			var _ids = list.map(function(_val){ return _val.cluster.clusterId; });
+		    ids = ids.concat(_ids);
+		});
+		return ids;
+	};
+	/************************************highlighted node***************************************/
+
+	$scope.masterUpdate = function(){
+		$('[ng-controller="ScaleTreeCtrl"]').scope().update();
+
+	};
+
 
 });
 
@@ -392,15 +448,20 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	$scope.init = function(){
 
 		$rootScope.stc = new ScaleTreeCanvas();
-		$rootScope.stc.update();
+		$scope.update();
 	};
 
 	$scope.getScaleTreeCanvas = function(){
 		return $rootScope.stc;
 	};
 
+	$scope.update = function(){
+		$rootScope.stc.update();
+	};
 	//have getScaleTreeCanvas() defined before calling init function
 	$scope.init();
+
+
 
 });
 

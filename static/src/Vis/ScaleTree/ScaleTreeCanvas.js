@@ -2,41 +2,8 @@ ScaleTreeCanvas = function(){
 
 	this.canvas = null;
 
-	//this array contains nodes that are in the scope of map.
-	//this array can only be modified by the topic_lense class.
-	this.activatedNodes = [];
-	//this array contains array that is in the subtree of clicked node;
-	//this array can only be modified by this class;
-	//only store this root of the subtree;
-	this.highlightedNodes = [];
-
 	this.init();
 }
-
-ScaleTreeCanvas.prototype.setAcNodes = function(val){
-	this.activatedNodes = val;
-};
-
-ScaleTreeCanvas.prototype.addHLNode = function(val){
-	this.highlightedNodes.push(val);
-};
-
-ScaleTreeCanvas.prototype.removeHLNode = function(val){
-	this.highlightedNodes = this.highlightedNodes.filter(function(_val){ return val != _val; });
-};
-
-ScaleTreeCanvas.prototype.getHLNodes = function(){
-
-	var ids = [];
-	this.highlightedNodes.forEach(function(val){
-
-		var node = DataCenter.instance().getTree().getNodeById(val);
-		var list = node.toList();
-		var _ids = list.map(function(_val){ return _val.cluster.clusterId; });
-	    ids = ids.concat(_ids);
-	});
-	return ids;
-};
 
 ScaleTreeCanvas.prototype.init = function() {
 	
@@ -90,9 +57,11 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 			title: 'set',
 			action: function(elm, d) {
 	            
-	            that.addHLNode(id);
+	            $('[ng-controller="app_controller"]').scope().addHlNode(id);
+
+	            var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
 				//update map;
-	        	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(that.getHLNodes());
+	        	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(hlNodes);
 
 	        	that.update();
 			}
@@ -101,7 +70,7 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 			title: 'unset',
 			action: function(elm, d) {
 
-				that.removeHLNode(id);
+				$('[ng-controller="app_controller"]').scope().removeHlNode(id);
             	//update map;
             	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull([]);
 
@@ -148,23 +117,24 @@ ScaleTreeCanvas.prototype.drawNode = function(){
 
 ScaleTreeCanvas.prototype.hoverNode = function(){
 
-	//this.activatedNodes = [];
-	//this.highlightedNodes = [];
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
+
 
 	d3.selectAll(".treeNode")
 		.attr("stroke", ScaleTreeCanvas.deAcNodeStroke)
 		.attr("fill", ScaleTreeCanvas.deAcNodeFill);
 
-	this.activatedNodes.forEach(function(val){
+	acNodes.forEach(function(val){
 		
 		d3.select("#node_"+val)
 			.attr("stroke", ScaleTreeCanvas.nodeStroke)
 			.attr("fill", ScaleTreeCanvas.nodeFill);
 	});
 
-	var hLnodes = intersect_arrays(this.activatedNodes, this.getHLNodes());
+	hlNodes = intersect_arrays(acNodes, hlNodes);
 
-	hLnodes.forEach(function(val){
+	hlNodes.forEach(function(val){
 		
 		d3.select("#node_"+val)
 			.attr("stroke", ScaleTreeCanvas.hLNodeStroke)

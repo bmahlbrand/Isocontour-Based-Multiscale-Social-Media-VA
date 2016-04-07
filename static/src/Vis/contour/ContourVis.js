@@ -1,12 +1,14 @@
 ContourVis = function(map_svg, overlay_svg, geo_bbox, start_time, end_time){
 
 	this.map_svg = map_svg;
+
+	//not used currently in this version;
 	this.overlay_svg = overlay_svg;
 
 };
 
 ContourVis.prototype.clear = function(){
-	this.map_svg.selectAll(".concaveHull").remove();
+	this.map_svg.selectAll("*").remove();
 };
 
 ContourVis.prototype.update = function(){
@@ -79,9 +81,8 @@ ContourVis.prototype.update = function(){
 
 	});
 
-	//update scale tree view, update activatednode list;
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().setAcNodes(drawedIds);
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().update();
+	//acNode list;
+	$('[ng-controller="app_controller"]').scope().setAcNodes(drawedIds);
 
 };
 
