@@ -80,8 +80,8 @@ ContourVis.prototype.update = function(){
 	});
 
 	//update scale tree view, update activatednode list;
-	ScaleTreeCanvas.instance().setAcNodes(drawedIds);
-	ScaleTreeCanvas.instance().update();
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().setAcNodes(drawedIds);
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().update();
 
 };
 

@@ -9,168 +9,168 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 //how to call a function from a scope;
 //$('[ng-controller="map_controller"]').scope().refresh_map();
 
-twittNavApp.controller('app_controller', function($rootScope, $scope) {
+// twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
-});
-
-
-twittNavApp.controller('EMTree_controller', function($rootScope, $scope) {
-
-	$scope.init = function(){
-		$rootScope.emtree = new EMTree(EMTerms.instance().get_terms());
-	};
-
-	$scope.init();
-
-	//connect tree and map;
-	$scope.send_tree_interaction_to_map = function(){
-		var selected_list = $rootScope.emtree.get_selected_list();
-		var first_lense = $('[ng-controller="map_controller"]').scope().get_first_lense();
-
-		if( first_lense != null){
-			first_lense.topic_lense_data.global_to_cached(selected_list);
-			$('[ng-controller="map_controller"]').scope().refresh_map();
-		}
-	};
-
-	$scope.update_tree_volume = function(vol_arr){
-		$rootScope.emtree.update_vol(vol_arr);
-	};
-
-	$scope.get_tree = function(){
-		return $rootScope.emtree;
-	}
-
-});
-
-twittNavApp.controller('EMTable_controller', function($rootScope, $scope) {
-
-	$scope.init = function(){
-		$rootScope.em_table = new EMTable();
-	};
-
-	$scope.init();
-
-	$scope.display = function(db){
-		$rootScope.em_table.display(db);
-	};
-
-	$scope.sort = {
-		mode : 'time_desc'
-	};
-
-	$scope.toggleSort = function() {
-
-		switch(this.sort.mode) {
-			case 'time_desc':
-				$rootScope.em_table.displayByMode(this.sort.mode);
-				break;
-
-			case 'summarized':
-				$rootScope.em_table.displayByMode(this.sort.mode);
-				break;
-		}
-	}
-});
-
-twittNavApp.controller('panel_controller', function($rootScope, $scope) {
-
-	$scope.init = function(){
-	};
-
-	$scope.init();
-
-	$scope.data = {
-		glyphType: 0,
-		displayMode: 0,
-		showHull: true,
-		transition: true,
-		realtime_mode: "resume",
-		time_window: 30
-	};
-
-	// $scope.glyph_change = function() {
-	// 	var type = parseInt(this.data.glyphType);
-	// 	switch(type) {
-	// 	case 0:
-	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_1;
-	// 		 break;
-	// 	case 1:
-	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_2;
-	// 		break;
-	// 	case 2:
-	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_3;
-	// 		break;
-	// 	}
-	// 	Canvas_manager.instance().update();
-	// }
-
-	$scope.display_mode_change = function() {
-		var mode = parseInt(this.data.displayMode);
-		switch(mode) {
-		case 0:
-			$rootScope.mapView.toggleAllModes();
-			break;
-		case 1:
-			$rootScope.mapView.toggleGlyphMode();
-			break;
-		case 2:
-			$rootScope.mapView.toggleHeatMapMode();
-			break;
-		case 3:
-			$rootScope.mapView.toggleDotMode();
-			break;
-
-		}
-	}
-
-	$scope.time_window_change = function(){
-		globe.time_window = this.data.time_window;
-	}
-
-	// $scope.null_change = function(){
-
-	// 	Topic_lense.enable_outline = this.data.showHull;
-	// 	Canvas_manager.instance().update();	
-	// }
-
-	// $scope.transition_change = function(){
-	// 	Topic_lense.enable_transition = this.data.transition;
-
-	// }
-
-	$scope.realtime_mode_change = function(){
-		if( this.data.realtime_mode == "resume"){
-			start_timing();
-		}else if( this.data.realtime_mode == "stop"){
-			stop_timing();
-		}
-	}
-
-});
+// });
 
 
-twittNavApp.controller('ts_controller', function($rootScope, $scope) {
+// twittNavApp.controller('EMTree_controller', function($rootScope, $scope) {
 
-	$scope.init = function(){
-		$rootScope.time_series_manager = new Time_series_manager();
-	};
+// 	$scope.init = function(){
+// 		$rootScope.emtree = new EMTree(EMTerms.instance().get_terms());
+// 	};
 
-	$scope.init();
+// 	$scope.init();
 
-	$scope.refresh_chart = function(data, start_time, end_time){
-		$rootScope.time_series_manager.set_data(data, start_time, end_time);
-	};
+// 	//connect tree and map;
+// 	$scope.send_tree_interaction_to_map = function(){
+// 		var selected_list = $rootScope.emtree.get_selected_list();
+// 		var first_lense = $('[ng-controller="map_controller"]').scope().get_first_lense();
 
-	$scope.get_ts = function(){
-		return $rootScope.time_series_manager;
-	};
+// 		if( first_lense != null){
+// 			first_lense.topic_lense_data.global_to_cached(selected_list);
+// 			$('[ng-controller="map_controller"]').scope().refresh_map();
+// 		}
+// 	};
 
-	$scope.set_time_range_manually = function(start_time, end_time){
-		return $rootScope.time_series_manager.set_time_range_manually(start_time, end_time);
-	};
+// 	$scope.update_tree_volume = function(vol_arr){
+// 		$rootScope.emtree.update_vol(vol_arr);
+// 	};
 
-});
+// 	$scope.get_tree = function(){
+// 		return $rootScope.emtree;
+// 	}
+
+// });
+
+// twittNavApp.controller('EMTable_controller', function($rootScope, $scope) {
+
+// 	$scope.init = function(){
+// 		$rootScope.em_table = new EMTable();
+// 	};
+
+// 	$scope.init();
+
+// 	$scope.display = function(db){
+// 		$rootScope.em_table.display(db);
+// 	};
+
+// 	$scope.sort = {
+// 		mode : 'time_desc'
+// 	};
+
+// 	$scope.toggleSort = function() {
+
+// 		switch(this.sort.mode) {
+// 			case 'time_desc':
+// 				$rootScope.em_table.displayByMode(this.sort.mode);
+// 				break;
+
+// 			case 'summarized':
+// 				$rootScope.em_table.displayByMode(this.sort.mode);
+// 				break;
+// 		}
+// 	}
+// });
+
+// twittNavApp.controller('panel_controller', function($rootScope, $scope) {
+
+// 	$scope.init = function(){
+// 	};
+
+// 	$scope.init();
+
+// 	$scope.data = {
+// 		glyphType: 0,
+// 		displayMode: 0,
+// 		showHull: true,
+// 		transition: true,
+// 		realtime_mode: "resume",
+// 		time_window: 30
+// 	};
+
+// 	// $scope.glyph_change = function() {
+// 	// 	var type = parseInt(this.data.glyphType);
+// 	// 	switch(type) {
+// 	// 	case 0:
+// 	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_1;
+// 	// 		 break;
+// 	// 	case 1:
+// 	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_2;
+// 	// 		break;
+// 	// 	case 2:
+// 	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_3;
+// 	// 		break;
+// 	// 	}
+// 	// 	Canvas_manager.instance().update();
+// 	// }
+
+// 	$scope.display_mode_change = function() {
+// 		var mode = parseInt(this.data.displayMode);
+// 		switch(mode) {
+// 		case 0:
+// 			$rootScope.mapView.toggleAllModes();
+// 			break;
+// 		case 1:
+// 			$rootScope.mapView.toggleGlyphMode();
+// 			break;
+// 		case 2:
+// 			$rootScope.mapView.toggleHeatMapMode();
+// 			break;
+// 		case 3:
+// 			$rootScope.mapView.toggleDotMode();
+// 			break;
+
+// 		}
+// 	}
+
+// 	$scope.time_window_change = function(){
+// 		globe.time_window = this.data.time_window;
+// 	}
+
+// 	// $scope.null_change = function(){
+
+// 	// 	Topic_lense.enable_outline = this.data.showHull;
+// 	// 	Canvas_manager.instance().update();	
+// 	// }
+
+// 	// $scope.transition_change = function(){
+// 	// 	Topic_lense.enable_transition = this.data.transition;
+
+// 	// }
+
+// 	$scope.realtime_mode_change = function(){
+// 		if( this.data.realtime_mode == "resume"){
+// 			start_timing();
+// 		}else if( this.data.realtime_mode == "stop"){
+// 			stop_timing();
+// 		}
+// 	}
+
+// });
+
+
+// twittNavApp.controller('ts_controller', function($rootScope, $scope) {
+
+// 	$scope.init = function(){
+// 		$rootScope.time_series_manager = new Time_series_manager();
+// 	};
+
+// 	$scope.init();
+
+// 	$scope.refresh_chart = function(data, start_time, end_time){
+// 		$rootScope.time_series_manager.set_data(data, start_time, end_time);
+// 	};
+
+// 	$scope.get_ts = function(){
+// 		return $rootScope.time_series_manager;
+// 	};
+
+// 	$scope.set_time_range_manually = function(start_time, end_time){
+// 		return $rootScope.time_series_manager.set_time_range_manually(start_time, end_time);
+// 	};
+
+// });
 
 // twittNavApp.controller('form_controller', function($rootScope, $scope, $http) {
 
@@ -251,6 +251,11 @@ twittNavApp.controller('ts_controller', function($rootScope, $scope) {
 
 // });
 
+twittNavApp.controller('app_controller', function($rootScope, $scope) {
+
+	
+
+});
 
 twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	$scope.init = function(){
@@ -397,5 +402,6 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	//have getScaleTreeCanvas() defined before calling init function
 	$scope.init();
 
-
 });
+
+
