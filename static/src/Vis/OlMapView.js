@@ -139,7 +139,7 @@ OlMapView.prototype.init = function(div) {
 
 	this.map.events.register("moveend", copyThis.map, function(e) {
 
-		$('[ng-controller="map_controller"]').scope().update();
+		$('[ng-controller="map_controller"]').scope().updateGeoBbox();
 
 	});
 

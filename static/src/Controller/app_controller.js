@@ -361,6 +361,10 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	
 	};
 
+	$scope.updateGeoBbox = function(){
+		Canvas_manager.instance().cv.updateGeoBbox();
+	};
+
 	$scope.getMap = function(){
 		return $rootScope.mapView;
 	};

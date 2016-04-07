@@ -11,9 +11,7 @@ ContourVis.prototype.clear = function(){
 	this.map_svg.selectAll("*").remove();
 };
 
-ContourVis.prototype.update = function(){
-
-	this.clear();
+ContourVis.prototype.updateGeoBbox = function(){
 
 	var that = this;
 
@@ -73,7 +71,7 @@ ContourVis.prototype.update = function(){
 				
 				if( that.filterHull(hull) ){
 					//temporarily, blue color, null id;
-					that.drawConcaveHull(cluster['clusterId'], hull, "blue");
+					//that.drawConcaveHull(cluster['clusterId'], hull, "blue");
 					drawedIds.push(cluster['clusterId']);
 				}
 			});
@@ -84,19 +82,49 @@ ContourVis.prototype.update = function(){
 	//acNode list;
 	$('[ng-controller="app_controller"]').scope().setAcNodes(drawedIds);
 
-	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
+};
+
+ContourVis.prototype.update = function(){
+
+	var that = this;
+
+	this.clear();
+
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+
+	//draw hull
+	var clist = DataCenter.instance().getTree().toList();
+
+	clist = clist.filter(function(val){
+		return acNodes.indexOf(val.cluster['clusterId']) != -1;
+	});
+
+	clist.forEach(function(val){
+
+		var hulls = val.cluster['optimizedHulls'];
+
+		hulls.forEach(function(hull){
+			//acual rendering function
+			that.drawConcaveHull(val.cluster['clusterId'], hull, "blue");
+		});
+
+	});
+
+	//hover hull
+	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
 	this.hoverHull(hlNodes);
 
 };
 
+
 //if clusterIdlist is empty, reset;
 ContourVis.prototype.hoverHull = function(clusterIdlist){
 
-	// if(clusterIdlist.length <= 0){
-	// 	d3.selectAll(".concaveHull")
-	// 		.attr("opacity", 1);
-	// 	return;
-	// }
+	if(clusterIdlist.length <= 0){
+		d3.selectAll(".concaveHull")
+			.attr("opacity", 1);
+		return;
+	}
 
 	d3.selectAll(".concaveHull")
 		.attr("opacity", 0);
