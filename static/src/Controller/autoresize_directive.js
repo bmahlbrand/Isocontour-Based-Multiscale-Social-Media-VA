@@ -33,7 +33,7 @@ twittNavApp.directive('autoresize',
 		
 		return angular.element($window).bind('resize', function() {  
 			$scope.initializeWindowSize();  
-			$('[ng-controller="map_controller"]').scope().refresh_map();
+			$('[ng-controller="map_controller"]').scope().update();
 			return $scope.$apply();  
 		});  
 	};  

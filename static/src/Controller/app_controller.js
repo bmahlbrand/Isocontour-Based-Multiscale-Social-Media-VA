@@ -285,10 +285,14 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 	$scope.addHlNode = function(val){
 		if($rootScope.highlightedNodes.indexOf(val) == -1)
 			$rootScope.highlightedNodes.push(val);
+
+		$scope.masterUpdate();
 	};
 
 	$scope.removeHlNode = function(val){
 		$rootScope.highlightedNodes = $rootScope.highlightedNodes.filter(function(_val){ return val != _val; });
+
+		$scope.masterUpdate();
 	};
 
 	$scope.getHlNodes = function(){
@@ -307,7 +311,7 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
 	$scope.masterUpdate = function(){
 		$('[ng-controller="ScaleTreeCtrl"]').scope().update();
-
+		$('[ng-controller="map_controller"]').scope().update();
 	};
 
 
@@ -341,7 +345,7 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	$scope.init();
 
 	//flag: true, zoom, false, pan or other interaction;
-	$scope.refresh_map = function() {
+	$scope.update = function() {
 	
 		if (typeof $rootScope.mapView == 'undefined')
 			return;

@@ -59,11 +59,11 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 	            
 	            $('[ng-controller="app_controller"]').scope().addHlNode(id);
 
-	            var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
-				//update map;
-	        	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(hlNodes);
+	   //          var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
+				// //update map;
+	   //      	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(hlNodes);
 
-	        	that.update();
+	   //      	that.update();
 			}
 		},
 		{
@@ -71,10 +71,10 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 			action: function(elm, d) {
 
 				$('[ng-controller="app_controller"]').scope().removeHlNode(id);
-            	//update map;
-            	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull([]);
+            	// //update map;
+            	// $('[ng-controller="map_controller"]').scope().getHulls().hoverHull([]);
 
-            	that.update();
+            	// that.update();
 			}
 		},
 		{

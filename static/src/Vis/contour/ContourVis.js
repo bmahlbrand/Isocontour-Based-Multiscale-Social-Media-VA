@@ -84,16 +84,19 @@ ContourVis.prototype.update = function(){
 	//acNode list;
 	$('[ng-controller="app_controller"]').scope().setAcNodes(drawedIds);
 
+	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
+	this.hoverHull(hlNodes);
+
 };
 
 //if clusterIdlist is empty, reset;
 ContourVis.prototype.hoverHull = function(clusterIdlist){
 
-	if(clusterIdlist.length <= 0){
-		d3.selectAll(".concaveHull")
-			.attr("opacity", 1);
-		return;
-	}
+	// if(clusterIdlist.length <= 0){
+	// 	d3.selectAll(".concaveHull")
+	// 		.attr("opacity", 1);
+	// 	return;
+	// }
 
 	d3.selectAll(".concaveHull")
 		.attr("opacity", 0);

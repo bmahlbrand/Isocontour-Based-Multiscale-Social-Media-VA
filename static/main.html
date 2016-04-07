@@ -220,7 +220,7 @@
 			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
 			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
 			//$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
-			$('[ng-controller="map_controller"]').scope().refresh_map();
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
 
 		// function enable_realtime(){
