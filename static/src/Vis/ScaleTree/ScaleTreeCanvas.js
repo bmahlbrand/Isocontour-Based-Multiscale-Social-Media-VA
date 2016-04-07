@@ -45,6 +45,9 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("height", _bbox.getHeight())
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
 	                            .attr("fill", ScaleTreeCanvas.nodeFill)
+	                            .on("click", function(){
+	                            	alert(this.id);
+	                            })
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 

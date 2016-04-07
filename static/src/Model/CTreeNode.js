@@ -64,6 +64,26 @@ CTreeNode.prototype.getNodesByLevels = function(level, rst){
 
 };
 
+CTreeNode.prototype.sortChildren = function(){
+
+	if( CTreeNode.SORT == CTreeNode.SORTMODE.VOLUME ){
+
+		this.children.sort(function(a,b){
+			if(a.cluster.ids.length < b.cluster.ids.length)
+				return 1;
+			if(a.cluster.ids.length > b.cluster.ids.length)
+				return -1;
+			return +0;
+
+		});
+
+		this.children.forEach(function(val){
+			val.sortChildren();
+		});
+	}
+
+};
+
 CTreeNode.prototype.getNodeById = function(id){
 
 	if(this.cluster.clusterId == id)
@@ -207,3 +227,6 @@ VisComponent.scale = function(){
 
 VisComponent.SCALEMODE = {LOG:0, LINEAR:1};
 VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
+
+CTreeNode.SORTMODE = { VOLUME:0 }
+CTreeNode.SORT = CTreeNode.SORTMODE.VOLUME;

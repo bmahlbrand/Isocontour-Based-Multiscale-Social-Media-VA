@@ -14,6 +14,7 @@ DataCenter = function(){
 
 	//init tree
 	this.root = this.initTree();
+	this.root.sortChildren();
 	
 };
 

@@ -105,7 +105,9 @@ ContourVis.prototype.update = function(){
 
 		hulls.forEach(function(hull){
 			//acual rendering function
-			that.drawConcaveHull(val.cluster['clusterId'], hull, "blue");
+
+			var color = contourColor()(val.cluster['zoom']);
+			that.drawConcaveHull(val.cluster['clusterId'], hull, color);
 		});
 
 	});
@@ -164,7 +166,7 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", lineFunction(pts))
 			    	.attr("stroke", color)
-			    	.attr("stroke-width", 2)
+			    	.attr("stroke-width", 3)
 			    	.attr("fill", "none")
 			    	.attr("opacity", 1)
 			    	.on("mouseover", function(){
@@ -192,7 +194,7 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
 
 		  			}).on("mouseout", function(){
-		  				
+
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 		  			});
 
