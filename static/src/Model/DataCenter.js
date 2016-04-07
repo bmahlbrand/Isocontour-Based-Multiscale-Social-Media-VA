@@ -1,46 +1,27 @@
-ClusterTree = function(){
+DataCenter = function(){
 
-	//cluster dictionary, key: cluster id;
+	//cluster dictionary, key: cluster id
 	this.clusters = {};
 
+	// tweet dictionary, key: tweet id
 	this.tweets = {};
 
 	this.loadTweets();
 	this.loadClusters();
 
-	//cluster tree:
-
 	//hard coded for now
 	this.rootID = "10_0";
 
-	this.root = this.initClusterTree();
+	//init tree
+	this.root = this.initTree();
 	
 };
 
 /*************************************************************************************/
-/******************************* cluster operation ***********************************/
+/***************************** cluster list operation ********************************/
 /*************************************************************************************/
 
-ClusterTree.prototype.loadClusters = function(){
-
-	var that = this;
-
-	$.ajax({
-		method: "GET",
-		dataType: "json",
-		url: "http://"+ip_address+"/getCluster",
-		headers : { 'Content-Type': 'application/json' },
-		async: false
-	})
-	.done(function( msg ) {
-		msg.forEach(function(cluster){
-			that.clusters[cluster['clusterId']] = cluster;
-		});
-	});
-
-};
-
-ClusterTree.prototype.getClusters = function(){
+DataCenter.prototype.getClusters = function(){
 
 	//this will later add filtering options
 	//TO-DO
@@ -52,17 +33,17 @@ ClusterTree.prototype.getClusters = function(){
 /*************************************************************************************/
 /***************************** cluster tree operation ********************************/
 /*************************************************************************************/
-ClusterTree.prototype.getClusterTree = function(){
+DataCenter.prototype.getTree = function(){
 	return this.root;
 };
 
-ClusterTree.prototype.getClustersByLevels = function(){
+DataCenter.prototype.getClustersByLevels = function(){
 	var rst = [];
 	this.root.getClustersByLevels(0, rst);
 	return rst;
 };
 
-ClusterTree.prototype.initClusterTree = function(){
+DataCenter.prototype.initTree = function(){
 
 	var rt = new CTreeNode(this.clusters[this.rootID]);
 	rt.addChild(this.clusters);
@@ -75,7 +56,40 @@ ClusterTree.prototype.initClusterTree = function(){
 /********************************* tweet operation ***********************************/
 /*************************************************************************************/
 
-ClusterTree.prototype.loadTweets = function(){
+DataCenter.prototype.getTweets = function(){
+	return this.tweets;
+};
+
+DataCenter.prototype.getTweetsByIds = function(ids){
+	
+	var that = this;
+	var rst = [];
+
+	ids.forEach(function(id){
+		if(that.tweets[id] !== null )
+			rst.push(that.tweets[id]);
+	});
+
+	return rst;
+};
+
+//distribution of categories;
+DataCenter.prototype.distOfCate = function(tweets){
+	
+	var cateArr = tweets.map(function(val){ return Object.keys(val.cate); });
+	cateArr = cateArr.reduce(function(prev, next){ return prev.concat(next); });
+	return _.countBy(cateArr);
+
+};
+
+
+/******************************************************************************************/
+
+/*************************************************************************************/
+/********************************* Ajax call operation *******************************/
+/*************************************************************************************/
+
+DataCenter.prototype.loadTweets = function(){
 
 	var that = this;
 
@@ -115,40 +129,35 @@ ClusterTree.prototype.loadTweets = function(){
 	});
 };
 
-ClusterTree.prototype.getTweets = function(){
-	return this.tweets;
-};
+DataCenter.prototype.loadClusters = function(){
 
-ClusterTree.prototype.getTweetsByIds = function(ids){
-	
 	var that = this;
-	var rst = [];
 
-	ids.forEach(function(id){
-		if(that.tweets[id] !== null )
-			rst.push(that.tweets[id]);
+	$.ajax({
+		method: "GET",
+		dataType: "json",
+		url: "http://"+ip_address+"/getCluster",
+		headers : { 'Content-Type': 'application/json' },
+		async: false
+	})
+	.done(function( msg ) {
+		msg.forEach(function(cluster){
+			that.clusters[cluster['clusterId']] = cluster;
+		});
 	});
 
-	return rst;
 };
 
-ClusterTree.prototype.distOfCate = function(tweets){
-	
-	var cateArr = tweets.map(function(val){ return Object.keys(val.cate); });
-	cateArr = cateArr.reduce(function(prev, next){ return prev.concat(next); });
-	return _.countBy(cateArr);
+/*************************************************************************************/
+DataCenter.the_instace = null;
+
+DataCenter.instance = function(){
+
+	if(DataCenter.the_instace == null)
+		DataCenter.the_instace = new DataCenter();
+	return DataCenter.the_instace;
 
 };
 
-
-/***********************************************************************************/
-
-ClusterTree.the_instace = null;
-
-ClusterTree.instance = function(){
-
-	if(ClusterTree.the_instace == null)
-		ClusterTree.the_instace = new ClusterTree();
-	return ClusterTree.the_instace;
-
-};
+//init DataCenter
+DataCenter.instance();

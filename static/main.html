@@ -50,6 +50,8 @@
 	<script type="text/javascript" src="src/Model/HullLayout.js"></script>
 	<script type="text/javascript" src="src/Model/PolyK.js"></script>
 
+	<script type="text/javascript" src="src/Vis/ColorFuncCollection.js"></script>
+
 
 	<script type="text/javascript" src="src/Model/Obj.js"></script>
 	<!--extend d3-->
@@ -65,14 +67,12 @@
 	<script type="text/javascript" src="src/Vis/TweetsHeatmapManager.js"></script>
 	<script type="text/javascript" src="src/Vis/PolygonLayerManager.js"></script>
 
-	<script type="text/javascript" src="src/Vis/ContextBrush.js"></script>
 	<script type="text/javascript" src="src/Vis/Canvas_manager.js"></script>
-	
-	<script type="text/javascript" src="src/Vis/Lense/CTreeNode.js"></script>
-	<script type="text/javascript" src="src/Vis/Lense/ClusterTree.js"></script>
-	<script type="text/javascript" src="src/Vis/Lense/Topic_lense.js"></script>
-	<script type="text/javascript" src="src/Vis/Lense/Topic_lense_model.js"></script>
-	<script type="text/javascript" src="src/Vis/Lense/Topic_lense_manager.js"></script>
+
+	<script type="text/javascript" src="src/Model/CTreeNode.js"></script>
+	<script type="text/javascript" src="src/Model/DataCenter.js"></script>
+
+	<script type="text/javascript" src="src/Vis/contour/ContourVis.js"></script>
 
 	<script type="text/javascript" src="lib/heatmap/heatmap.js"></script>
 	<script type="text/javascript" src="lib/heatmap/heatmap-openlayers-renderer.js"></script>
@@ -99,8 +99,6 @@
 
 	<!--scale tree-->
 	<script type="text/javascript" src="src/Vis/ScaleTree/ScaleTreeCanvas.js"></script>
-
-
 
 	<style>
 
@@ -213,7 +211,7 @@
 	  //       	setTimeout(function(){ enable_his(); }, 3000);
 	  //   	}
 	  default_case = 1;
-	  setTimeout(function(){ enable_his(); }, 3000);
+	  setTimeout(function(){ enable_his(); }, 1000);
 	    //}
 
 		function enable_his() {
@@ -224,95 +222,87 @@
 			$('[ng-controller="map_controller"]').scope().refresh_map();
 		}
 
-		function enable_realtime(){
+		// function enable_realtime(){
 
-			var data = case_study[default_case];
-			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
+		// 	var data = case_study[default_case];
+		// 	var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
 
-			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
+		// 	$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
 			
-			var start_date = new Date(Date.parse(case_study[default_case].start_time));
+		// 	var start_date = new Date(Date.parse(case_study[default_case].start_time));
 
-			globe.x_start = new XDate(start_date);
-			globe.x_end = new XDate(start_date);
+		// 	globe.x_start = new XDate(start_date);
+		// 	globe.x_end = new XDate(start_date);
 
-			//utc issue;
-			globe.x_start.addHours(case_study[default_case].time_offset);
-			globe.x_end.addHours(case_study[default_case].time_offset);
+		// 	//utc issue;
+		// 	globe.x_start.addHours(case_study[default_case].time_offset);
+		// 	globe.x_end.addHours(case_study[default_case].time_offset);
 			
-			globe.x_end.addSeconds(globe.data_inc);
+		// 	globe.x_end.addSeconds(globe.data_inc);
 
-			start_timing();
+		// 	start_timing();
 
-		}
+		// }
 
-		function start_timing(){
+		// function start_timing(){
 			
-			if(globe.interval_id != null)
-				return;
+		// 	if(globe.interval_id != null)
+		// 		return;
 
-			globe.interval_id = setInterval(function(){
+		// 	globe.interval_id = setInterval(function(){
 
-				var s = globe.x_start.toString("i")+"Z";
-				var e = globe.x_end.toString("i")+"Z";
+		// 		var s = globe.x_start.toString("i")+"Z";
+		// 		var e = globe.x_end.toString("i")+"Z";
 
-				if(globe.flag == true){
-					$('[ng-controller="map_controller"]').scope().load_data(s, e, true);
-					$('[ng-controller="map_controller"]').scope().refresh_map(false);
-				}else
-					$('[ng-controller="map_controller"]').scope().load_data(s, e, false);
+		// 		if(globe.flag == true){
+		// 			$('[ng-controller="map_controller"]').scope().load_data(s, e, true);
+		// 			$('[ng-controller="map_controller"]').scope().refresh_map(false);
+		// 		}else
+		// 			$('[ng-controller="map_controller"]').scope().load_data(s, e, false);
 
-				console.log("real-time mode: "+ s + ", " + e);
+		// 		console.log("real-time mode: "+ s + ", " + e);
 
-				//alert(s+" "+e+" "+flag);
+		// 		//alert(s+" "+e+" "+flag);
 
-				globe.flag = false;
+		// 		globe.flag = false;
 				
-				//move slide bar;
-				var slide_start = new XDate(globe.x_end);
-				slide_start.addMinutes(-1*globe.time_window);
-				slide_start.addHours(-4);
+		// 		//move slide bar;
+		// 		var slide_start = new XDate(globe.x_end);
+		// 		slide_start.addMinutes(-1*globe.time_window);
+		// 		slide_start.addHours(-4);
 
-				//time zone change;
-				var tmp_e = new XDate(globe.x_end);
-				tmp_e.addHours(-4);
+		// 		//time zone change;
+		// 		var tmp_e = new XDate(globe.x_end);
+		// 		tmp_e.addHours(-4);
 				
-				$('[ng-controller="ts_controller"]').scope().set_time_range_manually(slide_start, tmp_e);
+		// 		$('[ng-controller="ts_controller"]').scope().set_time_range_manually(slide_start, tmp_e);
 				
-				globe.x_start.addSeconds(globe.data_inc);
-				globe.x_end.addSeconds(globe.data_inc);
+		// 		globe.x_start.addSeconds(globe.data_inc);
+		// 		globe.x_end.addSeconds(globe.data_inc);
 
-			}, globe.data_fetch_timing*1000);
-		}
+		// 	}, globe.data_fetch_timing*1000);
+		// }
 
-		function stop_timing(){
+		// function stop_timing(){
 
-			if(globe.interval_id == null)
-				return;
+		// 	if(globe.interval_id == null)
+		// 		return;
 
-			clearInterval(globe.interval_id);
-			globe.interval_id = null;
+		// 	clearInterval(globe.interval_id);
+		// 	globe.interval_id = null;
 
-		}
-
-		function increaseSize(){
-			Topic_lense.glyph_size_delta++;
-		}
-
-		function decreaseSize(){
-			Topic_lense.glyph_size_delta--;
-		}
+		// }
 
 		function changemode(val){
-			Topic_lense.MODE = val;
+			ContourVis.MODE = val;
 			$('[ng-controller="map_controller"]').scope().refresh_map();
 		}
 
 		function changeTension(val){
 			if(parseInt(val) == 1)
-				Topic_lense.tension += 0.1;
+				ContourVis.tension += 0.1;
 			else
-				Topic_lense.tension -= 0.1;
+				ContourVis.tension -= 0.1;
 			$('[ng-controller="map_controller"]').scope().refresh_map();
 		}
 

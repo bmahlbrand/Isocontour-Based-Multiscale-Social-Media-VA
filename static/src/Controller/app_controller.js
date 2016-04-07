@@ -89,21 +89,21 @@ twittNavApp.controller('panel_controller', function($rootScope, $scope) {
 		time_window: 30
 	};
 
-	$scope.glyph_change = function() {
-		var type = parseInt(this.data.glyphType);
-		switch(type) {
-		case 0:
-			Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_1;
-			 break;
-		case 1:
-			Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_2;
-			break;
-		case 2:
-			Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_3;
-			break;
-		}
-		Canvas_manager.instance().update();
-	}
+	// $scope.glyph_change = function() {
+	// 	var type = parseInt(this.data.glyphType);
+	// 	switch(type) {
+	// 	case 0:
+	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_1;
+	// 		 break;
+	// 	case 1:
+	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_2;
+	// 		break;
+	// 	case 2:
+	// 		Topic_lense.glyph_index = Topic_lense.glyph_type.TYPE_3;
+	// 		break;
+	// 	}
+	// 	Canvas_manager.instance().update();
+	// }
 
 	$scope.display_mode_change = function() {
 		var mode = parseInt(this.data.displayMode);
@@ -128,16 +128,16 @@ twittNavApp.controller('panel_controller', function($rootScope, $scope) {
 		globe.time_window = this.data.time_window;
 	}
 
-	$scope.null_change = function(){
+	// $scope.null_change = function(){
 
-		Topic_lense.enable_outline = this.data.showHull;
-		Canvas_manager.instance().update();	
-	}
+	// 	Topic_lense.enable_outline = this.data.showHull;
+	// 	Canvas_manager.instance().update();	
+	// }
 
-	$scope.transition_change = function(){
-		Topic_lense.enable_transition = this.data.transition;
+	// $scope.transition_change = function(){
+	// 	Topic_lense.enable_transition = this.data.transition;
 
-	}
+	// }
 
 	$scope.realtime_mode_change = function(){
 		if( this.data.realtime_mode == "resume"){
@@ -172,84 +172,84 @@ twittNavApp.controller('ts_controller', function($rootScope, $scope) {
 
 });
 
-twittNavApp.controller('form_controller', function($rootScope, $scope, $http) {
+// twittNavApp.controller('form_controller', function($rootScope, $scope, $http) {
 
-	$scope.formData = {};
+// 	$scope.formData = {};
 	
-	// $scope.processForm = function() {
+// 	$scope.processForm = function() {
 		
-	// 	$http({
-	// 		method  : 'POST',
-	// 		url     : 'http://localhost:9000/search',
-	// 		data    : $.param($scope.formData),
-	// 		headers : { 'Content-Type': 'application/x-www-form-urlencoded' },
-	// 		cache	: true
-	// 	})
-	// 	.success(function(data) {
+// 		$http({
+// 			method  : 'POST',
+// 			url     : 'http://localhost:9000/search',
+// 			data    : $.param($scope.formData),
+// 			headers : { 'Content-Type': 'application/x-www-form-urlencoded' },
+// 			cache	: true
+// 		})
+// 		.success(function(data) {
 
-	// 		// data.forEach(function(entry){
-	// 		// 	TweetsDataManager.instance().insert(entry);
-	// 		// });
+// 			// data.forEach(function(entry){
+// 			// 	TweetsDataManager.instance().insert(entry);
+// 			// });
 
-	// 		// console.log(TweetsDataManager.instance().count());
+// 			// console.log(TweetsDataManager.instance().count());
 			
-	// 		// $('[ng-controller="map_controller"]').scope().refresh_map(-1, -1);
+// 			// $('[ng-controller="map_controller"]').scope().refresh_map(-1, -1);
 
-	// 	});
-	// };
-	$scope.processForm = function() {
+// 		});
+// 	};
+// 	$scope.processForm = function() {
 
-		var terms = $scope.formData.queryText.split(" ");
-		Canvas_manager.instance().topic_lense_manager.add_topic(terms, 0);
-	}
+// 		var terms = $scope.formData.queryText.split(" ");
+// 		Canvas_manager.instance().topic_lense_manager.add_topic(terms, 0);
+// 	}
 
-});
+// });
 
-twittNavApp.controller('selection_controller', function($rootScope, $scope) {
+// twittNavApp.controller('selection_controller', function($rootScope, $scope) {
 
-	$scope.flag = false;
+// 	$scope.flag = false;
 	
-	$scope.switch_selection = function() {
+// 	$scope.switch_selection = function() {
 		
-		if($scope.flag == true)
-			$rootScope.polygon_layer.activateControl();
-		else
-			$rootScope.polygon_layer.deactivateControl();
-	};
+// 		if($scope.flag == true)
+// 			$rootScope.polygon_layer.activateControl();
+// 		else
+// 			$rootScope.polygon_layer.deactivateControl();
+// 	};
 
-	$scope.enable_active = false;
+// 	$scope.enable_active = false;
 
-	$scope.switch_active = function() {
+// 	$scope.switch_active = function() {
 		
-		if($scope.enable_active == true)
-			Canvas_manager.instance().get_lense_manager().set_sts(Topic_lense.status.ACTIVE, 0);
-		else
-			Canvas_manager.instance().get_lense_manager().set_sts(Topic_lense.status.NORMAL, 0);
-	};
+// 		if($scope.enable_active == true)
+// 			Canvas_manager.instance().get_lense_manager().set_sts(Topic_lense.status.ACTIVE, 0);
+// 		else
+// 			Canvas_manager.instance().get_lense_manager().set_sts(Topic_lense.status.NORMAL, 0);
+// 	};
 
 
 
-});
+// });
 
 
-twittNavApp.controller('histogram_controller', function($rootScope, $scope, $http) {
+// twittNavApp.controller('histogram_controller', function($rootScope, $scope, $http) {
 
-	$scope.init = function(){
-		$scope.histogram = new HistogramBrush();
-	};
+// 	$scope.init = function(){
+// 		$scope.histogram = new HistogramBrush();
+// 	};
 
-	$scope.init();
+// 	$scope.init();
 
-	$scope.update_histogram = function(cluster_data){
+// 	$scope.update_histogram = function(cluster_data){
 		
-		if ($scope.histogram == null)
-			return;
+// 		if ($scope.histogram == null)
+// 			return;
 
-		$scope.histogram.update(cluster_data);
+// 		$scope.histogram.update(cluster_data);
 
-	};
+// 	};
 
-});
+// });
 
 
 twittNavApp.controller('map_controller', function($rootScope, $scope) {
@@ -273,7 +273,7 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		$rootScope.polygon_layer = new PolygonLayerManager($rootScope.mapView.getMap());
 
 		//initialize canvas manager:
-		Canvas_manager.instance().init(document.getElementById("mapView"), $rootScope.mapView.getMap(), $rootScope.mapViewHelper);
+		Canvas_manager.instance().init(document.getElementById("mapView"), $rootScope.mapView.getMap());
 		
 	};
 
@@ -284,9 +284,6 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	
 		if (typeof $rootScope.mapView == 'undefined')
 			return;
-		
-		var first_lense = $scope.get_first_lense();
-
 		// $rootScope.mapView.render_heatmap();
 		// $rootScope.mapView.render_dots();
 		
@@ -314,15 +311,15 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		Canvas_manager.instance().add_region(bounds, start_time, end_time);
 	};
 
-	//assume there is only one lense;
-	$scope.get_first_lense = function(){
-		var lense_db = Canvas_manager.instance().get_lense_manager().lense_db;
-		if(lense_db.length < 1)
-			return null;
-		else{
-			return lense_db[0];
-		}
-	};
+	// //assume there is only one lense;
+	// $scope.get_first_lense = function(){
+	// 	var lense_db = Canvas_manager.instance().get_lense_manager().lense_db;
+	// 	if(lense_db.length < 1)
+	// 		return null;
+	// 	else{
+	// 		return lense_db[0];
+	// 	}
+	// };
 
 	$scope.update_time_range = function(start_time, end_time){
 
@@ -368,14 +365,14 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		$rootScope.mapView.clear_dots();
 	}
 
-	$scope.get_color_mapping = function(key){
-		var default_color = "#000000";
-		var first_lense = $scope.get_first_lense();
-		if(first_lense != null)
-			return this.get_color_scheme()(key);
-		else
-			return default_color;
-	}
+	// $scope.get_color_mapping = function(key){
+	// 	var default_color = "#000000";
+	// 	var first_lense = $scope.get_first_lense();
+	// 	if(first_lense != null)
+	// 		return this.get_color_scheme()(key);
+	// 	else
+	// 		return default_color;
+	// }
 
 });
 
@@ -384,7 +381,7 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	
 	$scope.init = function(){
-		ScaleTreeCanvas.instance().setData(ClusterTree.instance().getClusterTree());
+
 		ScaleTreeCanvas.instance().update();
 	};
 

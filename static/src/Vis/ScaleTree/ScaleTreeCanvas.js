@@ -1,7 +1,6 @@
 ScaleTreeCanvas = function(){
 
 	this.canvas = null;
-	this.dataRoot = null;
 
 	//this array contains nodes that are in the scope of map.
 	//this array can only be modified by the topic_lense class.
@@ -13,10 +12,6 @@ ScaleTreeCanvas = function(){
 
 	this.init();
 }
-
-ScaleTreeCanvas.prototype.setData = function(val){
-	this.dataRoot = val;
-};
 
 ScaleTreeCanvas.prototype.setAcNodes = function(val){
 	this.activatedNodes = val;
@@ -35,7 +30,7 @@ ScaleTreeCanvas.prototype.getHLNodes = function(){
 	var ids = [];
 	this.highlightedNodes.forEach(function(val){
 
-		var node = ScaleTreeCanvas.instance().dataRoot.getNodeById(val);
+		var node = DataCenter.instance().getTree().getNodeById(val);
 		var list = node.toList();
 		var _ids = list.map(function(_val){ return _val.cluster.clusterId; });
 	    ids = ids.concat(_ids);
@@ -57,12 +52,12 @@ ScaleTreeCanvas.prototype.init = function() {
 
 ScaleTreeCanvas.prototype.setBbox = function(){
 
-	var level = this.dataRoot.getHeight();
+	var level = DataCenter.instance().getTree().getHeight();
 	var spaceBtLevels = Math.floor((ScaleTreeCanvas.height - level*ScaleTreeCanvas.nodeHeight) / (level-1));
 
 	//initial bbox;
 	var bbox = new BBox(ScaleTreeCanvas.width/2, ScaleTreeCanvas.nodeHeight/2, ScaleTreeCanvas.width/2, ScaleTreeCanvas.nodeHeight/2);
-	this.dataRoot.setBbox(bbox, spaceBtLevels);
+	DataCenter.instance().getTree().setBbox(bbox, spaceBtLevels);
 
 };
 
@@ -144,7 +139,7 @@ ScaleTreeCanvas.prototype.drawNode = function(){
 
 	var that = this;
 	this.setBbox();
-	this.dataRoot.drawBbox();
+	DataCenter.instance().getTree().drawBbox();
 
 	this.hoverNode();
 
@@ -181,7 +176,7 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 ScaleTreeCanvas.prototype.drawLinkage = function(){
 
-	this.dataRoot.drawLinkage();
+	DataCenter.instance().getTree().drawLinkage();
 
 	this.hoverLinkage();
 };

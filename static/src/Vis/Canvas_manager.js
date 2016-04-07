@@ -2,12 +2,13 @@ Canvas_manager = function(){
 
 	this.map_svg = null;
 	this.overlay_svg = null;
-	this.topic_lense_manager = null;
-	this.mapHelper = null;
+	// this.topic_lense_manager = null;
+
+	this.cv = null;
 
 };
 
-Canvas_manager.prototype.init = function(map_div, map, mapHelper) {
+Canvas_manager.prototype.init = function(map_div, map) {
 	
 	//init map svg;
 	this.map_div = map_div;
@@ -40,22 +41,15 @@ Canvas_manager.prototype.init = function(map_div, map, mapHelper) {
 					    	.style("z-index", "999")
 					    	.style("pointer-events", "none");
 
-    this.topic_lense_manager = new Topic_lense_manager(this.map_svg, this.overlay_svg);
-
-    this.update(false);
-
-    //set map helper;
-    this.mapHelper = mapHelper;
-
 };
 
 Canvas_manager.prototype.set_visibility = function(visible) {
 	this.overlay.setVisibility(visible);
 }
 
-Canvas_manager.prototype.get_lense_manager = function(){
-	return this.topic_lense_manager;
-};
+// Canvas_manager.prototype.get_lense_manager = function(){
+// 	return this.topic_lense_manager;
+// };
 
 Canvas_manager.prototype.get_map = function(){
 	return this.map;
@@ -68,10 +62,6 @@ Canvas_manager.prototype.geo_p_to_pixel_p = function(vec){
     var rst = new Vector2();
     rst.set(pixel.x, pixel.y);
     return rst;
-};
-
-Canvas_manager.prototype.getMapHelper = function(zoomLevel){
-	return this.mapHelper.getMap();
 };
 
 Canvas_manager.prototype.pixel_p_to_geo_p = function(vec){
@@ -151,10 +141,10 @@ Canvas_manager.prototype.update = function(){
         			.style("position", "absolute")
         			.style("z-index", "999");
 
-    if( this.topic_lense_manager.size() <= 0)
+    if( this.cv == null)
     	return;
 
-    this.topic_lense_manager.update();
+    this.cv.update();
     
 };
 
@@ -173,7 +163,8 @@ Canvas_manager.prototype.add_region = function(bounds, start_time, end_time){
 	var geo_bbox = new BBox();
 	geo_bbox.set_by_minmax( min_lng, max_lng, min_lat, max_lat);
 
-	this.topic_lense_manager.add_lense(geo_bbox, start_time, end_time);
+	// this.topic_lense_manager.add_lense(geo_bbox, start_time, end_time);
+	this.cv = new ContourVis(this.map_svg, this.overlay_svg, geo_bbox, start_time, end_time);
 
 };
 

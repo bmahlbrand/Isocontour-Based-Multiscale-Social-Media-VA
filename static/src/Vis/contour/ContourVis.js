@@ -1,31 +1,15 @@
-Topic_lense = function(lense_id, map_svg, overlay_svg, geo_bbox, start_time, end_time){
-
-	this.lense_id = lense_id;
+ContourVis = function(map_svg, overlay_svg, geo_bbox, start_time, end_time){
 
 	this.map_svg = map_svg;
 	this.overlay_svg = overlay_svg;
-	ClusterTree.instance();
 
-	this.colorScheme = null;
-
-	this.initColorScheme();
 };
 
-Topic_lense.prototype.initColorScheme = function(){
-
-	this.colorScheme = d3.scale
-						.linear()
-						.domain([ case_study[default_case].startLevel + case_study[default_case].zoom,
-								case_study[default_case].endLevel + case_study[default_case].zoom ])
-						// .range(["#08519c", "#eff3ff"]);
-						.range(["#0000ff","#ff0000"]);
-};
-
-Topic_lense.prototype.clear = function(){
+ContourVis.prototype.clear = function(){
 	this.map_svg.selectAll(".concaveHull").remove();
 };
 
-Topic_lense.prototype.update = function(){
+ContourVis.prototype.update = function(){
 
 	this.clear();
 
@@ -38,7 +22,7 @@ Topic_lense.prototype.update = function(){
 	var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
 	
 	// get the clusters of all levels;
-	var clusterMatrix = ClusterTree.instance().getClustersByLevels();
+	var clusterMatrix = DataCenter.instance().getClustersByLevels();
 	//filter based on vis levels
 	clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
 
@@ -60,7 +44,7 @@ Topic_lense.prototype.update = function(){
 
 			//clusters[i]['pixelPts'] = pixelPts;
 			//2d array contains 1d poly
-			clusters[i]['hulls'] = Topic_lense.getConcaveHull(clusters[i]['hullIds']);
+			clusters[i]['hulls'] = ContourVis.getConcaveHull(clusters[i]['hullIds']);
 
 			//optimized results save in clusters[i]['optimizedHulls']
 			clusters[i]['optimizedHulls'] = [];
@@ -70,7 +54,7 @@ Topic_lense.prototype.update = function(){
 	}
 
 	//perform overlapping removal;
-	if(Topic_lense.minOverlap)
+	if(ContourVis.minOverlap)
 		//only change clusters[i]['optimizedHulls']
 		clusterMatrix = HullLayout.minimizeOverlap(clusterMatrix);
 
@@ -102,7 +86,7 @@ Topic_lense.prototype.update = function(){
 };
 
 //if clusterIdlist is empty, reset;
-Topic_lense.prototype.hoverHull = function(clusterIdlist){
+ContourVis.prototype.hoverHull = function(clusterIdlist){
 
 	if(clusterIdlist.length <= 0){
 		d3.selectAll(".concaveHull")
@@ -121,7 +105,7 @@ Topic_lense.prototype.hoverHull = function(clusterIdlist){
 
 };
 
-Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
+ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 
 	pts = HullLayout.odArrTo2dArr(pts);
 
@@ -130,7 +114,7 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 
 	var lineFunction = null;
 
-	if(Topic_lense.MODE == Topic_lense.INTERMODE.BASIS){
+	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
 		lineFunction = d3.svg.line()
 						.x(function(d) { return d[0]; })
                         .y(function(d) { return d[1]; })
@@ -140,7 +124,7 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 						.x(function(d) { return d[0]; })
                         .y(function(d) { return d[1]; })
                         .interpolate("cardinal-closed")
-                        .tension(Topic_lense.tension);
+                        .tension(ContourVis.tension);
 	}
 
     var hull = svg.append("path")
@@ -157,21 +141,21 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 			    		var cluster_id = this.id.substring(5,this.id.length);
 			    		console.log(cluster_id);
 
-			    		var ids = ClusterTree.instance().getClusters()[cluster_id]['ids'];
-			    		var tweets = ClusterTree.instance().getTweetsByIds(ids);
+			    		var ids = DataCenter.instance().getClusters()[cluster_id]['ids'];
+			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
 			    		//cate distribution
-			    		console.log(ClusterTree.instance().distOfCate(tweets));
+			    		console.log(DataCenter.instance().distOfCate(tweets));
 
 			    		//tweets on the boundary:
 			    		var ids = [];
-			    		ClusterTree.instance().getClusters()[cluster_id]['hullIds'].forEach(function(idlist){
+			    		DataCenter.instance().getClusters()[cluster_id]['hullIds'].forEach(function(idlist){
 			    			ids = ids.concat(idlist);
 			    		});
 
-			    		var tweets = ClusterTree.instance().getTweetsByIds(ids);
+			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
 
@@ -183,7 +167,7 @@ Topic_lense.prototype.drawConcaveHull = function(id, pts, color){
 };
 
 
-Topic_lense.prototype.filterHull = function(hull){
+ContourVis.prototype.filterHull = function(hull){
 
 	//check valid hull
 	if(hull.length < 6)
@@ -200,7 +184,7 @@ Topic_lense.prototype.filterHull = function(hull){
 
 		var x = hull[2*i];
 		var y = hull[2*i+1];
-		if( (x > 0 && x < Topic_lense.DIMENSION) && (y > 0 && y < Topic_lense.DIMENSION) )
+		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
 			flag = true;
 
 	}
@@ -208,7 +192,7 @@ Topic_lense.prototype.filterHull = function(hull){
 	return flag;
 };
 //if not valid, return [];
-Topic_lense.getConcaveHull = function(idsList){
+ContourVis.getConcaveHull = function(idsList){
 
 	// get hull using js function. input: poly.
 	// if(poly.length < 3)
@@ -216,7 +200,7 @@ Topic_lense.getConcaveHull = function(idsList){
 
 	// // 1->concave; Infinity->convex.
 	// var poly = hull(poly, 100);
-	// return Topic_lense.smoothPoly(poly);
+	// return ContourVis.smoothPoly(poly);
 
 
 	// get hull from json file;
@@ -234,7 +218,7 @@ Topic_lense.getConcaveHull = function(idsList){
 		}
 		else{
 
-			var tweets = ClusterTree.instance().getTweets();
+			var tweets = DataCenter.instance().getTweets();
 			var pts = [];
 			ids.forEach(function(id){
 				var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
@@ -251,7 +235,7 @@ Topic_lense.getConcaveHull = function(idsList){
 };
 
 // not called in the current version
-// Topic_lense.smoothPoly = function(poly){
+// ContourVis.smoothPoly = function(poly){
 
 // 	if(poly.length <= 0)
 // 		return [];
@@ -284,9 +268,9 @@ Topic_lense.getConcaveHull = function(idsList){
 // };
 
 /******************  parameter setup  **********************/
-Topic_lense.tension = 0.7;
-Topic_lense.minOverlap = true;
-Topic_lense.INTERMODE = { BASIS:0, CARDINAL:1 };
-Topic_lense.MODE = Topic_lense.INTERMODE.CARDINAL;
-Topic_lense.DIMENSION = 1024;
+ContourVis.tension = 0.7;
+ContourVis.minOverlap = true;
+ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
+ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
+ContourVis.DIMENSION = 1024;
 /******************  parameter setup  **********************/
