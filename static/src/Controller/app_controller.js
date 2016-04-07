@@ -394,42 +394,42 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		return Canvas_manager.instance().cv;
 	};
 
-	$scope.update_time_range = function(start_time, end_time){
+	// $scope.update_time_range = function(start_time, end_time){
 
-		var first_lense = $scope.get_first_lense();
+	// 	var first_lense = $scope.get_first_lense();
 
-		if( first_lense != null){
-			first_lense.update_time_range(start_time, end_time);
-			$scope.refresh_map(false);
-		}
+	// 	if( first_lense != null){
+	// 		first_lense.update_time_range(start_time, end_time);
+	// 		$scope.refresh_map(false);
+	// 	}
 
-	};
+	// };
 
-	$scope.get_color_scheme = function(){
+	// $scope.get_color_scheme = function(){
 
-		var first_lense = $scope.get_first_lense();
+	// 	var first_lense = $scope.get_first_lense();
 
-		if( first_lense != null){
-			return first_lense.topic_lense_data.get_color_mapping();
-		}else{
-			alert("cannot find color mapping");
-			return null;
-		}
+	// 	if( first_lense != null){
+	// 		return first_lense.topic_lense_data.get_color_mapping();
+	// 	}else{
+	// 		alert("cannot find color mapping");
+	// 		return null;
+	// 	}
 
 
-	};
+	// };
 
-	$scope.get_current_key = function(){
+	// $scope.get_current_key = function(){
 
-		var first_lense = $scope.get_first_lense();
+	// 	var first_lense = $scope.get_first_lense();
 
-		if( first_lense != null){
-			return first_lense.topic_lense_data.get_current_key();
-		}else{
-			alert("cannot find current key");
-			return null;
-		}
-	};
+	// 	if( first_lense != null){
+	// 		return first_lense.topic_lense_data.get_current_key();
+	// 	}else{
+	// 		alert("cannot find current key");
+	// 		return null;
+	// 	}
+	// };
 
 	$scope.render_dots = function(geoPts, color){
 		$rootScope.mapView.render_dots(geoPts, color);

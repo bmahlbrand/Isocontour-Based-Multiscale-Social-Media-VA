@@ -191,8 +191,8 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
 
-
 		  			}).on("mouseout", function(){
+		  				
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 		  			});
 

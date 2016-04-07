@@ -57,7 +57,7 @@ Canvas_manager.prototype.get_map = function(){
 
 Canvas_manager.prototype.geo_p_to_pixel_p = function(vec){
 
-	var map = this.map
+	var map = this.map;
 	var pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(vec.x, vec.y).transform("EPSG:4326", "EPSG:900913"));
     var rst = new Vector2();
     rst.set(pixel.x, pixel.y);
