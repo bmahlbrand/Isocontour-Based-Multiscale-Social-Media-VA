@@ -140,7 +140,7 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 
 CTreeNode.prototype.drawBbox = function(){
 
-	ScaleTreeCanvas.instance().drawRect(this.cluster.clusterId, this.vis.getBbox());
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getBbox());
 
 	this.children.forEach(function(val){
 		val.drawBbox();
@@ -166,7 +166,8 @@ CTreeNode.prototype.drawLinkage = function(){
 		var p125 = [bbox.get_center().x, bbox.getBottom()+space*0.5 ];
 		var p175 = [_bbox.get_center().x, _bbox.getTop()-space*0.5 ];
 
-		ScaleTreeCanvas.instance().drawBCurve([p1, p125, p175, p2]);
+		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBCurve([p1, p125, p175, p2]);
+		
 		val.drawLinkage();
 
 	});

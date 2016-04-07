@@ -36,9 +36,7 @@ ScaleTreeCanvas.prototype.getHLNodes = function(){
 	    ids = ids.concat(_ids);
 	});
 	return ids;
-
 };
-
 
 ScaleTreeCanvas.prototype.init = function() {
 	
@@ -63,6 +61,7 @@ ScaleTreeCanvas.prototype.setBbox = function(){
 
 ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 
+	var that = this;
 	//add margin between adjacent nodes;
 	var margin = 2;
 	var _bbox = new BBox();
@@ -79,32 +78,34 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("height", _bbox.getHeight())
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
 	                            .attr("fill", ScaleTreeCanvas.nodeFill)
-	                            .on('contextmenu', d3.contextMenu(ScaleTreeCanvas.instance().get_menu(id)) );
+	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 
 ScaleTreeCanvas.prototype.get_menu = function(id){
+
+	var that = this;
 
 	var menu = [
 		{
 			title: 'set',
 			action: function(elm, d) {
 	            
-	            ScaleTreeCanvas.instance().addHLNode(id);
+	            that.addHLNode(id);
 				//update map;
-	        	$('[ng-controller="map_controller"]').scope().get_first_lense().hoverHull(ScaleTreeCanvas.instance().getHLNodes());
+	        	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(that.getHLNodes());
 
-	        	ScaleTreeCanvas.instance().update();
+	        	that.update();
 			}
 		},
 		{
 			title: 'unset',
 			action: function(elm, d) {
 
-				ScaleTreeCanvas.instance().removeHLNode(id);
+				that.removeHLNode(id);
             	//update map;
-            	$('[ng-controller="map_controller"]').scope().get_first_lense().hoverHull([]);
+            	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull([]);
 
-            	ScaleTreeCanvas.instance().update();
+            	that.update();
 			}
 		},
 		{
@@ -217,26 +218,3 @@ ScaleTreeCanvas.linkStroke = "#b2182b";
 
 
 /***********************************************************************************/
-
-ScaleTreeCanvas.the_instace = null;
-
-ScaleTreeCanvas.instance = function(){
-
-	if(ScaleTreeCanvas.the_instace == null)
-		ScaleTreeCanvas.the_instace = new ScaleTreeCanvas();
-	return ScaleTreeCanvas.the_instace;
-
-};
-
-
-function intersect_arrays(arr1, arr2){
-		
-	var results = [];
-
-	for (var i = 0; i < arr1.length; i++) {
-		if (arr2.indexOf(arr1[i]) !== -1) {
-    		results.push(arr1[i]);
-		}
-	}
-	return results;
-}

@@ -321,6 +321,10 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	// 	}
 	// };
 
+	$scope.getHulls = function(){
+		return Canvas_manager.instance().cv;
+	};
+
 	$scope.update_time_range = function(start_time, end_time){
 
 		var first_lense = $scope.get_first_lense();
@@ -382,8 +386,16 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	
 	$scope.init = function(){
 
-		ScaleTreeCanvas.instance().update();
+		$rootScope.stc = new ScaleTreeCanvas();
+		$rootScope.stc.update();
 	};
 
+	$scope.getScaleTreeCanvas = function(){
+		return $rootScope.stc;
+	};
+
+	//have getScaleTreeCanvas() defined before calling init function
 	$scope.init();
+
+
 });
