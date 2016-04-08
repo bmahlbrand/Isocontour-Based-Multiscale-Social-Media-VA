@@ -38,12 +38,6 @@ DataCenter.prototype.getTree = function(){
 	return this.root;
 };
 
-DataCenter.prototype.getClustersByLevels = function(){
-	var rst = [];
-	this.root.getClustersByLevels(0, rst);
-	return rst;
-};
-
 DataCenter.prototype.initTree = function(){
 
 	var rt = new CTreeNode(this.clusters[this.rootID]);

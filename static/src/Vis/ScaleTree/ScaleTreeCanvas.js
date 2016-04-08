@@ -48,6 +48,12 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .on("click", function(){
 	                            	alert(this.id);
 	                            })
+	                            // .on("mouseover", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().addHlNode(id);
+	                            // })
+	                            // .on("mouseout", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().removeHlNode(id);
+	                            // })
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 

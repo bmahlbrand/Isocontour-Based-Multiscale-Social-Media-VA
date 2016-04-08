@@ -36,31 +36,26 @@ CTreeNode.prototype.getHeight = function(){
 	return 1 + Math.max.apply(null, rst);
 };
 
-CTreeNode.prototype.getClustersByLevels = function(level, rst){
+CTreeNode.prototype.getTreeByLevels = function(){
 
-	//deal with the current node
-	while(rst.length <= level)
-		rst.push([]);
+	if(this.children.length <= 0)
+		return [this];
 
-	rst[level].push(this.cluster);
-
+	var rst = [];
 	this.children.forEach(function(val){
-		val.getClustersByLevels(level+1, rst);
+
+		var _rst = val.getTreeByLevels();
+
+		_rst.forEach(function(_val, i){
+			if(rst.length <= i)
+				rst.push([]);
+
+			rst[i] = rst[i].concat(_val);
+		});
 	});
 
-};
-
-CTreeNode.prototype.getNodesByLevels = function(level, rst){
-
-	//deal with the current node
-	while(rst.length <= level)
-		rst.push([]);
-
-	rst[level].push(this);
-
-	this.children.forEach(function(val){
-		val.getNodesByLevels(level+1, rst);
-	});
+	rst.unshift([this]);
+	return rst;
 
 };
 
