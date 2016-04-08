@@ -1,7 +1,6 @@
 CTreeNode = function(cluster){
 	this.cluster = cluster;
 	this.children = [];
-	this.type = CTreeNode.nodeType.NON_LEAF;
 	this.vis = new VisComponent();
 };
 
@@ -10,11 +9,7 @@ CTreeNode.prototype.addChild = function(clusterArr){
 	var that = this;
 	var childIdx = this.cluster['children'];
 
-	if(childIdx.length <= 0){
-		this.type = CTreeNode.nodeType.LEAF;
-
-	}else{
-		this.type = CTreeNode.nodeType.NON_LEAF;
+	if(childIdx.length > 0){
 
 		childIdx.forEach(function(val){
 			var c = new CTreeNode(clusterArr[val]);
@@ -104,19 +99,27 @@ CTreeNode.prototype.toList = function(){
 
 };
 
-CTreeNode.prototype.getType = function(){
-	return this.type;
-};
-
-CTreeNode.prototype.setType = function(type){
-	this.type = type;
-};
-
 CTreeNode.prototype.getVol = function(){
 	return this.cluster.ids.length;
 };
+/*****************************************************************************************/
+/**********************************    Stat Component   ***********************************/
+/*****************************************************************************************/
 
-CTreeNode.nodeType = { NON_LEAF: 1, LEAF:2};
+CTreeNode.prototype.getStatScore = function(){
+	var tweets = DataCenter.instance().getTweetsByIds(this.cluster['ids']);
+	var dist = DataCenter.instance().distOfCate(tweets);
+
+	var no = dist[CTreeNode.statVariable[0]];
+	var de = dist[CTreeNode.statVariable[0]] + dist[CTreeNode.statVariable[1]];
+
+	if( de <= 0)
+		return 0.5;
+	else
+		return no*1.0 / de;
+
+};
+
 
 /*****************************************************************************************/
 /**********************************    Vis Component   ***********************************/
@@ -225,3 +228,5 @@ VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 
 CTreeNode.SORTMODE = { VOLUME:0 }
 CTreeNode.SORT = CTreeNode.SORTMODE.VOLUME;
+
+CTreeNode.statVariable = ['T04', 'O02'];

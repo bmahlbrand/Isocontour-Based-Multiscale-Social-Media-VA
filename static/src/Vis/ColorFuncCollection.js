@@ -16,3 +16,13 @@ function contourColor(){
 	return q;
 
 }
+
+function statColor(){
+
+	var color = ['#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1','#35978f','#01665e','#003c30'];
+	
+	var q = d3.scale.quantize().domain([0, 1])
+								.range(color);
+	return q;
+
+}
