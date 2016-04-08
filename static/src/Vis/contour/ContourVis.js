@@ -19,12 +19,12 @@ ContourVis.prototype.updateGeoBbox = function(){
 							- ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
 
 	//only see adjacent 3 levels
-	var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
+	//var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
 	
 	// get the clusters of all levels;
 	var clusterMatrix = DataCenter.instance().getClustersByLevels();
 	//filter based on vis levels
-	clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
+	//clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
 
 	for(var level=0; level<clusterMatrix.length; level++){
 
