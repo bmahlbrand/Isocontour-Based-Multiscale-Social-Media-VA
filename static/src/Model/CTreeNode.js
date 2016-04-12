@@ -252,7 +252,7 @@ VisComponent.scale = function(){
 VisComponent.SCALEMODE = {LOG:0, LINEAR:1};
 VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 
-CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 }
-CTreeNode.SORT = CTreeNode.SORTMODE.VOLUME;
+CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 };
+CTreeNode.SORT = CTreeNode.SORTMODE.GEO;
 
 CTreeNode.statVariable = ['T04', 'O02'];
