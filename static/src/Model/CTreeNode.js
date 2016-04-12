@@ -19,7 +19,12 @@ CTreeNode.prototype.addChild = function(clusterArr){
 	}
 };
 
+/*****************************************************************************/
+/*************************** tree primitive operation*************************/
+/*****************************************************************************/
+
 CTreeNode.prototype.getHeight = function(){
+	
 	if(this.children.length <= 0)
 		return 1;
 
@@ -30,6 +35,22 @@ CTreeNode.prototype.getHeight = function(){
 
 	return 1 + Math.max.apply(null, rst);
 };
+
+CTreeNode.prototype.getNumOfLeaves = function(){
+
+	if(this.children.length <= 0)
+		return 1;
+
+	var rst = 0;
+	this.children.forEach(function(val){
+		rst += val.getNumOfLeaves();
+	});
+	return rst;
+};
+
+/*****************************************************************************/
+/*************************** tree primitive operation*************************/
+/*****************************************************************************/
 
 CTreeNode.prototype.getTreeByLevels = function(){
 
@@ -167,7 +188,7 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 		//set the bbox for children;
 		var sum = 0;
 		this.children.forEach(function(val){
-			sum += VisComponent.scale()(val.getVol());
+			sum += VisComponent.scale()(val.getVol(), val);
 		});
 
 		var left = bbox.getLeft();
@@ -176,7 +197,7 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 
 		this.children.forEach(function(val){
 
-			var w = width * VisComponent.scale()(val.getVol()) / sum;
+			var w = width * VisComponent.scale()(val.getVol(), val) / sum;
 			var b = new BBox(left+w/2, bbox.get_center().y + space + height, w/2, height/2 );
 			val.setBbox(b, space);
 			left += w;
@@ -233,12 +254,17 @@ VisComponent.prototype.getBbox = function(){
 };
 
 // x between [1, infinity]
-VisComponent.logScale = function(x){
+VisComponent.logScale = function(x, node){
 	return Math.log(x+1);
 };
 
-VisComponent.linearScale = function(x){
+VisComponent.linearScale = function(x, node){
 	return x;
+};
+
+VisComponent.uniformScale = function(x, node){
+	return node.getNumOfLeaves();
+
 };
 
 VisComponent.scale = function(){
@@ -247,9 +273,11 @@ VisComponent.scale = function(){
 		return VisComponent.logScale;
 	else if(VisComponent.SCALE == VisComponent.SCALEMODE.LINEAR)
 		return VisComponent.linearScale;
+	else if(VisComponent.SCALE == VisComponent.SCALEMODE.UNIFORM)
+		return VisComponent.uniformScale;
 };
 
-VisComponent.SCALEMODE = {LOG:0, LINEAR:1};
+VisComponent.SCALEMODE = {LOG:0, LINEAR:1, UNIFORM:2};
 VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 
 CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 };

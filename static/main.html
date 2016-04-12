@@ -320,6 +320,18 @@
 
 		}
 
+		function nodeSize(val){
+			if(parseInt(val) == 0)
+				VisComponent.SCALE = VisComponent.SCALEMODE.LOG;
+			else if(parseInt(val) == 1)
+				VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
+			else if(parseInt(val) == 2)
+				VisComponent.SCALE = VisComponent.SCALEMODE.UNIFORM;
+
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+
+		}
+
 	</script>
 
 </head>
@@ -349,7 +361,16 @@
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
 
-		<h5 align="center">Sort tree:</h5>
+
+		<h5 align="center">Node Size</h5>
+			<div>
+				<input type="radio" name="nodeSize" onclick="nodeSize(0);" ><span>log</span><br>
+				<input type="radio" name="nodeSize" onclick="nodeSize(1);" checked><span>linear</span><br>
+				<input type="radio" name="nodeSize" onclick="nodeSize(2);" ><span>uniform</span>
+
+			</div>
+
+		<h5 align="center">Sort Tree</h5>
 			<div>
 				<input type="radio" name="sortTree" onclick="sortTree(0);" ><span>volume</span><br>
 				<input type="radio" name="sortTree" onclick="sortTree(1);" checked><span>geolocation(lon)</span><br>
@@ -357,7 +378,7 @@
 
 			</div>
 		
-		<h5 align="center">Edit contour:</h5>
+		<h5 align="center">Contour Param</h5>
 			<div>
 				<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
 				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
