@@ -178,7 +178,7 @@ CTreeNode.prototype.getVis = function(){
 	return this.vis;
 };
 
-CTreeNode.prototype.setBbox = function(bbox, space){
+CTreeNode.prototype.setBbox = function(bbox){
 
 	this.vis.setBbox(bbox.center.x, bbox.center.y, bbox.extents.x, bbox.extents.y);
 
@@ -198,8 +198,10 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 		this.children.forEach(function(val){
 
 			var w = width * VisComponent.scale()(val.getVol(), val) / sum;
-			var b = new BBox(left+w/2, bbox.get_center().y + space + height, w/2, height/2 );
-			val.setBbox(b, space);
+			
+			var b = new BBox(left+w/2, bbox.get_center().y + height, w/2, height/2 );
+
+			val.setBbox(b);
 			left += w;
 		});
 	}
@@ -207,7 +209,7 @@ CTreeNode.prototype.setBbox = function(bbox, space){
 
 CTreeNode.prototype.drawBbox = function(){
 
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getBbox());
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getVisBbox());
 
 	this.children.forEach(function(val){
 		val.drawBbox();
@@ -220,11 +222,11 @@ CTreeNode.prototype.drawLinkage = function(){
 	if(this.children.length <= 0)
 		return;
 
-	var bbox = this.vis.getBbox();
+	var bbox = this.vis.getVisBbox();
 
 	this.children.forEach(function(val){
 
-		var _bbox = val.getVis().getBbox();
+		var _bbox = val.getVis().getVisBbox();
 		var space = _bbox.getTop() - bbox.getBottom();
 		//end points
 		var p1 = [bbox.get_center().x, bbox.getBottom()];
@@ -243,14 +245,25 @@ CTreeNode.prototype.drawLinkage = function(){
 
 VisComponent = function(){
 	this.bbox = null;
+	this.visBbox = null;
 };
 
 VisComponent.prototype.setBbox = function(cx, cy, ex, ey){
+	
 	this.bbox = new BBox(cx, cy, ex, ey);
+	this.visBbox = new BBox();
+	
+	this.visBbox.setBox(this.bbox);
+	
+	var extent = this.visBbox.getExtent();
+	extent.x = Math.max(extent.x - 2, 1);
+	extent.y = extent.y * 0.4;
+	this.visBbox.setExtents(extent.x, extent.y);
+
 };
 
-VisComponent.prototype.getBbox = function(){
-	return this.bbox;
+VisComponent.prototype.getVisBbox = function(){
+	return this.visBbox;
 };
 
 // x between [1, infinity]

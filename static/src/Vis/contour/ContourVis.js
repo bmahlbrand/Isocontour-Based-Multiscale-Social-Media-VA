@@ -80,7 +80,6 @@ ContourVis.prototype.updateGeoBbox = function(){
 				}
 			});
 		});
-
 	});
 
 	//acNode list;
