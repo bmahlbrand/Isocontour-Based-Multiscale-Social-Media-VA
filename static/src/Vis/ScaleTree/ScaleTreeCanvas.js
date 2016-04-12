@@ -36,7 +36,7 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	_bbox.setExtents( Math.max(_bbox.get_extent().x-margin, 1), _bbox.get_extent().y );
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
-	var color = statColor()(node.getStatScore());
+	var color = statColor()(node.cluster['score']);
 	//draw node;
 	var rectangle = this.canvas.append("rect")
 								.attr("id", "node_"+id)
@@ -196,5 +196,6 @@ ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
 
 ScaleTreeCanvas.linkStroke = "#b2182b";
 
+ScaleTreeCanvas.NODE_VIS_MODE = {};
 
 /***********************************************************************************/

@@ -56,21 +56,45 @@ CTreeNode.prototype.getTreeByLevels = function(){
 
 CTreeNode.prototype.sortChildren = function(){
 
+	var sortFunction = null;
+
 	if( CTreeNode.SORT == CTreeNode.SORTMODE.VOLUME ){
 
-		this.children.sort(function(a,b){
-			if(a.cluster.ids.length < b.cluster.ids.length)
-				return 1;
-			if(a.cluster.ids.length > b.cluster.ids.length)
-				return -1;
-			return +0;
+		sortFunction = function(a,b){
+							if( a.cluster.ids.length < b.cluster.ids.length )
+								return 1;
+							if( a.cluster.ids.length > b.cluster.ids.length )
+								return -1;
+							return +0;
 
-		});
-
-		this.children.forEach(function(val){
-			val.sortChildren();
-		});
+						};
 	}
+	else if( CTreeNode.SORT == CTreeNode.SORTMODE.GEO ){
+		
+		sortFunction = function(a,b){
+							if( a.cluster.center.lon > b.cluster.center.lon )
+								return 1;
+							if( a.cluster.center.lon < b.cluster.center.lon )
+								return -1;
+							return +0;
+						};
+	}
+	else if( CTreeNode.SORT == CTreeNode.SORTMODE.STAT ){
+		
+		sortFunction = function(a,b){
+							if( a.cluster.score < b.cluster.score )
+								return 1;
+							if( a.cluster.score > b.cluster.score )
+								return -1;
+							return +0;
+						};
+	}
+
+	this.children.sort(sortFunction);
+
+	this.children.forEach(function(val){
+		val.sortChildren();
+	});
 
 };
 
@@ -96,7 +120,6 @@ CTreeNode.prototype.toList = function(){
 	});
 
 	return rst;
-
 };
 
 CTreeNode.prototype.getVol = function(){
@@ -106,17 +129,22 @@ CTreeNode.prototype.getVol = function(){
 /**********************************    Stat Component   ***********************************/
 /*****************************************************************************************/
 
-CTreeNode.prototype.getStatScore = function(){
+CTreeNode.prototype.calcStatScore = function(){
+
 	var tweets = DataCenter.instance().getTweetsByIds(this.cluster['ids']);
 	var dist = DataCenter.instance().distOfCate(tweets);
 
 	var no = dist[CTreeNode.statVariable[0]];
 	var de = dist[CTreeNode.statVariable[0]] + dist[CTreeNode.statVariable[1]];
 
-	if( de <= 0)
-		return 0.5;
-	else
-		return no*1.0 / de;
+	var rst = no*1.0 / de;
+	rst = isNaN(rst) ? 0.5 : rst;
+
+	this.cluster['score'] = rst;
+
+	this.children.forEach(function(val){
+		val.calcStatScore();
+	});
 
 };
 
@@ -192,8 +220,6 @@ CTreeNode.prototype.drawLinkage = function(){
 
 };
 
-
-
 VisComponent = function(){
 	this.bbox = null;
 };
@@ -226,7 +252,7 @@ VisComponent.scale = function(){
 VisComponent.SCALEMODE = {LOG:0, LINEAR:1};
 VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 
-CTreeNode.SORTMODE = { VOLUME:0 }
+CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 }
 CTreeNode.SORT = CTreeNode.SORTMODE.VOLUME;
 
 CTreeNode.statVariable = ['T04', 'O02'];
