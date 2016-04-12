@@ -21,11 +21,9 @@ ScaleTreeCanvas.prototype.setBbox = function(){
 
 	var level = DataCenter.instance().getTree().getHeight();
 
-	var margin = ScaleTreeCanvas.treeMargin;
-
 	var centerX = ScaleTreeCanvas.width/2;
 	var centerY = ScaleTreeCanvas.height / level / 2;
-	var w = ScaleTreeCanvas.width/2 - margin;
+	var w = ScaleTreeCanvas.width/2 - ScaleTreeCanvas.treeMarginX;
 	var h = ScaleTreeCanvas.height / level / 2;
 
 	//initial bbox
@@ -123,19 +121,43 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
 		var centerY = ScaleTreeCanvas.height / level * (i - init_level + 0.5);
 		var w = ScaleTreeCanvas.width/2;
 		var h = ScaleTreeCanvas.height / level * 0.5 - yMargin;
+		
 		var bbox = new BBox(centerX, centerY, w, h);
 
 		var color = contourColor()(i);
 
-		var rectangle = this.canvas.append("rect")
-                            .attr("x", bbox.getLeft())
-                            .attr("y", bbox.getTop())
-                            .attr("width", bbox.getWidth())
-                            .attr("height", bbox.getHeight())
-                            .attr("stroke", color)
-                            .attr("fill", color)
-                            .attr("stroke-width", 3)
-                            .attr("opacity", 0.1);
+		//method 1;
+		this.canvas.append("rect")
+                    .attr("x", bbox.getLeft())
+                    .attr("y", bbox.getTop())
+                    .attr("width", bbox.getWidth())
+                    .attr("height", bbox.getHeight())
+                    .attr("stroke", color)
+                    .attr("fill", color)
+                    .attr("stroke-width", 3)
+                    .attr("opacity", 0.15);
+
+        //method 2;
+        // this.canvas.append("rect")
+        //             .attr("x", bbox.getLeft())
+        //             .attr("y", bbox.getTop())
+        //             .attr("width", bbox.getWidth())
+        //             .attr("height", bbox.getHeight())
+        //             .attr("stroke", color)
+        //             .attr("fill", color)
+        //             .attr("stroke-width", 3)
+        //             .attr("opacity", 0.2);
+
+        // this.canvas.append("rect")
+        //             .attr("x", bbox.getLeft())
+        //             .attr("y", bbox.getTop())
+        //             .attr("width", bbox.getWidth())
+        //             .attr("height", bbox.getHeight())
+        //             .attr("stroke", color)
+        //             .attr("fill", color)
+        //             .attr("stroke-width", 3)
+        //             .attr("opacity", 0.2);
+
 	}
 
 };
@@ -207,7 +229,7 @@ ScaleTreeCanvas.height = 700;
 ScaleTreeCanvas.nodeHeight = 40;
 ScaleTreeCanvas.div = "#ScaleTreeCanvasView";
 
-ScaleTreeCanvas.treeMargin = 50;
+ScaleTreeCanvas.treeMarginX = 50;
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
