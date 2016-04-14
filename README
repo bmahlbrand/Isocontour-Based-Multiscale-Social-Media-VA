@@ -1,3 +1,7 @@
 README
 
-change path in WordGraph to the absolute path to data/nltk_data
+Issues during coding:
+
+1) Why mouseout does not work on both cluster node and boundary?
+Ans: When the user hover on the feature, which triggered the mouseover, the canvas redraw the the previous features go away.
+    Thus when hover out, the system cannot find the previous corresponding object.

@@ -135,29 +135,29 @@ HullLayout.minimizeParentChildOverlap = function(parents, child){
 	return child;
 };
 
-HullLayout.minimizeOverlap = function(clusterMatrix){
+HullLayout.minimizeOverlap = function(cNodeMatrix){
 
 	//polys: 2D matrix;
 	//As is ensured in the server side, hulls in the same level do not have overlapping issues;
 
-	clusterMatrix.forEach(function(clusters, level){
-
+	cNodeMatrix.forEach(function(cnodes, level){
 
 		// create array to store parent polys, note that level i does not have parents.
 		var parentsPolys = [];
 		if(level != 0){
 			// i-1 means parent level;
-			clusterMatrix[level-1].forEach(function(cluster){
+			cNodeMatrix[level-1].forEach(function(cnode){
+
+				var cluster = cnode.cluster;
 				var hulls = cluster['hulls'];
 				parentsPolys = parentsPolys.concat(hulls);
 			});
 		}
 		
 		//perform minimization here;
-		clusters.forEach(function(cluster){
+		cnodes.forEach(function(cnode){
 
-			// console.log(cluster['clusterId']);
-
+			var cluster = cnode.cluster;
 			var hulls = cluster['hulls'];
 
 			hulls.forEach(function(hull){
@@ -174,5 +174,5 @@ HullLayout.minimizeOverlap = function(clusterMatrix){
 
 	});
 
-	return clusterMatrix;
+	return cNodeMatrix;
 }

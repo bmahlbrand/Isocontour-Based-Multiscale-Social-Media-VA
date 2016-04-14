@@ -96,7 +96,7 @@
 	<!-- Concave Hull -->
 	<script type="text/javascript" src="lib/hull-master/dist/hull.js"></script>
 
-	<script type="text/javascript" src="http://requirejs.org/docs/release/2.1.22/minified/require.js"></script>
+	<script type="text/javascript" src="lib/require.js"></script>
 
 	<!--scale tree-->
 	<script type="text/javascript" src="src/Vis/ScaleTree/ScaleTreeCanvas.js"></script>
@@ -153,7 +153,7 @@
 	  stroke-width: 1.5px;
 	}
 
-	treeNode:hover {
+	.treeNode:hover {
 		cursor: pointer;
 	}
 
@@ -185,9 +185,9 @@
   //   		$( "#table_container" ).draggable({ cancel: "div.noSupportDrag" });
   // 		});
 
-		// $(function() {
-		// 	$("#controlpanel").draggable();
-		// });
+		$(function() {
+			$("#controlpanel").draggable();
+		});
 
 		// $(function() {
 		// 	$("#timeseries").draggable();
@@ -307,6 +307,30 @@
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
 
+		function sortTree(val){
+			if(parseInt(val) == 0)
+				CTreeNode.SORT = CTreeNode.SORTMODE.VOLUME;
+			else if(parseInt(val) == 1)
+				CTreeNode.SORT = CTreeNode.SORTMODE.GEO;
+			else if(parseInt(val) == 2)
+				CTreeNode.SORT = CTreeNode.SORTMODE.STAT;
+
+			DataCenter.instance().getTree().sortChildren();
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+
+		}
+
+		function nodeSize(val){
+			if(parseInt(val) == 0)
+				VisComponent.SCALE = VisComponent.SCALEMODE.LOG;
+			else if(parseInt(val) == 1)
+				VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
+			else if(parseInt(val) == 2)
+				VisComponent.SCALE = VisComponent.SCALEMODE.UNIFORM;
+
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+
+		}
 
 	</script>
 
@@ -314,87 +338,15 @@
 <!-- onload="init()"  -->
 	<body ng-app="twittNavApp" ng-controller="app_controller">
 
-	<!--
-	   <nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Twitter Navigator</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form navbar-right" ng-controller="form_controller" ng-submit="processForm()">
-					<div class="form-group">
-					   <input id="search" type="text" placeholder="enter query..." class="form-control" ng-model="formData.queryText" >
-					   <button id="query" class="btn btn-success">add topics</button>
-                       <input id="clusterSize" type="number" placeholder="# of NN" min="1" max="100">
-                    </div>
-
-                    <div ng-controller="selection_controller">
-  						<label><input type="checkbox" ng-model="flag" ng-change="switch_selection()"><font color="white">enable selection</font></label>
-  						<label><input type="checkbox" ng-model="enable_active" ng-change="switch_active()"><font color="white">switch active</font></label>
-					</div>
-				</form>
-			</div>
-		</div>
-	   </nav>
-	-->
-	<!-- <div id="wrapper"> -->
-        <!-- Sidebar -->
-        <!-- <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">Twitter Navigator</a>
-                </li>
-                <li>
-                	<a href="#">Map</a>
-                	<div ng-controller="selection_controller">
-  						<input type="checkbox" ng-model="flag" ng-change="switch_selection()"><font color="white">enable selection</font>
-  						<input type="checkbox" ng-model="enable_active" ng-change="switch_active()"><font color="white">switch active</font>
-						<button type="button" onclick="load_data();">load data</button>
-					</div>
-                </li>
-                <li>
-                	<div id="EM_Tree" style="width:100%;height:500px;background-color:#ddd;overflow:hidden;" ng-controller="EMTree_controller">
-                	</div>
-                </li>
-                <li>
-	                <div>
-		                <textarea rows="10" cols="60" id="output">
-						</textarea>
-					</div>
-				</li>
-            </ul>
-        </div> -->
-        <!-- /#sidebar-wrapper -->
+	<div id="ScaleTreeContainer" style="left:1100px;top:50px;width:750px;height:750px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
 	
-		<!-- <div id="page-content-wrapper"> -->
-		    <!-- <div class="container-fluid">
-		        <div class="row">
-		            <div class="col-lg-12"> -->
-		                <!-- <div id="mapView" ng-controller="map_controller"></div> -->
-		            <!-- </div>
-		        </div>
-		    </div> -->
-		<!-- </div> -->
-
-	<!-- </div> -->
-
-	<div id="ScaleTreeContainer" style="left:1100px;top:50px;width:700px;height:700px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
-	
-	<h4 align="center" style="cursor: pointer">Scale Tree</h4>
+	<h5 align="center" style="cursor: pointer">Multi-Scale Cluster Tree</h5>
 
 	<!--background-color: rgba(247, 251, 255, 0.6);-->
-		<div style="width:600px;height:600px;margin: 0 auto;" class="noSupportDrag">
-			<div id="ScaleTreeCanvasView" style="width:600px;height:600px;" ng-controller="ScaleTreeCtrl"></div>
+		<div style="width:700px;height:700px;margin: 0 auto;" class="noSupportDrag">
+			<div id="ScaleTreeCanvasView" style="width:700px;height:700px;" ng-controller="ScaleTreeCtrl"></div>
 		</div>
 	</div>
-
-
 
 	<!--<div id="EM_Tree" style="left:50px;top:400px;width:700px;height:420px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;" ng-controller="EMTree_controller"></div>-->
 
@@ -402,11 +354,75 @@
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
-	<div id="layoutOption">
-		<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
-		<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
-		<button onclick="changeTension(1)">inc tension</button>
-		<button onclick="changeTension(0)">dec tension</button><br>
+
+	<div id="controlpanel" style="left:50px;top:50px;width:180px;height:350px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;">
+		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
+		<h4 align="center" style="cursor: pointer">Control Panel</h4>
+
+
+		<h5 align="center">Node Size</h5>
+			<div>
+				<input type="radio" name="nodeSize" onclick="nodeSize(0);" ><span>log</span><br>
+				<input type="radio" name="nodeSize" onclick="nodeSize(1);" checked><span>linear</span><br>
+				<input type="radio" name="nodeSize" onclick="nodeSize(2);" ><span>uniform</span>
+
+			</div>
+
+		<h5 align="center">Sort Tree</h5>
+			<div>
+				<input type="radio" name="sortTree" onclick="sortTree(0);" ><span>volume</span><br>
+				<input type="radio" name="sortTree" onclick="sortTree(1);" checked><span>geolocation(lon)</span><br>
+				<input type="radio" name="sortTree" onclick="sortTree(2);" ><span>stat score</span>
+
+			</div>
+		
+		<h5 align="center">Contour Param</h5>
+			<div>
+				<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
+				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
+				<button onclick="changeTension(1)">inc tension</button>
+				<button onclick="changeTension(0)">dec tension</button><br>
+			</div>
+			
+			<!-- <h5 align="center">Search:</h5>
+			<input type="text" name="search" size="10"><br>
+
+			<h5 align="center">Glyph Type</h5>
+		    <select name="glyphType" ng-model="data.glyphType" ng-change="glyph_change()">
+		      <option value="0">Option A</option>
+		      <option value="1">Option B</option>
+		      <option value="2">Option C</option>
+		    </select><br>
+
+			<h5 align="center">Display Mode</h5>
+		    <select name="glyphType" ng-model="data.displayMode" ng-change="display_mode_change()">
+				<option value="0">all</option>
+				<option value="1">glyph</option>
+				<option value="2">heatmap</option>
+				<option value="3">dot</option>
+		    </select><br>
+			<h5 align="center">Real-time Options</h5>
+		    <input type="radio" ng-model="data.realtime_mode" value="resume" ng-change="realtime_mode_change()"><span>resume</span><br>
+		    <input type="radio" ng-model="data.realtime_mode" value="stop" ng-change="realtime_mode_change()"><span>stop</span><br>
+		    
+		    <span align="center">Time Window:</span>
+    		 <select name="singleSelect" id="singleSelect" ng-model="data.time_window" width="110" style="width:110px" ng-change="time_window_change()">
+		      <option value="10">&nbsp;&nbsp;&nbsp;&nbsp;10</option>
+		      <option value="30" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;30</option>
+		      <option value="60">&nbsp;&nbsp;&nbsp;&nbsp;60</option>
+		    </select><br>
+
+		    <h5 align="center">Spatial Transition</h5>
+		    <span align="center">Convex hull:</span>
+    			<input type="checkbox" ng-model="data.showHull" ng-change="null_change()"><br/>
+
+    		<span align="center">Spatial transition:</span>
+    			<input type="checkbox" ng-model="data.transition" ng-change="transition_change()"><br/>
+
+    		<span align="center">Glyph Size</span>
+    			<button onclick="increaseSize()">Increase</button><button onclick="decreaseSize()">Decrease</button> -->
+
+
 	</div>
 
 </body>

@@ -1,5 +1,8 @@
 Vector2 = function(x, y) { 
 
+	this.x = 0;
+	this.y = 0;
+	
 	if( x === undefined || y === undefined ){
           this.x = 0; this.y = 0; 
     }else{
@@ -27,7 +30,9 @@ Vector2.prototype = {
     get_y : function() {return this.y; }, 
     divide : function(f) { var invf = 1/f; this.x *= invf; this.y *= invf; },
     dot : function(v) { return this.x * v.x + this.y * v.y; },
-    toString: function() { return this.x+","+this.y; },
+    toString: function() { 
+    	return this.x+","+this.y;
+    },
     toString_reverse: function() { return this.y+","+this.x; },
     dist: function(v) { var tx = v.x - this.x ; var ty = v.y - this.y ; return Math.sqrt(tx * tx + ty * ty)  },
     abs: function(){ this.x = Math.abs(this.x); this.y = Math.abs(this.y); }
@@ -66,6 +71,9 @@ BBox.prototype = {
 		return this.center;
 	},
 	get_extent: function(){
+		return this.extents;
+	},
+	getExtent: function(){
 		return this.extents;
 	},
 

@@ -15,23 +15,25 @@ ContourVis.prototype.updateGeoBbox = function(){
 
 	var that = this;
 
-	var currRelativeLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom() 
+	//var currRelativeLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom() 
 							- ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
 
 	//only see adjacent 3 levels
-	var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
+	//var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
 	
 	// get the clusters of all levels;
-	var clusterMatrix = DataCenter.instance().getClustersByLevels();
+	var cNodeMatrix = DataCenter.instance().getTree().getTreeByLevels();
 	//filter based on vis levels
-	clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
+	//clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
 
-	for(var level=0; level<clusterMatrix.length; level++){
+	for(var level=0; level<cNodeMatrix.length; level++){
 
-		var clusters = clusterMatrix[level];
+		var cnodes = cNodeMatrix[level];
 
 		//calculate the smoothed concave hull;
-		clusters.forEach(function(cluster, i){
+		cnodes.forEach(function(cnode){
+
+			var cluster = cnode.cluster;
 
 			/****************** filter clusters based on zoom level ***************************/
 			// check zoom level
@@ -44,10 +46,10 @@ ContourVis.prototype.updateGeoBbox = function(){
 
 			//clusters[i]['pixelPts'] = pixelPts;
 			//2d array contains 1d poly
-			clusters[i]['hulls'] = ContourVis.getConcaveHull(clusters[i]['hullIds']);
+			cluster['hulls'] = ContourVis.getConcaveHull(cluster['hullIds']);
 
 			//optimized results save in clusters[i]['optimizedHulls']
-			clusters[i]['optimizedHulls'] = [];
+			cluster['optimizedHulls'] = [];
 
 		});
 
@@ -56,14 +58,16 @@ ContourVis.prototype.updateGeoBbox = function(){
 	//perform overlapping removal;
 	if(ContourVis.minOverlap)
 		//only change clusters[i]['optimizedHulls']
-		clusterMatrix = HullLayout.minimizeOverlap(clusterMatrix);
+		cNodeMatrix = HullLayout.minimizeOverlap(cNodeMatrix);
 
 
 	var drawedIds = [];
 	//Draw concave hulls;
-	clusterMatrix.forEach(function(clusters){
+	cNodeMatrix.forEach(function(cnodes){
 
-		clusters.forEach(function(cluster){
+		cnodes.forEach(function(cnode){
+
+			var cluster = cnode.cluster;
 
 			var hulls = cluster['optimizedHulls'];
 
@@ -76,7 +80,6 @@ ContourVis.prototype.updateGeoBbox = function(){
 				}
 			});
 		});
-
 	});
 
 	//acNode list;
@@ -105,7 +108,9 @@ ContourVis.prototype.update = function(){
 
 		hulls.forEach(function(hull){
 			//acual rendering function
-			that.drawConcaveHull(val.cluster['clusterId'], hull, "blue");
+
+			var color = contourColor()(val.cluster['zoom']);
+			that.drawConcaveHull(val.cluster['clusterId'], hull, color);
 		});
 
 	});
@@ -164,13 +169,13 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", lineFunction(pts))
 			    	.attr("stroke", color)
-			    	.attr("stroke-width", 2)
+			    	.attr("stroke-width", 3)
 			    	.attr("fill", "none")
 			    	.attr("opacity", 1)
 			    	.on("mouseover", function(){
 
 			    		//tweets inside the hull;
-			    		var cluster_id = this.id.substring(5,this.id.length);
+			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		console.log(cluster_id);
 
 			    		var ids = DataCenter.instance().getClusters()[cluster_id]['ids'];
@@ -190,10 +195,16 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
 			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
+						
+						//$('[ng-controller="app_controller"]').scope().addHlNode(cluster_id);
 
 		  			}).on("mouseout", function(){
-		  				
+
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
+
+		  				var cluster_id = this.id.substring(5,this.id.length);
+		  				//$('[ng-controller="app_controller"]').scope().removeHlNode(cluster_id);
+
 		  			});
 
 };

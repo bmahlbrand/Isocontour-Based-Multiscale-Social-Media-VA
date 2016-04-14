@@ -14,6 +14,9 @@ DataCenter = function(){
 
 	//init tree
 	this.root = this.initTree();
+
+	this.root.sortChildren();
+
 	
 };
 
@@ -35,12 +38,6 @@ DataCenter.prototype.getClusters = function(){
 /*************************************************************************************/
 DataCenter.prototype.getTree = function(){
 	return this.root;
-};
-
-DataCenter.prototype.getClustersByLevels = function(){
-	var rst = [];
-	this.root.getClustersByLevels(0, rst);
-	return rst;
 };
 
 DataCenter.prototype.initTree = function(){
@@ -142,7 +139,17 @@ DataCenter.prototype.loadClusters = function(){
 	})
 	.done(function( msg ) {
 		msg.forEach(function(cluster){
+			
 			that.clusters[cluster['clusterId']] = cluster;
+
+			//calculate central position of the cluster;
+			var lats = [], lons = [];
+			cluster['ids'].forEach(function(val){
+				lats.push(that.tweets[val].lat);
+				lons.push(that.tweets[val].lon);
+			});
+			cluster['center'] = { lat:arrAvg(lats), lon:arrAvg(lons) };
+
 		});
 	});
 
@@ -161,3 +168,6 @@ DataCenter.instance = function(){
 
 //init DataCenter
 DataCenter.instance();
+//the reason why this function is not put in the constructor is
+//the function body calls the DataCenter.instance(), which can cause function call loop;
+DataCenter.instance().root.calcStatScore();

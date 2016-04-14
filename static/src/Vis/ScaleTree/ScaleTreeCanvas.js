@@ -2,6 +2,8 @@ ScaleTreeCanvas = function(){
 
 	this.canvas = null;
 
+	this.scaleBounds = [];
+
 	this.init();
 }
 
@@ -18,33 +20,43 @@ ScaleTreeCanvas.prototype.init = function() {
 ScaleTreeCanvas.prototype.setBbox = function(){
 
 	var level = DataCenter.instance().getTree().getHeight();
-	var spaceBtLevels = Math.floor((ScaleTreeCanvas.height - level*ScaleTreeCanvas.nodeHeight) / (level-1));
 
-	//initial bbox;
-	var bbox = new BBox(ScaleTreeCanvas.width/2, ScaleTreeCanvas.nodeHeight/2, ScaleTreeCanvas.width/2, ScaleTreeCanvas.nodeHeight/2);
-	DataCenter.instance().getTree().setBbox(bbox, spaceBtLevels);
+	var centerX = ScaleTreeCanvas.width/2;
+	var centerY = ScaleTreeCanvas.height / level / 2;
+	var w = ScaleTreeCanvas.width/2 - ScaleTreeCanvas.treeMarginX;
+	var h = ScaleTreeCanvas.height / level / 2;
+
+	//initial bbox
+	var bbox = new BBox(centerX, centerY, w, h);
+	DataCenter.instance().getTree().setBbox(bbox);
 
 };
 
 ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 
 	var that = this;
-	//add margin between adjacent nodes;
-	var margin = 2;
-	var _bbox = new BBox();
-	_bbox.setBox(bbox);
-	_bbox.setExtents( Math.max(_bbox.get_extent().x-margin, 1), _bbox.get_extent().y );
 
+	var node = DataCenter.instance().getTree().getNodeById(id);
+	var color = statColor()(node.cluster['score']);
 	//draw node;
 	var rectangle = this.canvas.append("rect")
 								.attr("id", "node_"+id)
 								.attr("class", "treeNode")
-	                            .attr("x", _bbox.getLeft())
-	                            .attr("y", _bbox.getTop())
-	                            .attr("width", _bbox.getWidth())
-	                            .attr("height", _bbox.getHeight())
+	                            .attr("x", bbox.getLeft())
+	                            .attr("y", bbox.getTop())
+	                            .attr("width", bbox.getWidth())
+	                            .attr("height", bbox.getHeight())
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
-	                            .attr("fill", ScaleTreeCanvas.nodeFill)
+	                            .attr("fill", color)
+	                            .on("click", function(){
+	                            	alert(this.id);
+	                            })
+	                            // .on("mouseover", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().addHlNode(id);
+	                            // })
+	                            // .on("mouseout", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().removeHlNode(id);
+	                            // })
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 
@@ -58,12 +70,6 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 			action: function(elm, d) {
 	            
 	            $('[ng-controller="app_controller"]').scope().addHlNode(id);
-
-	   //          var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes(id);
-				// //update map;
-	   //      	$('[ng-controller="map_controller"]').scope().getHulls().hoverHull(hlNodes);
-
-	   //      	that.update();
 			}
 		},
 		{
@@ -71,10 +77,6 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 			action: function(elm, d) {
 
 				$('[ng-controller="app_controller"]').scope().removeHlNode(id);
-            	// //update map;
-            	// $('[ng-controller="map_controller"]').scope().getHulls().hoverHull([]);
-
-            	// that.update();
 			}
 		},
 		{
@@ -105,9 +107,64 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pts){
 
 };
 
+ScaleTreeCanvas.prototype.drawScaleBound = function(){
+
+	var init_level = case_study[default_case].startLevel + case_study[default_case].zoom;
+	var end_level = case_study[default_case].endLevel + case_study[default_case].zoom;
+	var level = end_level - init_level + 1;
+
+	for(var i=init_level; i<=end_level; i++){
+
+		var yMargin = 5;
+
+		var centerX = ScaleTreeCanvas.width/2;
+		var centerY = ScaleTreeCanvas.height / level * (i - init_level + 0.5);
+		var w = ScaleTreeCanvas.width/2;
+		var h = ScaleTreeCanvas.height / level * 0.5 - yMargin;
+		
+		var bbox = new BBox(centerX, centerY, w, h);
+
+		var color = contourColor()(i);
+
+		//method 1;
+		this.canvas.append("rect")
+                    .attr("x", bbox.getLeft())
+                    .attr("y", bbox.getTop())
+                    .attr("width", bbox.getWidth())
+                    .attr("height", bbox.getHeight())
+                    .attr("stroke", color)
+                    .attr("fill", color)
+                    .attr("stroke-width", 3)
+                    .attr("opacity", 0.15);
+
+        //method 2;
+        // this.canvas.append("rect")
+        //             .attr("x", bbox.getLeft())
+        //             .attr("y", bbox.getTop())
+        //             .attr("width", bbox.getWidth())
+        //             .attr("height", bbox.getHeight())
+        //             .attr("stroke", color)
+        //             .attr("fill", color)
+        //             .attr("stroke-width", 3)
+        //             .attr("opacity", 0.2);
+
+        // this.canvas.append("rect")
+        //             .attr("x", bbox.getLeft())
+        //             .attr("y", bbox.getTop())
+        //             .attr("width", bbox.getWidth())
+        //             .attr("height", bbox.getHeight())
+        //             .attr("stroke", color)
+        //             .attr("fill", color)
+        //             .attr("stroke-width", 3)
+        //             .attr("opacity", 0.2);
+
+	}
+
+};
+
+
 ScaleTreeCanvas.prototype.drawNode = function(){
 
-	var that = this;
 	this.setBbox();
 	DataCenter.instance().getTree().drawBbox();
 
@@ -119,7 +176,6 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
-
 
 	d3.selectAll(".treeNode")
 		.attr("stroke", ScaleTreeCanvas.deAcNodeStroke)
@@ -141,7 +197,6 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 			.attr("fill", ScaleTreeCanvas.hLNodeFill);
 	});
 
-
 };
 
 
@@ -161,6 +216,7 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
+	this.drawScaleBound();
 	this.drawNode();
 	this.drawLinkage();
 
@@ -168,11 +224,12 @@ ScaleTreeCanvas.prototype.update = function(){
 
 };
 
-ScaleTreeCanvas.width = 600;
-ScaleTreeCanvas.height = 600;
+ScaleTreeCanvas.width = 700;
+ScaleTreeCanvas.height = 700;
 ScaleTreeCanvas.nodeHeight = 40;
 ScaleTreeCanvas.div = "#ScaleTreeCanvasView";
 
+ScaleTreeCanvas.treeMarginX = 50;
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
@@ -185,5 +242,8 @@ ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
 
 ScaleTreeCanvas.linkStroke = "#b2182b";
 
+ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
+
+ScaleTreeCanvas.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
 
 /***********************************************************************************/
