@@ -359,7 +359,6 @@
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
 
-
 		<h5 align="center">Node Size</h5>
 			<div>
 				<input type="radio" name="nodeSize" onclick="nodeSize(0);" ><span>log</span><br>
@@ -379,9 +378,9 @@
 		<h5 align="center">Contour Param</h5>
 			<div>
 				<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
-				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span>
-				<button onclick="changeTension(1)">inc tension</button>
-				<button onclick="changeTension(0)">dec tension</button><br>
+				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span><br>
+				tension: <button onclick="changeTension(1)">+</button>
+				<button onclick="changeTension(0)">-</button>
 			</div>
 			
 			<!-- <h5 align="center">Search:</h5>

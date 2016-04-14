@@ -134,8 +134,8 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
                     .attr("height", bbox.getHeight())
                     .attr("stroke", color)
                     .attr("fill", color)
-                    .attr("stroke-width", 3)
-                    .attr("opacity", 0.15);
+                    .attr("stroke-width", 1)
+                    .attr("opacity", 0.1);
 
         //method 2;
         // this.canvas.append("rect")
