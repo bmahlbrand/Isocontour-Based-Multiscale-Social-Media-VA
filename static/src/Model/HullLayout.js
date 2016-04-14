@@ -72,12 +72,13 @@ HullLayout.lineCenter = function(x1, y1, x2, y2){
 HullLayout._shrinkPartialPoly = function(parent, child){
 
 	var iteration = 0;
-	do{
-		var isChange = false;
+	var keepGoing = true;
+
+	do {
 		iteration += 1;
 
 		var len = child.length/2;
-		for(var i=0; i<len; i++){
+		for (var i=0; i<len; i++) {
 			
 			var x = child[2*i];
 			var y = child[2*i+1];
@@ -97,11 +98,12 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 				child[2*i] = center[0];
 				child[2*i+1] = center[1];
 
-				isChange = true;
+			} else{ //terminate looping through polygon
+				keepGoing = false;
 			}
 		}
 
-	}while( isChange == true && iteration < HullLayout.shrinkIteration );
+	} while( keepGoing == true && iteration < HullLayout.shrinkIteration );
 
 	// console.log("iteration time: "+iteration);
 	return child;
