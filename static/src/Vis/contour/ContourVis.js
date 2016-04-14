@@ -16,7 +16,7 @@ ContourVis.prototype.updateGeoBbox = function(){
 	var that = this;
 
 	//var currRelativeLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom() 
-							- ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
+							// - ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
 
 	//only see adjacent 3 levels
 	//var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
@@ -317,3 +317,34 @@ ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
 ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
 /******************  parameter setup  **********************/
+
+ContourVis.prototype.createDummyPath = function(pts){
+
+	pts = HullLayout.odArrTo2dArr(pts);
+
+	var that = this;
+	var svg = this.map_svg;
+
+	var lineFunction = null;
+
+	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("basis-closed");
+	}else{
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("cardinal-closed")
+                        .tension(ContourVis.tension);
+	}
+
+    var hull = svg.append("path")
+			    	.attr("class", "dummyPath")
+			    	.attr("d", lineFunction(pts))
+			    	.attr("stroke", "#FFF")
+			    	.attr("opacity", 0);
+	return hull;
+
+};

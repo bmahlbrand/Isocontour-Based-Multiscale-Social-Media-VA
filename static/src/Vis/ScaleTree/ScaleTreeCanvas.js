@@ -68,14 +68,12 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 		{
 			title: 'set',
 			action: function(elm, d) {
-	            
 	            $('[ng-controller="app_controller"]').scope().addHlNode(id);
 			}
 		},
 		{
 			title: 'unset',
 			action: function(elm, d) {
-
 				$('[ng-controller="app_controller"]').scope().removeHlNode(id);
 			}
 		},

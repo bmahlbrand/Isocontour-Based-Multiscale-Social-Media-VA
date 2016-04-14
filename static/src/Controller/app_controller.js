@@ -394,6 +394,10 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		return Canvas_manager.instance().cv;
 	};
 
+	$scope.createDummyPath = function(pts){
+		return Canvas_manager.instance().cv.createDummyPath(pts);
+	};
+
 	// $scope.update_time_range = function(start_time, end_time){
 
 	// 	var first_lense = $scope.get_first_lense();
