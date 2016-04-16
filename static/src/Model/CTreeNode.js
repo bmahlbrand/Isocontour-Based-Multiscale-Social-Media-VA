@@ -187,8 +187,14 @@ CTreeNode.prototype.setBbox = function(bbox){
 	else{
 		//set the bbox for children;
 		var sum = 0;
+
+		var max = 0;
 		this.children.forEach(function(val){
-			sum += VisComponent.scale()(val.getVol(), val);
+			max = Math.max(val.getVol(), max);
+		});
+
+		this.children.forEach(function(val){
+			sum += VisComponent.scale()(val.getVol(), val, max);
 		});
 
 		var left = bbox.getLeft();
@@ -197,7 +203,7 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 		this.children.forEach(function(val){
 
-			var w = width * VisComponent.scale()(val.getVol(), val) / sum;
+			var w = width * VisComponent.scale()(val.getVol(), val, max) / sum;
 			
 			var b = new BBox(left+w/2, bbox.get_center().y + height, w/2, height/2 );
 
@@ -267,17 +273,21 @@ VisComponent.prototype.getVisBbox = function(){
 };
 
 // x between [1, infinity]
-VisComponent.logScale = function(x, node){
+VisComponent.logScale = function(x, node, max){
 	return Math.log(x+1);
 };
 
-VisComponent.linearScale = function(x, node){
+VisComponent.linearScale = function(x, node, max){
 	return x;
 };
 
-VisComponent.uniformScale = function(x, node){
+VisComponent.uniformScale = function(x, node, max){
 	return node.getNumOfLeaves();
 
+};
+
+VisComponent.polyScale = function(x, node, max){
+	return Math.sqrt(x/max)*max;
 };
 
 VisComponent.scale = function(){
@@ -288,9 +298,11 @@ VisComponent.scale = function(){
 		return VisComponent.linearScale;
 	else if(VisComponent.SCALE == VisComponent.SCALEMODE.UNIFORM)
 		return VisComponent.uniformScale;
+	else if(VisComponent.SCALE == VisComponent.SCALEMODE.POLY)
+		return VisComponent.polyScale;
 };
 
-VisComponent.SCALEMODE = {LOG:0, LINEAR:1, UNIFORM:2};
+VisComponent.SCALEMODE = {LOG:0, LINEAR:1, UNIFORM:2, POLY:3};
 VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 
 CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 };

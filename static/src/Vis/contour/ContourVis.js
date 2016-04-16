@@ -327,7 +327,7 @@ ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
 
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2 };
-ContourVis.CONTOUR = ContourVis.CONTOURMODE.BOUND;
+ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
 
 /******************  parameter setup  **********************/

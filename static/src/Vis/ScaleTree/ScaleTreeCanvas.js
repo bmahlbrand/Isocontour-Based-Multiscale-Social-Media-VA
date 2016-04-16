@@ -123,38 +123,89 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
 		var bbox = new BBox(centerX, centerY, w, h);
 
 		var color = contourColorFill()(i);
+		var opac = 0.2;
 
-		//method 1;
+		/**************************************************/
+		/***********mode 1: entire fill********************/
+		/**************************************************/
+
+		// this.canvas.append("rect")
+  //                   .attr("x", bbox.getLeft())
+  //                   .attr("y", bbox.getTop())
+  //                   .attr("width", bbox.getWidth())
+  //                   .attr("height", bbox.getHeight())
+  //                   .attr("stroke", color)
+  //                   .attr("fill", color)
+  //                   .attr("stroke-width", 1)
+  //                   .attr("opacity", 0.3);
+
+
+  		/**************************************************/
+		/***********mode 2: side-by-side box***************/
+		/**************************************************/
+
+		var bw = 5;
+		var boxLeft = new BBox(centerX * bw / w, centerY, bw, h);
+		var boxRight = new BBox( 2*w - centerX * bw / w, centerY, bw, h);
+
 		this.canvas.append("rect")
-                    .attr("x", bbox.getLeft())
-                    .attr("y", bbox.getTop())
-                    .attr("width", bbox.getWidth())
-                    .attr("height", bbox.getHeight())
-                    .attr("stroke", color)
-                    .attr("fill", color)
-                    .attr("stroke-width", 1)
-                    .attr("opacity", 0.3);
+	                  .attr("x", boxLeft.getLeft())
+	                  .attr("y", boxLeft.getTop())
+	                  .attr("width", boxLeft.getWidth())
+	                  .attr("height", boxLeft.getHeight())
+	                  .attr("stroke", color)
+	                  .attr("fill", color)
+	                  .attr("stroke-width", 1)
+	                  .attr("opacity", 0.3);
 
-        //method 2;
-        // this.canvas.append("rect")
-        //             .attr("x", bbox.getLeft())
-        //             .attr("y", bbox.getTop())
-        //             .attr("width", bbox.getWidth())
-        //             .attr("height", bbox.getHeight())
-        //             .attr("stroke", color)
-        //             .attr("fill", color)
-        //             .attr("stroke-width", 3)
-        //             .attr("opacity", 0.2);
+	    this.canvas.append("rect")
+	                  .attr("x", boxRight.getLeft())
+	                  .attr("y", boxRight.getTop())
+	                  .attr("width", boxRight.getWidth())
+	                  .attr("height", boxRight.getHeight())
+	                  .attr("stroke", color)
+	                  .attr("fill", color)
+	                  .attr("stroke-width", 1)
+	                  .attr("opacity", 0.3);
+		
+		/**************************************************/
+		/***********mode 3: color gradient******************/
+		/**************************************************/
+		
+        //mode 3: color gradient;
+  //       var gradient = this.canvas.append("defs")
+		//   .append("linearGradient")
+		//     .attr("id", "backGrad")
+		//     .attr("x1", "0%")
+		//     .attr("x2", "100%")
+		//     .attr("spreadMethod", "pad");
 
-        // this.canvas.append("rect")
-        //             .attr("x", bbox.getLeft())
-        //             .attr("y", bbox.getTop())
-        //             .attr("width", bbox.getWidth())
-        //             .attr("height", bbox.getHeight())
-        //             .attr("stroke", color)
-        //             .attr("fill", color)
-        //             .attr("stroke-width", 3)
-        //             .attr("opacity", 0.2);
+		// gradient.append("stop")
+		//     .attr("offset", "0%")
+		//     .attr("stop-color", color)
+		//     .attr("stop-opacity", opac);
+
+		// gradient.append("stop")
+		//     .attr("offset", "5%")
+		//     .attr("stop-color", "#fff")
+		//     .attr("stop-opacity", opac);
+
+		// gradient.append("stop")
+		//     .attr("offset", "95%")
+		//     .attr("stop-color", "#fff")
+		//     .attr("stop-opacity", opac);
+
+		// gradient.append("stop")
+		//     .attr("offset", "100%")
+		//     .attr("stop-color", color)
+		//     .attr("stop-opacity", opac);
+
+		// this.canvas.append("rect")
+		// 			.attr("x", bbox.getLeft())
+		// 			.attr("y", bbox.getTop())
+		// 			.attr("width", bbox.getWidth())
+		// 			.attr("height", bbox.getHeight())
+		// 		    .style("fill", "url(#backGrad)");
 
 	}
 

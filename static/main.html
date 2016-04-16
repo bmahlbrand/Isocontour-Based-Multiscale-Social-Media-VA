@@ -327,6 +327,8 @@
 				VisComponent.SCALE = VisComponent.SCALEMODE.LINEAR;
 			else if(parseInt(val) == 2)
 				VisComponent.SCALE = VisComponent.SCALEMODE.UNIFORM;
+			else if(parseInt(val) == 3)
+				VisComponent.SCALE = VisComponent.SCALEMODE.POLY;
 
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 
@@ -375,7 +377,8 @@
 			<div>
 				<input type="radio" name="nodeSize" onclick="nodeSize(0);" ><span>log</span><br>
 				<input type="radio" name="nodeSize" onclick="nodeSize(1);" checked><span>linear</span><br>
-				<input type="radio" name="nodeSize" onclick="nodeSize(2);" ><span>uniform</span>
+				<input type="radio" name="nodeSize" onclick="nodeSize(2);" ><span>uniform</span><br>
+				<input type="radio" name="nodeSize" onclick="nodeSize(3);" ><span>poly</span>
 
 			</div>
 
@@ -398,9 +401,9 @@
 		<h5 align="center">Contour Vis</h5>
 
 			<div>
-				<input type="radio" name="sortTree" onclick="changeContourVis(0);" checked><span>stroke only</span><br>
-				<input type="radio" name="sortTree" onclick="changeContourVis(1);" ><span>fill(single hue)</span><br>
-				<input type="radio" name="sortTree" onclick="changeContourVis(2);" ><span>fill(sequential)</span><br>
+				<input type="radio" name="conVis" onclick="changeContourVis(0);" ><span>stroke only</span><br>
+				<input type="radio" name="conVis" onclick="changeContourVis(1);" ><span>fill(single hue)</span><br>
+				<input type="radio" name="conVis" onclick="changeContourVis(2);" checked><span>fill(sequential)</span><br>
 
 			</div>
 			
