@@ -67,19 +67,28 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 	var menu = [
 		{
 			title: 'set',
-			action: function(elm, d) {
+			action: function() {
 	            $('[ng-controller="app_controller"]').scope().addHlNode(id);
 			}
 		},
 		{
 			title: 'unset',
-			action: function(elm, d) {
+			action: function() {
 				$('[ng-controller="app_controller"]').scope().removeHlNode(id);
 			}
 		},
 		{
+			title: 'moveTo',
+			action: function() {
+
+				var node = DataCenter.instance().getTree().getNodeById(id);
+
+				$('[ng-controller="map_controller"]').scope().getMap().moveTo(node.cluster.center.lon, node.cluster.center.lat, node.cluster.zoom);
+			}
+		},
+		{
 			title: 'cancel',
-			action: function(elm, d, i) {
+			action: function() {
 			}
 		}
 	];

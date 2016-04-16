@@ -280,6 +280,14 @@ OlMapView.prototype.render_heatmap = function(){
 	this.tweetsHeatmapManager.refreshMap(geo_points);
 };
 
+
+OlMapView.prototype.moveTo = function(lon, lat, zoom){
+	
+	this.map.panTo(new OpenLayers.LonLat(lon, lat).transform(this.fromProjection, this.toProjection));
+	this.map.zoomTo(zoom);
+
+};
+
 // OlMapView.prototype.reset = function() {
 //     // console.log(distance);
 //     this.strategy.distance = 50;
