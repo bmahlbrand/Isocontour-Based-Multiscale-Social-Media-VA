@@ -122,7 +122,7 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
 		
 		var bbox = new BBox(centerX, centerY, w, h);
 
-		var color = contourColor()(i);
+		var color = contourColorFill()(i);
 
 		//method 1;
 		this.canvas.append("rect")
@@ -133,7 +133,7 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
                     .attr("stroke", color)
                     .attr("fill", color)
                     .attr("stroke-width", 1)
-                    .attr("opacity", 0.1);
+                    .attr("opacity", 0.3);
 
         //method 2;
         // this.canvas.append("rect")
@@ -177,13 +177,13 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 	d3.selectAll(".treeNode")
 		.attr("stroke", ScaleTreeCanvas.deAcNodeStroke)
-		.attr("fill", ScaleTreeCanvas.deAcNodeFill);
+		//.attr("fill", ScaleTreeCanvas.deAcNodeFill);
 
 	acNodes.forEach(function(val){
 		
 		d3.select("#node_"+val)
 			.attr("stroke", ScaleTreeCanvas.nodeStroke)
-			.attr("fill", ScaleTreeCanvas.nodeFill);
+			//.attr("fill", ScaleTreeCanvas.nodeFill);
 	});
 
 	hlNodes = intersect_arrays(acNodes, hlNodes);
@@ -192,7 +192,7 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 		
 		d3.select("#node_"+val)
 			.attr("stroke", ScaleTreeCanvas.hLNodeStroke)
-			.attr("fill", ScaleTreeCanvas.hLNodeFill);
+			//.attr("fill", ScaleTreeCanvas.hLNodeFill);
 	});
 
 };

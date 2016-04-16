@@ -332,6 +332,18 @@
 
 		}
 
+
+		function changeContourVis(val){
+			if(parseInt(val) == 0)
+				ContourVis.CONTOUR = ContourVis.CONTOURMODE.BOUND;
+			else if(parseInt(val) == 1)
+				ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSINGLE;
+			else if(parseInt(val) == 2)
+				ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
+			
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+		}
+
 	</script>
 
 </head>
@@ -375,12 +387,21 @@
 
 			</div>
 		
-		<h5 align="center">Contour Param</h5>
+		<h5 align="center">Contour Layout</h5>
 			<div>
 				<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
 				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span><br>
 				tension: <button onclick="changeTension(1)">+</button>
 				<button onclick="changeTension(0)">-</button>
+			</div>
+
+		<h5 align="center">Contour Vis</h5>
+
+			<div>
+				<input type="radio" name="sortTree" onclick="changeContourVis(0);" checked><span>stroke only</span><br>
+				<input type="radio" name="sortTree" onclick="changeContourVis(1);" ><span>fill(single hue)</span><br>
+				<input type="radio" name="sortTree" onclick="changeContourVis(2);" ><span>fill(sequential)</span><br>
+
 			</div>
 			
 			<!-- <h5 align="center">Search:</h5>

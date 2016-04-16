@@ -1,4 +1,4 @@
-function contourColor(){
+function contourColorStroke(){
 
 	// return d3.scale
 	// 			.linear()
@@ -7,14 +7,37 @@ function contourColor(){
 	// 			.range(["#0000ff","#ff0000"]);
 
 	//diverging from blue to red;
-	//var color = ["#d73027", "#fc8d59", "#fee090", "#ffffbf", "#e0f3f8", "#91bfdb", "#4575b4"];
-	var color = ["#034e7b", "#3690c0", "#66ccff", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"];
+	//var color = ["#034e7b", "#3690c0", "#66ccff", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"];
+	//constant color;
+	var color = ["#3182bd"];
 
 	var q = d3.scale.quantize().domain([ case_study[default_case].startLevel + case_study[default_case].zoom,
 										case_study[default_case].endLevel + case_study[default_case].zoom ])
 								.range(color);
 	return q;
+}
 
+function contourColorFill(){
+
+	var color = null;
+	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
+		color = ["#9ecae1"];
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
+		color = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c'];
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
+		color = ["none"];
+
+	//diverging from blue to red;
+	//var color = ["#034e7b", "#3690c0", "#66ccff", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"];
+	//sequential;
+	//var color = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c'];
+	//constant color;
+	//var color = ["#9ecae1"];
+
+	var q = d3.scale.quantize().domain([ case_study[default_case].startLevel + case_study[default_case].zoom,
+										case_study[default_case].endLevel + case_study[default_case].zoom ])
+								.range(color);
+	return q;
 }
 
 function statColor(){

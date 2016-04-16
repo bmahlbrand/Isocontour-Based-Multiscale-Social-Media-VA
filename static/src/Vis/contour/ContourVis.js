@@ -109,8 +109,11 @@ ContourVis.prototype.update = function(){
 		hulls.forEach(function(hull){
 			//acual rendering function
 
-			var color = contourColor()(val.cluster['zoom']);
-			that.drawConcaveHull(val.cluster['clusterId'], hull, color);
+			
+			var strokeColor = contourColorStroke()(val.cluster['zoom']);
+			var fillColor = contourColorFill()(val.cluster['zoom']);
+
+			that.drawConcaveHull(val.cluster['clusterId'], hull, strokeColor, fillColor);
 		});
 
 	});
@@ -142,7 +145,7 @@ ContourVis.prototype.hoverHull = function(clusterIdlist){
 
 };
 
-ContourVis.prototype.drawConcaveHull = function(id, pts, color){
+ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor){
 
 	pts = HullLayout.odArrTo2dArr(pts);
 
@@ -164,14 +167,20 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, color){
                         .tension(ContourVis.tension);
 	}
 
+	var _fillColor = null;
+	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
+		_fillColor = "none";
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE || ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
+		_fillColor = fillColor;
+
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", lineFunction(pts))
-			    	.attr("stroke", color)
+			    	.attr("stroke", strokeColor)
 			    	.attr("stroke-width", 3)
-			    	.attr("fill", "none")
-			    	.attr("opacity", 1)
+			    	.attr("fill", _fillColor)
+			    	.attr("fill-opacity", 0.4)
 			    	.on("mouseover", function(){
 
 			    		//tweets inside the hull;
@@ -316,6 +325,11 @@ ContourVis.minOverlap = true;
 ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
 ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
+
+ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2 };
+ContourVis.CONTOUR = ContourVis.CONTOURMODE.BOUND;
+
+
 /******************  parameter setup  **********************/
 
 ContourVis.prototype.createDummyPath = function(pts){
