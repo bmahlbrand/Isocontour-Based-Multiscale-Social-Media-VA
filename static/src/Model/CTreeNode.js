@@ -213,15 +213,27 @@ CTreeNode.prototype.setBbox = function(bbox){
 	}
 }
 
-CTreeNode.prototype.drawBbox = function(){
+CTreeNode.prototype.drawNode = function(){
 
 	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getVisBbox());
 
 	this.children.forEach(function(val){
-		val.drawBbox();
+		val.drawNode();
 	});
 
 };
+
+CTreeNode.prototype.drawBackground = function(ids){
+
+	if( ids.indexOf(this.cluster.clusterId) != -1)
+		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBgRect(this.vis.getBbox());
+
+	this.children.forEach(function(val){
+		val.drawBackground(ids);
+	});
+
+};
+
 
 CTreeNode.prototype.drawLinkage = function(){
 
@@ -270,6 +282,10 @@ VisComponent.prototype.setBbox = function(cx, cy, ex, ey){
 
 VisComponent.prototype.getVisBbox = function(){
 	return this.visBbox;
+};
+
+VisComponent.prototype.getBbox = function(){
+	return this.bbox;
 };
 
 // x between [1, infinity]
