@@ -88,7 +88,7 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 
 };
 
-ScaleTreeCanvas.prototype.drawBCurve = function(pts){
+ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
 
 	var lineFunction = d3.svg.line()
 		                      .x(function(d) { return d[0]; })
@@ -96,6 +96,7 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pts){
 		                      .interpolate("basis");
     
     var lineGraph = this.canvas.append("path")
+    							.attr("id", "link__"+pid+"__"+cid)
     							.attr("class", "treeLinkage")
 		                        .attr("d", lineFunction(pts))
 		                        .attr("stroke", ScaleTreeCanvas.linkStroke)
@@ -216,6 +217,8 @@ ScaleTreeCanvas.prototype.drawNode = function(){
 
 	this.setBbox();
 	DataCenter.instance().getTree().drawNode();
+
+	this.hoverNode();
 };
 
 ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
@@ -242,32 +245,35 @@ ScaleTreeCanvas.prototype.drawBackground = function(){
 
 };
 
-// ScaleTreeCanvas.prototype.hoverNode = function(){
+ScaleTreeCanvas.prototype.hoverNode = function(){
 
-// 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
-// 	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
 
-// 	d3.selectAll(".treeNode")
-// 		.attr("stroke", ScaleTreeCanvas.deAcNodeStroke)
-// 		//.attr("fill", ScaleTreeCanvas.deAcNodeFill);
+	var defaultOpac = 0.3;
+	var hlOpac = 1.0;
 
-// 	acNodes.forEach(function(val){
+	d3.selectAll(".treeNode")
+		.attr("stroke-opacity", defaultOpac)
+		.attr("fill-opacity", defaultOpac);
+
+	acNodes.forEach(function(val){
 		
-// 		d3.select("#node_"+val)
-// 			.attr("stroke", ScaleTreeCanvas.nodeStroke)
-// 			//.attr("fill", ScaleTreeCanvas.nodeFill);
-// 	});
+		d3.select("#node_"+val)
+			.attr("stroke-opacity", hlOpac)
+			.attr("fill-opacity", hlOpac);
+	});
 
-// 	hlNodes = intersect_arrays(acNodes, hlNodes);
+	// hlNodes = intersect_arrays(acNodes, hlNodes);
 
-// 	hlNodes.forEach(function(val){
+	// hlNodes.forEach(function(val){
 		
-// 		d3.select("#node_"+val)
-// 			.attr("stroke", ScaleTreeCanvas.hLNodeStroke)
-// 			//.attr("fill", ScaleTreeCanvas.hLNodeFill);
-// 	});
+	// 	d3.select("#node_"+val)
+	// 		.attr("stroke-opacity", hlOpac)
+	// 		.attr("fill-opacity", hlOpac);
+	// });
 
-// };
+};
 
 
 ScaleTreeCanvas.prototype.drawLinkage = function(){
@@ -278,6 +284,37 @@ ScaleTreeCanvas.prototype.drawLinkage = function(){
 };
 
 ScaleTreeCanvas.prototype.hoverLinkage = function(){
+	
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
+
+	var defaultOpac = 0.3;
+	var hlOpac = 1.0;
+
+	d3.selectAll(".treeLinkage")
+		.attr("stroke-opacity", function(){
+			
+			var tks = this.id.split("__");
+			var pid = tks[1];
+			var cid = tks[2];
+			if( acNodes.indexOf(pid) != -1 && acNodes.indexOf(cid) != -1 )
+				return hlOpac;
+			else
+				return defaultOpac;
+
+		})
+		.attr("fill-opacity", function(d){
+
+			var tks = this.id.split("__");
+			var pid = tks[1];
+			var cid = tks[2];
+			if( acNodes.indexOf(pid) != -1 && acNodes.indexOf(cid) != -1 )
+				return hlOpac;
+			else
+				return defaultOpac;
+
+		});
+
 
 };
 
@@ -287,11 +324,11 @@ ScaleTreeCanvas.prototype.update = function(){
 	this.canvas.selectAll("*").remove();
 
 	this.drawScaleBound();
-	this.drawBackground();
+	
+	//this.drawBackground();
+
 	this.drawNode();
 	this.drawLinkage();
-
-	console.log("render done");
 
 };
 

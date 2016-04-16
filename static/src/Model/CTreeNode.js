@@ -240,6 +240,8 @@ CTreeNode.prototype.drawLinkage = function(){
 	if(this.children.length <= 0)
 		return;
 
+	var pid = this.cluster.clusterId;
+
 	var bbox = this.vis.getVisBbox();
 
 	this.children.forEach(function(val){
@@ -253,7 +255,8 @@ CTreeNode.prototype.drawLinkage = function(){
 		var p125 = [bbox.get_center().x, bbox.getBottom()+space*0.5 ];
 		var p175 = [_bbox.get_center().x, _bbox.getTop()-space*0.5 ];
 
-		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBCurve([p1, p125, p175, p2]);
+		var cid = val.cluster.clusterId;
+		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBCurve(pid, cid, [p1, p125, p175, p2]);
 		
 		val.drawLinkage();
 
