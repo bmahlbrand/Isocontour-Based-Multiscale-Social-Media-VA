@@ -119,31 +119,31 @@ ContourVis.prototype.update = function(){
 	});
 
 	//hover hull
-	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
-	this.hoverHull(hlNodes);
+	//var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
+	//this.hoverHull(hlNodes);
 
 };
 
 
 //if clusterIdlist is empty, reset;
-ContourVis.prototype.hoverHull = function(clusterIdlist){
+// ContourVis.prototype.hoverHull = function(clusterIdlist){
 
-	if(clusterIdlist.length <= 0){
-		d3.selectAll(".concaveHull")
-			.attr("opacity", 1);
-		return;
-	}
+// 	if(clusterIdlist.length <= 0){
+// 		d3.selectAll(".concaveHull")
+// 			.attr("opacity", 1);
+// 		return;
+// 	}
 
-	d3.selectAll(".concaveHull")
-		.attr("opacity", 0);
+// 	d3.selectAll(".concaveHull")
+// 		.attr("opacity", 0);
 
-	clusterIdlist.forEach(function(val){
+// 	clusterIdlist.forEach(function(val){
 
-		d3.selectAll(".hull_"+val)
-			.attr("opacity", 1);
-	});
+// 		d3.selectAll(".hull_"+val)
+// 			.attr("opacity", 1);
+// 	});
 
-};
+// };
 
 ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor){
 
