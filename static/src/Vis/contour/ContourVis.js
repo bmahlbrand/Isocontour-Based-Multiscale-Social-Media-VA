@@ -108,7 +108,6 @@ ContourVis.prototype.update = function(){
 
 		hulls.forEach(function(hull){
 			//acual rendering function
-
 			
 			var strokeColor = contourColorStroke()(val.cluster['zoom']);
 			var fillColor = contourColorFill()(val.cluster['zoom']);
@@ -221,7 +220,7 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor)
 
 ContourVis.prototype.filterHull = function(hull){
 
-	//check valid hull
+	//not valid hull
 	if(hull.length < 6)
 		return false;
 
@@ -238,7 +237,6 @@ ContourVis.prototype.filterHull = function(hull){
 		var y = hull[2*i+1];
 		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
 			flag = true;
-
 	}
 
 	return flag;
