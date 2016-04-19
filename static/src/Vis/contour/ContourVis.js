@@ -291,7 +291,6 @@ ContourVis.getPixelCoords = function(ids){
 
 /******************  parameter setup  **********************/
 ContourVis.tension = 0.7;
-ContourVis.minOverlap = true;
 ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
 ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;

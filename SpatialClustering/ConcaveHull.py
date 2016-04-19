@@ -145,7 +145,10 @@ class ConcaveHull:
 
             # simplify method 2: shapely simplify
             tmp = geometry.Polygon(xy)
-            simplified = tmp.simplify(tolerance=simplify, preserve_topology=True)
+            if simplify <= 0:
+                simplified = tmp
+            else:
+                simplified = tmp.simplify(tolerance=simplify, preserve_topology=True)
 
             x = simplified.boundary.coords.xy[0]
             y = simplified.boundary.coords.xy[1]
