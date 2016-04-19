@@ -48,10 +48,6 @@ CTreeNode.prototype.getNumOfLeaves = function(){
 	return rst;
 };
 
-/*****************************************************************************/
-/*************************** tree primitive operation*************************/
-/*****************************************************************************/
-
 CTreeNode.prototype.getTreeByLevels = function(){
 
 	if(this.children.length <= 0)
@@ -169,9 +165,61 @@ CTreeNode.prototype.calcStatScore = function(){
 
 };
 
+/*****************************************************************************************/
+/************************   Contour  Vis  Component    ***********************************/
+/*****************************************************************************************/
+CTreeNode.prototype.getPixelCoords = function(){
+
+	this.cluster['hulls'] = ContourVis.getPixelCoords(this.cluster['hullIds']);
+	
+	this.children.forEach(function(val){
+		val.getPixelCoords();
+	});
+
+};
+
+CTreeNode.prototype.filterNodesForMinOlp = function(){
+
+	this.cluster['minOlpFlag'] = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
+
+	this.children.forEach(function(val){
+		val.filterNodesForMinOlp();
+	});
+
+};
+
+CTreeNode.prototype.minOlp = function(){
+
+	//only if both the parent and children are having 'minOlpFlag' field turned on, we perform the overlapping minimization;
+
+	var p = this;
+
+	if( p.cluster['minOlpFlag'] == true ){
+
+		this.children.forEach(function(val){
+			if( val.cluster['minOlpFlag'] == true )
+				val.cluster['hulls'] = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+		});
+	}
+
+	this.children.forEach(function(val){
+		val.minOlp();
+	});
+
+};
+
+CTreeNode.prototype.filterNodesForVis = function(){
+
+	this.cluster['visFlag'] = ContourVis.filterHullForVis(this.cluster['hulls']);
+
+	this.children.forEach(function(val){
+		val.filterNodesForVis();
+	});
+
+};
 
 /*****************************************************************************************/
-/**********************************    Vis Component   ***********************************/
+/************************ scale tree  Vis Component   ***********************************/
 /*****************************************************************************************/
 
 CTreeNode.prototype.getVis = function(){

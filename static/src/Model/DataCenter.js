@@ -150,6 +150,9 @@ DataCenter.prototype.loadClusters = function(){
 			});
 			cluster['center'] = { lat:arrAvg(lats), lon:arrAvg(lons) };
 
+			//tmp
+			cluster['hullIds'] = cluster['hullIds'][0] || [];
+
 		});
 	});
 

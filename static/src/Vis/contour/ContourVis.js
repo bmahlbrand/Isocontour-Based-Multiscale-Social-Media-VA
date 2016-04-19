@@ -13,77 +13,27 @@ ContourVis.prototype.clear = function(){
 
 ContourVis.prototype.updateGeoBbox = function(){
 
-	var that = this;
+	//perform minimizing overlapping algorithm;
+	var tree = DataCenter.instance().getTree();
+	tree.getPixelCoords();
+	tree.filterNodesForMinOlp();
+	tree.minOlp();
 
-	//var currRelativeLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom() 
-							// - ( case_study[default_case].zoom + case_study[default_case].startLevel ) ;
+	//update activenode list;
+	//for the concept of activenode, please find it in the app_controller file;
+	tree.filterNodesForVis();
 
-	//only see adjacent 3 levels
-	//var visLevelRange = [ currRelativeLevel-2, currRelativeLevel+1 ];
-	
-	// get the clusters of all levels;
-	var cNodeMatrix = DataCenter.instance().getTree().getTreeByLevels();
-	//filter based on vis levels
-	//clusterMatrix = clusterMatrix.filter(function(clusters, i){ return i >= visLevelRange[0] && i <= visLevelRange[1]; });
+	var clist = DataCenter.instance().getTree().toList();
 
-	for(var level=0; level<cNodeMatrix.length; level++){
-
-		var cnodes = cNodeMatrix[level];
-
-		//calculate the smoothed concave hull;
-		cnodes.forEach(function(cnode){
-
-			var cluster = cnode.cluster;
-
-			/****************** filter clusters based on zoom level ***************************/
-			// check zoom level
-			// var zoomLevel = $('[ng-controller="map_controller"]').scope().getMap().map.getZoom();
-			// if( Math.abs(zoomLevel - cluster['zoom']) > 1 )
-			// 	return;
-			// if(cluster['zoom'] != 13)
-			// 	return;
-			/****************** filter clusters based on zoom level ***************************/
-
-			//clusters[i]['pixelPts'] = pixelPts;
-			//2d array contains 1d poly
-			cluster['hulls'] = ContourVis.getConcaveHull(cluster['hullIds']);
-
-			//optimized results save in clusters[i]['optimizedHulls']
-			cluster['optimizedHulls'] = [];
-
-		});
-
-	}
-
-	//perform overlapping removal;
-	if(ContourVis.minOverlap)
-		//only change clusters[i]['optimizedHulls']
-		cNodeMatrix = HullLayout.minimizeOverlap(cNodeMatrix);
-
-
-	var drawedIds = [];
-	//Draw concave hulls;
-	cNodeMatrix.forEach(function(cnodes){
-
-		cnodes.forEach(function(cnode){
-
-			var cluster = cnode.cluster;
-
-			var hulls = cluster['optimizedHulls'];
-
-			hulls.forEach(function(hull){
-				
-				if( that.filterHull(hull) ){
-					//temporarily, blue color, null id;
-					//that.drawConcaveHull(cluster['clusterId'], hull, "blue");
-					drawedIds.push(cluster['clusterId']);
-				}
-			});
-		});
+	clist = clist.filter(function(val){
+		return val.cluster['visFlag'];
 	});
 
+	var activeNodes = clist.map(function(val){ return val.cluster['clusterId']; });
+
 	//acNode list;
-	$('[ng-controller="app_controller"]').scope().setAcNodes(drawedIds);
+	$('[ng-controller="app_controller"]').scope().setAcNodes(activeNodes);
+
 
 };
 
@@ -104,16 +54,8 @@ ContourVis.prototype.update = function(){
 
 	clist.forEach(function(val){
 
-		var hulls = val.cluster['optimizedHulls'];
-
-		hulls.forEach(function(hull){
-			//acual rendering function
-			
-			var strokeColor = contourColorStroke()(val.cluster['zoom']);
-			var fillColor = contourColorFill()(val.cluster['zoom']);
-
-			that.drawConcaveHull(val.cluster['clusterId'], hull, strokeColor, fillColor);
-		});
+		var hull = val.cluster['hulls'];
+		that.drawConcaveHull(val.cluster['clusterId'], hull, val.cluster['zoom']);
 
 	});
 
@@ -144,7 +86,7 @@ ContourVis.prototype.update = function(){
 
 // };
 
-ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor){
+ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
 
 	pts = HullLayout.odArrTo2dArr(pts);
 
@@ -166,17 +108,23 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor)
                         .tension(ContourVis.tension);
 	}
 
+	var node = DataCenter.instance().getTree().getNodeById(id);
+
 	var _fillColor = null;
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		_fillColor = "none";
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE || ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
-		_fillColor = fillColor;
+		_fillColor = contourColorFill()(zoom);
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE)
+		_fillColor = statColor()(node.cluster['score']);
 
+	var _stroke = contourColorStroke()(zoom);
+    
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", lineFunction(pts))
-			    	.attr("stroke", strokeColor)
+			    	.attr("stroke", _stroke)
 			    	.attr("stroke-width", 3)
 			    	.attr("fill", _fillColor)
 			    	.attr("fill-opacity", 0.4)
@@ -217,32 +165,72 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, strokeColor, fillColor)
 
 };
 
-
-ContourVis.prototype.filterHull = function(hull){
+// the difference between filterHullForMinOlp(O) and filterHullForVis(V) is:
+// O require that part of the poly should be inside the viewport
+// V require that the poly should overlap with the viewport rectangle
+// O's requirement is stronger
+ContourVis.filterHullForMinOlp = function(hull){
 
 	//not valid hull
 	if(hull.length < 6)
 		return false;
 
+	//too small
 	var aabb = PolyK.GetAABB(hull);
-
 	if(aabb.width < 5 || aabb.height < 5 )
 		return false;
 
-	//check in the viewport;
+	//check vertices in the viewport
 	var flag = false;
 	for(var i=0; i<hull.length/2; i++){
 
 		var x = hull[2*i];
 		var y = hull[2*i+1];
 		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
-			flag = true;
+			return true;
 	}
 
 	return flag;
 };
+
+ContourVis.filterHullForVis = function(hull){
+
+	//not valid hull
+	if(hull.length < 6)
+		return false;
+
+	//too small
+	var aabb = PolyK.GetAABB(hull);
+	if(aabb.width < 5 || aabb.height < 5 )
+		return false;
+
+	//check overlapping [dirty codes, need improvement later;]
+	var s = ContourVis.DIMENSION;
+	var viewports = [0,0,0,s,s,0,s,s];
+
+	var flag = false;
+	for(var i=0; i<viewports.length/2; i++){
+
+		var x = viewports[2*i];
+		var y = viewports[2*i+1];
+		
+		if(PolyK.ContainsPoint(hull,x,y))
+			return true;
+	}
+
+	for(var i=0; i<hull.length/2; i++){
+
+		var x = hull[2*i];
+		var y = hull[2*i+1];
+		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
+			return true;
+	}
+
+	return flag;
+};
+
 //if not valid, return [];
-ContourVis.getConcaveHull = function(idsList){
+ContourVis.getPixelCoords = function(ids){
 
 	// get hull using js function. input: poly.
 	// if(poly.length < 3)
@@ -254,34 +242,18 @@ ContourVis.getConcaveHull = function(idsList){
 
 
 	// get hull from json file;
-
-	if(idsList.length <= 0)
-		return [];
-
-	var rst = [];
-	idsList.forEach(function(ids){
-		
-		if(ids.length <= 3){
-			//no hull;
-			//theorotically this will not happen since this is already checked in the server side;
-			rst.push([]);
-		}
-		else{
-
-			var tweets = DataCenter.instance().getTweets();
-			var pts = [];
-			ids.forEach(function(id){
-				var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
-				pts.push(pt.x);
-				pts.push(pt.y)
-			});
-
-			rst.push(pts.slice(0, pts.length-2));
-		}
-
+	var tweets = DataCenter.instance().getTweets();
+	var pts = [];
+	ids.forEach(function(id){
+		var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
+		pts.push(pt.x);
+		pts.push(pt.y)
 	});
 
-	return rst;
+	if(pts.length > 2)
+		pts = pts.slice(0, pts.length-2);
+	
+	return pts;
 };
 
 // not called in the current version
@@ -324,7 +296,7 @@ ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
 ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
 
-ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2 };
+ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
 

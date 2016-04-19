@@ -211,69 +211,37 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 
 };
 
-//parents 2d array,  child 1d array;
-HullLayout.minimizeParentChildOverlap = function(parents, child){
+// //parents 2d array,  child 1d array;
+// HullLayout.minimizeParentChildOverlap = function(parents, child){
 
-	//since one cluster can have multiple polys(rare case), here comes the parents
-	//find the parent that contains the child
-	var parent = [];
-	parents.forEach(function(p){
-		if( HullLayout.checkIntersect(p, child) )
-			parent.push(p);
-	});
+// 	//since one cluster can have multiple polys(rare case), here comes the parents
+// 	//find the parent that contains the child
+// 	var parent = [];
+// 	parents.forEach(function(p){
+// 		if( HullLayout.checkIntersect(p, child) )
+// 			parent.push(p);
+// 	});
 
-	if(parent.length == 0){
-		console.log("find parent error" + parent.length);
-		return [];
-	}
+// 	if(parent.length == 0){
+// 		console.log("find parent error" + parent.length);
+// 		return [];
+// 	}
 
-	parent = parent[0];
-	//parent are already located.
-	//console.log(parent);
+// 	parent = parent[0];
+// 	//parent are already located.
+// 	//console.log(parent);
+// 	child = HullLayout._moveOutsidePts(parent, child);
+// 	// child = HullLayout._shrinkPartialCurvedPoly(parent, child);
+// 	child = HullLayout._shrinkPartialPoly(parent, child);
+
+// 	return child;
+// };
+
+
+HullLayout.minimizeOverlap = function(parent, child){
+
 	child = HullLayout._moveOutsidePts(parent, child);
-	child = HullLayout._shrinkPartialCurvedPoly(parent, child);
-
+	child = HullLayout._shrinkPartialPoly(parent, child);
 	return child;
+
 };
-
-HullLayout.minimizeOverlap = function(cNodeMatrix){
-
-	//polys: 2D matrix;
-	//As is ensured in the server side, hulls in the same level do not have overlapping issues;
-
-	cNodeMatrix.forEach(function(cnodes, level){
-
-		// create array to store parent polys, note that level i does not have parents.
-		var parentsPolys = [];
-		if(level != 0){
-			// i-1 means parent level;
-			cNodeMatrix[level-1].forEach(function(cnode){
-
-				var cluster = cnode.cluster;
-				var hulls = cluster['hulls'];
-				parentsPolys = parentsPolys.concat(hulls);
-			});
-		}
-		
-		//perform minimization here;
-		cnodes.forEach(function(cnode){
-
-			var cluster = cnode.cluster;
-			var hulls = cluster['hulls'];
-
-			hulls.forEach(function(hull){
-
-				if(level == 0){
-					cluster['optimizedHulls'].push(hull);
-				}else{
-					var rst = HullLayout.minimizeParentChildOverlap(parentsPolys, hull);
-					cluster['optimizedHulls'].push(rst);
-				}
-			});
-
-		});
-
-	});
-
-	return cNodeMatrix;
-}
