@@ -199,8 +199,8 @@ if __name__ == '__main__':
             # end of the concavity loop
 
     # list of clusters;
-    with open('cluster_list.json', 'w') as outfile:
-        json.dump(output, outfile, indent=True)
+    # with open('cluster_list.json', 'w') as outfile:
+    #     json.dump(output, outfile, indent=True)
 
     # furthermore, generate the tree structure (dendrogram) for clusters
 
