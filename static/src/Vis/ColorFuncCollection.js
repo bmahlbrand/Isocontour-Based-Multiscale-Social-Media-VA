@@ -22,7 +22,7 @@ function contourColorFill(){
 	var color = null;
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
 		color = ["#9ecae1"];
-	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL || ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE )
 		color = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c'];
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
