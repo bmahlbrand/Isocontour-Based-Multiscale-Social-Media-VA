@@ -105,7 +105,7 @@ if __name__ == '__main__':
     cluster_min_sample = 5
     initial_concavity = 0
     incConcavity = 0.01
-    simplify = 0 # 1.5
+    simplify = 0  # 1.5
     ##############################################
 
     sc = SpatialClustering()
