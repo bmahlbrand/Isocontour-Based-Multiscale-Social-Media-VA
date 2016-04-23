@@ -150,7 +150,11 @@ DataCenter.prototype.loadClusters = function(){
 			});
 			cluster['center'] = { lat:arrAvg(lats), lon:arrAvg(lons) };
 
-			//tmp
+			if( cluster['hullIds'].length > 1 )
+				console.log("Fatal error: multiple polygons");
+
+			//since we disabled to simplifying polygon feature in the server side, we do not have multiple polygons for a simple cluster.
+			//hence, the length of cluster['hullIds'] is guaranteed to be 1
 			cluster['hullIds'] = cluster['hullIds'][0] || [];
 
 		});

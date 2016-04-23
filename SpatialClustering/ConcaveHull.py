@@ -123,6 +123,7 @@ class ConcaveHull:
         if type(hull) is shapely.geometry.polygon.Polygon:
             hulls.append(hull)
         else:
+            # this will probably not happen if the simplying polygon feature is turned off
             hulls = hull
 
         hullsRst = []
