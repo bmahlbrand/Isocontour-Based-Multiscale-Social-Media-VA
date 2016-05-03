@@ -390,7 +390,7 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	// 	}
 	// };
 
-	$scope.getHulls = function(){
+	$scope.getCV = function(){
 		return Canvas_manager.instance().cv;
 	};
 

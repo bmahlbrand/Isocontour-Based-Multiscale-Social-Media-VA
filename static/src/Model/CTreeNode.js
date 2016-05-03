@@ -218,6 +218,24 @@ CTreeNode.prototype.filterNodesForVis = function(){
 
 };
 
+//only draw acnodes;
+CTreeNode.prototype.drawContour = function(acNodes){
+
+	if( acNodes.indexOf(this.cluster['clusterId']) == -1 )
+		return;
+
+	var hull = this.cluster['hulls'];
+	var id = this.cluster['clusterId'];
+	var zoom = this.cluster['zoom'];
+
+	$('[ng-controller="map_controller"]').scope().getCV().drawConcaveHull(id, hull, zoom);
+
+	this.children.forEach(function(val){
+		val.drawContour(acNodes);
+	});
+
+};
+
 /*****************************************************************************************/
 /************************ scale tree  Vis Component   ***********************************/
 /*****************************************************************************************/

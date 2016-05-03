@@ -45,19 +45,7 @@ ContourVis.prototype.update = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
-	//draw hull
-	var clist = DataCenter.instance().getTree().toList();
-
-	clist = clist.filter(function(val){
-		return acNodes.indexOf(val.cluster['clusterId']) != -1;
-	});
-
-	clist.forEach(function(val){
-
-		var hull = val.cluster['hulls'];
-		that.drawConcaveHull(val.cluster['clusterId'], hull, val.cluster['zoom']);
-
-	});
+	DataCenter.instance().getTree().drawContour(acNodes);
 
 	//hover hull
 	//var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
@@ -130,6 +118,7 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
 			    	.attr("fill-opacity", 0.4)
 			    	.on("mouseover", function(){
 
+			    		return;
 			    		//tweets inside the hull;
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		console.log(cluster_id);
@@ -155,6 +144,8 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
 						//$('[ng-controller="app_controller"]').scope().addHlNode(cluster_id);
 
 		  			}).on("mouseout", function(){
+
+		  				return;
 
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 
