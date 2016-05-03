@@ -224,11 +224,25 @@ CTreeNode.prototype.drawContour = function(acNodes){
 	if( acNodes.indexOf(this.cluster['clusterId']) == -1 )
 		return;
 
+	// create features for the current hulls
 	var hull = this.cluster['hulls'];
+	var currLineFunc = $('[ng-controller="map_controller"]').scope().getCV().createLineFunc(hull);
+
 	var id = this.cluster['clusterId'];
 	var zoom = this.cluster['zoom'];
 
-	$('[ng-controller="map_controller"]').scope().getCV().drawConcaveHull(id, hull, zoom);
+	//create features for children hulls
+	var childsLineFuncArr = [];
+
+	this.children.forEach(function(val){
+		if( acNodes.indexOf(val.cluster['clusterId']) != -1 ){
+			var hull = val.cluster['hulls'];
+			var lf = $('[ng-controller="map_controller"]').scope().getCV().createLineFunc(hull);
+			childsLineFuncArr.push(lf);
+		}
+	});
+
+	$('[ng-controller="map_controller"]').scope().getCV().drawConcaveHull(id, zoom, currLineFunc, childsLineFuncArr);
 
 	this.children.forEach(function(val){
 		val.drawContour(acNodes);

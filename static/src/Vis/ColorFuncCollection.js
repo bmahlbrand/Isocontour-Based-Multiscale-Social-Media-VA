@@ -23,7 +23,7 @@ function contourColorFill(){
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
 		color = ["#9ecae1"];
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL || ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE )
-		color = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c'];
+		color = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#084594'];
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
 
@@ -42,6 +42,7 @@ function contourColorFill(){
 
 function statColor(){
 
+	//divergent color scheme
 	var color = ['#8c510a','#bf812d','#dfc27d','#f6e8c3','#f5f5f5','#c7eae5','#80cdc1','#35978f','#01665e'];
 	
 	var q = d3.scale.quantize().domain([0, 1]).range(color);

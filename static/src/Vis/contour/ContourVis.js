@@ -74,12 +74,9 @@ ContourVis.prototype.update = function(){
 
 // };
 
-ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
+ContourVis.prototype.createLineFunc = function(pts){
 
 	pts = HullLayout.odArrTo2dArr(pts);
-
-	var that = this;
-	var svg = this.map_svg;
 
 	var lineFunction = null;
 
@@ -96,6 +93,16 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
                         .tension(ContourVis.tension);
 	}
 
+	return lineFunction(pts);
+
+}
+
+//use mask to exlude children hull area when rendering the current hull
+ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
+
+	var that = this;
+	var svg = this.map_svg;
+
 	var node = DataCenter.instance().getTree().getNodeById(id);
 
 	var _fillColor = null;
@@ -107,15 +114,42 @@ ContourVis.prototype.drawConcaveHull = function(id, pts, zoom){
 		_fillColor = statColor()(node.cluster['score']);
 
 	var _stroke = contourColorStroke()(zoom);
+
+	// create mask function:
+	var mask_id = 'lense_mask_' + id;
+	svg.append('defs')
+		.call(function (defs){
+
+	    defs.append('mask')
+	        .attr('id', mask_id)
+	        .call(function(mask){
+		          
+		        mask.append('rect')
+	          		.attr('width', svg.attr("width"))
+	  				.attr('height', svg.attr("height"))
+	  				.attr('x', 0)
+	  				.attr('y', 0)
+	  				.attr('fill', '#ffffff');
+
+				ChildsLineFuncArr.forEach(function(c){
+
+					mask.append('path')
+						.attr("d", c)
+	            		.attr('fill', '#000000');
+				});
+	        
+	        });
+    	});
     
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
 			    	.attr("class", "concaveHull "+"hull_"+id)
-			    	.attr("d", lineFunction(pts))
+			    	.attr("d", curLineFunc)
 			    	.attr("stroke", _stroke)
-			    	.attr("stroke-width", 3)
+			    	.attr("stroke-width", 2)
 			    	.attr("fill", _fillColor)
-			    	.attr("fill-opacity", 0.4)
+			    	.attr("fill-opacity", 0.6)
+			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	.on("mouseover", function(){
 
 			    		return;
