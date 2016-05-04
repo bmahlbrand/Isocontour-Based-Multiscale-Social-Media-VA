@@ -1,9 +1,6 @@
-ContourVis = function(map_svg, overlay_svg, geo_bbox, start_time, end_time){
+ContourVis = function(map_svg, geo_bbox, start_time, end_time){
 
 	this.map_svg = map_svg;
-
-	//not used currently in this version;
-	this.overlay_svg = overlay_svg;
 
 };
 

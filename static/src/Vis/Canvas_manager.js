@@ -1,8 +1,6 @@
 Canvas_manager = function(){
 
 	this.map_svg = null;
-	this.overlay_svg = null;
-	// this.topic_lense_manager = null;
 
 	this.cv = null;
 
@@ -26,20 +24,6 @@ Canvas_manager.prototype.init = function(map_div, map) {
 
     this.map_svg.attr("width", width)
         	.attr("height", height);
-
-    //init overlap_svg;
-    this.overlay_svg = d3.select("body")
-    						// .append("div")
-    						// .attr("id", "overlay_div")
-    						// .style("position", "absolute")
-    						// .attr("width", width)
-					    	// .attr("height", height)
-					    	.append("svg")
-					    	.attr("id", "overlap_svg")
-					    	.attr("width", width)
-					    	.attr("height", height)
-					    	.style("z-index", "999")
-					    	.style("pointer-events", "none");
 
 };
 
@@ -134,13 +118,6 @@ Canvas_manager.prototype.update = function(){
     this.map_svg.attr("width", width)
         	.attr("height", height);
 
-    this.overlay_svg.attr("width", width)
-        			.attr("height", height)
-        			.style("left", left + "px")
-        			.style("top", top + "px")
-        			.style("position", "absolute")
-        			.style("z-index", "999");
-
     if( this.cv == null)
     	return;
 
@@ -164,7 +141,7 @@ Canvas_manager.prototype.add_region = function(bounds, start_time, end_time){
 	geo_bbox.set_by_minmax( min_lng, max_lng, min_lat, max_lat);
 
 	// this.topic_lense_manager.add_lense(geo_bbox, start_time, end_time);
-	this.cv = new ContourVis(this.map_svg, this.overlay_svg, geo_bbox, start_time, end_time);
+	this.cv = new ContourVis(this.map_svg, geo_bbox, start_time, end_time);
 
 };
 

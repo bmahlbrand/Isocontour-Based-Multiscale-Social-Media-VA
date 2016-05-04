@@ -112,7 +112,7 @@
 	h4 {
 		
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
-		font-size: 22px;
+		font-size: 18px;
 
 	}
 	select {
@@ -128,7 +128,7 @@
 	h5 {
 		
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
-		font-size: 18px;
+		font-size: 16px;
 
 	}
 
@@ -161,45 +161,21 @@
 
 	<script type="text/javascript">
 
-		// $(function() {
-		// 	$("#EM_Tree_container").draggable();
-		// });
-
-		// $(function() {
-  //   		$( "#EM_Tree_container" ).draggable({ cancel: "div.noSupportDrag" });
-  // 		});
-
-  		$(function() {
-			$("#ScaleTreeContainer").draggable();
-		});
-
-		$(function() {
-    		$( "#ScaleTreeContainer" ).draggable({ cancel: "div.noSupportDrag" });
-  		});
 
   // 		$(function() {
-		// 	$("#table_container").draggable();
+		// 	$("#ScaleTreeContainer").draggable();
 		// });
 
 		// $(function() {
-  //   		$( "#table_container" ).draggable({ cancel: "div.noSupportDrag" });
+  //   		$( "#ScaleTreeContainer" ).draggable({ cancel: "div.noSupportDrag" });
   // 		});
 
-		$(function() {
-			$("#controlpanel").draggable();
-		});
 
 		// $(function() {
-		// 	$("#timeseries").draggable();
+		// 	$("#controlpanel").draggable();
 		// });
 
-		// $(function() {
-  //   		$( "#timeseries" ).draggable({ cancel: "div.noSupportDrag" });
-  // 		});
-		
-		// $(function() {
-		// 	$("#timeseries").draggable();
-		// });
+
 		//var person = prompt("Please enter a number, 0 for purdue shooting, 1 for boston bombing, 2 for hurricane sandy", "1");
     
     	//if (person != null){
@@ -354,24 +330,23 @@
 <!-- onload="init()"  -->
 	<body ng-app="twittNavApp" ng-controller="app_controller">
 
-	<div id="ScaleTreeContainer" style="left:1100px;top:50px;width:750px;height:750px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
+	<div id="ScaleTreeContainer" style="left:153px;top:15px;width:720px;height:550px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
 	
 	<h5 align="center" style="cursor: pointer">Multi-Scale Cluster Tree</h5>
 
 	<!--background-color: rgba(247, 251, 255, 0.6);-->
 		<div style="width:700px;height:700px;margin: 0 auto;" class="noSupportDrag">
-			<div id="ScaleTreeCanvasView" style="width:700px;height:700px;" ng-controller="ScaleTreeCtrl"></div>
+			<div id="ScaleTreeCanvasView" style="width:700px;height:500px;" ng-controller="ScaleTreeCtrl"></div>
 		</div>
 	</div>
 
 	<!--<div id="EM_Tree" style="left:50px;top:400px;width:700px;height:420px;position:absolute;background-color: rgba(247, 251, 255, 0.6);overflow:hidden;z-index:99999;border:2px solid #999;" ng-controller="EMTree_controller"></div>-->
 
-	<div id="mapView" ng-controller="map_controller" style="height:1024px;width:1024px;"></div>
+	<div id="mapView" ng-controller="map_controller" style="left:880px;top:15px;height:1024px;width:1024px;position:absolute;z-index:999;border:2px solid #999;"></div>
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
-
-	<div id="controlpanel" style="left:50px;top:50px;width:180px;height:550px;position:absolute;background-color: rgba(247, 251, 255, 1.0);overflow:hidden;z-index:99999;border:2px solid #999;text-align:center;overflow: scroll;">
+	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:hidden;overflow-x:hidden;" onmouseover="$('#controlpanel').css('overflowY', 'scroll');" onmouseout="$('#controlpanel').css('overflowY', 'hidden');">
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
 
@@ -410,46 +385,25 @@
 			</div>
 
 
-			
-			<!-- <h5 align="center">Search:</h5>
-			<input type="text" name="search" size="10"><br>
-
-			<h5 align="center">Glyph Type</h5>
-		    <select name="glyphType" ng-model="data.glyphType" ng-change="glyph_change()">
-		      <option value="0">Option A</option>
-		      <option value="1">Option B</option>
-		      <option value="2">Option C</option>
-		    </select><br>
-
-			<h5 align="center">Display Mode</h5>
-		    <select name="glyphType" ng-model="data.displayMode" ng-change="display_mode_change()">
-				<option value="0">all</option>
-				<option value="1">glyph</option>
-				<option value="2">heatmap</option>
-				<option value="3">dot</option>
-		    </select><br>
-			<h5 align="center">Real-time Options</h5>
-		    <input type="radio" ng-model="data.realtime_mode" value="resume" ng-change="realtime_mode_change()"><span>resume</span><br>
-		    <input type="radio" ng-model="data.realtime_mode" value="stop" ng-change="realtime_mode_change()"><span>stop</span><br>
-		    
-		    <span align="center">Time Window:</span>
-    		 <select name="singleSelect" id="singleSelect" ng-model="data.time_window" width="110" style="width:110px" ng-change="time_window_change()">
-		      <option value="10">&nbsp;&nbsp;&nbsp;&nbsp;10</option>
-		      <option value="30" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;30</option>
-		      <option value="60">&nbsp;&nbsp;&nbsp;&nbsp;60</option>
-		    </select><br>
-
-		    <h5 align="center">Spatial Transition</h5>
-		    <span align="center">Convex hull:</span>
-    			<input type="checkbox" ng-model="data.showHull" ng-change="null_change()"><br/>
-
-    		<span align="center">Spatial transition:</span>
-    			<input type="checkbox" ng-model="data.transition" ng-change="transition_change()"><br/>
-
-    		<span align="center">Glyph Size</span>
-    			<button onclick="increaseSize()">Increase</button><button onclick="decreaseSize()">Decrease</button> -->
+	</div>
 
 
+	<div id="clusterSigContainer" style="left:5px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
+	
+	<h5 align="center" style="cursor: pointer">Cluster Signature</h5>
+
+		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
+			<div id="clusterSignature" style="width:400px;height:550px;"></div>
+		</div>
+	</div>
+
+	<div id="msgContainer" style="left:440px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
+	
+	<h5 align="center" style="cursor: pointer">Message Table</h5>
+
+		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
+			<div id="msg" style="width:400px;height:550px;"></div>
+		</div>
 	</div>
 
 </body>

@@ -54,27 +54,27 @@ OlMapView.prototype.init = function(div) {
 
 	this.map.addLayer(this.baseLayer);
 
-	var style = new OpenLayers.Style({
-        pointRadius: "${radius}",
-        fillColor: "#ffcc66",
-        fillOpacity: 0.8,
-        strokeColor: "#cc6633",
-        strokeWidth: "${width}",
-        strokeOpacity: 0.8
-    }, {
-        context: {
-            width: function(feature) {
-                return (feature.cluster) ? 2 : 1;
-            },
-            radius: function(feature) {
-                var pix = 2;
-                if(feature.cluster) {
-                    pix = Math.min(feature.attributes.count, 7) + 2;
-                }
-                return pix;
-            }
-        }
-    });
+	// var style = new OpenLayers.Style({
+ //        pointRadius: "${radius}",
+ //        fillColor: "#ffcc66",
+ //        fillOpacity: 0.8,
+ //        strokeColor: "#cc6633",
+ //        strokeWidth: "${width}",
+ //        strokeOpacity: 0.8
+ //    }, {
+ //        context: {
+ //            width: function(feature) {
+ //                return (feature.cluster) ? 2 : 1;
+ //            },
+ //            radius: function(feature) {
+ //                var pix = 2;
+ //                if(feature.cluster) {
+ //                    pix = Math.min(feature.attributes.count, 7) + 2;
+ //                }
+ //                return pix;
+ //            }
+ //        }
+ //    });
 
 	/*
 	init dot layer:

@@ -340,7 +340,6 @@ def server_static(filename):
     print(filename)
     return static_file(filename, root='Static')
 
-
 @app.route('/')
 def index():
     return static_file('Static/main.html', '')

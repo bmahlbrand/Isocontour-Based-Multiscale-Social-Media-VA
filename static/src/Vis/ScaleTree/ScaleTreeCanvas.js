@@ -97,12 +97,15 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 
 };
 
+//two methods to draw edge in the tree:
 ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
+
+	var lineType = ScaleTreeCanvas.linkType == 0 ? 'basis' : 'linear';
 
 	var lineFunction = d3.svg.line()
 		                      .x(function(d) { return d[0]; })
 		                      .y(function(d) { return d[1]; })
-		                      .interpolate("basis");
+		                      .interpolate(lineType);
     
     var lineGraph = this.canvas.append("path")
     							.attr("id", "link__"+pid+"__"+cid)
@@ -111,7 +114,7 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
 		                        .attr("stroke", ScaleTreeCanvas.linkStroke)
 		                        .attr("stroke-width", 1)
 		                        .attr("fill", "none")
-		                        .attr("opacity", 0.5);
+		                        .attr("opacity", 1);
 
 };
 
@@ -342,11 +345,11 @@ ScaleTreeCanvas.prototype.update = function(){
 };
 
 ScaleTreeCanvas.width = 700;
-ScaleTreeCanvas.height = 700;
+ScaleTreeCanvas.height = 500;
 ScaleTreeCanvas.nodeHeight = 40;
 ScaleTreeCanvas.div = "#ScaleTreeCanvasView";
 
-ScaleTreeCanvas.treeMarginX = 50;
+ScaleTreeCanvas.treeMarginX = 30;
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
@@ -358,6 +361,8 @@ ScaleTreeCanvas.deAcNodeStroke = "#737373";
 ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
 
 ScaleTreeCanvas.linkStroke = "#b2182b";
+ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
+
 
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
 

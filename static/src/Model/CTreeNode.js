@@ -305,7 +305,7 @@ CTreeNode.prototype.drawNode = function(){
 
 CTreeNode.prototype.drawBackground = function(ids){
 
-	if( ids.indexOf(this.cluster.clusterId) != -1)
+	if( ids.indexOf(this.cluster.clusterId) != -1 )
 		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBgRect(this.vis.getBbox());
 
 	this.children.forEach(function(val){
