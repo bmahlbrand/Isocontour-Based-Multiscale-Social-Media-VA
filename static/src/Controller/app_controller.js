@@ -328,7 +328,7 @@ twittNavApp.controller('cp_controller', function($rootScope, $scope) {
 	      max: max,
 	      values: [ min, max ],
 	      slide: function( event, ui ) {
-	        $( "#rangeText" ).html( "<h5>" + ui.values[ 0 ] + " - " + ui.values[ 1 ] +"</h5>" );
+	        $( "#rangeText" ).html( "<h6>Range: " + ui.values[ 0 ] + " - " + ui.values[ 1 ] +"</h6>" );
 	        DataCenter.instance().setRange(ui.values[0], ui.values[1]);
 	      }
 	    });

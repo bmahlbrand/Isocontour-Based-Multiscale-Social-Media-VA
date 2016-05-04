@@ -1,5 +1,8 @@
 DataCenter = function(){
 
+	//filter options:
+	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
+
 	//cluster dictionary, key: cluster id
 	this.clusters = {};
 
@@ -13,13 +16,11 @@ DataCenter = function(){
 	this.rootID = "10_0";
 
 	//init tree
-	this.root = this.initTree();
+	this.orgRoot = this.initTree();
 
+	this.root = this.filterTree(this.orgRoot);
 	this.root.sortChildren();
 
-	//filter options:
-	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
-	
 	
 };
 
@@ -31,13 +32,14 @@ DataCenter = function(){
 DataCenter.prototype.setRange = function(min, max){
 
 	this.volRange = [min, max];
-
 };
 
 //current only have volume range filter, will add other filters later;
-DataCenter.prototype.filterTree = function(){
+DataCenter.prototype.filterTree = function(root){
 
-	
+	//copy tree for org root;
+	//only copy the nodes that pass the filter
+	return root;
 
 };
 
@@ -49,8 +51,7 @@ DataCenter.prototype.filterTree = function(){
 
 DataCenter.prototype.getClusters = function(){
 
-	//this will later add filtering options
-	//TO-DO
+	//TO-DO: only return the cluster that pass the filter
 	return this.clusters;
 };
 

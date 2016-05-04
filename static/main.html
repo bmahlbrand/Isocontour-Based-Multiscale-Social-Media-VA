@@ -142,6 +142,12 @@
 
 	}
 
+	h6 {
+		
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		font-size: 12px;
+
+	}
 	span {
 
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
@@ -369,13 +375,12 @@
 	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:hidden;overflow-x:hidden;margin:0 auto;" onmouseover="$('#controlpanel').css('overflowY', 'scroll');" onmouseout="$('#controlpanel').css('overflowY', 'hidden');" ng-controller="cp_controller">
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
-			<div id="slider-range"></div>
-			<div id="rangeText" style="text-align:center"></div>
 
 		<h5 align="center">Filter</h5>
 			<div>
-				<input type="radio" name="treeType" onclick="treeType(0);" ><span>rect</span><br>
-				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>circle</span><br>
+				<div id="slider-range"></div>
+				<div id="rangeText" style="text-align:center" align="center"><h6>range:</h6></div>
+				
 
 			</div>
 
