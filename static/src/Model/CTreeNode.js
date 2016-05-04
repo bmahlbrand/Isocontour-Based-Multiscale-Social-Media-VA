@@ -180,7 +180,13 @@ CTreeNode.prototype.getPixelCoords = function(){
 
 CTreeNode.prototype.filterNodesForMinOlp = function(){
 
-	this.cluster['minOlpFlag'] = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
+	var rst = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
+
+	this.cluster['minOlpFlag'] = rst[0];
+
+	// might extend the hull;
+	if(rst[0] == true)
+		this.cluster['hulls'] = rst[1];
 
 	this.children.forEach(function(val){
 		val.filterNodesForMinOlp();

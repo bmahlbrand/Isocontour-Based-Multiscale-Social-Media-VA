@@ -195,24 +195,40 @@ ContourVis.filterHullForMinOlp = function(hull){
 
 	//not valid hull
 	if(hull.length < 6)
-		return false;
+		return [true, ContourVis.extendHull(hull)];
 
 	//too small
 	var aabb = PolyK.GetAABB(hull);
-	if(aabb.width < 5 || aabb.height < 5 )
-		return false;
+	if(aabb.width < 6 || aabb.height < 6 )
+		return [true, ContourVis.extendHull(hull)];
 
 	//check vertices in the viewport
-	var flag = false;
 	for(var i=0; i<hull.length/2; i++){
 
 		var x = hull[2*i];
 		var y = hull[2*i+1];
 		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
-			return true;
+			return [true, hull];
 	}
 
-	return flag;
+	return [false, hull];
+};
+
+// enlarge the area of hull if it is too small;
+ContourVis.extendHull = function(hull){
+
+	var xs = [], ys = [];
+	for(var i=0; i<hull.length/2; i++){
+		xs.push(hull[2*i]);
+		ys.push(hull[2*i+1]);
+	}
+	xs = arrAvg(xs);
+	ys = arrAvg(ys);
+
+	var r = 3;
+
+	return [ xs+r, ys+r, xs+r, ys-r, xs-r, ys-r, xs-r, ys+r ];
+
 };
 
 ContourVis.filterHullForVis = function(hull){
