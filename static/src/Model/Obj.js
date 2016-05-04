@@ -70,6 +70,9 @@ BBox.prototype = {
 	get_center: function(){
 		return this.center;
 	},
+	getCenter: function(){
+		return this.center;
+	},
 	get_extent: function(){
 		return this.extents;
 	},

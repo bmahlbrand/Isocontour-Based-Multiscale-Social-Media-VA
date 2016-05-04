@@ -60,6 +60,34 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 
+ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
+
+	var that = this;
+
+	var node = DataCenter.instance().getTree().getNodeById(id);
+	var color = statColor()(node.cluster['score']);
+	//draw node;
+	var rectangle = this.canvas.append("circle")
+								.attr("id", "node_"+id)
+								.attr("class", "treeNode")
+	                            .attr("cx", bbox.getCenter().x)
+	                            .attr("cy", bbox.getCenter().y)
+	                            .attr("r", 3)
+	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
+	                            .attr("stroke-width", 1)
+	                            .attr("fill", color)
+	                            .on("click", function(){
+	                            	alert(this.id);
+	                            })
+	                            // .on("mouseover", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().addHlNode(id);
+	                            // })
+	                            // .on("mouseout", function(){
+	                            // 	$('[ng-controller="app_controller"]').scope().removeHlNode(id);
+	                            // })
+	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
+};
+
 ScaleTreeCanvas.prototype.get_menu = function(id){
 
 	var that = this;
@@ -227,7 +255,6 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
 
 ScaleTreeCanvas.prototype.drawNode = function(){
 
-	this.setBbox();
 	DataCenter.instance().getTree().drawNode();
 
 	this.hoverNode();
@@ -336,11 +363,12 @@ ScaleTreeCanvas.prototype.update = function(){
 	this.canvas.selectAll("*").remove();
 
 	this.drawScaleBound();
-	
+
+	this.setBbox();
 	//this.drawBackground();
 
-	this.drawNode();
 	this.drawLinkage();
+	this.drawNode();
 
 };
 
@@ -367,5 +395,8 @@ ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
 
 ScaleTreeCanvas.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
+
+ScaleTreeCanvas.TREE_TYPE_MODE = { RECT:0, CIRC:1 };
+ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
 
 /***********************************************************************************/

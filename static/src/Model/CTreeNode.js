@@ -285,7 +285,7 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 			var w = width * VisComponent.scale()(val.getVol(), val, max) / sum;
 			
-			var b = new BBox(left+w/2, bbox.get_center().y + height, w/2, height/2 );
+			var b = new BBox(left+w/2, bbox.getCenter().y + height, w/2, height/2 );
 
 			val.setBbox(b);
 			left += w;
@@ -295,7 +295,10 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 CTreeNode.prototype.drawNode = function(){
 
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getVisBbox());
+	if( ScaleTreeCanvas.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.RECT )
+		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getVisBbox());
+	else if( ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC )
+		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawCircle(this.cluster.clusterId, this.vis.getVisBbox());
 
 	this.children.forEach(function(val){
 		val.drawNode();
@@ -329,11 +332,13 @@ CTreeNode.prototype.drawLinkage = function(){
 		var _bbox = val.getVis().getVisBbox();
 		var space = _bbox.getTop() - bbox.getBottom();
 		//end points
-		var p1 = [bbox.get_center().x, bbox.getBottom()];
-		var p2 = [_bbox.get_center().x, _bbox.getTop()];
+		var p1 = [bbox.getCenter().x, bbox.getCenter().y];
+		var p2 = [_bbox.getCenter().x, _bbox.getCenter().y];
+
+		var midY = (bbox.getCenter().y + _bbox.getCenter().y)*0.5;
 		//bezier control points
-		var p125 = [bbox.get_center().x, bbox.getBottom()+space*0.5 ];
-		var p175 = [_bbox.get_center().x, _bbox.getTop()-space*0.5 ];
+		var p125 = [bbox.getCenter().x, midY ];
+		var p175 = [_bbox.getCenter().x, midY ];
 
 		var cid = val.cluster.clusterId;
 		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBCurve(pid, cid, [p1, p125, p175, p2]);
