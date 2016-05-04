@@ -22,6 +22,16 @@
 	<![endif]-->
 	<title>Twitter Navigator</title>
 
+	<script type="text/javascript">
+		Array.prototype.max = function() {
+		  return Math.max.apply(null, this);
+		};
+
+		Array.prototype.min = function() {
+		  return Math.min.apply(null, this);
+		};
+	</script>
+
 	<!--external resources-->
 	<!-- jquery ui-->
 	<script type="text/javascript" src="lib/jQuery/jquery-2.1.3.min.js"></script>
@@ -356,9 +366,18 @@
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
-	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:hidden;overflow-x:hidden;" onmouseover="$('#controlpanel').css('overflowY', 'scroll');" onmouseout="$('#controlpanel').css('overflowY', 'hidden');">
+	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:hidden;overflow-x:hidden;margin:0 auto;" onmouseover="$('#controlpanel').css('overflowY', 'scroll');" onmouseout="$('#controlpanel').css('overflowY', 'hidden');" ng-controller="cp_controller">
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
+			<div id="slider-range"></div>
+			<div id="rangeText" style="text-align:center"></div>
+
+		<h5 align="center">Filter</h5>
+			<div>
+				<input type="radio" name="treeType" onclick="treeType(0);" ><span>rect</span><br>
+				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>circle</span><br>
+
+			</div>
 
 		<h5 align="center">Tree Style</h5>
 			<div>

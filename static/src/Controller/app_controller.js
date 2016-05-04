@@ -317,6 +317,35 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
 });
 
+
+twittNavApp.controller('cp_controller', function($rootScope, $scope) {
+
+	$scope.initRange = function(min, max){
+
+		$( "#slider-range" ).slider({
+	      range: true,
+	      min: min,
+	      max: max,
+	      values: [ min, max ],
+	      slide: function( event, ui ) {
+	        $( "#rangeText" ).html( "<h5>" + ui.values[ 0 ] + " - " + ui.values[ 1 ] +"</h5>" );
+	        DataCenter.instance().setRange(ui.values[0], ui.values[1]);
+	      }
+	    });
+
+	    $( "#slider-range" ).width(80);
+		$( "#slider-range" ).css('left', 30);
+
+	};
+
+	//init range:
+	var list = DataCenter.instance().getTree().toList();
+	var vol = list.map(function(val){ return val.getVol(); });
+	$scope.initRange(vol.min(), vol.max());
+
+});
+
+
 twittNavApp.controller('map_controller', function($rootScope, $scope) {
 	$scope.init = function(){
 
