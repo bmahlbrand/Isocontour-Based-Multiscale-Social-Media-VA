@@ -17,8 +17,31 @@ DataCenter = function(){
 
 	this.root.sortChildren();
 
+	//filter options:
+	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
+	
 	
 };
+
+
+/*************************************************************************************/
+/**************************** cluster filter operation *******************************/
+/*************************************************************************************/
+
+DataCenter.prototype.setRange = function(min, max){
+
+	this.volRange = [min, max];
+
+};
+
+//current only have volume range filter, will add other filters later;
+DataCenter.prototype.filterTree = function(){
+
+	
+
+};
+
+/*************************************************************************************/
 
 /*************************************************************************************/
 /***************************** cluster list operation ********************************/
