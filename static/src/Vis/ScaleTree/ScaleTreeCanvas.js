@@ -17,9 +17,9 @@ ScaleTreeCanvas.prototype.init = function() {
 			    	;
 };
 
-ScaleTreeCanvas.prototype.setBbox = function(){
+ScaleTreeCanvas.prototype.setBbox = function(treeNode){
 
-	var level = DataCenter.instance().getTree().getHeight();
+	var level = treeNode.getHeight();
 
 	var centerX = ScaleTreeCanvas.width/2;
 	var centerY = ScaleTreeCanvas.height / level / 2;
@@ -28,7 +28,7 @@ ScaleTreeCanvas.prototype.setBbox = function(){
 
 	//initial bbox
 	var bbox = new BBox(centerX, centerY, w, h);
-	DataCenter.instance().getTree().setBbox(bbox);
+	treeNode.setBbox(bbox);
 
 };
 
@@ -146,11 +146,14 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
 
 };
 
-ScaleTreeCanvas.prototype.drawScaleBound = function(){
+ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
-	var init_level = case_study[default_case].startLevel + case_study[default_case].zoom;
-	var end_level = case_study[default_case].endLevel + case_study[default_case].zoom;
-	var level = end_level - init_level + 1;
+	//var init_level = case_study[default_case].startLevel + case_study[default_case].zoom;
+	//var end_level = case_study[default_case].endLevel + case_study[default_case].zoom;
+	//var level = end_level - init_level + 1;
+	var init_level = treeNode.cluster['zoom'];
+	var level = treeNode.getHeight();
+	var end_level = init_level + level - 1;
 
 	for(var i=init_level; i<=end_level; i++){
 
@@ -253,9 +256,9 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(){
 };
 
 
-ScaleTreeCanvas.prototype.drawNode = function(){
+ScaleTreeCanvas.prototype.drawNode = function(treeNode){
 
-	DataCenter.instance().getTree().drawNode();
+	treeNode.drawNode();
 
 	this.hoverNode();
 };
@@ -277,10 +280,10 @@ ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
 	                            .attr("fill-opacity", 0.4);      
 };
 
-ScaleTreeCanvas.prototype.drawBackground = function(){
+ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();	
-	DataCenter.instance().getTree().drawBackground(acNodes);
+	treeNode.drawBackground(acNodes);
 
 };
 
@@ -315,9 +318,9 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 };
 
 
-ScaleTreeCanvas.prototype.drawLinkage = function(){
+ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
-	DataCenter.instance().getTree().drawLinkage();
+	treeNode.drawLinkage();
 
 	this.hoverLinkage();
 };
@@ -362,13 +365,14 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
-	this.drawScaleBound();
+	var treeNode = DataCenter.instance().getTree().children[1];
 
-	this.setBbox();
-	//this.drawBackground();
+	this.setBbox(treeNode);
+	this.drawScaleBound(treeNode);
+	//this.drawBackground(treeNode);
 
-	this.drawLinkage();
-	this.drawNode();
+	this.drawLinkage(treeNode);
+	this.drawNode(treeNode);
 
 };
 
