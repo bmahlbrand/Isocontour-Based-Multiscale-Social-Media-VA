@@ -329,9 +329,9 @@
 		function treeType(val){
 			
 			if(parseInt(val) == 0)
-				ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.RECT;
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.RECT;
 			else if(parseInt(val) == 1)
-				ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}

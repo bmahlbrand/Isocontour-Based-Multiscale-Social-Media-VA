@@ -1,30 +1,49 @@
 ScaleTreeCanvas = function(){
 
+	//vis styling
+	this.width = 700;
+	this.height = 500;
+
+	this.nodeHeight = 40;
+	this.div = "#ScaleTreeCanvasView";
+
+	this.treeMarginX = 30;
+
+	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
+	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
+
+	//vis styling
+
 	this.canvas = null;
 
 	this.scaleBounds = [];
 
 	this.init();
+
 }
 
 ScaleTreeCanvas.prototype.init = function() {
 	
-	this.canvas = d3.select(ScaleTreeCanvas.div)
+	var that = this;
+
+	this.canvas = d3.select(that.div)
 			    	.append("svg")
 			    	.attr("id", "ScaleTreeCanvasSvg")
-			    	.attr("width", ScaleTreeCanvas.width)
-			    	.attr("height", ScaleTreeCanvas.height)
+			    	.attr("width", that.width)
+			    	.attr("height", that.height)
 			    	;
+
+	console.log();
 };
 
 ScaleTreeCanvas.prototype.setBbox = function(treeNode){
 
 	var level = treeNode.getHeight();
 
-	var centerX = ScaleTreeCanvas.width/2;
-	var centerY = ScaleTreeCanvas.height / level / 2;
-	var w = ScaleTreeCanvas.width/2 - ScaleTreeCanvas.treeMarginX;
-	var h = ScaleTreeCanvas.height / level / 2;
+	var centerX = this.width/2;
+	var centerY = this.height / level / 2;
+	var w = this.width/2 - this.treeMarginX;
+	var h = this.height / level / 2;
 
 	//initial bbox
 	var bbox = new BBox(centerX, centerY, w, h);
@@ -159,10 +178,10 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
 		var yMargin = 5;
 
-		var centerX = ScaleTreeCanvas.width/2;
-		var centerY = ScaleTreeCanvas.height / level * (i - init_level + 0.5);
-		var w = ScaleTreeCanvas.width/2;
-		var h = ScaleTreeCanvas.height / level * 0.5 - yMargin;
+		var centerX = this.width/2;
+		var centerY = this.height / level * (i - init_level + 0.5);
+		var w = this.width/2;
+		var h = this.height / level * 0.5 - yMargin;
 		
 		var bbox = new BBox(centerX, centerY, w, h);
 
@@ -256,6 +275,15 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 };
 
 
+ScaleTreeCanvas.prototype.drawSingleNode = function(id, bbox){
+
+	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.RECT )
+		this.drawRect(id, bbox);
+	else if( this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC )
+		this.drawCircle(id, bbox);
+
+};
+
 ScaleTreeCanvas.prototype.drawNode = function(treeNode){
 
 	treeNode.drawNode();
@@ -282,7 +310,7 @@ ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
 
 ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
 
-	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();	
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 	treeNode.drawBackground(acNodes);
 
 };
@@ -365,7 +393,8 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
-	var treeNode = DataCenter.instance().getTree().children[1];
+	//var treeNode = DataCenter.instance().getTree().children[0].children[6].children[10];
+	var treeNode = DataCenter.instance().getTree();
 
 	this.setBbox(treeNode);
 	this.drawScaleBound(treeNode);
@@ -375,13 +404,6 @@ ScaleTreeCanvas.prototype.update = function(){
 	this.drawNode(treeNode);
 
 };
-
-ScaleTreeCanvas.width = 700;
-ScaleTreeCanvas.height = 500;
-ScaleTreeCanvas.nodeHeight = 40;
-ScaleTreeCanvas.div = "#ScaleTreeCanvasView";
-
-ScaleTreeCanvas.treeMarginX = 30;
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
@@ -395,12 +417,8 @@ ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
 ScaleTreeCanvas.linkStroke = "#b2182b";
 ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
 
-
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
 
-ScaleTreeCanvas.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
-
 ScaleTreeCanvas.TREE_TYPE_MODE = { RECT:0, CIRC:1 };
-ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
 
 /***********************************************************************************/

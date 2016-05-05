@@ -301,10 +301,7 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 CTreeNode.prototype.drawNode = function(){
 
-	if( ScaleTreeCanvas.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.RECT )
-		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawRect(this.cluster.clusterId, this.vis.getVisBbox());
-	else if( ScaleTreeCanvas.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC )
-		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawCircle(this.cluster.clusterId, this.vis.getVisBbox());
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawSingleNode(this.cluster.clusterId, this.vis.getVisBbox());
 
 	this.children.forEach(function(val){
 		val.drawNode();
