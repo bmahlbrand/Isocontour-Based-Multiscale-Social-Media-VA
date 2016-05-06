@@ -264,8 +264,6 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 		//only store this root of the subtree;
 		$rootScope.highlightedNodes = [];
 
-	
-
 	};
 
 	$scope.init();
@@ -505,8 +503,6 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 	};
 	//have getScaleTreeCanvas() defined before calling init function
 	$scope.init();
-
-
 
 });
 

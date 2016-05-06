@@ -48,29 +48,6 @@ CTreeNode.prototype.getNumOfLeaves = function(){
 	return rst;
 };
 
-CTreeNode.prototype.getTreeByLevels = function(){
-
-	if(this.children.length <= 0)
-		return [this];
-
-	var rst = [];
-	this.children.forEach(function(val){
-
-		var _rst = val.getTreeByLevels();
-
-		_rst.forEach(function(_val, i){
-			if(rst.length <= i)
-				rst.push([]);
-
-			rst[i] = rst[i].concat(_val);
-		});
-	});
-
-	rst.unshift([this]);
-	return rst;
-
-};
-
 CTreeNode.prototype.sortChildren = function(){
 
 	var sortFunction = null;
@@ -301,7 +278,7 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 CTreeNode.prototype.drawNode = function(){
 
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawSingleNode(this.cluster.clusterId, this.vis.getVisBbox());
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawSingleNode(this.cluster.clusterId, this.vis.getVisBbox(), this.vis.getBbox());
 
 	this.children.forEach(function(val){
 		val.drawNode();
@@ -360,6 +337,14 @@ VisComponent = function(){
 VisComponent.prototype.setBbox = function(cx, cy, ex, ey){
 	
 	this.bbox = new BBox(cx, cy, ex, ey);
+
+	//shrink a little bit for visualization:
+	var margin = 3;
+	if(this.bbox.getWidth() > margin)
+		this.bbox.getExtent().x -= margin*0.5;
+	if(this.bbox.getHeight() > margin)
+		this.bbox.getExtent().y -= margin*0.5;
+
 	this.visBbox = new BBox();
 	
 	this.visBbox.setBox(this.bbox);

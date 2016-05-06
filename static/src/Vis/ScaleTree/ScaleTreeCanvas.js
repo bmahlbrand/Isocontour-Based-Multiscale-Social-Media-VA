@@ -9,9 +9,11 @@ ScaleTreeCanvas = function(){
 
 	this.treeMarginX = 30;
 
+	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
 	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
-	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
+	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
 
+	this.scaleBoundFlag = true;
 	//vis styling
 
 	this.canvas = null;
@@ -32,8 +34,6 @@ ScaleTreeCanvas.prototype.init = function() {
 			    	.attr("width", that.width)
 			    	.attr("height", that.height)
 			    	;
-
-	console.log();
 };
 
 ScaleTreeCanvas.prototype.setBbox = function(treeNode){
@@ -112,6 +112,18 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 	var that = this;
 
 	var menu = [
+		{
+			title: 'focus on me',
+			action: function() {
+	             DataCenter.instance().setFocusID(id);
+			}
+		},
+		{
+			title: 'reset focus',
+			action: function() {
+	             DataCenter.instance().setFocusID(DataCenter.instance().rootID);
+			}
+		},
 		{
 			title: 'set',
 			action: function() {
@@ -274,13 +286,19 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
 };
 
+ScaleTreeCanvas.prototype.drawSingleNode = function(id, visBbox, bbox){
 
-ScaleTreeCanvas.prototype.drawSingleNode = function(id, bbox){
+	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
 
-	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.RECT )
+		if( this.NODE_TYPE == ScaleTreeCanvas.NODE_TYPE_MODE.RECT )
+			this.drawRect(id, visBbox);
+		else if( this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC )
+			this.drawCircle(id, visBbox);
+	}
+	else if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.ICICLE ){
+
 		this.drawRect(id, bbox);
-	else if( this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC )
-		this.drawCircle(id, bbox);
+	}
 
 };
 
@@ -348,9 +366,11 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
-	treeNode.drawLinkage();
-
-	this.hoverLinkage();
+	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
+		treeNode.drawLinkage();
+		this.hoverLinkage();
+	}
+	
 };
 
 ScaleTreeCanvas.prototype.hoverLinkage = function(){
@@ -393,11 +413,12 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
-	//var treeNode = DataCenter.instance().getTree().children[0].children[6].children[10];
-	var treeNode = DataCenter.instance().getTree();
+	var treeNode = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
 	this.setBbox(treeNode);
-	this.drawScaleBound(treeNode);
+
+	if(this.scaleBoundFlag)
+		this.drawScaleBound(treeNode);
 	//this.drawBackground(treeNode);
 
 	this.drawLinkage(treeNode);
@@ -419,6 +440,8 @@ ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
 
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
 
-ScaleTreeCanvas.TREE_TYPE_MODE = { RECT:0, CIRC:1 };
+ScaleTreeCanvas.NODE_TYPE_MODE = { RECT:0, CIRC:1 };
+
+ScaleTreeCanvas.TREE_TYPE_MODE = { NODELINK:0, ICICLE:1 };
 
 /***********************************************************************************/

@@ -1,7 +1,11 @@
 DataCenter = function(){
 
+	//hard coded for now
+	this.rootID = "10_0";
+	
 	//filter options:
 	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
+	this.focusID = this.rootID;
 
 	//cluster dictionary, key: cluster id
 	this.clusters = {};
@@ -12,9 +16,6 @@ DataCenter = function(){
 
 	this.loadTweets();
 	this.loadClusters();
-
-	//hard coded for now
-	this.rootID = "10_0";
 
 	//init tree
 	this.root = this.initTree();
@@ -34,13 +35,21 @@ DataCenter.prototype.setRange = function(min, max){
 
 };
 
-//current only have volume range filter, will add other filters later;
+DataCenter.prototype.setFocusID = function(id){
+	this.focusID = id;
+
+	//just for now:
+	$('[ng-controller="app_controller"]').scope().masterUpdate();
+};
+
+//current only have volume range filter, will add other filters later
+//not decided whether we need to copy the tree
 DataCenter.prototype.filterTree = function(root){
 
 	//copy tree for org root;
 	//only copy the nodes that pass the filter
 	return root;
-	
+
 };
 
 /*************************************************************************************/
@@ -49,11 +58,12 @@ DataCenter.prototype.filterTree = function(root){
 /***************************** cluster list operation ********************************/
 /*************************************************************************************/
 
-DataCenter.prototype.getClusters = function(){
+//not used for now;
+// DataCenter.prototype.getClusters = function(){
 
-	//TO-DO: only return the cluster that pass the filter
-	return this.clusters;
-};
+// 	//TO-DO: only return the cluster that pass the filter
+// 	return this.clusters;
+// };
 
 /*************************************************************************************/
 
