@@ -140,7 +140,7 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 		iteration += 1;
 
 		var len = child.length/2;
-		var path = HullLayout.getPath(HullLayout.sampledPath(HullLayout.getLine(child)));
+		var path = HullLayout.getPath(child);
 		
 		for (var i=0; i<len; i++) {
 			
@@ -148,15 +148,17 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 			var y = child[2*i+1];
 
 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
-			var p = HullLayout.closestPointOnPath(path, x);
+			var p = HullLayout.closestPointOnPath(path[0][0], [x,y]);
+			//x = p[0];
+			//y = p[1];
 
-			if(rst.dist < HullLayout.pointEdgeDisThres) {
+			if (rst.dist < HullLayout.pointEdgeDisThres) {
 
 				var left = (i-1+len)%len;
 				var right = (i+1+len)%len;
 
-				var center1 = HullLayout.lineCenter(x, y, child[2*left], child[2*left+1]);
-				var center2 = HullLayout.lineCenter(x, y, child[2*right], child[2*right+1]);
+				var center1 = HullLayout.lineCenter(p[0], p[1], child[2*left], child[2*left+1]);
+				var center2 = HullLayout.lineCenter(p[0], p[1], child[2*right], child[2*right+1]);
 
 				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
 
@@ -246,8 +248,8 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 HullLayout.minimizeOverlap = function(parent, child){
 
 	child = HullLayout._moveOutsidePts(parent, child);
-	child = HullLayout._shrinkPartialPoly(parent, child);
-	//child = HullLayout._shrinkPartialCurvedPoly(parent, child);
+	//child = HullLayout._shrinkPartialPoly(parent, child);
+	child = HullLayout._shrinkPartialCurvedPoly(parent, child);
 	return child;
 
 };
