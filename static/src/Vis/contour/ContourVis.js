@@ -149,7 +149,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	.on("mouseover", function(){
 
-			    		//return;
+			    		return;
 			    		//tweets inside the hull;
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		console.log(cluster_id);
@@ -176,7 +176,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 		  			}).on("mouseout", function(){
 
-		  				//return;
+		  				return;
 
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 
