@@ -48,6 +48,14 @@ HullLayout.sampledPath = function(path) { //actually this should be the line of 
 	return path.interpolate(path.length, path.length * 2);
 };
 
+HullLayout.samplePath = function(path, pathNodesN) {
+	//loop through and compute sampled points based on total length of path and double points
+	var pathLength = pathNode.getTotalLength(),
+		threshold = pathLength / (pathNodesN * 2);
+
+	return;
+};
+
 HullLayout.pointAlongPath = function(path, t) {
 	var l = path.getTotalLength();
 	var pt = path.getPointAtLength(l * t);
@@ -248,8 +256,8 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 HullLayout.minimizeOverlap = function(parent, child){
 
 	child = HullLayout._moveOutsidePts(parent, child);
-	//child = HullLayout._shrinkPartialPoly(parent, child);
-	child = HullLayout._shrinkPartialCurvedPoly(parent, child);
+	child = HullLayout._shrinkPartialPoly(parent, child);
+	//child = HullLayout._shrinkPartialCurvedPoly(parent, child);
 	return child;
 
 };
