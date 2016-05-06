@@ -338,6 +338,28 @@ ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
 
 /******************  parameter setup  **********************/
+ContourVis.prototype.createDummyLine = function(pts){
+
+	pts = HullLayout.odArrTo2dArr(pts);
+
+	var lineFunction = null;
+	
+	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("basis-closed");
+	} else {
+		lineFunction = d3.svg.line()
+						.x(function(d) { return d[0]; })
+                        .y(function(d) { return d[1]; })
+                        .interpolate("cardinal-closed")
+                        .tension(ContourVis.tension);
+	}
+
+	return lineFunction;
+
+};
 
 ContourVis.prototype.createDummyPath = function(pts){
 
@@ -346,20 +368,7 @@ ContourVis.prototype.createDummyPath = function(pts){
 	var that = this;
 	var svg = this.map_svg;
 
-	var lineFunction = null;
-
-	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
-		lineFunction = d3.svg.line()
-						.x(function(d) { return d[0]; })
-                        .y(function(d) { return d[1]; })
-                        .interpolate("basis-closed");
-	}else{
-		lineFunction = d3.svg.line()
-						.x(function(d) { return d[0]; })
-                        .y(function(d) { return d[1]; })
-                        .interpolate("cardinal-closed")
-                        .tension(ContourVis.tension);
-	}
+	var lineFunction = this.createDummyLine(pts);
 
     var hull = svg.append("path")
 			    	.attr("class", "dummyPath")

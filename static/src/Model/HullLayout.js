@@ -40,6 +40,10 @@ HullLayout.getPath = function(points) {
 	return $('[ng-controller="map_controller"]').scope().createDummyPath(points);
 };
 
+HullLayout.getLine = function(points) {
+	return $('[ng-controller="map_controller"]').scope().createDummyLine(points);
+};
+
 HullLayout.sampledPath = function(path) { //actually this should be the line of the path
 	return path.interpolate(path.length, path.length * 2);
 };
@@ -136,14 +140,15 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 		iteration += 1;
 
 		var len = child.length/2;
-		var path = HullLayout.sampledPath(HullLayout.getPath(child));
-
+		var path = HullLayout.getPath(HullLayout.sampledPath(HullLayout.getLine(child)));
+		
 		for (var i=0; i<len; i++) {
 			
 			var x = child[2*i];
 			var y = child[2*i+1];
 
 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
+			var p = HullLayout.closestPointOnPath(path, x);
 
 			if(rst.dist < HullLayout.pointEdgeDisThres) {
 
@@ -242,6 +247,7 @@ HullLayout.minimizeOverlap = function(parent, child){
 
 	child = HullLayout._moveOutsidePts(parent, child);
 	child = HullLayout._shrinkPartialPoly(parent, child);
+	//child = HullLayout._shrinkPartialCurvedPoly(parent, child);
 	return child;
 
 };
