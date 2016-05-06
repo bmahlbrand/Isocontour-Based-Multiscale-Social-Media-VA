@@ -13,6 +13,7 @@ ScaleTreeCanvas = function(){
 	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
 	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
 
+	this.scaleBoundFlag = true;
 	//vis styling
 
 	this.canvas = null;
@@ -111,6 +112,18 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 	var that = this;
 
 	var menu = [
+		{
+			title: 'focus on me',
+			action: function() {
+	             DataCenter.instance().setFocusID(id);
+			}
+		},
+		{
+			title: 'reset focus',
+			action: function() {
+	             DataCenter.instance().setFocusID(DataCenter.instance().rootID);
+			}
+		},
 		{
 			title: 'set',
 			action: function() {
@@ -273,7 +286,6 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
 };
 
-
 ScaleTreeCanvas.prototype.drawSingleNode = function(id, visBbox, bbox){
 
 	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
@@ -401,11 +413,12 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
-	//var treeNode = DataCenter.instance().getTree().children[0].children[6].children[10];
-	var treeNode = DataCenter.instance().getTree();
+	var treeNode = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
 	this.setBbox(treeNode);
-	this.drawScaleBound(treeNode);
+
+	if(this.scaleBoundFlag)
+		this.drawScaleBound(treeNode);
 	//this.drawBackground(treeNode);
 
 	this.drawLinkage(treeNode);

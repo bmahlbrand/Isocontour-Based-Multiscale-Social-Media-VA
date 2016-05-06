@@ -149,12 +149,12 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	.on("mouseover", function(){
 
-			    		return;
+			    		//return;
 			    		//tweets inside the hull;
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		console.log(cluster_id);
 
-			    		var ids = DataCenter.instance().getClusters()[cluster_id]['ids'];
+			    		var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
 			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
@@ -164,7 +164,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 			    		//tweets on the boundary:
 			    		var ids = [];
-			    		DataCenter.instance().getClusters()[cluster_id]['hullIds'].forEach(function(idlist){
+			    		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
 			    			ids = ids.concat(idlist);
 			    		});
 
@@ -176,7 +176,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 		  			}).on("mouseout", function(){
 
-		  				return;
+		  				//return;
 
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 

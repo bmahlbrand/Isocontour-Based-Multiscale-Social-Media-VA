@@ -48,29 +48,6 @@ CTreeNode.prototype.getNumOfLeaves = function(){
 	return rst;
 };
 
-CTreeNode.prototype.getTreeByLevels = function(){
-
-	if(this.children.length <= 0)
-		return [this];
-
-	var rst = [];
-	this.children.forEach(function(val){
-
-		var _rst = val.getTreeByLevels();
-
-		_rst.forEach(function(_val, i){
-			if(rst.length <= i)
-				rst.push([]);
-
-			rst[i] = rst[i].concat(_val);
-		});
-	});
-
-	rst.unshift([this]);
-	return rst;
-
-};
-
 CTreeNode.prototype.sortChildren = function(){
 
 	var sortFunction = null;
