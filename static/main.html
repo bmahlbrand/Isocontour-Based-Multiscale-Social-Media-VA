@@ -326,12 +326,22 @@
 
 		}
 
+		function setNodeType(val){
+			
+			if(parseInt(val) == 0)
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.RECT;
+			else if(parseInt(val) == 1)
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
+			
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+		}
+
 		function treeType(val){
 			
 			if(parseInt(val) == 0)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.RECT;
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.ICICLE;
 			else if(parseInt(val) == 1)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
+				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -384,10 +394,17 @@
 
 			</div>
 
-		<h5 align="center">Tree Style</h5>
+		<h5 align="center">Tree Type</h5>
 			<div>
-				<input type="radio" name="treeType" onclick="treeType(0);" ><span>rect</span><br>
-				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>circle</span><br>
+				<input type="radio" name="treeType" onclick="treeType(0);" ><span>icicle</span><br>
+				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>node-link</span><br>
+
+			</div>
+		
+		<h5 align="center">Node Style</h5>
+			<div>
+				<input type="radio" name="nodeType" onclick="setNodeType(0);" ><span>rect</span><br>
+				<input type="radio" name="nodeType" onclick="setNodeType(1);" checked><span>circle</span><br>
 
 			</div>
 		

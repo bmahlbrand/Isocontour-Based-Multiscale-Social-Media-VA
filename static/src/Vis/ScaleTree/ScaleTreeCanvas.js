@@ -9,8 +9,9 @@ ScaleTreeCanvas = function(){
 
 	this.treeMarginX = 30;
 
+	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
 	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
-	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC;
+	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
 
 	//vis styling
 
@@ -32,8 +33,6 @@ ScaleTreeCanvas.prototype.init = function() {
 			    	.attr("width", that.width)
 			    	.attr("height", that.height)
 			    	;
-
-	console.log();
 };
 
 ScaleTreeCanvas.prototype.setBbox = function(treeNode){
@@ -275,12 +274,19 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 };
 
 
-ScaleTreeCanvas.prototype.drawSingleNode = function(id, bbox){
+ScaleTreeCanvas.prototype.drawSingleNode = function(id, visBbox, bbox){
 
-	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.RECT )
+	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
+
+		if( this.NODE_TYPE == ScaleTreeCanvas.NODE_TYPE_MODE.RECT )
+			this.drawRect(id, visBbox);
+		else if( this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC )
+			this.drawCircle(id, visBbox);
+	}
+	else if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.ICICLE ){
+
 		this.drawRect(id, bbox);
-	else if( this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.CIRC )
-		this.drawCircle(id, bbox);
+	}
 
 };
 
@@ -348,9 +354,11 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
-	treeNode.drawLinkage();
-
-	this.hoverLinkage();
+	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
+		treeNode.drawLinkage();
+		this.hoverLinkage();
+	}
+	
 };
 
 ScaleTreeCanvas.prototype.hoverLinkage = function(){
@@ -419,6 +427,8 @@ ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
 
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
 
-ScaleTreeCanvas.TREE_TYPE_MODE = { RECT:0, CIRC:1 };
+ScaleTreeCanvas.NODE_TYPE_MODE = { RECT:0, CIRC:1 };
+
+ScaleTreeCanvas.TREE_TYPE_MODE = { NODELINK:0, ICICLE:1 };
 
 /***********************************************************************************/
