@@ -106,8 +106,13 @@ DataCenter.prototype.getTweetsByIds = function(ids){
 
 //distribution of categories;
 DataCenter.prototype.distOfCate = function(tweets){
-	
+
+	if(tweets.length <= 0)
+		return {};
+
 	var cateArr = tweets.map(function(val){ return Object.keys(val.cate); });
+	
+
 	cateArr = cateArr.reduce(function(prev, next){ return prev.concat(next); });
 	return _.countBy(cateArr);
 

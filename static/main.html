@@ -378,19 +378,34 @@
 			var rst = [];
 			var mapping = {};
 
-			var keys = ["T11","C07","E01","T02","O02","T09","T04","T03"];
+			//var keys = ["T11","C07","E01","T02","O02","T09","T04","T03"];
+
+			var keys = ["T02","T03","O02","T09","T04"];
+
 			list.forEach(function(val){
 
-				var size = val.cluster['ids'].length;
 				var tweets = DataCenter.instance().getTweetsByIds(val.cluster['ids']);
+				tweets = tweets.filter(function(val){
+					var k = Object.keys(val.cate);
+					var inter = intersect_arrays(keys, k);
+					if(inter.length > 0)
+						return true;
+					else
+						return false;
+				})
 				var dist = DataCenter.instance().distOfCate(tweets);
 				var tmp = [];
+				var size = tweets.length;
 				keys.forEach(function(key){
 					if(dist.hasOwnProperty(key))
 						tmp.push(dist[key]/size);
 					else
 						tmp.push(0);
 				});
+
+				//merge T02 and T03 into one entry
+				tmp[1] = tmp[0] + tmp[1];
+				tmp.shift();
 				rst.push(tmp);
 				mapping[rst.length-1] = val.cluster['clusterId'];
 			});
@@ -398,16 +413,16 @@
 			console.log(JSON.stringify(rst));
 			console.log(JSON.stringify(mapping));
 
-			// rst.forEach(function(val, idx){
-			// 	rst[idx] = mapping[idx] + "," + val.join(',');
-			// });
+			rst.forEach(function(val, idx){
+				rst[idx] = mapping[idx] + "," + val.join(',');
+			});
 
-			// rst = 'label,variable1,variable2,variable3,variable4,variable5,variable6,variable7,variable8' + '\n' + rst.join('\n');
+			rst = 'label,variable1,variable2,variable3,variable4' + '\n' + rst.join('\n');
 
-			// var doc = document.createElement('a');
-	 	// 	doc.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(rst));
-	 	// 	doc.setAttribute('download', 'features.csv');
-	 	// 	doc.click();
+			var doc = document.createElement('a');
+	 		doc.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(rst));
+	 		doc.setAttribute('download', 'features.csv');
+	 		doc.click();
 		}
 
 	</script>
