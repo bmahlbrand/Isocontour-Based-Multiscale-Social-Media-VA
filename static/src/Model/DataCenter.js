@@ -148,6 +148,7 @@ DataCenter.prototype.loadTweets = function(){
 			t.lon = parseFloat(entry.geolocation.lon);
 			
 			t.cate = {};
+			t.text = entry.lemmed_text;
 			entry.cate.forEach(function(val){
 				t.cate[val] = true;
 			});

@@ -311,7 +311,6 @@ def query():
             
     return json.dumps({'tweets':rst_new})
 
-
 @app.route('/search', method="POST")
 def query():
     start_time = TimeFunc.time_func_solr_date_to_python_date('2015-05-13T00:00:00Z')
