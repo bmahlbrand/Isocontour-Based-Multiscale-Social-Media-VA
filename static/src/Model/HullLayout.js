@@ -40,6 +40,10 @@ HullLayout.getPath = function(points) {
 	return $('[ng-controller="map_controller"]').scope().createDummyPath(points);
 };
 
+HullLayout.getSampledPath = function(points) {
+	return this.samplePath(this.getPath(points)[0][0], points.length / 2);
+};
+
 HullLayout.getLine = function(points) {
 	return $('[ng-controller="map_controller"]').scope().createDummyLine(points);
 };
@@ -48,19 +52,27 @@ HullLayout.sampledPath = function(path) { //actually this should be the line of 
 	return path.interpolate(path.length, path.length * 2);
 };
 
-HullLayout.samplePath = function(path, pathNodesN) {
+HullLayout.samplePath = function(pathNode, pathNodesN) {
 	//loop through and compute sampled points based on total length of path and double points
 	var pathLength = pathNode.getTotalLength(),
 		threshold = pathLength / (pathNodesN * 2);
+	
+	var sampledPts = [];
 
-	return;
+	for (var i = 0; i < threshold; i++) {
+		var pt = this.pointAlongPath(pathNode, (1.0 / threshold) * i);
+		sampledPts.push(pt.x);
+		sampledPts.push(pt.y);
+	}
+
+	return sampledPts;
 };
 
 HullLayout.pointAlongPath = function(path, t) {
+	
 	var l = path.getTotalLength();
-	var pt = path.getPointAtLength(l * t);
+	return path.getPointAtLength(l * t);
 
-	return pt;
 }
 
 HullLayout.closestPointOnPath = function(pathNode, point) {
@@ -69,6 +81,7 @@ HullLayout.closestPointOnPath = function(pathNode, point) {
 	  best,
 	  bestLength,
 	  bestDistance = Infinity;
+
 	// linear scan for coarse approximation
 	for (var scan, scanLength = 0, scanDistance; scanLength <= pathLength; scanLength += precision) {
 		if ((scanDistance = distance2(scan = pathNode.getPointAtLength(scanLength))) < bestDistance) {
@@ -148,30 +161,29 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 		iteration += 1;
 
 		var len = child.length/2;
-		var path = HullLayout.getPath(child);
-		
+		var nodes = HullLayout.getSampledPath(child);
+		var path = HullLayout.getPath(nodes);
+
 		for (var i=0; i<len; i++) {
 			
-			var x = child[2*i];
-			var y = child[2*i+1];
+			var x = nodes[2*i];
+			var y = nodes[2*i+1];
 
 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
 			var p = HullLayout.closestPointOnPath(path[0][0], [x,y]);
-			//x = p[0];
-			//y = p[1];
 
 			if (rst.dist < HullLayout.pointEdgeDisThres) {
 
 				var left = (i-1+len)%len;
 				var right = (i+1+len)%len;
 
-				var center1 = HullLayout.lineCenter(p[0], p[1], child[2*left], child[2*left+1]);
-				var center2 = HullLayout.lineCenter(p[0], p[1], child[2*right], child[2*right+1]);
+				var center1 = HullLayout.lineCenter(p[0], p[1], nodes[2*left], nodes[2*left+1]);
+				var center2 = HullLayout.lineCenter(p[0], p[1], nodes[2*right], nodes[2*right+1]);
 
 				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
 
-				child[2*i] = center[0];
-				child[2*i+1] = center[1];
+				nodes[2*i] = center[0];
+				nodes[2*i+1] = center[1];
 
 			} else { //terminate looping through polygon
 				keepGoing = false;
@@ -181,7 +193,7 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 	} while ( keepGoing == true && iteration < HullLayout.shrinkIteration );
 
 	// console.log("iteration time: "+iteration);
-	return child;
+	return nodes;
 
 };
 
