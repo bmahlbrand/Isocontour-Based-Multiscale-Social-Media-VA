@@ -311,6 +311,27 @@ def query():
             
     return json.dumps({'tweets':rst_new})
 
+@app.route('/cate_cluster', method="GET")
+def query():
+
+    case_index = int(request.query.get("case_index"))
+
+    fname = ''
+    if case_index == 0:
+        fname = 'shooting.json'
+    elif case_index == 1:
+        fname = 'boston_cate_cluster.json'
+    elif case_index == 2:
+        fname = 'sandy.json'
+    elif case_index == 4:
+        fname = 'keene.json'
+
+    rst = {}
+    with open(fname) as data_file:
+        rst = json.load(data_file)
+
+    return json.dumps(rst)
+
 
 @app.route('/search', method="POST")
 def query():
