@@ -403,8 +403,8 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 
 	};
 
-	$scope.add_region_to_canvas = function(bounds, start_time, end_time){
-		Canvas_manager.instance().add_region(bounds, start_time, end_time);
+	$scope.add_region_to_canvas = function(bounds){
+		Canvas_manager.instance().add_region(bounds);
 	};
 
 	// //assume there is only one lense;

@@ -125,7 +125,7 @@ Canvas_manager.prototype.update = function(){
     
 };
 
-Canvas_manager.prototype.add_region = function(bounds, start_time, end_time){
+Canvas_manager.prototype.add_region = function(bounds){
 
 	//geo-bounds:
 	var lngs = Object.keys( bounds ).map(function ( key ) { return bounds[key].x; });
@@ -140,8 +140,7 @@ Canvas_manager.prototype.add_region = function(bounds, start_time, end_time){
 	var geo_bbox = new BBox();
 	geo_bbox.set_by_minmax( min_lng, max_lng, min_lat, max_lat);
 
-	// this.topic_lense_manager.add_lense(geo_bbox, start_time, end_time);
-	this.cv = new ContourVis(this.map_svg, geo_bbox, start_time, end_time);
+	this.cv = new ContourVis(this.map_svg);
 
 };
 

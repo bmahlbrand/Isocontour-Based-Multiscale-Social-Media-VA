@@ -1,4 +1,4 @@
-ContourVis = function(map_svg, geo_bbox, start_time, end_time){
+ContourVis = function(map_svg){
 
 	this.map_svg = map_svg;
 
