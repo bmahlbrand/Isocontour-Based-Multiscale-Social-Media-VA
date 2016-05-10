@@ -65,7 +65,7 @@
 	<script type="text/javascript">
 
 	OlMapViewHelper.startLevel = 0;
-	OlMapViewHelper.endLevel = 2;
+	OlMapViewHelper.endLevel = 6;
 
 	var name = 'keene';
 	var mapView;
@@ -121,9 +121,18 @@
 		var profile = {};
 		profile.zoom = mapView.getMap().getZoom();
 
-		var center = mapView.getMap().getCenter();
-		center = new OpenLayers.LonLat(center.lon, center.lat).transform("EPSG:900913", "EPSG:4326");
-		profile.center = [center.lon, center.lat];
+
+		var lonlat = mapView.getMap().getLonLatFromPixel( {x:0,y:0} );
+		var corner1 = new OpenLayers.LonLat(lonlat.lon, lonlat.lat).transform("EPSG:900913", "EPSG:4326");
+
+		var lonlat = mapView.getMap().getLonLatFromPixel( {x:1024,y:1024} );
+		var corner2 = new OpenLayers.LonLat(lonlat.lon, lonlat.lat).transform("EPSG:900913", "EPSG:4326");
+
+		profile.min_x = Math.min(corner1.lon, corner2.lon);
+		profile.max_x = Math.max(corner1.lon, corner2.lon);
+		profile.min_y = Math.min(corner1.lat, corner2.lat);
+		profile.max_y = Math.max(corner1.lat, corner2.lat);
+
 		profile.startLevel = OlMapViewHelper.startLevel;
 		profile.endLevel = OlMapViewHelper.endLevel;
 

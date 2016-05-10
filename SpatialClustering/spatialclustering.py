@@ -106,13 +106,17 @@ if __name__ == '__main__':
     initial_concavity = 0
     incConcavity = 0.01
     simplify = 0  # 1.5
+
+    name = 'keene'
+    intputFile = name + '_multiscale.json'
+    outputFile = name + '_clustertree.json'
     ##############################################
 
     sc = SpatialClustering()
 
     output = []
 
-    with open('multiscale.json') as data_file:
+    with open(intputFile) as data_file:
         rst = json.load(data_file)
 
     for i in range(len(rst)):
@@ -239,5 +243,5 @@ if __name__ == '__main__':
                     print('fatal error in tree generation', len(target))
 
     # cluster tree;
-    with open('cluster_tree.json', 'w') as outfile:
+    with open(outputFile, 'w') as outfile:
         json.dump(output, outfile, indent=True)
