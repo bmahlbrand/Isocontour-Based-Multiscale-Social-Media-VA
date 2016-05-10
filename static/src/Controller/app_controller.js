@@ -506,4 +506,20 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 
 });
 
+twittNavApp.controller('table_controller', function($rootScope, $scope) {
 
+	$scope.init = function(){
+		$scope.table = new EMTable();
+
+	};
+
+	$scope.init();
+
+	$scope.displayMsgByClusterId = function(clusterId){
+
+		var ids = DataCenter.instance().getTree().getNodeById(clusterId).cluster['ids'];
+    	var tweets = DataCenter.instance().getTweetsByIds(ids);
+		$scope.table.display(tweets);
+	};
+
+});
