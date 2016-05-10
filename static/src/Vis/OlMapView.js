@@ -118,9 +118,11 @@ OlMapView.prototype.init = function(div) {
 
     //this.map.addLayers([this.baseLayer, this.clusters]);
 
-    var x = ( case_study[default_case].min_x + case_study[default_case].max_x ) * 0.5;
-    var y = ( case_study[default_case].min_y + case_study[default_case].max_y ) * 0.5;
-    var zoom = case_study[default_case].zoom;
+    var x = ( profile.min_x + profile.max_x ) * 0.5;
+    var y = ( profile.min_y + profile.max_y ) * 0.5;
+    // var x = profile.center[0];
+    // var y = profile.center[1];
+    var zoom = profile.zoom;
 
     this.map.setCenter(
 	    new OpenLayers.LonLat(x, y).transform(
@@ -317,5 +319,5 @@ OlMapView.prototype.getMapExtent = function() {
 	return this.map.getExtent();
 };
 
-OlMapView.zoomLevel = case_study[default_case].zoom;
+OlMapView.zoomLevel = profile.zoom;
 OlMapView.INTERACTION = {ZOOM_IN:0, ZOOM_OUT:1, PAN:2};

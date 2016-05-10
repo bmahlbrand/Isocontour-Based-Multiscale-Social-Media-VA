@@ -133,11 +133,12 @@ DataCenter.prototype.loadTweets = function(){
 	$.ajax({
 		method: "GET",
 		dataType: "json",
-		url: "http://"+ip_address+"/EMcategory_cache",
-		data: $.param({ start_time: case_study[default_case].start_time,
-						end_time: case_study[default_case].end_time,
-						case_index: default_case
-					  }),
+		url: tweetDataFile,
+		//url: "http://"+ip_address+"/EMcategory_cache",
+		// data: $.param({ start_time: case_study[default_case].start_time,
+		// 				end_time: case_study[default_case].end_time,
+		// 				case_index: default_case
+		// 			  }),
 
 		headers : { 'Content-Type': 'application/json' },
 		async: false
@@ -178,7 +179,8 @@ DataCenter.prototype.loadClusters = function(){
 	$.ajax({
 		method: "GET",
 		dataType: "json",
-		url: "http://"+ip_address+"/getCluster",
+		//url: "http://"+ip_address+"/getCluster",
+		url: clusterTreeFile,
 		headers : { 'Content-Type': 'application/json' },
 		async: false
 	})
@@ -215,8 +217,9 @@ DataCenter.prototype.loadCateCluster = function(){
 	$.ajax({
 		method: "GET",
 		dataType: "json",
-		url: "http://"+ip_address+"/cate_cluster",
-		data: $.param({ case_index: default_case }),
+		url: cateCluster,
+		//url: "http://"+ip_address+"/cate_cluster",
+		//data: $.param({ case_index: default_case }),
 		headers : { 'Content-Type': 'application/json' },
 		async: false
 	})

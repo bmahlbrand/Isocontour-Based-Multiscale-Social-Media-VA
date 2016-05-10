@@ -22,16 +22,6 @@
 	<![endif]-->
 	<title>Twitter Navigator</title>
 
-	<script type="text/javascript">
-		Array.prototype.max = function() {
-		  return Math.max.apply(null, this);
-		};
-
-		Array.prototype.min = function() {
-		  return Math.min.apply(null, this);
-		};
-	</script>
-
 	<!--external resources-->
 	<!-- jquery ui-->
 	<script type="text/javascript" src="lib/jQuery/jquery-2.1.3.min.js"></script>
@@ -55,7 +45,33 @@
 
 	<!-- spatial analysis toolkit: TURF.JS -->
 	<!--<script type="text/javascript" src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
-	
+		
+	<script type="text/javascript">
+		Array.prototype.max = function() {
+		  return Math.max.apply(null, this);
+		};
+
+		Array.prototype.min = function() {
+		  return Math.min.apply(null, this);
+		};
+
+		d3.selection.prototype.moveToFront = function(){
+			return this.each(function(){
+			TweetsHeatmapManageris.parentNode.appendChild(this);
+			});
+		};
+		d3.selection.prototype.moveToBack = function(){
+			return this.each(function() {
+			    var firstChild = this.parentNode.firstChild;
+			    if (firstChild) { 
+			        this.parentNode.insertBefore(this, firstChild);
+			    } 
+			}); 
+		};
+
+	</script>
+
+
 	<!-- spatial clustering-->
 	<script type="text/javascript" src="src/Model/HullLayout.js"></script>
 	<script type="text/javascript" src="src/Model/PolyK.js"></script>
@@ -180,40 +196,11 @@
 
 	<script type="text/javascript">
 
-
-  // 		$(function() {
-		// 	$("#ScaleTreeContainer").draggable();
-		// });
-
-		// $(function() {
-  //   		$( "#ScaleTreeContainer" ).draggable({ cancel: "div.noSupportDrag" });
-  // 		});
-
-
-		// $(function() {
-		// 	$("#controlpanel").draggable();
-		// });
-
-
-		//var person = prompt("Please enter a number, 0 for purdue shooting, 1 for boston bombing, 2 for hurricane sandy", "1");
-    
-    	//if (person != null){
-        	//default_case = parseInt(person);
-
-			// var r = confirm("Press OK to load real-time mode, and Cancel to load historical mode");
-	  //   	if (r == true) {
-	  //       	setTimeout(function(){ enable_realtime(); }, 3000);
-	  //   	} else {
-	  //       	setTimeout(function(){ enable_his(); }, 3000);
-	  //   	}
-	  default_case = 1;
 	  setTimeout(function(){ enable_his(); }, 1000);
-	    //}
 
 		function enable_his() {
-			var data = case_study[default_case];
-			var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
-			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
+			var bounds = [ {x:profile.min_x, y:profile.min_y},{x:profile.max_x, y:profile.max_y}];
+			$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds);
 			//$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
 			$('[ng-controller="map_controller"]').scope().updateGeoBbox();
 		}

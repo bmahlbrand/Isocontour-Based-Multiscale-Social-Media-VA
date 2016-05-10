@@ -11,8 +11,8 @@ function contourColorStroke(){
 	//constant color;
 	var color = ["#3182bd"];
 
-	var q = d3.scale.quantize().domain([ case_study[default_case].startLevel + case_study[default_case].zoom,
-										case_study[default_case].endLevel + case_study[default_case].zoom ])
+	var q = d3.scale.quantize().domain([ profile.startLevel + profile.zoom,
+										profile.endLevel + profile.zoom ])
 								.range(color);
 	return q;
 }
@@ -34,8 +34,8 @@ function contourColorFill(){
 	//constant color;
 	//var color = ["#9ecae1"];
 
-	var q = d3.scale.quantize().domain([ case_study[default_case].startLevel + case_study[default_case].zoom,
-										case_study[default_case].endLevel + case_study[default_case].zoom ])
+	var q = d3.scale.quantize().domain([ profile.startLevel + profile.zoom,
+										profile.endLevel + profile.zoom ])
 								.range(color);
 	return q;
 }
