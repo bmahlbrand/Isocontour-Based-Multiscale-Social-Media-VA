@@ -1,7 +1,6 @@
 OlMapViewHelper = function(center, zoom){
 
 	this.maps = [];
-	this.tweets = [];
 
 	this.baseLayer = null;
 	this.init(center, zoom);
@@ -54,48 +53,11 @@ OlMapViewHelper.prototype.getMap = function(){
 	return this.map;
 };
 
-OlMapViewHelper.startLevel = case_study[default_case].startLevel;
-OlMapViewHelper.endLevel = case_study[default_case].endLevel;
-
 OlMapViewHelper.fromProjection = new OpenLayers.Projection("EPSG:4326");
 OlMapViewHelper.toProjection   = new OpenLayers.Projection("EPSG:900913");
 OlMapViewHelper.baseSize = 1024;
 
-OlMapViewHelper.prototype.initData = function(){
-
-	var that = this;
-
-	$.ajax({
-		method: "GET",
-		dataType: "json",
-		url: "http://"+ip_address+"/EMcategory_cache",
-		data: $.param({ start_time: case_study[default_case].start_time,
-						end_time: case_study[default_case].end_time,
-						case_index: default_case 
-					  }),
-
-		headers : { 'Content-Type': 'application/json' },
-		async: false
-	})
-	.done(function(msg){
-
-		var tweets = [];
-
-		msg.tweets.forEach(function(entry){
-
-			var t = {};
-			t.tweet_id = entry.tweet_id;
-			t.lat = parseFloat(entry.geolocation.lat);
-			t.lon = parseFloat(entry.geolocation.lon);
-			tweets.push(t);
-
-		});
-
-		that.tweets = tweets;
-	});
-};
-
-OlMapViewHelper.prototype.genMultiScaleCoords = function(){
+OlMapViewHelper.prototype.genMultiScaleCoords = function(tweets, name){
 
 	var that = this;
 	var layers = [];
@@ -106,20 +68,22 @@ OlMapViewHelper.prototype.genMultiScaleCoords = function(){
 
 		var pts = [];
 		
-		that.tweets.forEach(function(t){
+		tweets.forEach(function(t){
 			var pt = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(t.lon, t.lat).transform("EPSG:4326", "EPSG:900913"));
 			pts.push([t.tweet_id, Math.floor(pt.x), Math.floor(pt.y)]);
 		});
 
 		layer.pts = pts;
 		layers.push(layer);
+
+		console.log('level '+map.getZoom()+' loaded');
 	});
 
 	var output = JSON.stringify(layers);
 
 	var element = document.createElement('a');
 	element.setAttribute('href', 'data:text/text;charset=utf-8,' +      encodeURI(output));
-	element.setAttribute('download', "multiscale.json");
+	element.setAttribute('download', name);
 	element.click();
 
 };

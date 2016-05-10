@@ -129,8 +129,8 @@ OlMapView.prototype.init = function(div) {
 	    ), zoom
 	);
 
-    this.tweetsHeatmapManager = new TweetsHeatmapManager();
-    this.map.addLayer(this.tweetsHeatmapManager.getLayer());
+    //this.tweetsHeatmapManager = new TweetsHeatmapManager();
+    //this.map.addLayer(this.tweetsHeatmapManager.getLayer());
 
 	/*
 	register events;
@@ -139,8 +139,11 @@ OlMapView.prototype.init = function(div) {
 
 	this.map.events.register("moveend", copyThis.map, function(e) {
 
-		$('[ng-controller="map_controller"]').scope().updateGeoBbox();
+		try{
+			$('[ng-controller="map_controller"]').scope().updateGeoBbox();
+		}catch(e){
 
+		}
 	});
 
 	// this.map.events.register("zoomend", copyThis.map,  function(e) {
