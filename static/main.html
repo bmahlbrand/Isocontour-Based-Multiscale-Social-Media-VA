@@ -80,7 +80,6 @@
 
 	<script type="text/javascript" src="src/Vis/Canvas_manager.js"></script>
 
-
 	<script type="text/javascript" src="src/Model/CTreeComponent/VisComponent.js"></script>
 	<script type="text/javascript" src="src/Model/CTreeComponent/StatComponent.js"></script>
 
@@ -218,77 +217,6 @@
 			//$('[ng-controller="map_controller"]').scope().load_data(data.start_time, data.end_time, true);
 			$('[ng-controller="map_controller"]').scope().updateGeoBbox();
 		}
-
-		// function enable_realtime(){
-
-		// 	var data = case_study[default_case];
-		// 	var bounds = [ {x:data.min_x, y:data.min_y},{x:data.max_x, y:data.max_y}];
-
-		// 	$('[ng-controller="map_controller"]').scope().add_region_to_canvas(bounds, data.start_time, data.end_time);
-			
-		// 	var start_date = new Date(Date.parse(case_study[default_case].start_time));
-
-		// 	globe.x_start = new XDate(start_date);
-		// 	globe.x_end = new XDate(start_date);
-
-		// 	//utc issue;
-		// 	globe.x_start.addHours(case_study[default_case].time_offset);
-		// 	globe.x_end.addHours(case_study[default_case].time_offset);
-			
-		// 	globe.x_end.addSeconds(globe.data_inc);
-
-		// 	start_timing();
-
-		// }
-
-		// function start_timing(){
-			
-		// 	if(globe.interval_id != null)
-		// 		return;
-
-		// 	globe.interval_id = setInterval(function(){
-
-		// 		var s = globe.x_start.toString("i")+"Z";
-		// 		var e = globe.x_end.toString("i")+"Z";
-
-		// 		if(globe.flag == true){
-		// 			$('[ng-controller="map_controller"]').scope().load_data(s, e, true);
-		// 			$('[ng-controller="map_controller"]').scope().refresh_map(false);
-		// 		}else
-		// 			$('[ng-controller="map_controller"]').scope().load_data(s, e, false);
-
-		// 		console.log("real-time mode: "+ s + ", " + e);
-
-		// 		//alert(s+" "+e+" "+flag);
-
-		// 		globe.flag = false;
-				
-		// 		//move slide bar;
-		// 		var slide_start = new XDate(globe.x_end);
-		// 		slide_start.addMinutes(-1*globe.time_window);
-		// 		slide_start.addHours(-4);
-
-		// 		//time zone change;
-		// 		var tmp_e = new XDate(globe.x_end);
-		// 		tmp_e.addHours(-4);
-				
-		// 		$('[ng-controller="ts_controller"]').scope().set_time_range_manually(slide_start, tmp_e);
-				
-		// 		globe.x_start.addSeconds(globe.data_inc);
-		// 		globe.x_end.addSeconds(globe.data_inc);
-
-		// 	}, globe.data_fetch_timing*1000);
-		// }
-
-		// function stop_timing(){
-
-		// 	if(globe.interval_id == null)
-		// 		return;
-
-		// 	clearInterval(globe.interval_id);
-		// 	globe.interval_id = null;
-
-		// }
 
 		function changemode(val){
 			ContourVis.MODE = val;
@@ -524,12 +452,12 @@
 		</div>
 	</div>
 
-	<div id="msgContainer" style="left:440px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
+	<div id="msgContainer" style="left:440px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;" ng-controller="table_controller">
 	
 	<h5 align="center" style="cursor: pointer">Message Table</h5>
 
 		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
-			<div id="msg" style="width:400px;height:550px;"></div>
+			<div id="msgTable" style="width:400px;height:430px;overflow: scroll;"></div>
 		</div>
 	</div>
 
