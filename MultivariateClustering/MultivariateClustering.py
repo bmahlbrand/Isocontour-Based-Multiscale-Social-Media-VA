@@ -23,14 +23,27 @@ for idx, val in enumerate(clusters):
 
     stat[val].append(mapping[str(idx)])
 
+newMapping = {};
+sizeThres = 10;
+
 for key in stat:
     print(key, len(stat[key]))
+    if len(stat[key]) > sizeThres:
+        newMapping[key] = len(newMapping)
+
+print(newMapping)
+
+# assign cluster that has less than sizeThres members as outliers, the index is changed to -1 for outliers
 
 output = {}
 
 for idx, val in enumerate(clusters):
     clusterId = mapping[str(idx)]
-    output[clusterId] = val
+    if val in newMapping:
+        output[clusterId] = newMapping[val]
+    else:
+        # outlier;
+        output[clusterId] = -1
 
 # OUTPUT
 with open('boston_cate_cluster.json', 'w') as outfile:
