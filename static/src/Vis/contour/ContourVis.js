@@ -11,7 +11,7 @@ ContourVis.prototype.clear = function(){
 ContourVis.prototype.updateGeoBbox = function(){
 
 	//perform minimizing overlapping algorithm;
-	var tree = DataCenter.instance().getTree();
+	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 	tree.getPixelCoords();
 	tree.filterNodesForMinOlp();
 	tree.minOlp();
@@ -20,7 +20,7 @@ ContourVis.prototype.updateGeoBbox = function(){
 	//for the concept of activenode, please find it in the app_controller file;
 	tree.filterNodesForVis();
 
-	var clist = DataCenter.instance().getTree().toList();
+	var clist = tree.toList();
 
 	clist = clist.filter(function(val){
 		return val.cluster['visFlag'];
@@ -42,7 +42,8 @@ ContourVis.prototype.update = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
-	DataCenter.instance().getTree().drawContour(acNodes);
+	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
+	tree.drawContour(acNodes);
 
 	//hover hull
 	//var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
@@ -108,7 +109,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE || ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
 		_fillColor = contourColorFill()(zoom);
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE)
-		_fillColor = statColor()(node.cluster['score']);
+		_fillColor = statColor()(node.stat.getScore());
 
 	var _stroke = contourColorStroke()(zoom);
 
@@ -147,6 +148,12 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    	.attr("fill", _fillColor)
 			    	.attr("fill-opacity", 0.6)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
+			    	.on("click", function(){
+
+			    		var id = this.id.substring(5,this.id.length);
+	                    $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
+
+			    	})
 			    	.on("mouseover", function(){
 
 			    		return;
