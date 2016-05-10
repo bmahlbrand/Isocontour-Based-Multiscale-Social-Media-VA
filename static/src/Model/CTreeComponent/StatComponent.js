@@ -7,5 +7,4 @@ StatComponent = function(cateClusterId){
 
 StatComponent.prototype.getScore = function(){
 	return this.cateClusterId;
-
 };

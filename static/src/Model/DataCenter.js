@@ -152,9 +152,13 @@ DataCenter.prototype.loadTweets = function(){
 			t.tweet_id = entry.tweet_id;
 			t.lat = parseFloat(entry.geolocation.lat);
 			t.lon = parseFloat(entry.geolocation.lon);
-			
+			t.created_at = entry.created_at;
+
 			t.cate = {};
-			t.text = entry.lemmed_text;
+			t.lemmed_text = entry.lemmed_text;
+			t.text = entry.text;
+			t.tokens = entry.tokens;
+
 			entry.cate.forEach(function(val){
 				t.cate[val] = true;
 			});

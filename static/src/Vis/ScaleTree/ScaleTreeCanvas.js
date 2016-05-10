@@ -56,7 +56,7 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	var that = this;
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
-	var color = statColor()(node.cluster['score']);
+	var color = statColor()(node.stat.getScore());
 	//draw node;
 	var rectangle = this.canvas.append("rect")
 								.attr("id", "node_"+id)
@@ -68,7 +68,10 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
 	                            .attr("fill", color)
 	                            .on("click", function(){
-	                            	alert(this.id);
+
+	                            	var id = this.id.substring(5,this.id.length);
+	                            	$('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
+	                            	
 	                            })
 	                            // .on("mouseover", function(){
 	                            // 	$('[ng-controller="app_controller"]').scope().addHlNode(id);
@@ -84,7 +87,7 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 	var that = this;
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
-	var color = statColor()(node.cluster['score']);
+	var color = statColor()(node.stat.getScore());
 	//draw node;
 	var rectangle = this.canvas.append("circle")
 								.attr("id", "node_"+id)
