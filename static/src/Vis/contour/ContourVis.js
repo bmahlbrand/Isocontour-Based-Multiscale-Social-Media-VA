@@ -200,7 +200,11 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 // O's requirement is stronger
 ContourVis.filterHullForMinOlp = function(hull){
 
-	//not valid hull
+	//no points;
+	if(hull.length <= 0)
+		return [false, hull];
+
+	//one or two points;
 	if(hull.length < 6)
 		return [true, ContourVis.extendHull(hull)];
 
