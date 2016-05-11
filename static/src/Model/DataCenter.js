@@ -13,6 +13,7 @@ DataCenter = function(){
 
 	// tweet dictionary, key: tweet id
 	this.tweets = {};
+	this.categories = {};
 
 	this.loadTweets();
 	this.loadClusters();
@@ -163,6 +164,9 @@ DataCenter.prototype.loadTweets = function(){
 			entry.cate.forEach(function(val){
 				t.cate[val] = true;
 			});
+
+			//initialize global category array;
+			that.categories = union_arrays(that.categories, entry.cate);
 			
 			tweets[entry.tweet_id] = t;
 
