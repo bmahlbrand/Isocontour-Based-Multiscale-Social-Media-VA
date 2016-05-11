@@ -10,7 +10,14 @@ EMTable.prototype.display = function(tweets){
 					+"<td style=\"white-space:nowrap;\"><b>Date<b></td><td><b>Content<b></td>"
 					+"</tr>";
 
-	tweets.sort(function(a, b) { return a.created_at - b.created_at; });
+	tweets.sort(function(a, b) { 
+		if(a.created_at < b.created_at)
+			return 1;
+		else if(b.created_at < a.created_at)
+			return -1;
+		else
+			return 0;
+	});
 
 	for(var t = 0; t < tweets.length; t++){
 		
