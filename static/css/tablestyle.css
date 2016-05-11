@@ -1,7 +1,7 @@
 
 .gradient-style
 {
-	font-family: "Times New Roman", Georgia, Serif;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	border-collapse: collapse;
 }
 .gradient-style th
@@ -13,11 +13,11 @@
 }
 .gradient-style td
 {
-	padding: 5px;
+	padding: 1px;
 	color: #000;
 	opacity:1;
 	border: 1px solid black;
-	font-size: 18px;
+	font-size: 14px;
 }
 .gradient-style tr
 {
@@ -34,4 +34,3 @@
 	color: #000;
 	opacity:1;
 }
-
