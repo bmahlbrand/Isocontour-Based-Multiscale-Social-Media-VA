@@ -3,24 +3,14 @@ EMTable = function(){
 
 EMTable.prototype.display = function(tweets){
 
-	var color = {
-		"T02":"#aa0000", 
-		"T03":"#aa0000",
-		"O02":"#aaaa00",
-		"T09":"#aa00aa",
-		"T04":"#0000aa",
-		"C07":"#00aaaa"
-	};
-	
-
-	var keys = Object.keys(color);
+	var color = d3.scale.category10();
+	var categories = DataCenter.instance().categories;
 
 	var html = "<table id=\"em_table\" class=\"gradient-style\" style=\"opacity:0.8;\"><tr>"
 					+"<td style=\"white-space:nowrap;\"><b>Date<b></td><td><b>Content<b></td>"
 					+"</tr>";
 
 	tweets.sort(function(a, b) { return a.created_at - b.created_at; });
-
 
 	for(var t = 0; t < tweets.length; t++){
 		
@@ -40,14 +30,18 @@ EMTable.prototype.display = function(tweets){
 		var visFlag = false;
 		keywords.forEach(function(entry){
 
-			var cate = intersect_arrays(keys, tokens[entry]);
+			var cate = intersect_arrays(categories, tokens[entry]);
 			var index = lemmed_text.indexOf(entry);
 
 			if(cate.length > 0 && index >= 0){
-				c = color[cate[0]];
+				c = color(categories.indexOf(cate[0]));
+
 				rgb = hexToRgb(c);
+				//background color;
 				rgba = rgb.r + "," + rgb.g + "," + rgb.b + "," + 0.5;
 				text[index] = "<span style=\"background-color:rgba(" + rgba + ")\">" + text[index] + "</span>";
+				//font color
+				//text[index] = "<font color=\"" + c + ")\">" + text[index] + "</font>";
 				//assign color to the background of text;
 				visFlag = true;
 			}
