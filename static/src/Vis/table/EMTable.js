@@ -3,7 +3,16 @@ EMTable = function(){
 
 EMTable.prototype.display = function(tweets){
 
-	var color = {"T02":"#aa0000", "T03":"#aa0000" ,"O02":"#aaaa00", "T09":"#aa00aa", "T04":"#0000aa"};
+	var color = {
+		"T02":"#aa0000", 
+		"T03":"#aa0000",
+		"O02":"#aaaa00",
+		"T09":"#aa00aa",
+		"T04":"#0000aa",
+		"C07":"#00aaaa"
+	};
+	
+
 	var keys = Object.keys(color);
 
 	var html = "<table id=\"em_table\" class=\"gradient-style\" style=\"opacity:0.8;\"><tr>"

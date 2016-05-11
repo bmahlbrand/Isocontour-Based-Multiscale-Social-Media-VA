@@ -1,7 +1,7 @@
 DataCenter = function(){
 
 	//hard coded for now
-	this.rootID = "10_0";
+	this.rootID = treeRootId;
 	
 	//filter options:
 	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
@@ -209,25 +209,27 @@ DataCenter.prototype.loadClusters = function(){
 	});
 };
 
-
 DataCenter.prototype.loadCateCluster = function(){
 
-	var that = this;
+	for(var key in this.clusters)
+		this.clusters[key]['cateClusterId'] = 0;
 
-	$.ajax({
-		method: "GET",
-		dataType: "json",
-		url: cateCluster,
-		//url: "http://"+ip_address+"/cate_cluster",
-		//data: $.param({ case_index: default_case }),
-		headers : { 'Content-Type': 'application/json' },
-		async: false
-	})
-	.done(function( msg ) {
+	// var that = this;
 
-		for(var key in msg)
-			that.clusters[key]['cateClusterId'] = msg[key];
-	});
+	// $.ajax({
+	// 	method: "GET",
+	// 	dataType: "json",
+	// 	url: cateCluster,
+	// 	//url: "http://"+ip_address+"/cate_cluster",
+	// 	//data: $.param({ case_index: default_case }),
+	// 	headers : { 'Content-Type': 'application/json' },
+	// 	async: false
+	// })
+	// .done(function( msg ) {
+
+	// 	for(var key in msg)
+	// 		that.clusters[key]['cateClusterId'] = msg[key];
+	// });
 
 };
 
