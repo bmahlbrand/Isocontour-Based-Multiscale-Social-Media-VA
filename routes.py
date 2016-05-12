@@ -389,7 +389,7 @@ if __name__ == '__main__':
     wg_manager = WordGraphManager.WordGraphManager(search)
     srl_manager = SRLGraphManager.SRLGraphManager(search)
     awg_manager = AugmentedWordGraphManager.AugmentedWordGraphManager(search)
-    run(app, host='128.46.137.79', port=9006, debug=True)
+    run(app, host='localhost', port=9006, debug=True)
 #     rst = []
 #     rst = json.load(codecs.open('boston_ori.json', 'r', 'utf-8-sig'))
 #          
