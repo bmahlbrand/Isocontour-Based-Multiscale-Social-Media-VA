@@ -37,11 +37,11 @@ HullLayout.checkIntersect = function(parent, child){
 };
 
 HullLayout.getPath = function(points) {
-	return $('[ng-controller="map_controller"]').scope().createDummyPath(points);
+	return $('[ng-controller="map_controller"]').scope().createDummyPath(points)[0][0];
 };
 
 HullLayout.getSampledPath = function(points) {
-	return this.samplePath(this.getPath(points)[0][0], points.length / 2);
+	return this.samplePath(this.getPath(points));
 };
 
 HullLayout.getLine = function(points) {
@@ -52,15 +52,17 @@ HullLayout.sampledPath = function(path) { //actually this should be the line of 
 	return path.interpolate(path.length, path.length * 2);
 };
 
-HullLayout.samplePath = function(pathNode, pathNodesN) {
+HullLayout.samplePath = function(pathNode) {
 	//loop through and compute sampled points based on total length of path and double points
 	var pathLength = pathNode.getTotalLength(),
-		threshold = pathLength / (pathNodesN * 2);
+		threshold = 5;
 	
-	var sampledPts = [];
+	if (pathLength == 0 || threshold == 0)
+		return [];
 
-	for (var i = 0; i < threshold; i++) {
-		var pt = this.pointAlongPath(pathNode, (1.0 / threshold) * i);
+	var sampledPts = [];
+	for (var scanLength = 0; scanLength <= pathLength; scanLength += threshold) {
+		var pt = this.pointAlongPath(pathNode, scanLength);
 		sampledPts.push(pt.x);
 		sampledPts.push(pt.y);
 	}
@@ -71,9 +73,9 @@ HullLayout.samplePath = function(pathNode, pathNodesN) {
 HullLayout.pointAlongPath = function(path, t) {
 	
 	var l = path.getTotalLength();
-	return path.getPointAtLength(l * t);
+	return path.getPointAtLength(t);
 
-}
+};
 
 HullLayout.closestPointOnPath = function(pathNode, point) {
 	var pathLength = pathNode.getTotalLength(),
@@ -116,7 +118,7 @@ HullLayout.closestPointOnPath = function(pathNode, point) {
 	    	dy = p.y - point[1];
 		return dx * dx + dy * dy;
 	}
-}
+};
 
 
 HullLayout._moveOutsidePts = function(parent, child){
@@ -157,25 +159,27 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 	var iteration = 0;
 	var keepGoing = true;
 
+	var nodes = HullLayout.getSampledPath(child);
+
 	do {
 		iteration += 1;
 
-		var len = child.length/2;
-		var nodes = HullLayout.getSampledPath(child);
-		var path = HullLayout.getPath(nodes);
+		var len = nodes.length/2;
 
 		for (var i=0; i<len; i++) {
 			
 			var x = nodes[2*i];
 			var y = nodes[2*i+1];
+			var path = HullLayout.getPath(nodes);
 
 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
-			var p = HullLayout.closestPointOnPath(path[0][0], [x,y]);
-
+			
 			if (rst.dist < HullLayout.pointEdgeDisThres) {
 
 				var left = (i-1+len)%len;
 				var right = (i+1+len)%len;
+				
+				var p = HullLayout.closestPointOnPath(path, [x,y]);
 
 				var center1 = HullLayout.lineCenter(p[0], p[1], nodes[2*left], nodes[2*left+1]);
 				var center2 = HullLayout.lineCenter(p[0], p[1], nodes[2*right], nodes[2*right+1]);
@@ -203,6 +207,7 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 	var keepGoing = true;
 
 	do {
+
 		iteration += 1;
 
 		var len = child.length/2;
@@ -268,8 +273,8 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 HullLayout.minimizeOverlap = function(parent, child){
 
 	child = HullLayout._moveOutsidePts(parent, child);
-	child = HullLayout._shrinkPartialPoly(parent, child);
-	//child = HullLayout._shrinkPartialCurvedPoly(parent, child);
+	//child = HullLayout._shrinkPartialPoly(parent, child);
+	child = HullLayout._shrinkPartialCurvedPoly(parent, child);
 	return child;
 
 };
