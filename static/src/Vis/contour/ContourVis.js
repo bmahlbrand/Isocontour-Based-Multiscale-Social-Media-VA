@@ -156,39 +156,51 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    	})
 			    	.on("mouseover", function(){
 
-			    		return;
-			    		//tweets inside the hull;
+			    		
+			    		/*************************************draw optimized dots************************************/
 			    		var cluster_id = this.id.substring(5, this.id.length);
-			    		console.log(cluster_id);
+			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    		for(var i=0; i<dots.length/2; i++){
+			    			svg.append("circle")
+			    				.attr('class', 'control_point')
+			    				.attr('cx', dots[2*i])
+			    				.attr('cy', dots[2*i+1])
+			    				.attr('r', 5)
+			    				.attr('fill', 'red');
+			    		}
 
-			    		var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
-			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		/*************************************draw actual tweet dots************************************/
+			    		// //tweets inside the hull;
+			    		// var cluster_id = this.id.substring(5, this.id.length);
+			    		// console.log(cluster_id);
+
+			    		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
+			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-			    		//cate distribution
-			    		console.log(DataCenter.instance().distOfCate(tweets));
+			    		// //cate distribution
+			    		// console.log(DataCenter.instance().distOfCate(tweets));
 
-			    		//tweets on the boundary:
-			    		var ids = [];
-			    		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
-			    			ids = ids.concat(idlist);
-			    		});
+			    		// //tweets on the boundary:
+			    		// var ids = [];
+			    		// DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
+			    		// 	ids = ids.concat(idlist);
+			    		// });
 
-			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
-						
-						//$('[ng-controller="app_controller"]').scope().addHlNode(cluster_id);
+			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
+
 
 		  			}).on("mouseout", function(){
 
-		  				return;
+		  				/*************************************draw optimized dots************************************/
+			    		svg.selectAll(".control_point").remove();
 
-		  				$('[ng-controller="map_controller"]').scope().clear_dots();
+			    		/*************************************draw actual tweet dots************************************/
 
-		  				var cluster_id = this.id.substring(5,this.id.length);
-		  				//$('[ng-controller="app_controller"]').scope().removeHlNode(cluster_id);
+		  				//$('[ng-controller="map_controller"]').scope().clear_dots();
 
 		  			});
 
