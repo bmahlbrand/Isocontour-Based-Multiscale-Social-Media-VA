@@ -484,6 +484,20 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 
 });
 
+twittNavApp.controller('dataedit_controller', function($rootScope, $scope) {
+
+	$scope.init = function(){
+
+		$rootScope.dataviewer = new DataViewer();
+	};
+
+	$scope.init();
+
+	$scope.showData = function(){
+		$rootScope.dataviewer.showData();
+	};
+
+});
 
 /* controller for scale tree view */
 twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {

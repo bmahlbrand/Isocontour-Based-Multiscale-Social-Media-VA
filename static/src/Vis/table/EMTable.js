@@ -10,7 +10,7 @@ EMTable.prototype.display = function(tweets){
 					+"<td style=\"white-space:nowrap;\"><b>Date<b></td><td><b>Content<b></td>"
 					+"</tr>";
 
-	tweets.sort(function(a, b) { 
+	tweets.sort(function(a, b) {
 		if(a.created_at < b.created_at)
 			return 1;
 		else if(b.created_at < a.created_at)
@@ -56,7 +56,7 @@ EMTable.prototype.display = function(tweets){
 		});
 
 		if(visFlag)
-			html += "<tr><td >" + date + "</td><td >" + text.join(" ") + "</td></tr>";
+			html += "<tr><td>" + date + "</td><td>" + text.join(" ") + "</td></tr>";
 		//html += "<tr><td style=\"cursor:pointer;\">" + id + "</td><td >" + date + "</td><td >" + text + "</td></tr>";
 	}
 	

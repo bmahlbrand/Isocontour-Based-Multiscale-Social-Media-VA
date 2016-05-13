@@ -121,6 +121,7 @@
 	<script type="text/javascript" src="src/Vis/Time-series/timeseriesmanager.js"></script>
 
 	<script type="text/javascript" src="src/Vis/table/EMTable.js"></script>
+	<script type="text/javascript" src="src/Vis/DataViewer.js"></script>
 
 	<!-- Concave Hull -->
 	<script type="text/javascript" src="lib/hull-master/dist/hull.js"></script>
@@ -196,7 +197,18 @@
 
 	<script type="text/javascript">
 
-	  setTimeout(function(){ enable_his(); }, 1000);
+		/*************************************************************************************/
+		$(function() {
+			$("#dataEditContainer").draggable();
+		});
+
+		$(function() {
+    		$( "#dataEditContainer" ).draggable({ cancel: "div.noSupportDrag" });
+    	});
+
+    	/***************************************************************************************/
+
+	  	setTimeout(function(){ enable_his(); }, 1000);
 
 		function enable_his() {
 			var bounds = [ {x:profile.min_x, y:profile.min_y},{x:profile.max_x, y:profile.max_y}];
@@ -286,8 +298,7 @@
 			var dist = DataCenter.instance().distOfCate(tweets);
 			console.log(JSON.stringify(dist));
 			tweets = tweets.map(function(t){ return t.text; });
-			console.log(JSON.stringify(tweets))
-
+			console.log(JSON.stringify(tweets));
 		}
 
 		function printClusterCateDist(){
@@ -344,6 +355,15 @@
 	 		doc.click();
 		}
 
+		function showDataViewer(){
+
+			$('[ng-controller="dataedit_controller"]').scope().showData();
+			$('#dataEditContainer').show();
+
+
+		}
+
+
 	</script>
 
 </head>
@@ -366,16 +386,20 @@
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
-	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:hidden;overflow-x:hidden;margin:0 auto;" onmouseover="$('#controlpanel').css('overflowY', 'scroll');" onmouseout="$('#controlpanel').css('overflowY', 'hidden');" ng-controller="cp_controller">
+	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:scroll;overflow-x:hidden;margin:0 auto;" ng-controller="cp_controller">
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
+
+<!-- 		<h5 align="center">Data Editing</h5>
+			<div>
+				<input type="radio" name="dataViewer" onclick="showDataViewer();" ><span>Open</span>
+				<input type="radio" name="dataViewer" onclick="$('#dataEditContainer').hide();" checked><span>Close</span><br>
+			</div> -->
 
 		<h5 align="center">Filter</h5>
 			<div>
 				<div id="slider-range"></div>
 				<div id="rangeText" style="text-align:center" align="center"><h6>range:</h6></div>
-				
-
 			</div>
 
 		<h5 align="center">Tree Type</h5>
@@ -387,8 +411,8 @@
 		
 		<h5 align="center">Node Style</h5>
 			<div>
-				<input type="radio" name="nodeType" onclick="setNodeType(0);" ><span>rect</span><br>
-				<input type="radio" name="nodeType" onclick="setNodeType(1);" checked><span>circle</span><br>
+				<input type="radio" name="nodeType" onclick="setNodeType(0);" checked><span>rect</span><br>
+				<input type="radio" name="nodeType" onclick="setNodeType(1);" ><span>circle</span><br>
 
 			</div>
 		
@@ -425,8 +449,6 @@
 				<input type="radio" name="conVis" onclick="changeContourFill(2);" checked><span>sequential</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(3);" ><span>stat score</span><br>
 			</div>
-
-
 	</div>
 
 
@@ -446,7 +468,14 @@
 		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
 			<div id="msgTable" style="width:400px;height:430px;overflow: scroll;"></div>
 		</div>
+		
 	</div>
+
+<!-- 	<div id="dataEditContainer" ng-controller="dataedit_controller" style="left:500px;top:100px;width:1000px;height:800px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:9999;border:2px solid #999;display: none;">
+	
+	<h5 align="center" style="cursor: pointer">Data Viewer</h5>
+		<div id="dataEdit" style="width:900px;height:700px;overflow:scroll;margin: 0 auto; " class="noSupportDrag"></div>
+	</div> -->
 
 </body>
 </html>
