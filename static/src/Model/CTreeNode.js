@@ -214,8 +214,11 @@ CTreeNode.prototype.minOlp = function(){
 
 		this.children.forEach(function(val){
 			if( val.cluster['minOlpFlag'] == true ){
-				console.log(val.cluster['clusterId']);
-				val.cluster['hulls'] = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+
+				var rst = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+				
+				p.cluster['hulls'] = rst[0];
+				val.cluster['hulls'] = rst[1];
 			}
 		});
 	}

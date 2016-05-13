@@ -142,7 +142,7 @@ HullLayout._moveOutsidePts = function(parent, child){
 		child[2*i+1] = y;
 	}
 
-	return child;
+	return [parent, child];
 
 };
 
@@ -160,21 +160,17 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 	var iteration = 0;
 	var keepGoing;
 
-	// var nodes = HullLayout.getSampledPath(child);
-	// already performed sampling process in a seperate function [CTreeNode.prototype.samplePoints]
-	var nodes = child;
-
 	do {
 		iteration += 1;
 		farEnough = true;
 
-		var len = nodes.length/2;
+		var len = child.length/2;
 
 		for (var i=0; i<len; i++) {
 			
-			var x = nodes[2*i];
-			var y = nodes[2*i+1];
-			var path = HullLayout.getPath(nodes);
+			var x = child[2*i];
+			var y = child[2*i+1];
+			var path = HullLayout.getPath(child);
 
 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
 			
@@ -186,13 +182,13 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 				//var p = HullLayout.closestPointOnPath(path, [x,y]);
 				var p = [x,y];
 
-				var center1 = HullLayout.lineCenter(p[0], p[1], nodes[2*left], nodes[2*left+1]);
-				var center2 = HullLayout.lineCenter(p[0], p[1], nodes[2*right], nodes[2*right+1]);
+				var center1 = HullLayout.lineCenter(p[0], p[1], child[2*left], child[2*left+1]);
+				var center2 = HullLayout.lineCenter(p[0], p[1], child[2*right], child[2*right+1]);
 
 				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
 
-				nodes[2*i] = center[0];
-				nodes[2*i+1] = center[1];
+				child[2*i] = center[0];
+				child[2*i+1] = center[1];
 
 				farEnough = false;
 			}
@@ -201,7 +197,7 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
 
 	console.log("iteration time: "+iteration);
-	return nodes;
+	return [parent, child];
 
 };
 
@@ -276,9 +272,9 @@ HullLayout._shrinkPartialPoly = function(parent, child){
 
 HullLayout.minimizeOverlap = function(parent, child){
 
-	child = HullLayout._moveOutsidePts(parent, child);
+	parentChild = HullLayout._moveOutsidePts(parent, child);
 	//child = HullLayout._shrinkPartialPoly(parent, child);
-	child = HullLayout._shrinkPartialCurvedPoly(parent, child);
-	return child;
+	parentChild = HullLayout._shrinkPartialCurvedPoly(parentChild[0], parentChild[1]);
+	return parentChild;
 
 };
