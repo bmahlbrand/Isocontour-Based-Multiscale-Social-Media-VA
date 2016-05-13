@@ -9,4 +9,4 @@ Ans: When the user hover on the feature, which triggered the mouseover, the canv
 overlapping minimization module:	
 2) need a way to simplify the curves before sampling points.
 3) may calculate the area/other attributes of the hulls before and after the optimization. If the diffrence is too significant, we may want to reject the changes, or do not display the hulls.
-4) In some cases, the line-center-based point shifting method may not work, since the new position can be the same as the old position due to specific polygon topology. Might make sense to think about changing both the parent and child hulls, not just changing the child.
+4) In some cases, the line-center-based point shifting method may not work, since the new position can be the same as the old position due to specific polygon topology. Might make sense to think about changing both the parent and child hulls, not just changing the child. The idea of Force-Directed Layout makes sense in this case.
