@@ -5,5 +5,7 @@ Issues during coding:
 1) Why mouseout does not work on both cluster node and boundary?
 Ans: When the user hover on the feature, which triggered the mouseover, the canvas redraw the the previous features go away.
     Thus when hover out, the system cannot find the previous corresponding object.
-	
+
+overlapping minimization module:	
 2) need a way to simplify the curves before sampling points.
+3) may calculate the area/other attributes of the hulls before and after the optimization. If the diffrence is too significant, we may want to reject the changes, or do not display the hulls.
