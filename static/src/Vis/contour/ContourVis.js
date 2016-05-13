@@ -12,8 +12,10 @@ ContourVis.prototype.updateGeoBbox = function(){
 
 	//perform minimizing overlapping algorithm;
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
+	tree.resetFlags();
 	tree.getPixelCoords();
 	tree.filterNodesForMinOlp();
+	tree.samplePoints();
 	tree.minOlp();
 
 	//update activenode list;
@@ -152,6 +154,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 			    		var id = this.id.substring(5,this.id.length);
 	                    $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
+	                    console.log(id);
 
 			    	})
 			    	.on("mouseover", function(){
@@ -182,15 +185,15 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    		// //cate distribution
 			    		// console.log(DataCenter.instance().distOfCate(tweets));
 
-			    		// //tweets on the boundary:
-			    		// var ids = [];
-			    		// DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
-			    		// 	ids = ids.concat(idlist);
-			    		// });
+			    		//tweets on the boundary:
+			    		var ids = [];
+			    		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
+			    			ids = ids.concat(idlist);
+			    		});
 
-			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
+			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
 
 
 		  			}).on("mouseout", function(){
@@ -200,7 +203,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 			    		/*************************************draw actual tweet dots************************************/
 
-		  				//$('[ng-controller="map_controller"]').scope().clear_dots();
+		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 
 		  			});
 
@@ -210,20 +213,21 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 // O require that part of the poly should be inside the viewport
 // V require that the poly should overlap with the viewport rectangle
 // O's requirement is stronger
+//return value [0]: is valid or not; [1]: hull coords: [2]:whether force extended; 
 ContourVis.filterHullForMinOlp = function(hull){
 
 	//no points;
 	if(hull.length <= 0)
-		return [false, hull];
+		return [false, hull, false];
 
 	//one or two points;
 	if(hull.length < 6)
-		return [true, ContourVis.extendHull(hull)];
+		return [true, ContourVis.extendHull(hull), true];
 
 	//too small
 	var aabb = PolyK.GetAABB(hull);
 	if(aabb.width < 6 || aabb.height < 6 )
-		return [true, ContourVis.extendHull(hull)];
+		return [true, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
@@ -231,10 +235,10 @@ ContourVis.filterHullForMinOlp = function(hull){
 		var x = hull[2*i];
 		var y = hull[2*i+1];
 		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
-			return [true, hull];
+			return [true, hull, false];
 	}
 
-	return [false, hull];
+	return [false, hull, false];
 };
 
 // enlarge the area of hull if it is too small;
@@ -364,6 +368,11 @@ ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 ContourVis.prototype.createDummyLine = function(pts){
 
 	pts = HullLayout.odArrTo2dArr(pts);
+
+	// lineFunction = d3.svg.line()
+	// 					.x(function(d) { return d[0]; })
+	// 		            .y(function(d) { return d[1]; })
+	// 		            .interpolate("linear-closed");
 
 	var lineFunction = null;
 	

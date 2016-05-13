@@ -1,6 +1,4 @@
-HullLayout = function(){
-
-};
+HullLayout = function(){};
 
 HullLayout.tdArrTo1dArr = function(hull){
 
@@ -44,24 +42,26 @@ HullLayout.getSampledPath = function(points) {
 	return this.samplePath(this.getPath(points));
 };
 
-HullLayout.getLine = function(points) {
-	return $('[ng-controller="map_controller"]').scope().createDummyLine(points);
-};
+// HullLayout.getLine = function(points) {
+// 	return $('[ng-controller="map_controller"]').scope().createDummyLine(points);
+// };
 
-HullLayout.sampledPath = function(path) { //actually this should be the line of the path
-	return path.interpolate(path.length, path.length * 2);
-};
+//not used for now;
+// HullLayout.sampledPath = function(path) { //actually this should be the line of the path
+// 	return path.interpolate(path.length, path.length * 2);
+// };
 
 HullLayout.samplePath = function(pathNode) {
 	//loop through and compute sampled points based on total length of path and double points
-	var pathLength = pathNode.getTotalLength(),
-		threshold = 5;
+	var pathLength = pathNode.getTotalLength();
 	
-	if (pathLength == 0 || threshold == 0)
+	if (pathLength == 0)
 		return [];
 
 	var sampledPts = [];
-	for (var scanLength = 0; scanLength <= pathLength; scanLength += threshold) {
+	//set the termination condition to be "pathLength - HullLayout.samplePathThreshold / 2" 
+	//in order to make sure that the starting and ending points are not too close;
+	for (var scanLength = 0; scanLength <= pathLength - HullLayout.samplePathThreshold / 2; scanLength += HullLayout.samplePathThreshold) {
 		var pt = this.pointAlongPath(pathNode, scanLength);
 		sampledPts.push(pt.x);
 		sampledPts.push(pt.y);
@@ -146,8 +146,9 @@ HullLayout._moveOutsidePts = function(parent, child){
 
 };
 
-HullLayout.pointEdgeDisThres = 3; //pixel distance?
-HullLayout.shrinkIteration = 15;
+HullLayout.samplePathThreshold = 40; //pixel distance
+HullLayout.pointEdgeDisThres = 10; //pixel distance?
+HullLayout.shrinkIteration = 50;
 
 HullLayout.lineCenter = function(x1, y1, x2, y2){
 	return [ (x1+x2)*0.5, (y1+y2)*0.5 ];
@@ -157,12 +158,15 @@ HullLayout.lineCenter = function(x1, y1, x2, y2){
 HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 
 	var iteration = 0;
-	var keepGoing = true;
+	var keepGoing;
 
-	var nodes = HullLayout.getSampledPath(child);
+	// var nodes = HullLayout.getSampledPath(child);
+	// already performed sampling process in a seperate function [CTreeNode.prototype.samplePoints]
+	var nodes = child;
 
 	do {
 		iteration += 1;
+		farEnough = true;
 
 		var len = nodes.length/2;
 
@@ -179,7 +183,8 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 				var left = (i-1+len)%len;
 				var right = (i+1+len)%len;
 				
-				var p = HullLayout.closestPointOnPath(path, [x,y]);
+				//var p = HullLayout.closestPointOnPath(path, [x,y]);
+				var p = [x,y];
 
 				var center1 = HullLayout.lineCenter(p[0], p[1], nodes[2*left], nodes[2*left+1]);
 				var center2 = HullLayout.lineCenter(p[0], p[1], nodes[2*right], nodes[2*right+1]);
@@ -189,14 +194,13 @@ HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 				nodes[2*i] = center[0];
 				nodes[2*i+1] = center[1];
 
-			} else { //terminate looping through polygon
-				keepGoing = false;
+				farEnough = false;
 			}
 		}
 
-	} while ( keepGoing == true && iteration < HullLayout.shrinkIteration );
+	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
 
-	// console.log("iteration time: "+iteration);
+	console.log("iteration time: "+iteration);
 	return nodes;
 
 };

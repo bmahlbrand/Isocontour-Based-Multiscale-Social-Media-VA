@@ -124,6 +124,17 @@ CTreeNode.prototype.getVol = function(){
 /*****************************************************************************************/
 /************************   Contour  Vis  Component    ***********************************/
 /*****************************************************************************************/
+CTreeNode.prototype.resetFlags = function(){
+
+	this.cluster['minOlpFlag'] = false;
+	this.cluster['visFlag'] = false;
+
+	this.children.forEach(function(val){
+		val.resetFlags();
+	});
+
+};
+
 CTreeNode.prototype.getPixelCoords = function(){
 
 	this.cluster['hulls'] = ContourVis.getPixelCoords(this.cluster['hullIds']);
@@ -134,18 +145,61 @@ CTreeNode.prototype.getPixelCoords = function(){
 
 };
 
-CTreeNode.prototype.filterNodesForMinOlp = function(){
+//if flag is defined, propogate the flag to the subtree;
+//the idea behind this propogation is that if a node is forcely extend, then we just set the children to be false;
+CTreeNode.prototype.filterNodesForMinOlp = function(flag){
 
-	var rst = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
+	if(flag === undefined){
 
-	this.cluster['minOlpFlag'] = rst[0];
+		var rst = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
 
-	// might extend the hull;
-	if(rst[0] == true)
-		this.cluster['hulls'] = rst[1];
+		this.cluster['minOlpFlag'] = rst[0];
+
+		// valid hull
+		if(rst[0] == true){
+			this.cluster['hulls'] = rst[1];
+
+			//forcely extend the hull, set children to be false;
+			if(rst[2] == true){
+				this.children.forEach(function(val){
+					val.filterNodesForMinOlp(false);
+				});
+			}
+			else{
+				this.children.forEach(function(val){
+					val.filterNodesForMinOlp();
+				});
+			}
+		}
+		//not valid hull, but still check for the subtree [previously missed this step]
+		else{
+			this.children.forEach(function(val){
+				val.filterNodesForMinOlp();
+			});
+		}
+
+
+	}
+	else{
+		this.cluster['minOlpFlag'] = flag;
+
+		this.children.forEach(function(val){
+			val.filterNodesForMinOlp(flag);
+		});
+	}
+
+};
+
+CTreeNode.prototype.samplePoints = function(){
+
+	var p = this;
+
+	if( p.cluster['minOlpFlag'] == true ){
+		p.cluster['hulls'] = HullLayout.getSampledPath(p.cluster['hulls']);
+	}
 
 	this.children.forEach(function(val){
-		val.filterNodesForMinOlp();
+		val.samplePoints();
 	});
 
 };
@@ -159,8 +213,10 @@ CTreeNode.prototype.minOlp = function(){
 	if( p.cluster['minOlpFlag'] == true ){
 
 		this.children.forEach(function(val){
-			if( val.cluster['minOlpFlag'] == true )
+			if( val.cluster['minOlpFlag'] == true ){
+				console.log(val.cluster['clusterId']);
 				val.cluster['hulls'] = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+			}
 		});
 	}
 
