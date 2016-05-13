@@ -94,7 +94,7 @@ DataCenter.prototype.getTweets = function(){
 };
 
 DataCenter.prototype.getTweetsByIds = function(ids){
-	
+
 	var that = this;
 	var rst = [];
 

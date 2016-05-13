@@ -11,7 +11,7 @@ ScaleTreeCanvas = function(){
 
 	this.TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
 	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
-	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
+	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.RECT;
 
 	this.scaleBoundFlag = true;
 	//vis styling
@@ -71,7 +71,8 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 
 	                            	var id = this.id.substring(5,this.id.length);
 	                            	$('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
-	                            	
+	                            	console.log(id);
+
 	                            })
 	                            // .on("mouseover", function(){
 	                            // 	$('[ng-controller="app_controller"]').scope().addHlNode(id);
