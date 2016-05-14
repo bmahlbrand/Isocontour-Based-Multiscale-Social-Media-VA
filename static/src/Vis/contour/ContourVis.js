@@ -97,6 +97,21 @@ ContourVis.prototype.createLineFunc = function(pts){
 
 }
 
+// ContourVis.prototype.createLineFuncLinear = function(pts){
+
+// 	pts = HullLayout.odArrTo2dArr(pts);
+
+// 	var lineFunction = null;
+
+// 	lineFunction = d3.svg.line()
+// 					.x(function(d) { return d[0]; })
+//                     .y(function(d) { return d[1]; })
+//                     .interpolate("linear-closed");
+
+// 	return lineFunction(pts);
+
+// }
+
 //use mask to exlude children hull area when rendering the current hull
 ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
 
@@ -213,7 +228,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 // O require that part of the poly should be inside the viewport
 // V require that the poly should overlap with the viewport rectangle
 // O's requirement is stronger
-//return value [0]: is valid or not; [1]: hull coords: [2]:whether force extended; 
+//return value [0]: is valid or not; [1]: hull coords: [2]:whether force extended;
 ContourVis.filterHullForMinOlp = function(hull){
 
 	//no points;
@@ -222,12 +237,20 @@ ContourVis.filterHullForMinOlp = function(hull){
 
 	//one or two points not draw for now;
 	if(hull.length < 6)
-		return [false, ContourVis.extendHull(hull), true];
+		return [false, hull, true];
+		// return [false, ContourVis.extendHull(hull), true];
 
 	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
 	if(aabb.width < 6 || aabb.height < 6 )
-		return [false, ContourVis.extendHull(hull), true];
+		return [false, hull, true];
+		// return [false, ContourVis.extendHull(hull), true];
+
+	//area too small not draw for now;
+	var area = PolyK.GetArea(hull);
+	if( Math.abs(area) <= 100 )
+		return [false, hull, true];
+		// return [false, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
@@ -262,7 +285,7 @@ ContourVis.extendHull = function(hull){
 
 };
 
-ContourVis.filterHullForVis = function(hull){
+ContourVis.filterHullForVis = function(hull, flagForMinOlp){
 
 	//not valid hull
 	if(hull.length < 6)
@@ -273,11 +296,15 @@ ContourVis.filterHullForVis = function(hull){
 	if(aabb.width < 5 || aabb.height < 5 )
 		return false;
 
+	//area two small
+	var area = PolyK.GetArea(hull);
+	if( Math.abs(area) <= 100 )
+		return false;
+
 	//check overlapping [dirty codes, need improvement later;]
 	var s = ContourVis.DIMENSION;
 	var viewports = [0,0,0,s,s,0,s,s];
 
-	var flag = false;
 	for(var i=0; i<viewports.length/2; i++){
 
 		var x = viewports[2*i];
@@ -292,10 +319,10 @@ ContourVis.filterHullForVis = function(hull){
 		var x = hull[2*i];
 		var y = hull[2*i+1];
 		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
-			return true;
+			return true && flagForMinOlp;
 	}
 
-	return flag;
+	return false;
 };
 
 //if not valid, return [];

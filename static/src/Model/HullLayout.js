@@ -77,7 +77,42 @@ HullLayout.pointAlongPath = function(path, t) {
 
 };
 
-HullLayout._moveOutsidePts = function(parent, child){
+// HullLayout._moveOutsidePts = function(parent, child){
+
+// 	for(var i=0; i<child.length/2; i++){
+		
+// 		var x = child[2*i];
+// 		var y = child[2*i+1];
+
+// 		if( !PolyK.ContainsPoint(parent, x, y) ){
+
+// 			var rst = PolyK.ClosestEdge(parent, x, y);
+// 			var closedP = rst.point;
+			
+// 			//norm closeP to xy;
+// 			var norm = rst.norm;
+// 			var reverseNorm = {x:-norm.x, y:-norm.y};
+
+// 			if( Math.abs(reverseNorm.x*reverseNorm.x + reverseNorm.y*reverseNorm.y - 1 ) > 0.1 )
+// 				console.log('fatal error from HullLayout -- not normalized');
+
+// 			//add a small offset to enforce the points INSIDE the parent hull, not ON the hull
+// 			var delta = 5;
+
+// 			//assign the closest point to the child array;
+// 			x = closedP.x + delta*reverseNorm.x;
+// 			y = closedP.y + delta*reverseNorm.y;
+// 		}
+
+// 		child[2*i] = x;
+// 		child[2*i+1] = y;
+// 	}
+
+// 	return {p:parent, c:child};
+
+// };
+
+HullLayout._moveOutsidePtsBiDir = function(parent, child){
 
 	for(var i=0; i<child.length/2; i++){
 		
@@ -116,51 +151,51 @@ HullLayout.lineCenter = function(x1, y1, x2, y2){
 	return [ (x1+x2)*0.5, (y1+y2)*0.5 ];
 };
 
-HullLayout._shrinkPartialCurvedPoly = function(parent, child){
+// HullLayout._shrinkPartialCurvedPoly = function(parent, child){
 
-	var iteration = 0;
-	var keepGoing;
+// 	var iteration = 0;
+// 	var keepGoing;
 
-	do {
-		iteration += 1;
-		farEnough = true;
+// 	do {
+// 		iteration += 1;
+// 		farEnough = true;
 
-		var len = child.length/2;
+// 		var len = child.length/2;
 
-		for (var i=0; i<len; i++) {
+// 		for (var i=0; i<len; i++) {
 			
-			var x = child[2*i];
-			var y = child[2*i+1];
-			var path = HullLayout.getPath(child);
+// 			var x = child[2*i];
+// 			var y = child[2*i+1];
+// 			var path = HullLayout.getPath(child);
 
-			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
+// 			var rst = PolyK.ClosestEdge(parent, x, y); //sample points on arc evenly, then minimize each
 			
-			if (rst.dist < HullLayout.pointEdgeDisThres) {
+// 			if (rst.dist < HullLayout.pointEdgeDisThres) {
 
-				var left = (i-1+len)%len;
-				var right = (i+1+len)%len;
+// 				var left = (i-1+len)%len;
+// 				var right = (i+1+len)%len;
 				
-				//var p = HullLayout.closestPointOnPath(path, [x,y]);
-				var p = [x,y];
+// 				//var p = HullLayout.closestPointOnPath(path, [x,y]);
+// 				var p = [x,y];
 
-				var center1 = HullLayout.lineCenter(p[0], p[1], child[2*left], child[2*left+1]);
-				var center2 = HullLayout.lineCenter(p[0], p[1], child[2*right], child[2*right+1]);
+// 				var center1 = HullLayout.lineCenter(p[0], p[1], child[2*left], child[2*left+1]);
+// 				var center2 = HullLayout.lineCenter(p[0], p[1], child[2*right], child[2*right+1]);
 
-				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
+// 				var center = HullLayout.lineCenter(center1[0], center1[1], center2[0], center2[1]);
 
-				child[2*i] = center[0];
-				child[2*i+1] = center[1];
+// 				child[2*i] = center[0];
+// 				child[2*i+1] = center[1];
 
-				farEnough = false;
-			}
-		}
+// 				farEnough = false;
+// 			}
+// 		}
 
-	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
+// 	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
 
-	console.log("iteration time: "+iteration);
-	return {p:parent, c:child};
+// 	console.log("iteration time: "+iteration);
+// 	return {p:parent, c:child};
 
-};
+// };
 
 HullLayout._forceDirectedMove = function(parent, child){
 
@@ -210,20 +245,36 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 		childCand.forEach(function(val){
 			var i = val[0];
-			child[2*i] = child[2*i] + delta*val[1].x;
-			child[2*i+1] = child[2*i+1] + delta*val[1].y;
+			var x = child[2*i] + delta*val[1].x;
+			var y = child[2*i+1] + delta*val[1].y;
+
+			if(PolyK.ContainsPoint(parent, x, y)){
+				child[2*i] = x;
+				child[2*i+1] = y;
+			}else{
+				child[2*i] = child[2*i] - delta*val[1].x;
+				child[2*i+1] = child[2*i+1] - delta*val[1].y;
+			}
 		});
 
 		/***************************************update parent points*****************************************/
 
-		parentCand.forEach(function(val){
-			var i = val[0];
-			parent[2*i] = parent[2*i] + delta*val[1].x;
-			parent[2*i+1] = parent[2*i+1] + delta*val[1].y;
-		});
+		// adding the procedure of changing parent points will make it inconsistant to maintain the inclusion of parent-child relationship; 
+		// parentCand.forEach(function(val){
+		// 	var i = val[0];
+		// 	var x = parent[2*i] + delta*val[1].x;
+		// 	var y = parent[2*i+1] + delta*val[1].y;
 
+		// 	if(PolyK.ContainsPoint(child, x, y)){
+		// 		parent[2*i] = parent[2*i] - delta*val[1].x;
+		// 		parent[2*i+1] = parent[2*i+1] - delta*val[1].y;
+		// 	}
+		// 	else{
+		// 		parent[2*i] = parent[2*i] + delta*val[1].x;
+		// 		parent[2*i+1] = parent[2*i+1] + delta*val[1].y;
+		// 	}
 
-
+		// });
 
 	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
 
@@ -232,18 +283,41 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 };
 
+HullLayout._validateOpt = function(parent, child){
+	
+	for(var i=0; i<child.length/2; i++){
+		
+		var x = child[2*i];
+		var y = child[2*i+1];
+
+		if( !PolyK.ContainsPoint(parent, x, y) ){
+			return {p:parent, c:[]};
+		}
+	}
+
+	return {p:parent, c:child};
+
+}
 
 HullLayout.minimizeOverlap = function(parent, child){
 
-	parentChild = {p:parent, c:child};
-	parentChild = HullLayout._moveOutsidePts(parentChild.p, parentChild.c);
+	var parentChild = {p:parent, c:child};
+	if(parent.length <= 0 || child.length <= 0)
+		return parentChild;
+
+	parentChild = HullLayout._moveOutsidePtsBiDir(parentChild.p, parentChild.c);
 	//child = HullLayout._shrinkPartialPoly(parent, child);
 	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
+	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
+
 	return parentChild;
 
 };
 
-HullLayout.samplePathThreshold = 30; //pixel distance
+
+
+
+HullLayout.samplePathThreshold = 25; //pixel distance
 HullLayout.pointEdgeDisThres = 10; //pixel distance?
 HullLayout.shrinkIteration = 10;
 

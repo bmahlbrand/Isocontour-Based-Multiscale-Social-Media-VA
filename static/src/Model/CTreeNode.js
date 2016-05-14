@@ -231,7 +231,7 @@ CTreeNode.prototype.minOlp = function(){
 
 CTreeNode.prototype.filterNodesForVis = function(){
 
-	this.cluster['visFlag'] = ContourVis.filterHullForVis(this.cluster['hulls']);
+	this.cluster['visFlag'] = ContourVis.filterHullForVis(this.cluster['hulls'], this.cluster['minOlpFlag']);
 
 	this.children.forEach(function(val){
 		val.filterNodesForVis();
