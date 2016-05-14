@@ -283,6 +283,7 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 };
 
+//check that after the optimization, the child is inclusive in the parent scope.
 HullLayout._validateOpt = function(parent, child){
 	
 	for(var i=0; i<child.length/2; i++){
@@ -317,7 +318,7 @@ HullLayout.minimizeOverlap = function(parent, child){
 
 
 
-HullLayout.samplePathThreshold = 25; //pixel distance
+HullLayout.samplePathThreshold = 30; //pixel distance
 HullLayout.pointEdgeDisThres = 10; //pixel distance?
 HullLayout.shrinkIteration = 10;
 
