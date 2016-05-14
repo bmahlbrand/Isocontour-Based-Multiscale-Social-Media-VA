@@ -14,8 +14,8 @@ ContourVis.prototype.updateGeoBbox = function(){
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 	tree.resetFlags();
 	tree.getPixelCoords();
-	tree.filterNodesForMinOlp();
 	tree.samplePoints();
+	tree.filterNodesForMinOlp();
 	tree.minOlp();
 
 	//update activenode list;
@@ -220,22 +220,26 @@ ContourVis.filterHullForMinOlp = function(hull){
 	if(hull.length <= 0)
 		return [false, hull, false];
 
-	//one or two points;
+	//one or two points not draw for now;
 	if(hull.length < 6)
-		return [true, ContourVis.extendHull(hull), true];
+		return [false, ContourVis.extendHull(hull), true];
 
-	//too small
+	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
 	if(aabb.width < 6 || aabb.height < 6 )
-		return [true, ContourVis.extendHull(hull), true];
+		return [false, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
 
 		var x = hull[2*i];
 		var y = hull[2*i+1];
-		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) )
+		if( (x > 0 && x < ContourVis.DIMENSION) && (y > 0 && y < ContourVis.DIMENSION) ){
+
+			if(hull.length < 8)
+				console.log(hull.length);
 			return [true, hull, false];
+		}
 	}
 
 	return [false, hull, false];

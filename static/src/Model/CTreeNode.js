@@ -145,6 +145,20 @@ CTreeNode.prototype.getPixelCoords = function(){
 
 };
 
+
+CTreeNode.prototype.samplePoints = function(){
+
+	var p = this;
+
+	p.cluster['hulls'] = HullLayout.getSampledPath(p.cluster['hulls']);
+
+	this.children.forEach(function(val){
+		val.samplePoints();
+	});
+
+};
+
+
 //if flag is defined, propogate the flag to the subtree;
 //the idea behind this propogation is that if a node is forcely extend, then we just set the children to be false;
 CTreeNode.prototype.filterNodesForMinOlp = function(flag){
@@ -190,20 +204,6 @@ CTreeNode.prototype.filterNodesForMinOlp = function(flag){
 
 };
 
-CTreeNode.prototype.samplePoints = function(){
-
-	var p = this;
-
-	if( p.cluster['minOlpFlag'] == true ){
-		p.cluster['hulls'] = HullLayout.getSampledPath(p.cluster['hulls']);
-	}
-
-	this.children.forEach(function(val){
-		val.samplePoints();
-	});
-
-};
-
 CTreeNode.prototype.minOlp = function(){
 
 	//only if both the parent and children are having 'minOlpFlag' field turned on, we perform the overlapping minimization;
@@ -217,8 +217,8 @@ CTreeNode.prototype.minOlp = function(){
 
 				var rst = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
 				
-				p.cluster['hulls'] = rst[0];
-				val.cluster['hulls'] = rst[1];
+				p.cluster['hulls'] = rst.p;
+				val.cluster['hulls'] = rst.c;
 			}
 		});
 	}
