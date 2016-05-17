@@ -551,3 +551,17 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 	};
 
 });
+
+twittNavApp.controller('ClusterSignatureCtrl', function($rootScope, $scope) {
+
+	$scope.init = function(){
+		$scope.clusterSignatures = new ClusterSignatures();
+
+	};
+
+	$scope.init();
+
+	$scope.displayClusterSignatures = function(clusters) {
+
+	};
+});
