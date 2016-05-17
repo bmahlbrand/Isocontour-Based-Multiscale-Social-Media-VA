@@ -40,13 +40,21 @@ function contourColorFill(){
 	return q;
 }
 
-function statColor(){
+// function statColor(){
 
-	//divergent color scheme
-	//var color = ['#8c510a','#bf812d','#dfc27d','#f6e8c3','#f5f5f5','#c7eae5','#80cdc1','#35978f','#01665e'];
-	var color = ['#fbb4ae','#b3cde3','#ccebc5','#decbe4'];
-	color.unshift('#aaaaaa');
+// 	//divergent color scheme
+// 	//var color = ['#8c510a','#bf812d','#dfc27d','#f6e8c3','#f5f5f5','#c7eae5','#80cdc1','#35978f','#01665e'];
+// 	var color = ['#fbb4ae','#b3cde3','#ccebc5','#decbe4'];
+// 	color.unshift('#aaaaaa');
 	
-	var q = d3.scale.quantize().domain([-1, 3]).range(color);
-	return q;
+// 	var q = d3.scale.quantize().domain([-1, 3]).range(color);
+// 	return q;
+// }
+
+
+function divergentColorList(){
+	//light
+	// return ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9'];
+	//lighter
+	return ['#fbb4ae','#b3cde3','#ccebc5','#decbe4','#fed9a6','#ffffcc','#e5d8bd','#fddaec','#f2f2f2'];
 }

@@ -253,6 +253,18 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 
 twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
+	$scope.initUI = function(){
+
+		var cates = DataCenter.instance().categories;
+		cates.forEach(function(val){
+			
+			$('#categoryList').append($("<option></option>")
+								.attr("value",val)
+								.attr("style", "background-color: "+divergentColorList()[cates.indexOf(val)])
+								.text(val + ": " + EMCateTitle[val]));
+		});
+	};
+
 	$scope.init = function(){
 
 		//this array contains nodes that are inside the geo-scope of map based on the user's navigation on map.
@@ -263,6 +275,8 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 		//this array can only be modified by this class;
 		//only store this root of the subtree;
 		$rootScope.highlightedNodes = [];
+
+		$scope.initUI();
 
 	};
 

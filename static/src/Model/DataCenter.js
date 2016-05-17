@@ -13,7 +13,7 @@ DataCenter = function(){
 
 	// tweet dictionary, key: tweet id
 	this.tweets = {};
-	this.categories = {};
+	this.categories = [];
 
 	this.loadTweets();
 	this.loadClusters();
@@ -24,6 +24,8 @@ DataCenter = function(){
 
 	this.filterRoot = this.filterTree(this.root);
 	this.filterRoot.sortChildren();
+
+	this.categories = this.categories.sort();
 	
 };
 

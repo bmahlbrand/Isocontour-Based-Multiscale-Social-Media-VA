@@ -96,3 +96,14 @@ $.ajax({
 });
 
 var treeRootId = profile.zoom + "_0";
+
+var EMCateTitle = {
+	"C07": "Safety Security",
+	"E01": "Event Related",
+	"O02": "EM Response",
+	"T02": "Injuried People",
+	"T03": "Dead People",
+	"T04": "Infras Damage",
+	"T09": "Displace Evacuate",
+	"T11": "Personal Update"
+};

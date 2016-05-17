@@ -56,7 +56,6 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	var that = this;
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
-	var color = statColor()(node.stat.getScore());
 	//draw node;
 	var rectangle = this.canvas.append("rect")
 								.attr("id", "node_"+id)
@@ -66,7 +65,7 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("width", bbox.getWidth())
 	                            .attr("height", bbox.getHeight())
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
-	                            .attr("fill", color)
+	                            .attr("fill", "none")
 	                            .on("click", function(){
 
 	                            	var id = this.id.substring(5,this.id.length);
@@ -88,7 +87,6 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 	var that = this;
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
-	var color = statColor()(node.stat.getScore());
 	//draw node;
 	var rectangle = this.canvas.append("circle")
 								.attr("id", "node_"+id)
@@ -98,7 +96,7 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 	                            .attr("r", 3)
 	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
 	                            .attr("stroke-width", 1)
-	                            .attr("fill", color)
+	                            .attr("fill", "none")
 	                            .on("click", function(){
 	                            	alert(this.id);
 	                            })
