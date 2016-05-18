@@ -3,7 +3,6 @@ EMTable = function(){
 
 EMTable.prototype.display = function(tweets){
 
-	var color = d3.scale.category10();
 	var categories = DataCenter.instance().categories;
 
 	var html = "<table id=\"em_table\" class=\"gradient-style\" style=\"opacity:0.8;\"><tr>"
@@ -41,11 +40,11 @@ EMTable.prototype.display = function(tweets){
 			var index = lemmed_text.indexOf(entry);
 
 			if(cate.length > 0 && index >= 0){
-				c = color(categories.indexOf(cate[0]));
+				c = divergentColorList()[categories.indexOf(cate[0])];
 
 				rgb = hexToRgb(c);
 				//background color;
-				rgba = rgb.r + "," + rgb.g + "," + rgb.b + "," + 0.5;
+				rgba = rgb.r + "," + rgb.g + "," + rgb.b + "," + 0.9;
 				text[index] = "<span style=\"background-color:rgba(" + rgba + ")\">" + text[index] + "</span>";
 				//font color
 				//text[index] = "<font color=\"" + c + ")\">" + text[index] + "</font>";
