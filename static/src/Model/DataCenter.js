@@ -17,17 +17,20 @@ DataCenter = function(){
 
 	this.loadTweets();
 	this.loadClusters();
-	this.loadCateCluster();
 
+	this.root = null;
+	this.filterRoot = null;
+	
+};
+
+DataCenter.prototype.init = function(){
 	//init tree
 	this.root = this.initTree();
 
 	this.filterRoot = this.filterTree(this.root);
 	this.filterRoot.sortChildren();
 
-	this.categories = this.categories.sort();
-	
-};
+}
 
 /*************************************************************************************/
 /**************************** cluster filter operation *******************************/
@@ -169,6 +172,7 @@ DataCenter.prototype.loadTweets = function(){
 
 			//initialize global category array;
 			that.categories = union_arrays(that.categories, entry.cate);
+			that.categories.sort();
 			
 			tweets[entry.tweet_id] = t;
 
@@ -215,30 +219,6 @@ DataCenter.prototype.loadClusters = function(){
 	});
 };
 
-DataCenter.prototype.loadCateCluster = function(){
-
-	for(var key in this.clusters)
-		this.clusters[key]['cateClusterId'] = 0;
-
-	// var that = this;
-
-	// $.ajax({
-	// 	method: "GET",
-	// 	dataType: "json",
-	// 	url: cateCluster,
-	// 	//url: "http://"+ip_address+"/cate_cluster",
-	// 	//data: $.param({ case_index: default_case }),
-	// 	headers : { 'Content-Type': 'application/json' },
-	// 	async: false
-	// })
-	// .done(function( msg ) {
-
-	// 	for(var key in msg)
-	// 		that.clusters[key]['cateClusterId'] = msg[key];
-	// });
-
-};
-
 /*************************************************************************************/
 DataCenter.the_instace = null;
 
@@ -252,3 +232,4 @@ DataCenter.instance = function(){
 
 //init DataCenter
 DataCenter.instance();
+DataCenter.instance().init();
