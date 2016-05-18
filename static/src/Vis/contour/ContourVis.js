@@ -126,7 +126,8 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE || ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
 		_fillColor = contourColorFill()(zoom);
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE)
-		_fillColor = statColor()(node.stat.getScore());
+		//disabled for now
+		_fillColor = contourColorFill()(zoom);
 
 	var _stroke = contourColorStroke()(zoom);
 
@@ -155,13 +156,13 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 	        
 	        });
     	});
-    
+
+
+	/*******************************************render area inside the hull*******************************************/
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", curLineFunc)
-			    	.attr("stroke", _stroke)
-			    	.attr("stroke-width", 2)
 			    	.attr("fill", _fillColor)
 			    	.attr("fill-opacity", 0.6)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
@@ -170,10 +171,10 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    		var id = this.id.substring(5,this.id.length);
 	                    $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
 	                    console.log(id);
+	                    console.log(node.stat.getCateDist());
 
 			    	})
 			    	.on("mouseover", function(){
-
 			    		
 			    		/*************************************draw optimized dots************************************/
 			    		var cluster_id = this.id.substring(5, this.id.length);
@@ -210,7 +211,6 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 			    		
 			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
 
-
 		  			}).on("mouseout", function(){
 
 		  				/*************************************draw optimized dots************************************/
@@ -221,6 +221,75 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 		  				$('[ng-controller="map_controller"]').scope().clear_dots();
 
 		  			});
+
+
+	/***************************************************render the boundary*************************************************/
+	var selectedCate = ["C07", "O02"];
+	var categories = DataCenter.instance().categories;
+	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
+	var cateColor = selectedCate.map(function(val){ return divergentColorList()[categories.indexOf(val)] });
+
+	this.drawStripLines(id, curLineFunc, cateVol, cateColor);
+
+};
+
+ContourVis.prototype.drawStripLines = function(id, lineFunc, cateVol, cateColor){
+
+	var svg = this.map_svg;
+	var strokeWidth = 5;
+	var unitLength = 5;
+	var defaultColor = "#555";
+
+	try{
+
+		var nonZeroArr = cateVol.filter(function(val){ return val > 0 ? true : false; });
+
+		if(nonZeroArr.length <= 0)
+			throw "error";
+
+		var min = nonZeroArr.min();
+		//normalize the array based on the non-zero min value;
+		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
+		//multiply by unit length;
+		cateVol = cateVol.map(function(val){ return val*unitLength; });
+
+		var sum = cateVol.reduce(function(a, b){return a+b;});
+
+		var offset = 0;
+		cateVol.forEach(function(cate, idx){
+
+			if(cate < 0.1)
+				return;
+
+			var dashArray = cate + ", " + (sum-cate);
+			var dashOffset = offset;
+			offset += cate;
+
+			svg.append("path")
+				.attr("class", "stripline_" + id + "_" + idx)
+				.attr("d", lineFunc)
+		    	.attr("stroke", cateColor[idx])
+		    	.attr("stroke-width", strokeWidth)
+		    	.style("stroke-dasharray", dashArray)
+		    	//the offset is the reverse direction of the common thinking.
+		    	.style("stroke-dashoffset", dashOffset*(-1))
+		    	.attr("fill", "none");
+		});
+
+	}catch(err){
+
+		console.log(err);
+
+		//just draw regular line, do not add strip
+		svg.append("path")
+				.attr("class", "stripline_" + id + "_0")
+				.attr("d", lineFunc)
+		    	.attr("stroke", defaultColor)
+		    	.attr("stroke-width", strokeWidth)
+		    	.attr("fill", "none");
+
+	}
+
 
 };
 
