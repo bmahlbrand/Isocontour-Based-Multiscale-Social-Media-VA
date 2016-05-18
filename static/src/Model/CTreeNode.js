@@ -2,7 +2,7 @@ CTreeNode = function(cluster){
 	this.cluster = cluster;
 	this.children = [];
 	this.vis = new VisComponent();
-	this.stat = new StatComponent(cluster['cateClusterId']);
+	this.stat = new StatComponent(cluster['ids']);
 };
 
 CTreeNode.prototype.addChild = function(clusterArr){
