@@ -222,9 +222,8 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 		  			});
 
-
 	/***************************************************render the boundary*************************************************/
-	var selectedCate = ["C07", "O02"];
+	var selectedCate = DataCenter.instance().focusCates;
 	var categories = DataCenter.instance().categories;
 	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
 	var cateColor = selectedCate.map(function(val){ return divergentColorList()[categories.indexOf(val)] });
@@ -238,14 +237,17 @@ ContourVis.prototype.drawStripLines = function(id, lineFunc, cateVol, cateColor)
 	var svg = this.map_svg;
 	var strokeWidth = 5;
 	var unitLength = 5;
-	var defaultColor = "#555";
+	var defaultColor = "#aaa";
 
 	try{
+
+		if(cateVol.length <= 0)
+			throw "no cates selected";
 
 		var nonZeroArr = cateVol.filter(function(val){ return val > 0 ? true : false; });
 
 		if(nonZeroArr.length <= 0)
-			throw "error";
+			throw "no non-zero data for the selected cates;";
 
 		var min = nonZeroArr.min();
 		//normalize the array based on the non-zero min value;
@@ -278,7 +280,7 @@ ContourVis.prototype.drawStripLines = function(id, lineFunc, cateVol, cateColor)
 
 	}catch(err){
 
-		console.log(err);
+		console.error(err);
 
 		//just draw regular line, do not add strip
 		svg.append("path")

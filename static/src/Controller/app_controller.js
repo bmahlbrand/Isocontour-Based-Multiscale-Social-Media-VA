@@ -256,12 +256,27 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 	$scope.initUI = function(){
 
 		var cates = DataCenter.instance().categories;
-		cates.forEach(function(val){
+		cates.forEach(function(val, idx){
 			
-			$('#categoryList').append($("<option></option>")
-								.attr("value",val)
-								.attr("style", "background-color: "+divergentColorList()[cates.indexOf(val)])
-								.text(val + ": " + EMCateTitle[val]));
+			$('#cateList').append(
+				'<label><input type="checkbox" name="cates" value="'+val+'" />' 
+				+ '<span style="background-color:' + divergentColorList()[cates.indexOf(val)] + ';">'
+				+ val
+				+ ': ' + EMCateTitle[val]
+				+ '</span></label>'
+			);
+		});
+
+		//set the DataCenter focus categories based on the front end selection;
+		$(function() {
+		     $("#cateList").multiselect(function(){ 
+
+				var names = [];
+				$('#cateList input:checked').each(function() {
+			        names.push(this.value);
+			    });
+			    DataCenter.instance().setFocusCate(names);
+			});
 		});
 	};
 

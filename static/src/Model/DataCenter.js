@@ -6,6 +6,7 @@ DataCenter = function(){
 	//filter options:
 	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
 	this.focusID = this.rootID;
+	this.focusCates = [];
 
 	//cluster dictionary, key: cluster id
 	this.clusters = {};
@@ -44,6 +45,17 @@ DataCenter.prototype.setRange = function(min, max){
 
 DataCenter.prototype.setFocusID = function(id){
 	this.focusID = id;
+
+	//just for now:
+	$('[ng-controller="app_controller"]').scope().masterUpdate();
+};
+
+DataCenter.prototype.setFocusCate = function(cates){
+
+	if(cates.length <= 0)
+		this.focusCates = [];
+	else
+		this.focusCates = _.uniq(cates);
 
 	//just for now:
 	$('[ng-controller="app_controller"]').scope().masterUpdate();

@@ -69,6 +69,27 @@
 			}); 
 		};
 
+		jQuery.fn.multiselect = function(callback) {
+		    $(this).each(function() {
+		        var checkboxes = $(this).find("input:checkbox");
+		        checkboxes.each(function() {
+		            var checkbox = $(this);
+		            // Highlight pre-selected checkboxes
+		            if (checkbox.prop("checked"))
+		                checkbox.parent().addClass("multiselect-on");
+		 
+		            // Highlight checkboxes that the user selects
+		            checkbox.click(function() {
+		                if (checkbox.prop("checked"))
+		                    checkbox.parent().addClass("multiselect-on");
+		                else
+		                    checkbox.parent().removeClass("multiselect-on");
+		                callback();
+		            });
+		        });
+		    });
+		};
+
 	</script>
 
 
@@ -192,6 +213,30 @@
 	.treeNode:hover {
 		cursor: pointer;
 	}
+
+	/**********************multiple select****************************/
+	.multiselect {
+	    width:120px;
+	    height:100px;
+	    border:solid 1px #c0c0c0;
+	    overflow:scroll;
+	    font-family: "Trebuchet MS", Helvetica, sans-serif;
+	    font-size: 12px;
+	    text-align: left;
+	    margin: auto;
+	}
+	 
+	.multiselect label {
+	    display:block;
+	    height:13px; 
+	    width:200px; 
+	    margin: 2px;
+	}
+	 
+	.multiselect-on {
+	    /*color:#ffffff;*/
+	}
+	/**********************multiple select****************************/
 
 	</style>
 
@@ -400,7 +445,7 @@
 			</div>
 
 		<h5 align="center">Categories</h5>
-		<select id="categoryList" size="8" multiple></select>
+			<div id="cateList" class="multiselect"></div>
 
 		<h5 align="center">Tree Type</h5>
 			<div>
