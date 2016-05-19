@@ -98,12 +98,12 @@ $.ajax({
 var treeRootId = profile.zoom + "_0";
 
 var EMCateTitle = {
-	"C07": "Safety Security",
-	"E01": "Event Related",
-	"O02": "EM Response",
-	"T02": "Injuried People",
-	"T03": "Dead People",
-	"T04": "Infras Damage",
-	"T09": "Displace Evacuate",
-	"T11": "Personal Update"
+	"C07": "Safety",
+	"E01": "Event",
+	"O02": "Response",
+	"T02": "Injuried",
+	"T03": "Dead",
+	"T04": "Infras",
+	"T09": "Evacuate",
+	"T11": "Update"
 };
