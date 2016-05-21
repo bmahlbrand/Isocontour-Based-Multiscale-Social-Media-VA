@@ -260,7 +260,8 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 			
 			$('#cateList').append(
 				'<label><input type="checkbox" name="cates" value="'+val+'" />' 
-				+ '<span style="background-color:' + divergentColorList()[cates.indexOf(val)] + ';">'
+				//+ '<span style="background-color:' + divergentColorList()[cates.indexOf(val)] + ';">'
+				+ '<span id="' +val+ '">'
 				+ val
 				+ ': ' + EMCateTitle[val]
 				+ '</span></label>'
@@ -269,12 +270,24 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
 		//set the DataCenter focus categories based on the front end selection;
 		$(function() {
-		     $("#cateList").multiselect(function(){ 
+		     $("#cateList").multiselect(function(){
 
 				var names = [];
 				$('#cateList input:checked').each(function() {
 			        names.push(this.value);
 			    });
+			    
+				d3.select("#cateList").selectAll("span")[0].forEach(function(val){
+
+						var index = names.indexOf(val.id);
+						if( index != -1){
+							d3.select("span#"+val.id).style('color', divergentColorList()[index]);
+						}else{
+							d3.select("span#"+val.id).style('color', "#000");
+						}
+					}
+				);
+
 			    DataCenter.instance().setFocusCate(names);
 			});
 		});

@@ -226,7 +226,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 	var selectedCate = DataCenter.instance().focusCates;
 	var categories = DataCenter.instance().categories;
 	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
-	var cateColor = selectedCate.map(function(val){ return divergentColorList()[categories.indexOf(val)] });
+	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
 	this.drawOutLine(id, curLineFunc, cateVol, cateColor);
 
@@ -235,7 +235,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	var svg = this.map_svg;
-	var lineWidth = 8;
+	var lineWidth = 6;
 
 	try{
 
@@ -252,9 +252,12 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
 
 		//up to this point, the cateVol has been normalized already;
-		//draw strip line;
-		//this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
-		this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT)
+			throw "default contour";
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP)
+			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
+			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 
 	}catch(err){
 
@@ -324,7 +327,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 	//multiply by unit length;
 	var sum = cateVol.reduce(function(a, b){return a+b;});
 
-	var numOfCircle = Math.floor(curPath.getTotalLength() / unitLength);
+	var numOfCircle = Math.ceil(curPath.getTotalLength() / unitLength);
 
 	var localCount = 0;
 	var curIdx = 0;
@@ -351,8 +354,8 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 			.attr('cx', pos.x)
 			.attr('cy', pos.y)
 			.attr('r', circleR)
-			.attr('stroke', "#555")
-			.attr('stroke-width', "1px")
+			// .attr('stroke', "#555")
+			// .attr('stroke-width', "1px")
 			.attr('fill', cateColor[val]);
 	});
 
@@ -528,6 +531,8 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2 }
+ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
