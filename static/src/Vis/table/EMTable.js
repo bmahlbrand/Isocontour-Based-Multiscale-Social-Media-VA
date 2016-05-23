@@ -3,7 +3,8 @@ EMTable = function(){
 
 EMTable.prototype.display = function(tweets){
 
-	var categories = DataCenter.instance().categories;
+	// var categories = DataCenter.instance().categories;
+	var focusCates = DataCenter.instance().focusCates;
 
 	var html = "<table id=\"em_table\" class=\"gradient-style\" style=\"opacity:0.8;\"><tr>"
 					+"<td style=\"white-space:nowrap;\"><b>Date<b></td><td><b>Content<b></td>"
@@ -36,11 +37,11 @@ EMTable.prototype.display = function(tweets){
 		var visFlag = false;
 		keywords.forEach(function(entry){
 
-			var cate = intersect_arrays(categories, tokens[entry]);
+			var cate = intersect_arrays(focusCates, tokens[entry]);
 			var index = lemmed_text.indexOf(entry);
 
 			if(cate.length > 0 && index >= 0){
-				c = divergentColorList()[categories.indexOf(cate[0])];
+				c = divergentColorList()[focusCates.indexOf(cate[0])];
 
 				rgb = hexToRgb(c);
 				//background color;
@@ -56,6 +57,8 @@ EMTable.prototype.display = function(tweets){
 
 		if(visFlag)
 			html += "<tr><td>" + date + "</td><td>" + text.join(" ") + "</td></tr>";
+		// else
+		// 	html += "<tr><td>" + date + "</td><td>" + text.join(" ") + "</td></tr>";
 		//html += "<tr><td style=\"cursor:pointer;\">" + id + "</td><td >" + date + "</td><td >" + text + "</td></tr>";
 	}
 	

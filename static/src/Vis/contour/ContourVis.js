@@ -226,18 +226,16 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 	var selectedCate = DataCenter.instance().focusCates;
 	var categories = DataCenter.instance().categories;
 	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
-	var cateColor = selectedCate.map(function(val){ return divergentColorList()[categories.indexOf(val)] });
+	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-	this.drawStripLines(id, curLineFunc, cateVol, cateColor);
+	this.drawOutLine(id, curLineFunc, cateVol, cateColor);
 
 };
 
-ContourVis.prototype.drawStripLines = function(id, lineFunc, cateVol, cateColor){
+ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	var svg = this.map_svg;
-	var strokeWidth = 5;
-	var unitLength = 5;
-	var defaultColor = "#aaa";
+	var lineWidth = 6;
 
 	try{
 
@@ -252,48 +250,116 @@ ContourVis.prototype.drawStripLines = function(id, lineFunc, cateVol, cateColor)
 		var min = nonZeroArr.min();
 		//normalize the array based on the non-zero min value;
 		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
-		//multiply by unit length;
-		cateVol = cateVol.map(function(val){ return val*unitLength; });
 
-		var sum = cateVol.reduce(function(a, b){return a+b;});
-
-		var offset = 0;
-		cateVol.forEach(function(cate, idx){
-
-			if(cate < 0.1)
-				return;
-
-			var dashArray = cate + ", " + (sum-cate);
-			var dashOffset = offset;
-			offset += cate;
-
-			svg.append("path")
-				.attr("class", "stripline_" + id + "_" + idx)
-				.attr("d", lineFunc)
-		    	.attr("stroke", cateColor[idx])
-		    	.attr("stroke-width", strokeWidth)
-		    	.style("stroke-dasharray", dashArray)
-		    	//the offset is the reverse direction of the common thinking.
-		    	.style("stroke-dashoffset", dashOffset*(-1))
-		    	.attr("fill", "none");
-		});
+		//up to this point, the cateVol has been normalized already;
+		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT)
+			throw "default contour";
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP)
+			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
+			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 
 	}catch(err){
 
 		console.error(err);
-
 		//just draw regular line, do not add strip
+
+		var defaultColor = "#aaa";
+
 		svg.append("path")
 				.attr("class", "stripline_" + id + "_0")
 				.attr("d", lineFunc)
 		    	.attr("stroke", defaultColor)
-		    	.attr("stroke-width", strokeWidth)
+		    	.attr("stroke-width", lineWidth)
 		    	.attr("fill", "none");
-
 	}
 
+};
+
+ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+
+	var svg = this.map_svg;
+	var unitLength = 5;
+
+	//multiply by unit length;
+	cateVol = cateVol.map(function(val){ return val*unitLength; });
+	var sum = cateVol.reduce(function(a, b){return a+b;});
+
+	var offset = 0;
+	cateVol.forEach(function(cate, idx){
+
+		if(cate < 0.1)
+			return;
+
+		var dashArray = cate + ", " + (sum-cate);
+		var dashOffset = offset;
+		offset += cate;
+
+		svg.append("path")
+			.attr("class", "stripline_" + id + "_" + idx)
+			.attr("d", lineFunc)
+	    	.attr("stroke", cateColor[idx])
+	    	.attr("stroke-width", lineWidth)
+	    	.style("stroke-dasharray", dashArray)
+	    	//the offset is the reverse direction of the common thinking.
+	    	.style("stroke-dashoffset", dashOffset*(-1))
+	    	.attr("fill", "none");
+	});
 
 };
+
+ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+
+	var svg = this.map_svg;
+	var unitLength = lineWidth;
+	var margin = 1;
+	var circleR = ( unitLength - margin*2 ) * 0.5;
+
+	//generate path;
+	var curPath = svg.append("path")
+					// .attr("class", "stripline_" + id + "_" + idx)
+					.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	curPath = curPath[0][0];
+
+	//multiply by unit length;
+	var sum = cateVol.reduce(function(a, b){return a+b;});
+
+	var numOfCircle = Math.ceil(curPath.getTotalLength() / unitLength);
+
+	var localCount = 0;
+	var curIdx = 0;
+	var renderArr = [];
+
+	for(var i=0;i<numOfCircle; i++){
+
+		if(localCount>= cateVol[curIdx]){
+			localCount = 0;
+			curIdx = (curIdx + 1) % cateVol.length;
+		}
+		renderArr.push(curIdx);
+		localCount++;
+	}
+
+	// console.log(renderArr);
+	renderArr.forEach(function(val, idx){
+
+		//val here is the index of the cateVol;
+		var pos = curPath.getPointAtLength(idx*unitLength);
+
+		svg.append("circle")
+			.attr('class', 'outlintpoint_'+id)
+			.attr('cx', pos.x)
+			.attr('cy', pos.y)
+			.attr('r', circleR)
+			// .attr('stroke', "#555")
+			// .attr('stroke-width', "1px")
+			.attr('fill', cateColor[val]);
+	});
+
+}
 
 // the difference between filterHullForMinOlp(O) and filterHullForVis(V) is:
 // O require that part of the poly should be inside the viewport
@@ -465,6 +531,8 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2 }
+ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
