@@ -1,3 +1,4 @@
+//small multiples visualization
 ClusterSignature = function() {
 	this.signatures = {};
 };
@@ -12,6 +13,13 @@ ClusterSignature.prototype.load = function() {
 
 };
 
+ClusterSignature.prototype.loadIndex = function(i) {
+	var key = clusters[i].keys()[0];
+	this.signatures[key]['area'] = this.getArea(clusters[i].hulls);
+	this.signatures[key]['tweetVolume'] = clusters[i].hullIds;
+}
+
+//shoelace formula
 ClusterSignature.prototype.getArea = function(clusterPoints) {
 	
 	var sum = 0.0;
@@ -35,5 +43,5 @@ ClusterSignature.prototype.getArea = function(clusterPoints) {
 
 //grab the minimap view
 ClusterSignature.prototype.getView = function(clusterPoints) {
-	
+
 };
