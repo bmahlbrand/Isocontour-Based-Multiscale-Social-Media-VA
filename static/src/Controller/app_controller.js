@@ -4,7 +4,16 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 	// mapView = new OlMapView();
    
  //    mapView.init(document.getElementById("mapView"), 1200, 600);
-});
+}).directive('whenScrolled', function() {
+    return function(scope, elm, attr) {
+        var raw = elm[0];
+        elm.bind('scroll', function() {
+            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                scope.$apply(attr.whenScrolled);
+            }
+        });
+    };
+});;
 
 //how to call a function from a scope;
 //$('[ng-controller="map_controller"]').scope().refresh_map();
@@ -583,11 +592,21 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 twittNavApp.controller('ClusterSignatureCtrl', function($rootScope, $scope) {
 
 	$scope.init = function(){
-		$scope.clusterSignatures = new ClusterSignatures();
+		$scope.clusterSignatures = [];//new ClusterSignature();//= [];// ['ham', 'cheese', 'stuff', 'other', 'another', 'simply', 'a', 'canadian', 'fantasy'];
 
 	};
 
 	$scope.init();
+
+	var counter = 0;
+    $scope.loadMore = function() {
+        for (var i = 0; i < 35; i++) {
+            //$scope.clusterSignatures.loadIndex(counter);
+            $scope.clusterSignatures.push({id: counter});
+            counter += 1;
+        }
+    };
+    $scope.loadMore();
 
 	$scope.displayClusterSignatures = function(clusters) {
 

@@ -153,6 +153,8 @@
 
 	<!--scale tree-->
 	<script type="text/javascript" src="src/Vis/ScaleTree/ScaleTreeCanvas.js"></script>
+	<!--cluster signature-->
+	<script type="text/javascript" src="src/Vis/ClusterSignature/ClusterSignature.js"></script>
 
 	<style>
 
@@ -520,12 +522,18 @@
 	</div>
 
 
-	<div id="clusterSigContainer" style="left:5px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;">
+	<div id="clusterSigContainer" style="left:5px;top:580px;width:430px;height:460px;position:absolute;background-color: rgba(255, 255, 255, 1.0);overflow:hidden;z-index:99;border:2px solid #999;text-align:center;" ng-controller="ClusterSignatureCtrl">
 	
 	<h5 align="center" style="cursor: pointer">Cluster Signature</h5>
 
 		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
-			<div id="clusterSignature" style="width:400px;height:550px;" ><!-- ng-controller="ClusterSignatureCtrl" --></div>
+			<div id="clusterSignature" style="width:400px;height:550px;overflow: scroll;" when-scrolled="loadMore()"><!--  -->
+				<ul>
+					<li ng-repeat="sig in clusterSignatures">
+						{{ sig }}
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
