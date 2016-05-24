@@ -45,6 +45,16 @@ ContourVis.prototype.update = function(){
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
+
+	//showing all levels;
+	var levelForFilter = 20;
+
+	acNodes = acNodes.filter(function(id){
+
+		var level = parseInt(id.split("_")[0]);
+		return level <= levelForFilter;
+	});
+
 	tree.drawContour(acNodes);
 
 	//hover hull
@@ -264,13 +274,15 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		console.error(err);
 		//just draw regular line, do not add strip
 
+		// var defaultColor = "#2b8cbe";
 		var defaultColor = "#aaa";
+		var defaultWidth = 2;
 
 		svg.append("path")
 				.attr("class", "stripline_" + id + "_0")
 				.attr("d", lineFunc)
 		    	.attr("stroke", defaultColor)
-		    	.attr("stroke-width", lineWidth)
+		    	.attr("stroke-width", defaultWidth)
 		    	.attr("fill", "none");
 	}
 

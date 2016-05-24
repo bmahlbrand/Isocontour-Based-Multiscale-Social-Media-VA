@@ -143,6 +143,7 @@ OlMapView.prototype.init = function(div) {
 
 		try{
 			$('[ng-controller="map_controller"]').scope().updateGeoBbox();
+			console.log("zoom level: "+copyThis.map.getZoom())
 		}catch(e){
 
 		}
@@ -220,7 +221,7 @@ OlMapView.prototype.render_dots = function(tweets, color){
 		if(color == "blue")
 			feature.attributes = {color: color, opacity:0.8, radius:8};
 		else
-			feature.attributes = {color: color, opacity:0.8, radius:3};
+			feature.attributes = {color: color, opacity:0.8, radius:1};
 
 		features_array.push(feature);
 		

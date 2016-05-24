@@ -240,7 +240,7 @@ HullLayout._forceDirectedMove = function(parent, child){
 			}
 		}
 
-		var delta = HullLayout.pointEdgeDisThres * 0.25;
+		var delta = HullLayout.pointEdgeDisThres * 0.15;
 		/***************************************update child points*****************************************/
 
 		childCand.forEach(function(val){
@@ -320,7 +320,7 @@ HullLayout.minimizeOverlap = function(parent, child){
 
 HullLayout.samplePathThreshold = 30; //pixel distance
 HullLayout.pointEdgeDisThres = 10; //pixel distance?
-HullLayout.shrinkIteration = 10;
+HullLayout.shrinkIteration = 5;
 
 
 // HullLayout.closestPointOnPath = function(pathNode, point) {
