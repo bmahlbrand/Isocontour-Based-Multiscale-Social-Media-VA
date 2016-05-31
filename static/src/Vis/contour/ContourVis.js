@@ -245,7 +245,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	var svg = this.map_svg;
-	var lineWidth = 6;
+	var lineWidth = 4;
 
 	try{
 
@@ -275,14 +275,13 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		//just draw regular line, do not add strip
 
 		// var defaultColor = "#2b8cbe";
-		var defaultColor = "#aaa";
-		var defaultWidth = 2;
+		var defaultColor = "#777";
 
 		svg.append("path")
 				.attr("class", "stripline_" + id + "_0")
 				.attr("d", lineFunc)
 		    	.attr("stroke", defaultColor)
-		    	.attr("stroke-width", defaultWidth)
+		    	.attr("stroke-width", lineWidth)
 		    	.attr("fill", "none");
 	}
 
