@@ -4,16 +4,7 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 	// mapView = new OlMapView();
    
  //    mapView.init(document.getElementById("mapView"), 1200, 600);
-}).directive('whenScrolled', function() {
-    return function(scope, elm, attr) {
-        var raw = elm[0];
-        elm.bind('scroll', function() {
-            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-                scope.$apply(attr.whenScrolled);
-            }
-        });
-    };
-});;
+});
 
 //how to call a function from a scope;
 //$('[ng-controller="map_controller"]').scope().refresh_map();
@@ -622,20 +613,44 @@ twittNavApp.controller('ClusterSignatureCtrl', function($rootScope, $scope) {
 			//console.log(nodes[i].cluster);
 			clusters.push(nodes[i].cluster);
 			
-			if (i > 15) {
+			if (i >= 15) {
 				break;
 			}
 		}		
 		
 		for (var i = 0; i < clusters.length; i++) {
-			$scope.clusterSignatures.push(
-				{ 
-					id: clusters[i].clusterId,
+			$scope.clusterSignatures.push({
+				 	id: clusters[i].clusterId,
 					area: ClusterSignature.instance().getArea(ClusterSignature.instance().getPointsFromTweetIds(clusters[i].hullIds)),
-					volume: clusters[i].ids.length
+					volume: clusters[i].ids.length 
 				});
 		}
 	};
 
 	$scope.update();
+});
+
+twittNavApp.directive('whenScrolled', function() {
+    return function(scope, elm, attr) {
+        var raw = elm[0];
+        elm.bind('scroll', function() {
+            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                scope.$apply(attr.whenScrolled);
+            }
+        });
+    };
+});
+
+twittNavApp.directive('minimap', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            data: '='
+        },
+        template: '<div class="myTemplate"></div>',
+        link: function (scope, element, attrs) {
+            // We lookup .myTemplate starting from element
+            console.log(d3.select(element[0]).select('.minimap'))
+        }
+    };
 });
