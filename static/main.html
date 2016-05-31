@@ -528,9 +528,16 @@
 
 		<div style="width:400px;height:450px;margin: 0 auto;" class="noSupportDrag">
 			<div id="clusterSignature" style="width:400px;height:550px;overflow: scroll;" when-scrolled="loadMore()"><!--  -->
-				<ul>
+				<ul style="list-style-type: none; padding:0; margin:0;">
 					<li ng-repeat="sig in clusterSignatures">
-						{{ sig }}
+						<b>ID:</b> {{ sig.id }}
+						<div>
+							<img style="width:100px;height:150px;" src="img/placeholder.png">
+						</div>
+						<b>Area:</b> {{ sig.area }} <i> mi^2 </i>
+						<br>
+						<b>Volume:</b> {{ sig.volume }}
+						<hr>
 					</li>
 				</ul>
 			</div>

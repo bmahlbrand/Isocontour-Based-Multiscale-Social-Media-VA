@@ -4,16 +4,7 @@ var twittNavApp = angular.module('twittNavApp', []).run(function() {
 	// mapView = new OlMapView();
    
  //    mapView.init(document.getElementById("mapView"), 1200, 600);
-}).directive('whenScrolled', function() {
-    return function(scope, elm, attr) {
-        var raw = elm[0];
-        elm.bind('scroll', function() {
-            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-                scope.$apply(attr.whenScrolled);
-            }
-        });
-    };
-});;
+});
 
 //how to call a function from a scope;
 //$('[ng-controller="map_controller"]').scope().refresh_map();
@@ -575,7 +566,6 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 
 	$scope.init = function(){
 		$scope.table = new EMTable();
-
 	};
 
 	$scope.init();
@@ -585,6 +575,7 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 		var ids = DataCenter.instance().getTree().getNodeById(clusterId).cluster['ids'];
     	var tweets = DataCenter.instance().getTweetsByIds(ids);
 		$scope.table.display(tweets);
+
 	};
 
 });
@@ -592,23 +583,74 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 twittNavApp.controller('ClusterSignatureCtrl', function($rootScope, $scope) {
 
 	$scope.init = function(){
-		$scope.clusterSignatures = [];//new ClusterSignature();//= [];// ['ham', 'cheese', 'stuff', 'other', 'another', 'simply', 'a', 'canadian', 'fantasy'];
-
+		$scope.clusterSignatures = [];
 	};
 
 	$scope.init();
 
 	var counter = 0;
+
     $scope.loadMore = function() {
-        for (var i = 0; i < 35; i++) {
+        for (var i = 0; i < 5; i++) {
             //$scope.clusterSignatures.loadIndex(counter);
             $scope.clusterSignatures.push({id: counter});
             counter += 1;
         }
     };
-    $scope.loadMore();
+
+    //$scope.loadMore();
 
 	$scope.displayClusterSignatures = function(clusters) {
 
 	};
+
+	$scope.update = function() {
+		var clusters = [];
+
+		var nodes = DataCenter.instance().getTree().toList();
+
+		for (var i = 0; i < nodes.length; i++) {
+			//console.log(nodes[i].cluster);
+			clusters.push(nodes[i].cluster);
+			
+			if (i >= 15) {
+				break;
+			}
+		}		
+		
+		for (var i = 0; i < clusters.length; i++) {
+			$scope.clusterSignatures.push({
+				 	id: clusters[i].clusterId,
+					area: ClusterSignature.instance().getArea(ClusterSignature.instance().getPointsFromTweetIds(clusters[i].hullIds)),
+					volume: clusters[i].ids.length 
+				});
+		}
+	};
+
+	$scope.update();
+});
+
+twittNavApp.directive('whenScrolled', function() {
+    return function(scope, elm, attr) {
+        var raw = elm[0];
+        elm.bind('scroll', function() {
+            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                scope.$apply(attr.whenScrolled);
+            }
+        });
+    };
+});
+
+twittNavApp.directive('minimap', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            data: '='
+        },
+        template: '<div class="myTemplate"></div>',
+        link: function (scope, element, attrs) {
+            // We lookup .myTemplate starting from element
+            console.log(d3.select(element[0]).select('.minimap'))
+        }
+    };
 });

@@ -591,3 +591,20 @@ ContourVis.prototype.createDummyPath = function(pts){
 	return hull;
 
 };
+
+ContourVis.prototype.createClusterSignaturePath = function(svg, pts){
+
+	pts = HullLayout.odArrTo2dArr(pts);
+
+	var that = this;
+
+	var lineFunction = this.createDummyLine(pts);
+
+    var hull = svg.append("path")
+			    	.attr("class", "dummyPath")
+			    	.attr("d", lineFunction(pts))
+			    	.attr("stroke", "#FFF")
+			    	.attr("opacity", 0);
+	return hull;
+
+};
