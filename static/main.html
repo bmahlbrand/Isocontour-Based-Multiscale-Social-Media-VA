@@ -200,6 +200,7 @@
 
 	.concaveHull {
 		cursor: pointer;
+		box-shadow: inset 0px 0px 4px #000;
 	}
 	.hull {
 	  fill: none;
@@ -422,6 +423,14 @@
 			$('#dataEditContainer').show();
 		}
 
+		function turnHalo(val){
+
+			var flag = parseInt(val) == 0 ? false : true;
+			ContourVis.enableHalo = flag;
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+
+		}
+
 	</script>
 
 </head>
@@ -519,6 +528,14 @@
 				<input type="radio" name="conVis" onclick="changeContourFill(2);" checked><span>sequential</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(3);" ><span>stat score</span><br>
 			</div>
+
+		<h5 align="center">Contour Halo</h5>
+			<div>
+				<input type="radio" name="halo" onclick="turnHalo(0);" ><span>disable</span><br>
+				<input type="radio" name="halo" onclick="turnHalo(1);" checked><span>enable</span><br>
+
+			</div>
+
 	</div>
 
 

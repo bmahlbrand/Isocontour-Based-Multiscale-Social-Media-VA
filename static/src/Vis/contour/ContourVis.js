@@ -42,6 +42,8 @@ ContourVis.prototype.update = function(){
 
 	this.clear();
 
+	this.initHalo();
+
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
@@ -122,6 +124,53 @@ ContourVis.prototype.createLineFunc = function(pts){
 
 // }
 
+
+ContourVis.prototype.initHalo = function(){
+
+	var svg = this.map_svg;
+
+	var defs = svg.append("defs");
+
+	// create filter with id #drop-shadow
+	// height=130% so that the shadow is not clipped
+	var filter = defs.append("filter")
+	    .attr("id", "halo")
+	    .attr("x", "-50%")
+		.attr("y", "-50%")
+	    .attr("height", "200%")
+		.attr("width", "200%");
+
+	// SourceAlpha refers to opacity of graphic that this filter will be applied to
+	// convolve that with a Gaussian with standard deviation 3 and store result
+	// in blur
+	filter.append("feGaussianBlur")
+	    .attr("in", "SourceAlpha")
+	    .attr("stdDeviation", 5)
+	    .attr("result", "blur");
+
+	// translate output of Gaussian blur to the right and downwards with 2px
+	// store result in offsetBlur
+	filter.append("feOffset")
+	    .attr("in", "blur")
+	    .attr("dx", 0)
+	    .attr("dy", 0)
+	    .attr("result", "offsetBlur");
+		
+	// <feFlood flood-color="rgb(100, 100, 0)" result="color"/>
+	//filter.append("feFlood")
+	//    .attr("flood-color", "rgb(255, 0, 0)")
+	//    .attr("result", "color");
+		
+	// overlay original SourceGraphic over translated blurred opacity by using
+	// feMerge filter. Order of specifying inputs is important!
+	var feMerge = filter.append("feMerge");
+
+	feMerge.append("feMergeNode")
+	    .attr("in", "offsetBlur")
+	feMerge.append("feMergeNode")
+	    .attr("in", "SourceGraphic");
+}
+
 //use mask to exlude children hull area when rendering the current hull
 ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
 
@@ -141,6 +190,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 	var _stroke = contourColorStroke()(zoom);
 
+	/*******************************************create mask for children area*******************************************/
 	// create mask function:
 	var mask_id = 'lense_mask_' + id;
 	svg.append('defs')
@@ -245,7 +295,7 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	var svg = this.map_svg;
-	var lineWidth = 4;
+	var lineWidth = 6;
 
 	try{
 
@@ -274,15 +324,51 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		console.error(err);
 		//just draw regular line, do not add strip
 
-		// var defaultColor = "#2b8cbe";
-		var defaultColor = "#777";
+		var defaultColor = "#2b8cbe";
+		//var defaultColor = "#777";
+		var defaultWidth = 2;
 
-		svg.append("path")
-				.attr("class", "stripline_" + id + "_0")
-				.attr("d", lineFunc)
-		    	.attr("stroke", defaultColor)
-		    	.attr("stroke-width", lineWidth)
-		    	.attr("fill", "none");
+		if(ContourVis.enableHalo){
+
+			svg.append('defs')
+				.call(function (defs){
+
+			    defs.append('mask')
+			        .attr('id', 'halo_mask'+id)
+			        .call(function(mask){
+				          
+				        mask.append('rect')
+			          		.attr('width', svg.attr("width"))
+			  				.attr('height', svg.attr("height"))
+			  				.attr('x', 0)
+			  				.attr('y', 0)
+			  				.attr('fill', '#ffffff');
+						mask.append('path')
+							.attr("d", lineFunc)
+		            		.attr('fill', '#000000');
+			        
+			        });
+		    	});
+
+			svg.append("path")
+					.attr("class", "stripline_" + id + "_0")
+					.attr("d", lineFunc)
+			    	.attr("stroke", defaultColor)
+			    	.attr("stroke-width", defaultWidth)
+			    	.attr("fill", "white")
+			    	.style("filter", "url(#halo)")
+			    	.attr('mask', 'url(#halo_mask'+id+')')
+		}
+		else{
+
+			svg.append("path")
+					.attr("class", "stripline_" + id + "_0")
+					.attr("d", lineFunc)
+			    	.attr("stroke", defaultColor)
+			    	.attr("stroke-width", defaultWidth)
+			    	.attr("fill", "none");
+
+		}
 	}
 
 };
@@ -544,6 +630,7 @@ ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
+ContourVis.enableHalo = true;
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
