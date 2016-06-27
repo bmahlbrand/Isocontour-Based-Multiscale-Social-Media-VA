@@ -410,7 +410,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 	var svg = this.map_svg;
 	var unitLength = lineWidth;
 	var margin = 1;
-	var circleR = ( unitLength - margin*2 ) * 0.5;
+	var circleR = ( unitLength - margin*2 ) * 0.7;
 
 	//generate path;
 	var curPath = svg.append("path")
@@ -446,14 +446,17 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 		//val here is the index of the cateVol;
 		var pos = curPath.getPointAtLength(idx*unitLength);
 
-		svg.append("circle")
-			.attr('class', 'outlintpoint_'+id)
-			.attr('cx', pos.x)
-			.attr('cy', pos.y)
-			.attr('r', circleR)
-			// .attr('stroke', "#555")
-			// .attr('stroke-width', "1px")
-			.attr('fill', cateColor[val]);
+		if(ContourVis.inViewPort(pos.x, pos.y)){
+
+			svg.append("circle")
+				.attr('class', 'outlintpoint_'+id)
+				.attr('cx', pos.x)
+				.attr('cy', pos.y)
+				.attr('r', circleR)
+				.attr('stroke', "#aaa")
+				.attr('stroke-width', "1")
+				.attr('fill', cateColor[val]);
+		}
 	});
 
 }
@@ -695,3 +698,10 @@ ContourVis.prototype.createClusterSignaturePath = function(svg, pts){
 	return hull;
 
 };
+
+ContourVis.inViewPort = function(x,y){
+
+	if( 0 <= x && x <= ContourVis.DIMENSION && 0 <= y && y <= ContourVis.DIMENSION )
+		return true;
+	return false;
+}
