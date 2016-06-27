@@ -292,6 +292,41 @@ ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLin
 
 };
 
+ContourVis.prototype.drawHalo = function(id, lineFunc){
+
+	var svg = this.map_svg;
+
+	svg.append('defs')
+		.call(function (defs){
+
+	    defs.append('mask')
+	        .attr('id', 'halo_mask'+id)
+	        .call(function(mask){
+		          
+		        mask.append('rect')
+	          		.attr('width', svg.attr("width"))
+	  				.attr('height', svg.attr("height"))
+	  				.attr('x', 0)
+	  				.attr('y', 0)
+	  				.attr('fill', '#ffffff');
+				mask.append('path')
+					.attr("d", lineFunc)
+            		.attr('fill', '#000000');
+	        });
+    	});
+
+	svg.append("path")
+			.attr("class", "stripline_" + id + "_0")
+			.attr("d", lineFunc)
+	    	.attr("stroke", "#aaa")
+	    	.attr("stroke-width", 0)
+	    	.attr("fill", "white")
+	    	.style("filter", "url(#halo)")
+	    	.attr('mask', 'url(#halo_mask'+id+')')
+
+
+};
+
 ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	var svg = this.map_svg;
@@ -299,6 +334,11 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 
 	try{
 
+		//draw halo first;
+		if(ContourVis.enableHalo)
+			this.drawHalo(id, lineFunc);
+
+		//calculate category distribution;
 		if(cateVol.length <= 0)
 			throw "no cates selected";
 
@@ -312,12 +352,14 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
 
 		//up to this point, the cateVol has been normalized already;
+		//draw contour
 		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT)
 			throw "default contour";
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP)
 			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+
 
 	}catch(err){
 
@@ -328,47 +370,13 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		//var defaultColor = "#777";
 		var defaultWidth = 2;
 
-		if(ContourVis.enableHalo){
 
-			svg.append('defs')
-				.call(function (defs){
-
-			    defs.append('mask')
-			        .attr('id', 'halo_mask'+id)
-			        .call(function(mask){
-				          
-				        mask.append('rect')
-			          		.attr('width', svg.attr("width"))
-			  				.attr('height', svg.attr("height"))
-			  				.attr('x', 0)
-			  				.attr('y', 0)
-			  				.attr('fill', '#ffffff');
-						mask.append('path')
-							.attr("d", lineFunc)
-		            		.attr('fill', '#000000');
-			        
-			        });
-		    	});
-
-			svg.append("path")
-					.attr("class", "stripline_" + id + "_0")
-					.attr("d", lineFunc)
-			    	.attr("stroke", defaultColor)
-			    	.attr("stroke-width", defaultWidth)
-			    	.attr("fill", "white")
-			    	.style("filter", "url(#halo)")
-			    	.attr('mask', 'url(#halo_mask'+id+')')
-		}
-		else{
-
-			svg.append("path")
-					.attr("class", "stripline_" + id + "_0")
-					.attr("d", lineFunc)
-			    	.attr("stroke", defaultColor)
-			    	.attr("stroke-width", defaultWidth)
-			    	.attr("fill", "none");
-
-		}
+		svg.append("path")
+				.attr("class", "stripline_" + id + "_0")
+				.attr("d", lineFunc)
+		    	.attr("stroke", defaultColor)
+		    	.attr("stroke-width", defaultWidth)
+		    	.attr("fill", "none");
 	}
 
 };
