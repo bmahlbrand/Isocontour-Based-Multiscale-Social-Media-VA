@@ -16,15 +16,17 @@ DataCenter = function(){
 	this.tweets = {};
 	this.categories = [];
 
-	this.loadTweets();
-	this.loadClusters();
-
 	this.root = null;
 	this.filterRoot = null;
 	
 };
 
 DataCenter.prototype.init = function(){
+
+	//init database;
+	this.loadTweets();
+	this.loadClusters();
+
 	//init tree
 	this.root = this.initTree();
 
@@ -122,6 +124,20 @@ DataCenter.prototype.getTweetsByIds = function(ids){
 
 	return rst;
 };
+
+DataCenter.prototype.getKeywordsFreq = function(ids){
+
+	var that = this;
+	var rst = [];
+
+	ids.forEach(function(id){
+		if(that.tweets[id] !== null )
+			rst = rst.concat( Object.keys(that.tweets[id].tokens) );
+	});
+
+	return _.countBy(rst);
+
+}
 
 //distribution of categories;
 DataCenter.prototype.distOfCate = function(tweets){
@@ -226,6 +242,10 @@ DataCenter.prototype.loadClusters = function(){
 			//since we disabled to simplifying polygon feature in the server side, we do not have multiple polygons for a simple cluster.
 			//hence, the length of cluster['hullIds'] is guaranteed to be 1
 			cluster['hullIds'] = cluster['hullIds'][0] || [];
+
+			cluster['keywordsFreq'] = DataCenter.instance().getKeywordsFreq(cluster['ids']);
+
+
 
 		});
 	});
