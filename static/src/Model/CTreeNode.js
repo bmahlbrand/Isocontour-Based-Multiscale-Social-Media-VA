@@ -165,7 +165,7 @@ CTreeNode.prototype.filterNodesForMinOlp = function(flag){
 
 	if(flag === undefined){
 
-		var rst = ContourVis.filterHullForMinOlp(this.cluster['hulls']);
+		var rst = ContourVis.hullInViewport(this.cluster['hulls']);
 
 		this.cluster['minOlpFlag'] = rst[0];
 
@@ -231,7 +231,7 @@ CTreeNode.prototype.minOlp = function(){
 
 CTreeNode.prototype.filterNodesForVis = function(){
 
-	this.cluster['visFlag'] = ContourVis.filterHullForVis(this.cluster['hulls'], this.cluster['minOlpFlag']);
+	this.cluster['visFlag'] = ContourVis.hullOverlapViewport(this.cluster['hulls'], this.cluster['minOlpFlag']);
 
 	this.children.forEach(function(val){
 		val.filterNodesForVis();
@@ -263,7 +263,7 @@ CTreeNode.prototype.drawContour = function(acNodes){
 		}
 	});
 
-	$('[ng-controller="map_controller"]').scope().getCV().drawConcaveHull(id, zoom, currLineFunc, childsLineFuncArr);
+	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr);
 
 	this.children.forEach(function(val){
 		val.drawContour(acNodes);
