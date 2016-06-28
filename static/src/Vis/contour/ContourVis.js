@@ -33,7 +33,6 @@ ContourVis.prototype.updateGeoBbox = function(){
 	//acNode list;
 	$('[ng-controller="app_controller"]').scope().setAcNodes(activeNodes);
 
-
 };
 
 ContourVis.prototype.update = function(){
@@ -359,6 +358,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT)
+			this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 
 
 	}catch(err){
@@ -465,7 +466,31 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 				.attr('stroke-width', "1")
 				.attr('fill', cateColor[val]);
 		}
+
 	});
+
+}
+
+//[in progress]
+ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+
+	var svg = this.map_svg;
+	
+	//generate path;
+	var curPath = svg.append("path")
+					// .attr("class", "stripline_" + id + "_" + idx)
+					.attr("id", "pathfortext"+id)
+					.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	svg.append("text")
+	    .attr("x", 0)
+	    .attr("dy", 10)
+	  .append("textPath")
+	    .attr("class", "textpath")
+	    .attr("xlink:href", "#"+"pathfortext"+id)
+	    .text("Hello, curved textPath!");
 
 }
 
@@ -639,7 +664,7 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
-ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2 }
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
