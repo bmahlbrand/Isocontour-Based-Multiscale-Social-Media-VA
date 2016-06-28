@@ -170,8 +170,9 @@ ContourVis.prototype.initHalo = function(){
 	    .attr("in", "SourceGraphic");
 }
 
-//use mask to exlude children hull area when rendering the current hull
-ContourVis.prototype.drawConcaveHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
+//use mask to exlude children hull area when rendering the current hull;
+//only draw hulls which ['visFlag'] == true;
+ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
 
 	var that = this;
 	var svg = this.map_svg;
@@ -315,7 +316,7 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
     	});
 
 	svg.append("path")
-			.attr("class", "stripline_" + id + "_0")
+			.attr("class", "haloline_" + id + "_0")
 			.attr("d", lineFunc)
 	    	.attr("stroke", "#aaa")
 	    	.attr("stroke-width", 0)
@@ -341,12 +342,14 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		if(cateVol.length <= 0)
 			throw "no cates selected";
 
-		var nonZeroArr = cateVol.filter(function(val){ return val > 0 ? true : false; });
+		//remove 0 entry;
+		cateColor = cateColor.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
+		cateVol = cateVol.filter(function(val){ return val > 0 ? true : false; });
 
-		if(nonZeroArr.length <= 0)
+		if(cateVol.length <= 0)
 			throw "no non-zero data for the selected cates;";
 
-		var min = nonZeroArr.min();
+		var min = cateVol.min();
 		//normalize the array based on the non-zero min value;
 		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
 
@@ -371,9 +374,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		//var defaultColor = "#777";
 		var defaultWidth = 2;
 
-
 		svg.append("path")
-				.attr("class", "stripline_" + id + "_0")
+				.attr("class", "nativeline_" + id + "_0")
 				.attr("d", lineFunc)
 		    	.attr("stroke", defaultColor)
 		    	.attr("stroke-width", defaultWidth)
@@ -439,7 +441,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 	var curIdx = 0;
 	var renderArr = [];
 
-	for(var i=0;i<numOfCircle; i++){
+	for(var i=0; i<numOfCircle; i++){
 
 		if(localCount>= cateVol[curIdx]){
 			localCount = 0;
@@ -484,22 +486,83 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 			    	.attr("stroke", "none")
 			    	.attr("fill", "none");
 
-	svg.append("text")
-	    .attr("x", 0)
-	    .attr("dy", 10)
-	  .append("textPath")
-	    .attr("class", "textpath")
-	    .attr("xlink:href", "#"+"pathfortext"+id)
-	    .text("Hello, curved textPath!");
+	curPath = curPath[0][0];
+
+	var step = 5;
+	var segs = Math.floor(curPath.getTotalLength() / step);
+
+	//discrete path into a series of points;
+	var pts = [];
+	for(var i=0; i<segs; i++){
+		var pos = curPath.getPointAtLength(i*step);
+		pts.push([pos.x, pos.y]);
+	}
+
+	//direction array;
+	var flags = [];
+	for(var i=0; i<segs; i++){
+		var flag = pts[(i+1)%segs][0] - pts[i][0] > 1;
+		flags.push(flag);
+	}
+
+	//extract subpath that have the same direction;
+	var subpaths = [];
+	var subpathDir = [];
+	var start = 0;
+	for(var i=1; i<segs; i++){
+		
+		//dir of current point and next point;
+		var dir = flags[i];
+		var preDir = flags[(i-1+segs)%segs];
+
+		if(dir != preDir || i == segs-1){
+			subpaths.push([start, i]);
+			subpathDir.push(preDir);
+			start = i;
+		}
+	}
+
+	//connect tail to head;
+	if( flags[0] == flags[segs-1] ){
+		var end = subpaths.pop();
+		subpaths[0][0] = end[0];
+		subpathDir.pop();
+	}
+
+	subpaths.forEach(function(val, i){
+
+		var subarray = val[0] < val[1] ? pts.slice(val[0], val[1]) : pts.slice(val[1], pts.length).concat(pts.slice(0, val[0]));
+		
+		var lineFunc = d3.svg.line()
+							.x(function(d) { return d[0]; })
+							.y(function(d) { return d[1]; })
+							.interpolate("cardinal");
+
+		var curPath = svg.append("path")
+						.attr("d", lineFunc(subarray))
+				    	.attr("stroke", subpathDir[i] == true ? '#a00' : "#00a" )
+				    	.attr("stroke-width", 2)
+				    	.attr("fill", "none");
+	});
+
+	// svg.append("text")
+	//     .attr("x", 0)
+	//     .attr("dy", 0)
+	//     .style("font-size", "14px")
+	// 	.style("text-anchor", "middle")
+	//   .append("textPath")
+	//     .attr("class", "textpath")
+	//     .attr("xlink:href", "#"+"pathfortext"+id)
+	//     .text("Hello, curved textPath!");
 
 }
 
-// the difference between filterHullForMinOlp(O) and filterHullForVis(V) is:
+// the difference between hullInViewport(O) and hullOverlapViewport(V) is:
 // O require that part of the poly should be inside the viewport
 // V require that the poly should overlap with the viewport rectangle
 // O's requirement is stronger
 //return value [0]: is valid or not; [1]: hull coords: [2]:whether force extended;
-ContourVis.filterHullForMinOlp = function(hull){
+ContourVis.hullInViewport = function(hull){
 
 	//no points;
 	if(hull.length <= 0)
@@ -555,7 +618,7 @@ ContourVis.extendHull = function(hull){
 
 };
 
-ContourVis.filterHullForVis = function(hull, flagForMinOlp){
+ContourVis.hullOverlapViewport = function(hull, flagForMinOlp){
 
 	//not valid hull
 	if(hull.length < 6)
