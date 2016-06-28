@@ -67,7 +67,14 @@ HullLayout.samplePath = function(pathNode) {
 		sampledPts.push(pt.y);
 	}
 
-	return sampledPts;
+	//reverse the array to change counter-clock-wise to clock-wise;
+	reversed = [];
+	for(var i=0; i<sampledPts.length/2; i++){
+		reversed.unshift(sampledPts[2*i+1]);
+		reversed.unshift(sampledPts[2*i]);
+	}
+
+	return reversed;
 };
 
 HullLayout.pointAlongPath = function(path, t) {
