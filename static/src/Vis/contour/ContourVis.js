@@ -501,7 +501,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 	//direction array;
 	var flags = [];
 	for(var i=0; i<segs; i++){
-		var flag = pts[(i+1)%segs][0] - pts[i][0] > 1;
+		var flag = pts[(i+1)%segs][0] - pts[i][0] > 0.5;
 		flags.push(flag);
 	}
 
@@ -515,10 +515,21 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		var dir = flags[i];
 		var preDir = flags[(i-1+segs)%segs];
 
-		if(dir != preDir || i == segs-1){
+		if(dir != preDir){
 			subpaths.push([start, i]);
 			subpathDir.push(preDir);
 			start = i;
+		}
+		if(i == segs-1){
+			//handle the case where the last element is different from the last but one;
+			if(dir != preDir){
+				subpaths.push([i-1, i]);
+				subpathDir.push(dir);
+			}
+			else{
+				subpaths.push([start, i]);
+				subpathDir.push(dir);
+			}
 		}
 	}
 
@@ -531,7 +542,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 	subpaths.forEach(function(val, i){
 
-		var subarray = val[0] < val[1] ? pts.slice(val[0], val[1]) : pts.slice(val[1], pts.length).concat(pts.slice(0, val[0]));
+		var subarray = val[0] < val[1] ? pts.slice(val[0], val[1]) : pts.slice(val[0], pts.length).concat(pts.slice(0, val[1]));
 		
 		var lineFunc = d3.svg.line()
 							.x(function(d) { return d[0]; })
@@ -539,21 +550,27 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 							.interpolate("cardinal");
 
 		var curPath = svg.append("path")
+						.attr("id", "textline_"+id+"_"+i)
 						.attr("d", lineFunc(subarray))
 				    	.attr("stroke", subpathDir[i] == true ? '#a00' : "#00a" )
-				    	.attr("stroke-width", 2)
-				    	.attr("fill", "none");
-	});
+				    	//.attr("stroke", "none")
+				    	.attr("stroke-width", 3)
+				    	.attr("fill", "none")
+				    	.style("stroke-dasharray", ("3, 2"));
+		
+		// svg.append("text")
+		// 	.attr("id", "text_"+id+"_"+i)
+		//     .attr("x", 0)
+		//     .attr("dy", 0)
+		//     .style("font-size", "14px")
+		// 	.style("text-anchor", "middle")
+		//   .append("textPath")
+		//     .attr("class", "textpath")
+		//     .attr("xlink:href", "#"+"textline_"+id+"_"+i)
+		//     .text("Hello");
 
-	// svg.append("text")
-	//     .attr("x", 0)
-	//     .attr("dy", 0)
-	//     .style("font-size", "14px")
-	// 	.style("text-anchor", "middle")
-	//   .append("textPath")
-	//     .attr("class", "textpath")
-	//     .attr("xlink:href", "#"+"pathfortext"+id)
-	//     .text("Hello, curved textPath!");
+
+	});
 
 }
 
