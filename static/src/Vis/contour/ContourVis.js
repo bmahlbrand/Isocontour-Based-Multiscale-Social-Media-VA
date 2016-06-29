@@ -619,20 +619,27 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		//http://bl.ocks.org/eweitnauer/7325338
 
 		var pathLen = curPath[0][0].getTotalLength();
+		var fontSize = 14;
+		var letterW = fontSize*0.5;
+		
+
 		var str = "hello*";
+		//generate string of enough length for textpath;
+		var repeat = Math.ceil(pathLen / (str.length*letterW));
+		str = str.repeat(repeat);
 
 		svg.append("text")
 			.attr("id", "text_"+id+"_"+i)
 		    .attr("x", 0)
 		    .attr("dy", 0)
-		    .style("font-size", "14px")
+		    .style("font-size", fontSize+"px")
 		    .style("font-family", "consolas")
 		    .attr("dominant-baseline", baseline)
 			// .style("text-anchor", "middle")
 		  .append("textPath")
 		    .attr("class", "textpath")
 		    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
-		    .text(str.repeat(100));
+		    .text(str);
 
 	});
 
