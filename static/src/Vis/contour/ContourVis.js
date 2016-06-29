@@ -491,21 +491,21 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 	var step = 5;
 	var segs = Math.floor(curPath.getTotalLength() / step);
 
-	//discrete path into a series of points;
+	/*******************************discrete path into a series of points************************************/
 	var pts = [];
 	for(var i=0; i<segs; i++){
 		var pos = curPath.getPointAtLength(i*step);
 		pts.push([pos.x, pos.y]);
 	}
 
-	//direction array;
+	/**********************************construct directionay flag array****************************************/
 	var flags = [];
 	for(var i=0; i<segs; i++){
 		var flag = pts[(i+1)%segs][0] - pts[i][0] > 0.5;
 		flags.push(flag);
 	}
 
-	//extract subpath that have the same direction;
+	/***********************extract subpath that have the same direction************************************/
 	var subpaths = [];
 	var subpathDir = [];
 	var start = 0;
@@ -533,17 +533,71 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		}
 	}
 
-	//connect tail to head;
+	/***************************************connect tail to head*******************************************/
 	if( flags[0] == flags[segs-1] ){
 		var end = subpaths.pop();
 		subpaths[0][0] = end[0];
 		subpathDir.pop();
 	}
 
+
+	/**************************************remove small segments*******************************************/
+	var iter = 10;
+	var smallLen = 10;
+	var maxFac = 5;
+	for(var i=0; i<iter; i++){
+
+		var j;
+		for(j=0; j<subpaths.length; j++){
+			var length = subpaths[j][0] < subpaths[j][1] ? 
+							subpaths[j][1] - subpaths[j][0] : 
+							(pts.length-subpaths[j][0])+subpaths[j][1];
+			
+			if(length < smallLen){
+
+				var left = (j-1+subpaths.length)%subpaths.length;
+				var right = (j+1+subpaths.length)%subpaths.length;
+
+				var leftLen = subpaths[left][0] < subpaths[left][1] ? 
+								subpaths[left][1] - subpaths[left][0] : 
+								(pts.length-subpaths[left][0])+subpaths[left][1];
+
+				var rightLen = subpaths[right][0] < subpaths[right][1] ? 
+								subpaths[right][1] - subpaths[right][0] : 
+								(pts.length-subpaths[right][0])+subpaths[right][1];
+				
+				var mLen = Math.max(leftLen, rightLen);
+
+				if( subpathDir[left] == subpathDir[right] && subpathDir[left] != subpathDir[j] && mLen > length*maxFac ){
+					var leftIdx = subpaths[left][0];
+					var rightIdx = subpaths[right][1];
+					
+					//actual remove;
+					subpaths[left][1] = rightIdx;
+					subpathDir.splice(j, 2);
+					subpaths.splice(j, 2);
+				}
+
+				break;
+			}
+		}
+		if(j>=subpaths.length)
+			break;
+	}
+	/**********************************************render text line****************************************/
+
 	subpaths.forEach(function(val, i){
 
 		var subarray = val[0] < val[1] ? pts.slice(val[0], val[1]) : pts.slice(val[0], pts.length).concat(pts.slice(0, val[1]));
 		
+		//if the array is too short, then do not render text;
+		if(subarray.length <= 5)
+			return;
+
+		//reverse the path that goes left direction
+		if(subpathDir[i] == false)
+			subarray.reverse();
+
 		var lineFunc = d3.svg.line()
 							.x(function(d) { return d[0]; })
 							.y(function(d) { return d[1]; })
@@ -552,23 +606,33 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		var curPath = svg.append("path")
 						.attr("id", "textline_"+id+"_"+i)
 						.attr("d", lineFunc(subarray))
-				    	.attr("stroke", subpathDir[i] == true ? '#a00' : "#00a" )
-				    	//.attr("stroke", "none")
+				    	//.attr("stroke", subpathDir[i] == true ? '#a00' : "#00a" )
+				    	.attr("stroke", "none")
 				    	.attr("stroke-width", 3)
-				    	.attr("fill", "none")
-				    	.style("stroke-dasharray", ("3, 2"));
+				    	.attr("fill", "none");
 		
-		// svg.append("text")
-		// 	.attr("id", "text_"+id+"_"+i)
-		//     .attr("x", 0)
-		//     .attr("dy", 0)
-		//     .style("font-size", "14px")
-		// 	.style("text-anchor", "middle")
-		//   .append("textPath")
-		//     .attr("class", "textpath")
-		//     .attr("xlink:href", "#"+"textline_"+id+"_"+i)
-		//     .text("Hello");
+		/*******************************************draw text*******************************************/
 
+		var baseline = subpathDir[i] == true ? 'text-after-edge' : 'text-before-edge';
+		var baseline = 'central';
+		//how to align vertically the text along a textpath;
+		//http://bl.ocks.org/eweitnauer/7325338
+
+		var pathLen = curPath[0][0].getTotalLength();
+		var str = "hello*";
+
+		svg.append("text")
+			.attr("id", "text_"+id+"_"+i)
+		    .attr("x", 0)
+		    .attr("dy", 0)
+		    .style("font-size", "14px")
+		    .style("font-family", "consolas")
+		    .attr("dominant-baseline", baseline)
+			// .style("text-anchor", "middle")
+		  .append("textPath")
+		    .attr("class", "textpath")
+		    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
+		    .text(str.repeat(100));
 
 	});
 
