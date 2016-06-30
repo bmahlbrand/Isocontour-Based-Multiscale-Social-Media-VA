@@ -121,6 +121,18 @@ CTreeNode.prototype.getVol = function(){
 	return this.cluster.ids.length;
 };
 
+/*****************************************************************************/
+/*************************** Semantic/topic operation*************************/
+/*****************************************************************************/
+CTreeNode.prototype.getKeywords = function(topK){
+	var keywords = this.cluster['keywordsFreq'];
+	var sorted = Object.keys(keywords).sort(function(a,b){return keywords[b]-keywords[a]; });
+	return sorted.length >= topK ? sorted.slice(0, topK) : sorted;
+};
+
+
+
+
 /*****************************************************************************************/
 /************************   Contour  Vis  Component    ***********************************/
 /*****************************************************************************************/
