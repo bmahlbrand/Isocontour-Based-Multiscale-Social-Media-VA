@@ -539,8 +539,6 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		subpaths[0][0] = end[0];
 		subpathDir.pop();
 	}
-
-
 	/**************************************remove small segments*******************************************/
 	var iter = 10;
 	var smallLen = 10;
@@ -574,8 +572,19 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 					
 					//actual remove;
 					subpaths[left][1] = rightIdx;
-					subpathDir.splice(j, 2);
-					subpaths.splice(j, 2);
+
+					if(j == subpaths.length-1){
+						//remove the last and next(which is the head)
+						subpathDir.splice(j, 1);
+						subpaths.splice(j, 1);
+						subpathDir.splice(0, 1);
+						subpaths.splice(0, 1);
+
+					}else{
+						//remove the consecutive two elements;
+						subpathDir.splice(j, 2);
+						subpaths.splice(j, 2);
+					}
 				}
 
 				break;
@@ -598,6 +607,17 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		if(subpathDir[i] == false)
 			subarray.reverse();
 
+		//test subpath in viewport
+		// var i;
+		// for(i=0; i<subarray.length; i++){
+		// 	if(ContourVis.inViewPort(subarray[i][0], subarray[i][1]))
+		// 		break;
+		// }
+		// //not in viewport
+		// if(i >= subarray.length)
+		// 	return;
+
+
 		var lineFunc = d3.svg.line()
 							.x(function(d) { return d[0]; })
 							.y(function(d) { return d[1]; })
@@ -609,6 +629,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 				    	//.attr("stroke", subpathDir[i] == true ? '#a00' : "#00a" )
 				    	.attr("stroke", "none")
 				    	.attr("stroke-width", 3)
+				    	.attr("stroke-opacity", 0.5)
 				    	.attr("fill", "none");
 		
 		/*******************************************draw text*******************************************/
@@ -622,11 +643,13 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		var fontSize = 14;
 		var letterW = fontSize*0.5;
 		
+		//get keywords from the tree node;
+		var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(10);
+		var str = keywords.join("*");
 
-		var str = "hello*";
 		//generate string of enough length for textpath;
 		var repeat = Math.ceil(pathLen / (str.length*letterW));
-		str = str.repeat(repeat);
+		str = Array(repeat).fill(str).join("*");
 
 		svg.append("text")
 			.attr("id", "text_"+id+"_"+i)
@@ -635,7 +658,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		    .style("font-size", fontSize+"px")
 		    .style("font-family", "consolas")
 		    .attr("dominant-baseline", baseline)
-			// .style("text-anchor", "middle")
+			.style("fill", "#f00")
 		  .append("textPath")
 		    .attr("class", "textpath")
 		    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
