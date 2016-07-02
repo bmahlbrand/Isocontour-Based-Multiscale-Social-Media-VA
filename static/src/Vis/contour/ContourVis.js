@@ -48,7 +48,7 @@ ContourVis.prototype.update = function(){
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
 	//showing all levels;
-	var levelForFilter = 20;
+	var levelForFilter = 11;
 
 	acNodes = acNodes.filter(function(id){
 
@@ -632,7 +632,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 				    	.attr("stroke-opacity", 0.5)
 				    	.attr("fill", "none");
 		
-		/*******************************************draw text*******************************************/
+		/***************************************construct text string***********************************/
 
 		var baseline = subpathDir[i] == true ? 'text-after-edge' : 'text-before-edge';
 		var baseline = 'central';
@@ -641,7 +641,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 		var pathLen = curPath[0][0].getTotalLength();
 		var fontSize = 14;
-		var letterW = fontSize*0.5;
+		var letterW = fontSize*0.49;
 		
 		//get keywords from the tree node;
 		var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(10);
@@ -649,7 +649,49 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 		//generate string of enough length for textpath;
 		var repeat = Math.ceil(pathLen / (str.length*letterW));
-		str = Array(repeat).fill(str).join("*");
+		var entireStr = Array(repeat).fill(str).join("*");
+		var words = entireStr.split("*");
+
+		//linear gradient won't work.
+		//we need to find the gradient along the path/stroke
+		/*********************************************construct color gradient******************************/
+		// var gradient = svg.append("defs")
+		// 				  .append("linearGradient")
+		// 				    .attr("id", "textgradient_"+id)
+		// 				    .attr("gradientUnits", "userSpaceOnUse");
+		// 				    // .attr("x1", "0%")
+		// 				    // .attr("x2", "100%");
+
+		// // var percentPerLetter = 100.0 / entireStr.length;
+		// var percentPerLetter = letterW / pathLen * 100;
+
+		// var offsetColor = [];
+		// var start = 0;
+
+		// words.forEach(function(val){
+
+		// 	offsetColor.push({offset:start, color:"#f00"});
+		// 	offsetColor.push({offset:start+val.length*percentPerLetter, color:"#f00"});
+		// 	start += val.length*percentPerLetter;
+
+		// 	offsetColor.push({offset:start, color:"#0f0"});
+		// 	offsetColor.push({offset:start+percentPerLetter, color:"#0f0"});
+		// 	start += percentPerLetter;
+
+		// });
+
+		// offsetColor.pop();
+		// offsetColor.pop();
+
+		// offsetColor.forEach(function(val){
+		// 	gradient.append("stop")
+		// 	    .attr("offset", val.offset+"%")
+		// 	    .attr("stop-color", val.color)
+		// 	    .attr("stop-opacity", 1);
+		// });
+
+		/********************************************draw text string***************************************/
+
 
 		svg.append("text")
 			.attr("id", "text_"+id+"_"+i)
@@ -658,11 +700,11 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		    .style("font-size", fontSize+"px")
 		    .style("font-family", "consolas")
 		    .attr("dominant-baseline", baseline)
-			.style("fill", "#f00")
+			//.style("fill", "url(#textgradient_"+id+")")
 		  .append("textPath")
 		    .attr("class", "textpath")
 		    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
-		    .text(str);
+		    .text(entireStr);
 
 	});
 
