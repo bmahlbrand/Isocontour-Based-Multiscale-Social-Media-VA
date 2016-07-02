@@ -48,7 +48,7 @@ ContourVis.prototype.update = function(){
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
 	//showing all levels;
-	var levelForFilter = 11;
+	var levelForFilter = 20;
 
 	acNodes = acNodes.filter(function(id){
 
@@ -288,7 +288,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
 	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-	this.drawOutLine(id, curLineFunc, cateVol, cateColor);
+	this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor);
 
 };
 
@@ -327,7 +327,7 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 };
 
-ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
+ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol, cateColor){
 
 	var svg = this.map_svg;
 	var lineWidth = 6;
@@ -343,6 +343,7 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 			throw "no cates selected";
 
 		//remove 0 entry;
+		selectedCate = selectedCate.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
 		cateColor = cateColor.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
 		cateVol = cateVol.filter(function(val){ return val > 0 ? true : false; });
 
@@ -362,7 +363,7 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, cateVol, cateColor){
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT)
-			this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+			this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
 
 
 	}catch(err){
@@ -474,7 +475,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 }
 
 //[in progress]
-ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
 	var svg = this.map_svg;
 	
@@ -641,16 +642,17 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 		var pathLen = curPath[0][0].getTotalLength();
 		var fontSize = 14;
-		var letterW = fontSize*0.49;
+		var letterW = fontSize*0.55;
 		
 		//get keywords from the tree node;
-		var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(10);
+		var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
 		var str = keywords.join("*");
 
 		//generate string of enough length for textpath;
 		var repeat = Math.ceil(pathLen / (str.length*letterW));
 		var entireStr = Array(repeat).fill(str).join("*");
-		var words = entireStr.split("*");
+		//split by *, but keep * in the array;
+		var words = entireStr.split(/(\*)/g);
 
 		//linear gradient won't work.
 		//we need to find the gradient along the path/stroke
@@ -689,22 +691,57 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		// 	    .attr("stop-color", val.color)
 		// 	    .attr("stop-opacity", 1);
 		// });
+		/**********************************calculate startoffset for each word******************************/
+		//add an extra delimiter in the end of words depending on the directionality of line;
+		if(subpathDir[i])
+			words.unshift("*");
+
+		var startOffs = [];
+		var start = 0;
+		var spaceBetWords = 2;
+		for(var j=0; j<words.length; j++){
+			startOffs.push({word:words[j], start:start});
+			start = start + words[j].length*letterW;
+			if(start >= pathLen)
+				break;
+		}
+
+		//add an extra delimiter in the end of words depending on the directionality of line;
+		if(!subpathDir[i])
+			startOffs.push({word:"*", start:start});
+		
 
 		/********************************************draw text string***************************************/
 
+		startOffs.forEach(function(val, j){
 
-		svg.append("text")
-			.attr("id", "text_"+id+"_"+i)
-		    .attr("x", 0)
-		    .attr("dy", 0)
-		    .style("font-size", fontSize+"px")
-		    .style("font-family", "consolas")
-		    .attr("dominant-baseline", baseline)
-			//.style("fill", "url(#textgradient_"+id+")")
-		  .append("textPath")
-		    .attr("class", "textpath")
-		    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
-		    .text(entireStr);
+			var c;
+			if(val.word == "*")
+				c = "#000";
+			else{
+				var tCates = Object.keys(DataCenter.instance().keywordCate[val.word]);
+				var inter = intersect_arrays(selectedCate, tCates);
+				if(inter.length > 0)
+					c = cateColor[selectedCate.indexOf(inter[0])];
+				else
+					c = "#555";
+			}
+
+
+			svg.append("text")
+				.attr("id", "text_"+id+"_"+i+"_"+j)
+			    .attr("x", 0)
+			    .attr("dy", 0)
+			    .style("font-size", fontSize+"px")
+			    .style("font-family", "consolas")
+			    .attr("dominant-baseline", baseline)
+				.style("fill", c)
+			  .append("textPath")
+			    .attr("class", "textpath")
+			    .attr("startOffset", val.start+"px")
+			    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
+			    .text(val.word);
+		});
 
 	});
 
