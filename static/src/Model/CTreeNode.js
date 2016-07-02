@@ -124,14 +124,17 @@ CTreeNode.prototype.getVol = function(){
 /*****************************************************************************/
 /*************************** Semantic/topic operation*************************/
 /*****************************************************************************/
-CTreeNode.prototype.getKeywords = function(topK){
+CTreeNode.prototype.getKeywords = function(cates, topK){
 	var keywords = this.cluster['keywordsFreq'];
-	var sorted = Object.keys(keywords).sort(function(a,b){return keywords[b]-keywords[a]; });
+	var sorted = Object.keys(keywords)
+						.filter(function(val){
+							var tCates = Object.keys(DataCenter.instance().keywordCate[val]);
+							var inter = intersect_arrays(cates, tCates);
+							return inter.length>0?true:false;
+						})
+						.sort(function(a,b){return keywords[b]-keywords[a]; });
 	return sorted.length >= topK ? sorted.slice(0, topK) : sorted;
 };
-
-
-
 
 /*****************************************************************************************/
 /************************   Contour  Vis  Component    ***********************************/
