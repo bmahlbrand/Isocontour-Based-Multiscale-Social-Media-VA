@@ -15,6 +15,7 @@ DataCenter = function(){
 	// tweet dictionary, key: tweet id
 	this.tweets = {};
 	this.categories = [];
+	this.keywordCate = {};
 
 	this.root = null;
 	this.filterRoot = null;
@@ -201,8 +202,21 @@ DataCenter.prototype.loadTweets = function(){
 			//initialize global category array;
 			that.categories = union_arrays(that.categories, entry.cate);
 			that.categories.sort();
+			//end
 			
 			tweets[entry.tweet_id] = t;
+
+			//initialize global keywordCate;
+			for(var word in entry.tokens){
+				if(that.keywordCate[word] == null)
+					that.keywordCate[word] = {};
+
+				var cates = entry.tokens[word];
+				cates.forEach(function(val){
+					that.keywordCate[word][val] = true;
+				});
+			}
+			//end
 
 		});
 
