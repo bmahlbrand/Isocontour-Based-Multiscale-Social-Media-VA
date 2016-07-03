@@ -278,7 +278,9 @@ CTreeNode.prototype.drawContour = function(acNodes){
 		}
 	});
 
-	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr);
+	var isChild = childsLineFuncArr.length > 0 ? false : true;
+
+	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr, isChild);
 
 	this.children.forEach(function(val){
 		val.drawContour(acNodes);
