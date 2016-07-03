@@ -172,7 +172,7 @@ ContourVis.prototype.initHalo = function(){
 
 //use mask to exlude children hull area when rendering the current hull;
 //only draw hulls which ['visFlag'] == true;
-ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr){
+ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr, isChild){
 
 	var that = this;
 	var svg = this.map_svg;
@@ -288,7 +288,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
 	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-	this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor);
+	this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor, isChild);
 
 };
 
@@ -327,7 +327,7 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 };
 
-ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol, cateColor){
+ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol, cateColor, isChild){
 
 	var svg = this.map_svg;
 	var lineWidth = 6;
@@ -340,7 +340,7 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 		//calculate category distribution;
 		if(cateVol.length <= 0)
-			throw "no cates selected";
+			throw "error code [1]; no cates selected";
 
 		//remove 0 entry;
 		selectedCate = selectedCate.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
@@ -348,7 +348,7 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 		cateVol = cateVol.filter(function(val){ return val > 0 ? true : false; });
 
 		if(cateVol.length <= 0)
-			throw "no non-zero data for the selected cates;";
+			throw "error code [2]; no non-zero data for the selected cates;";
 
 		var min = cateVol.min();
 		//normalize the array based on the non-zero min value;
@@ -357,13 +357,19 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 		//up to this point, the cateVol has been normalized already;
 		//draw contour
 		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT)
-			throw "default contour";
+			throw "error code [3]; default contour";
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP)
 			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT)
 			this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT_FILL){
+			if(!isChild)
+				this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+			else
+				this.drawTextArea(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+		}
 
 
 	}catch(err){
@@ -372,13 +378,15 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 		//just draw regular line, do not add strip
 
 		var defaultColor = "#2b8cbe";
-		//var defaultColor = "#777";
+		var grey = "#777";
+
+		var color = err.indexOf("[3]") > -1 ? defaultColor : grey;
 		var defaultWidth = 2;
 
 		svg.append("path")
 				.attr("class", "nativeline_" + id + "_0")
 				.attr("d", lineFunc)
-		    	.attr("stroke", defaultColor)
+		    	.attr("stroke", color)
 		    	.attr("stroke-width", defaultWidth)
 		    	.attr("fill", "none");
 	}
@@ -474,7 +482,6 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 
 }
 
-//[in progress]
 ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
 	var svg = this.map_svg;
@@ -727,7 +734,6 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 					c = "#555";
 			}
 
-
 			svg.append("text")
 				.attr("id", "text_"+id+"_"+i+"_"+j)
 			    .attr("x", 0)
@@ -744,6 +750,130 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		});
 
 	});
+
+}
+
+ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
+
+	var svg = this.map_svg;
+	
+	//generate path;
+	var curPath = svg.append("path")
+					// .attr("class", "stripline_" + id + "_" + idx)
+					.attr("id", "pathfortext"+id)
+					.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	curPath = curPath[0][0];
+
+	var step = 5;
+	var segs = Math.floor(curPath.getTotalLength() / step);
+
+	/*******************************discrete path into a series of points************************************/
+	var pts = [];
+	for(var i=0; i<segs; i++){
+		var pos = curPath.getPointAtLength(i*step);
+		pts.push([pos.x, pos.y]);
+	}
+
+	/*****************************************get bounding box************************************************/
+	var aabb = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts));
+	
+	// var aabbVis = svg.append("rect")
+	//                    .attr("x", aabb.x)
+	//                    .attr("y", aabb.y)
+	//                    .attr("width", aabb.width)
+	//                    .attr("height", aabb.height)
+	//                    .attr("fill", "green");
+
+	var fontSize = 14;
+	//the scale factor is set differently for text line vs area filling according to the experiment
+	var letterW = fontSize*0.49;
+	
+	//get keywords from the tree node;
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
+	var str = keywords.join("*");
+
+
+	//generate string of enough length for textpath;
+	var repeat = Math.ceil(aabb.width / (str.length*letterW));
+	var entireStr = Array(repeat).fill(str).join("*");
+
+	/***********************************************fill rect with text****************************************/
+
+	var clip = svg.append("clipPath")
+					.attr("id", "textclip_"+id)
+				  .append("path")
+				  	.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	//sequential layout of text with fixed length offset;
+	//render using the same color;
+	// for(var i=0; i<Math.ceil(aabb.height/fontSize); i++){
+
+	// 	var xShiftText = Math.floor(aabb.width / Math.ceil(aabb.height/fontSize) * i / letterW);
+
+	// 	var y = aabb.y + i*fontSize;
+	// 	svg.append("text")
+	// 		.attr("x", aabb.x)
+	// 		.attr("y", y)
+	// 		.attr("font-size", fontSize+"px")
+	// 		.attr("font-family", "consolas")
+	// 		.attr("alignment-baseline", "hanging")
+	// 		.attr("clip-path", "url(#textclip_" +id+ ")")
+	// 		.text(entireStr.substr(xShiftText) + entireStr.substr(0, xShiftText));
+	// }
+
+	//render individual text;
+	for(var i=0; i<Math.ceil(aabb.height/fontSize); i++){
+
+		var dy = i*fontSize;
+		var dx = 0;
+		var idx = 0;
+			
+		var words = entireStr.split(/(\*)/g);
+
+		do{
+			//get word
+			var word = words[idx];
+
+			//get color;
+			var c;
+			if(word == "*")
+				c = "#000";
+			else{
+				var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
+				var inter = intersect_arrays(selectedCate, tCates);
+				if(inter.length > 0)
+					c = cateColor[selectedCate.indexOf(inter[0])];
+				else
+					c = "#555";
+			}
+
+			//render text;
+			svg.append("text")
+				.attr("x", aabb.x + dx)
+				.attr("y", aabb.y + dy)
+				.attr("font-size", fontSize+"px")
+				.attr("font-family", "consolas")
+				.attr("fill", c)
+				.attr("alignment-baseline", "hanging")
+				.attr("clip-path", "url(#textclip_" +id+ ")")
+				.text(word);
+
+			dx += word.length*letterW;
+			idx++;
+
+		}while(dx < aabb.width);
+
+		//shift string
+		var shiftOffset = entireStr.indexOf("*", Math.floor(entireStr.length / 3));
+		if(shiftOffset > -1)
+			entireStr = entireStr.substr(shiftOffset+1) + "*" + entireStr.substr(0, shiftOffset);
+		
+	}
 
 }
 
@@ -917,7 +1047,7 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
-ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3 }
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
