@@ -351,6 +351,8 @@
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.CIRCLE;
 			else if(parseInt(val) == 3)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
+			else if(parseInt(val) == 4)
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
 
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -480,6 +482,7 @@
 				<input type="radio" name="outlineType" onclick="outlineType(1);"><span>Strip</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Circle</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Text</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text &#38; Fill</span><br>
 
 			</div>
 
