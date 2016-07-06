@@ -386,7 +386,6 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 
 };
 
-
 ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
 	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
@@ -425,12 +424,9 @@ ScaleTreeCanvas.prototype.hoverLinkage = function(){
 				return hlOpac;
 			else
 				return defaultOpac;
-
 		});
 
-
 };
-
 
 
 ScaleTreeCanvas.prototype.update = function(){
@@ -438,15 +434,19 @@ ScaleTreeCanvas.prototype.update = function(){
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
 
+	//get tree node(root or node specified by user)
 	var treeNode = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
+	//calculate the bbox of each node
 	this.setBbox(treeNode);
 
+	//draw legend of the zoom level;
 	if(this.scaleBoundFlag)
 		this.drawScaleBound(treeNode);
 
 	//this.drawBackground(treeNode);
 
+	//draw edges and nodes;
 	this.drawLinkage(treeNode);
 	this.drawNodes(treeNode);
 
