@@ -343,15 +343,28 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 	var defaultOpac = 0.3;
 	var hlOpac = 1.0;
 
+	var defaultFill = "#fff";
+	var highlightFill = "#ece7f2"
+
+	// d3.selectAll(".treeNode")
+	// 	.attr("stroke-opacity", defaultOpac)
+	// 	.attr("fill-opacity", defaultOpac);
+
+	// acNodes.forEach(function(val){
+		
+	// 	d3.select("#node_"+val)
+	// 		.attr("stroke-opacity", hlOpac)
+	// 		.attr("fill-opacity", hlOpac);
+	// });
 	d3.selectAll(".treeNode")
-		.attr("stroke-opacity", defaultOpac)
-		.attr("fill-opacity", defaultOpac);
+		.attr("fill", defaultFill)
+		.attr("fill", defaultFill);
 
 	acNodes.forEach(function(val){
 		
 		d3.select("#node_"+val)
-			.attr("stroke-opacity", hlOpac)
-			.attr("fill-opacity", hlOpac);
+			.attr("fill", highlightFill)
+			.attr("fill", highlightFill);
 	});
 
 	// hlNodes = intersect_arrays(acNodes, hlNodes);
