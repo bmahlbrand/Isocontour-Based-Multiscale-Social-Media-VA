@@ -51,6 +51,7 @@ ScaleTreeCanvas.prototype.setBbox = function(treeNode){
 
 };
 
+/**************************actual rendering function for tree node -- render rectangle*************************/
 ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 
 	var that = this;
@@ -82,6 +83,8 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 };
 
+
+/**************************actual rendering function for tree node -- render circle*************************/
 ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 
 	var that = this;
@@ -158,7 +161,7 @@ ScaleTreeCanvas.prototype.get_menu = function(id){
 
 };
 
-//two methods to draw edge in the tree:
+/**************************actual rendering function for tree edge -- render bcurve or linear*************************/
 ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
 
 	var lineType = ScaleTreeCanvas.linkType == 0 ? 'basis' : 'linear';
@@ -179,6 +182,7 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
 
 };
 
+/**************************************draw legend for zoom level**************************************/
 ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
 	//var init_level = case_study[default_case].startLevel + case_study[default_case].zoom;
@@ -288,7 +292,8 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 
 };
 
-ScaleTreeCanvas.prototype.drawSingleNode = function(id, visBbox, bbox){
+/*************************************generic wrapper for tree node rendering*************************************************/
+ScaleTreeCanvas.prototype.drawTreeNode = function(id, visBbox, bbox){
 
 	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
 
@@ -304,13 +309,15 @@ ScaleTreeCanvas.prototype.drawSingleNode = function(id, visBbox, bbox){
 
 };
 
-ScaleTreeCanvas.prototype.drawNode = function(treeNode){
+/*************************************generic wrapper for tree node/highlight rendering*************************************/
+ScaleTreeCanvas.prototype.drawNodes = function(treeNode){
 
-	treeNode.drawNode();
+	treeNode.drawNodes();
 
 	this.hoverNode();
 };
 
+/*************************************highlight background of tree node*************************************/
 ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
 
 	var that = this;
@@ -335,6 +342,7 @@ ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
 
 };
 
+/***************************************************************/
 ScaleTreeCanvas.prototype.hoverNode = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
@@ -383,7 +391,7 @@ ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
 	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
 		treeNode.drawLinkage();
-		this.hoverLinkage();
+		//this.hoverLinkage();
 	}
 	
 };
@@ -437,7 +445,7 @@ ScaleTreeCanvas.prototype.update = function(){
 	//this.drawBackground(treeNode);
 
 	this.drawLinkage(treeNode);
-	this.drawNode(treeNode);
+	this.drawNodes(treeNode);
 
 };
 
