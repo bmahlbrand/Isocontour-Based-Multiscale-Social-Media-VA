@@ -331,12 +331,12 @@ CTreeNode.prototype.setBbox = function(bbox){
 	}
 }
 
-CTreeNode.prototype.drawNode = function(){
+CTreeNode.prototype.drawNodes = function(){
 
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawSingleNode(this.cluster.clusterId, this.vis.getVisBbox(), this.vis.getBbox());
+	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawTreeNode(this.cluster.clusterId, this.vis.getVisBbox(), this.vis.getBbox());
 
 	this.children.forEach(function(val){
-		val.drawNode();
+		val.drawNodes();
 	});
 
 };
