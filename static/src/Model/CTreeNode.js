@@ -341,16 +341,16 @@ CTreeNode.prototype.drawNodes = function(){
 
 };
 
-CTreeNode.prototype.drawBackground = function(ids){
+// CTreeNode.prototype.drawBackground = function(ids){
 
-	if( ids.indexOf(this.cluster.clusterId) != -1 )
-		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBgRect(this.vis.getBbox());
+// 	if( ids.indexOf(this.cluster.clusterId) != -1 )
+// 		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBgRect(this.vis.getBbox());
 
-	this.children.forEach(function(val){
-		val.drawBackground(ids);
-	});
+// 	this.children.forEach(function(val){
+// 		val.drawBackground(ids);
+// 	});
 
-};
+// };
 
 
 CTreeNode.prototype.drawLinkage = function(){

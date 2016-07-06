@@ -335,12 +335,12 @@ ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
 	                            .attr("fill-opacity", 0.4);      
 };
 
-ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
+// ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
 
-	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
-	treeNode.drawBackground(acNodes);
+// 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+// 	treeNode.drawBackground(acNodes);
 
-};
+// };
 
 /***************************************************************/
 ScaleTreeCanvas.prototype.hoverNode = function(){
@@ -431,6 +431,8 @@ ScaleTreeCanvas.prototype.hoverLinkage = function(){
 
 };
 
+
+
 ScaleTreeCanvas.prototype.update = function(){
 
 	//clear canvas;
@@ -442,12 +444,15 @@ ScaleTreeCanvas.prototype.update = function(){
 
 	if(this.scaleBoundFlag)
 		this.drawScaleBound(treeNode);
+
 	//this.drawBackground(treeNode);
 
 	this.drawLinkage(treeNode);
 	this.drawNodes(treeNode);
 
 };
+
+/*******************global variables that define the view-level properties*******************/
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
