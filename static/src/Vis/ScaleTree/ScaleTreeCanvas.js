@@ -318,22 +318,22 @@ ScaleTreeCanvas.prototype.drawNodes = function(treeNode){
 };
 
 /*************************************highlight background of tree node*************************************/
-ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
+// ScaleTreeCanvas.prototype.drawBgRect = function(bbox){
 
-	var that = this;
+// 	var that = this;
 
-	var color = "#ccc";
-	//draw node;
-	var rectangle = this.canvas.append("rect")
-								.attr("class", "nodeBG")
-	                            .attr("x", bbox.getLeft())
-	                            .attr("y", bbox.getTop())
-	                            .attr("width", bbox.getWidth())
-	                            .attr("height", bbox.getHeight())
-	                            .attr("stroke", "none")
-	                            .attr("fill", color)
-	                            .attr("fill-opacity", 0.4);      
-};
+// 	var color = "#ccc";
+// 	//draw node;
+// 	var rectangle = this.canvas.append("rect")
+// 								.attr("class", "nodeBG")
+// 	                            .attr("x", bbox.getLeft())
+// 	                            .attr("y", bbox.getTop())
+// 	                            .attr("width", bbox.getWidth())
+// 	                            .attr("height", bbox.getHeight())
+// 	                            .attr("stroke", "none")
+// 	                            .attr("fill", color)
+// 	                            .attr("fill-opacity", 0.4);
+// };
 
 // ScaleTreeCanvas.prototype.drawBackground = function(treeNode){
 
