@@ -390,9 +390,9 @@ CTreeNode.prototype.drawLinkage = function(){
 CTreeNode.prototype._getNodeEdge = function(){
 
 	if(this.children.length <= 0)
-		return [ [{"id":this.cluster['clusterId'], "vol":this.cluster['ids'].length}], []];
+		return [ [{"id":this.cluster['clusterId'], "vol":this.getVol()}], []];
 
-	var nodes = [ {"id":this.cluster['clusterId'], "vol":this.cluster['ids'].length} ];
+	var nodes = [ {"id":this.cluster['clusterId'], "vol":this.getVol()} ];
 	var edges = [];
 
 	var that = this;
@@ -429,6 +429,8 @@ CTreeNode.prototype.getNodeEdge = function(){
 
 		if(!n1.hasOwnProperty('children'))
 			n1.children = [];
+		if(!n2.hasOwnProperty('children'))
+			n2.children = [];
 
 		n1.children.push(n2);
 	});
