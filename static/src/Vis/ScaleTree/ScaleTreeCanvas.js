@@ -1,8 +1,8 @@
 ScaleTreeCanvas = function(){
 
 	//vis styling
-	this.width = 700;
-	this.height = 500;
+	this.width = ScaleTreeCanvas.WIDTH;
+	this.height = ScaleTreeCanvas.HEIGHT;
 
 	this.nodeHeight = 40;
 	this.div = "#ScaleTreeCanvasView";
@@ -453,6 +453,8 @@ ScaleTreeCanvas.prototype.update = function(){
 };
 
 /*******************global variables that define the view-level properties*******************/
+ScaleTreeCanvas.WIDTH = 700;
+ScaleTreeCanvas.HEIGHT = 500;
 
 ScaleTreeCanvas.hLNodeStroke = "#313695";
 ScaleTreeCanvas.hLNodeFill = "#abd9e9";
