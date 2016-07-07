@@ -384,6 +384,58 @@ CTreeNode.prototype.drawLinkage = function(){
 
 };
 
+/*****************************************************************************************/
+/******************************* FD tree Vis Component ***********************************/
+/*****************************************************************************************/
+CTreeNode.prototype._getNodeEdge = function(){
+
+	if(this.children.length <= 0)
+		return [ [{"id":this.cluster['clusterId'], "vol":this.cluster['ids'].length}], []];
+
+	var nodes = [ {"id":this.cluster['clusterId'], "vol":this.cluster['ids'].length} ];
+	var edges = [];
+
+	var that = this;
+	this.children.forEach(function(val){
+
+		var nodeEdge = val._getNodeEdge();
+		
+		nodes = nodes.concat(nodeEdge[0]);
+		edges = edges.concat(nodeEdge[1]);
+
+		edges.push({"source": that.cluster['clusterId'], "target": val.cluster['clusterId']});
+	});
+
+	return [nodes, edges];
+
+};
+
+CTreeNode.prototype.getNodeEdge = function(){
+
+	var nodeEdge = this._getNodeEdge();
+	var nodes = nodeEdge[0];
+	var edges = nodeEdge[1];
+
+	var _edges = []
+	edges.forEach(function(val){
+
+		var n1 = $.grep(nodes, function(e){ return e.id == val.source; });
+		var n2 = $.grep(nodes, function(e){ return e.id == val.target; });
+		n1 = n1[0];
+		n2 = n2[0];
+
+		_edges.push( {"source":n1, "target":n2} );
+
+
+		if(!n1.hasOwnProperty('children'))
+			n1.children = [];
+
+		n1.children.push(n2);
+	});
+
+	return [nodes, _edges];
+}
+
 CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 };
 CTreeNode.SORT = CTreeNode.SORTMODE.GEO;
 
