@@ -25,7 +25,45 @@ FDTreeCanvas.prototype.init = function() {
 
 //https://github.com/d3/d3-3.x-api-reference/blob/master/Force-Layout.md
 //https://bl.ocks.org/mbostock/1062288 [collapsible force layout]
-FDTreeCanvas.prototype.forceLayout = function(nodes, edges){
+//understanding the parameter of force-directed layout: http://bl.ocks.org/sathomas/11550728
+FDTreeCanvas.prototype.forceLayout = function(nodes, edges, treeNode){
+
+	//calculate attributes;
+	var treeNodeList = treeNode.toList();
+	var vols = treeNodeList.map(function(val){ return val.getVol(); });
+
+	/*******************************************node configuration*********************************************/
+	//linear scale;
+	// var nodeSize = d3.scale.linear()
+	// 						.domain([_.min(vols), _.max(vols)])
+	// 						.range([3,20]);
+	//log scale;
+	var nodeSize = d3.scale.log()
+							.base(Math.E)
+							.domain([_.min(vols), _.max(vols)])
+							.range([3,20]);
+
+	var nodeCharge = d3.scale.linear()
+							.domain([_.min(vols), _.max(vols)])
+							.range([-30,-120]);
+	/**********************************************************************************************************/
+
+	/*******************************************edge configuration*********************************************/
+	var zoomLevel = treeNodeList.map(function(val){ return parseInt(val.cluster['clusterId'].split("_")[0]); });
+
+	var nodeChildren = nodes.map(function(val){ return val.children.length; });
+
+	//based on zoom level
+	// var linkDis = d3.scale.linear()
+	// 						.domain([_.min(zoomLevel), _.max(zoomLevel)])
+	// 						.range([200,10]);
+
+	//based on number of children of the parent node;
+	var linkDis = d3.scale.linear()
+							.domain([_.min(nodeChildren), _.max(nodeChildren)])
+							.range([8,200]);
+
+	/**********************************************************************************************************/
 
 	var that = this;
 	var svg = this.canvas;
@@ -38,8 +76,18 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges){
 						    // .gravity(0.1)
 						    // .theta(0.8)
 						    // .alpha(0.1)
-						    .charge(function(d) { return d.children ? -d.vol / 100 : -30; })
-    						.linkDistance(function(d) { return d.target.children ? 80 : 15; })
+						    .charge(function(d) {
+						    	return nodeCharge(d.vol);
+						    	// return d.children ? -d.vol / 10 : -30; 
+						    })
+    						.linkDistance(function(d) {
+
+    							// var level = parseInt(d.source.id.split("_")[0]);
+    							// return linkDis(level);
+    							var numChild = parseInt(d.target.children.length);
+    							return linkDis(numChild) + nodeSize(d.target.vol) + nodeSize(d.source.vol);
+    							// return d.target.children ? 80 : 15; 
+    						})
 						    .size([that.width, that.height])
 						    .on("tick", ticked);
 
@@ -54,7 +102,7 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges){
 					.data(edges)
 					.enter().append("line")
 					.attr("stroke-width", 1)
-					.attr("stroke-opacity", 0.3)
+					.attr("stroke-opacity", 0.5)
 					.attr("stroke", "#d6604d");
 	
 	var node = svg.append("g")
@@ -63,14 +111,16 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges){
 					.data(nodes)
 					.enter().append("circle")
 					.attr("r", function(i){
-						return Math.max(Math.sqrt(i.vol) / 3, 5);
+						return nodeSize(i.vol);
 					})
 					.attr("stroke", "#000")
-  					.attr("stroke-width", .5)
+  					.attr("stroke-width", 0.5)
 					.attr("fill", function(i){
 						var level = i.id.split("_")[0];
 						return contourColorFill()(parseInt(level));
-					});
+					})
+					.style("cursor", "hand")
+					.call(force.drag);
 
 	force.nodes(nodes)
 			.links(edges)
@@ -98,7 +148,7 @@ FDTreeCanvas.prototype.update = function(){
 	var treeNode = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 	var nodeEdge = treeNode.getNodeEdge();
 
-	this.forceLayout(nodeEdge[0], nodeEdge[1]);
+	this.forceLayout(nodeEdge[0], nodeEdge[1], treeNode);
 
 
 };
