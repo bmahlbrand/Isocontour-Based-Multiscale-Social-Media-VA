@@ -350,7 +350,9 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 	/************************************highlighted node***************************************/
 
 	$scope.masterUpdate = function(){
-		$('[ng-controller="ScaleTreeCtrl"]').scope().update();
+		
+		//$('[ng-controller="ScaleTreeCtrl"]').scope().update();
+		$('[ng-controller="FDTreeCtrl"]').scope().update();
 		$('[ng-controller="map_controller"]').scope().update();
 	};
 
@@ -558,6 +560,27 @@ twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
 		$rootScope.stc.update();
 	};
 	//have getScaleTreeCanvas() defined before calling init function
+	$scope.init();
+
+});
+
+/* controller for fd tree view */
+twittNavApp.controller('FDTreeCtrl', function($rootScope, $scope) {
+	
+	$scope.init = function(){
+
+		$rootScope.fdtc = new FDTreeCanvas();
+		$scope.update();
+	};
+
+	$scope.getFDTreeCanvas = function(){
+		return $rootScope.fdtc;
+	};
+
+	$scope.update = function(){
+		$rootScope.fdtc.update();
+	};
+
 	$scope.init();
 
 });
