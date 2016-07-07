@@ -6,7 +6,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="css/context.css">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/tree.css">
+	<!-- <link rel="stylesheet" href="css/tree.css"> -->
 	<link rel="stylesheet" href="css/timeseries.css">
 	<link rel="stylesheet" href="css/tooltip.css">
 			<!-- Bootstrap core CSS -->
@@ -29,7 +29,8 @@
 	<link rel="stylesheet" href="lib/jquery-ui-1.11.4/jquery-ui.css">
 	<script type="text/javascript" src="lib/numeric-1.2.6.min.js"></script>
 	<script type="text/javascript" src="lib/d3/d3.min.js" charset="utf-8"></script>
-
+	<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+	
 	<script type="text/javascript" src="lib/underscore.js"></script>
 
 	<script type="text/javascript" src="lib/contextmenu/d3-context-menu.js"></script>
@@ -153,6 +154,7 @@
 
 	<!--scale tree-->
 	<script type="text/javascript" src="src/Vis/ScaleTree/ScaleTreeCanvas.js"></script>
+	<script type="text/javascript" src="src/Vis/ScaleTree/FDTreeCanvas.js"></script>
 	<!--cluster signature-->
 	<script type="text/javascript" src="src/Vis/ClusterSignature/ClusterSignature.js"></script>
 
@@ -447,7 +449,10 @@
 
 	<!--background-color: rgba(247, 251, 255, 0.6);-->
 		<div style="width:700px;height:700px;margin: 0 auto;" class="noSupportDrag">
+			<!--
 			<div id="ScaleTreeCanvasView" style="width:700px;height:500px;" ng-controller="ScaleTreeCtrl"></div>
+			-->
+			<div id="FDTreeCanvasView" style="width:700px;height:500px;" ng-controller="FDTreeCtrl"></div>
 		</div>
 	</div>
 
