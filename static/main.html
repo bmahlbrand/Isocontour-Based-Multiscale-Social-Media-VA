@@ -155,6 +155,7 @@
 	<!--scale tree-->
 	<script type="text/javascript" src="src/Vis/ScaleTree/ScaleTreeCanvas.js"></script>
 	<script type="text/javascript" src="src/Vis/ScaleTree/FDTreeCanvas.js"></script>
+	<script type="text/javascript" src="src/Vis/ScaleTree/TreeCanvas.js"></script>
 	<!--cluster signature-->
 	<script type="text/javascript" src="src/Vis/ClusterSignature/ClusterSignature.js"></script>
 
@@ -312,9 +313,9 @@
 		function setNodeType(val){
 			
 			if(parseInt(val) == 0)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.RECT;
+				$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas(TreeCanvas.MODES.SCALETREE).NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.RECT;
 			else if(parseInt(val) == 1)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
+				$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas(TreeCanvas.MODES.SCALETREE).NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.CIRC;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -322,9 +323,19 @@
 		function treeType(val){
 			
 			if(parseInt(val) == 0)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.ICICLE;
+				$('[ng-controller="treeCanvasCtrl"]').scope().switchCanvas(TreeCanvas.MODES.SCALETREE);
 			else if(parseInt(val) == 1)
-				$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
+				$('[ng-controller="treeCanvasCtrl"]').scope().switchCanvas(TreeCanvas.MODES.FDTREE);
+			
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+		}
+
+		function dendroType(val){
+			
+			if(parseInt(val) == 0)
+				$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas(TreeCanvas.MODES.SCALETREE).TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.ICICLE;
+			else if(parseInt(val) == 1)
+				$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas(TreeCanvas.MODES.SCALETREE).TREE_TYPE = ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -449,10 +460,7 @@
 
 	<!--background-color: rgba(247, 251, 255, 0.6);-->
 		<div style="width:700px;height:700px;margin: 0 auto;" class="noSupportDrag">
-			<!--
-			<div id="ScaleTreeCanvasView" style="width:700px;height:500px;" ng-controller="ScaleTreeCtrl"></div>
-			-->
-			<div id="FDTreeCanvasView" style="width:700px;height:500px;" ng-controller="FDTreeCtrl"></div>
+			<div id="treeCanvas" style="width:700px;height:500px;" ng-controller="treeCanvasCtrl"></div>
 		</div>
 	</div>
 
@@ -471,6 +479,13 @@
 				<input type="radio" name="dataViewer" onclick="showDataViewer();" ><span>Open</span>
 				<input type="radio" name="dataViewer" onclick="$('#dataEditContainer').hide();" checked><span>Close</span><br>
 			</div> -->
+
+		<h5 align="center">Tree Type</h5>
+			<div>
+				<input type="radio" name="treeType" onclick="treeType(0);" ><span>dendrogram</span><br>
+				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>nodelink</span><br>
+
+			</div>
 
 		<h5 align="center">Filter</h5>
 			<div>
@@ -491,10 +506,10 @@
 
 			</div>
 
-		<h5 align="center">Tree Type</h5>
+		<h5 align="center">Dendrogram Type</h5>
 			<div>
-				<input type="radio" name="treeType" onclick="treeType(0);" ><span>icicle</span><br>
-				<input type="radio" name="treeType" onclick="treeType(1);" checked><span>node-link</span><br>
+				<input type="radio" name="dendroType" onclick="dendroType(0);" ><span>icicle</span><br>
+				<input type="radio" name="dendroType" onclick="dendroType(1);" checked><span>node-link</span><br>
 
 			</div>
 		
