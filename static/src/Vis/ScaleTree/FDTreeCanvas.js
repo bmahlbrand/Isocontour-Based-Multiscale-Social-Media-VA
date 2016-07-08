@@ -1,26 +1,17 @@
-FDTreeCanvas = function(){
+FDTreeCanvas = function(width, height, canvas){
 
 	//vis styling
-	this.width = ScaleTreeCanvas.WIDTH;
-	this.height = ScaleTreeCanvas.HEIGHT;
+	this.width = width;
+	this.height = height;
 
-	this.canvas = null;
-	this.div = "#FDTreeCanvasView";
+	this.canvas = canvas;
 
 	this.init();
 
 };
 
 FDTreeCanvas.prototype.init = function() {
-	
-	var that = this;
 
-	this.canvas = d3.select(that.div)
-			    	.append("svg")
-			    	.attr("id", "FDTreeCanvasSvg")
-			    	.attr("width", that.width)
-			    	.attr("height", that.height)
-			    	;
 };
 
 //https://github.com/d3/d3-3.x-api-reference/blob/master/Force-Layout.md
@@ -146,7 +137,8 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges, treeNode){
 
 }
 
-FDTreeCanvas.prototype.updateLayout = function(){
+//update layout, this function is only called when the program starts or when the canvas is switched to this FDTree one;
+FDTreeCanvas.prototype.preUpdate = function(){
 
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
@@ -157,7 +149,6 @@ FDTreeCanvas.prototype.updateLayout = function(){
 
 	this.forceLayout(nodeEdge[0], nodeEdge[1], treeNode);
 
-
 };
 
 
@@ -166,7 +157,7 @@ FDTreeCanvas.prototype.hoverNode = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
-	var defaultFill = "#eee";
+	var defaultFill = TreeCanvas.dfNodeFill;
 
 	d3.selectAll(".FDNodes")
 		.attr("fill", defaultFill);
@@ -186,8 +177,8 @@ FDTreeCanvas.prototype.hoverEdges = function(){
 	
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
-	var defaultStroke = "#aaa";
-	var hilightedStroke = "#fdbb84";
+	var defaultStroke = TreeCanvas.dfEdgeStroke;
+	var hilightedStroke = TreeCanvas.hlEdgeStroke;
 
 	d3.selectAll(".FDEdges")
 		.attr("stroke", function(){
@@ -207,9 +198,9 @@ FDTreeCanvas.prototype.hoverEdges = function(){
 			var source = tks[1];
 			var target = tks[2];
 			if( acNodes.indexOf(source) != -1 && acNodes.indexOf(target) != -1 )
-				return 3;
+				return TreeCanvas.hlEdgeStrokeWidth;
 			else
-				return 1;
+				return TreeCanvas.dfEdgeStrokeWidth;
 
 		});
 
