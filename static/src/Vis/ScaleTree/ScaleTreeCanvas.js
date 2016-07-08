@@ -1,11 +1,10 @@
-ScaleTreeCanvas = function(){
+ScaleTreeCanvas = function(width, height, canvas){
 
 	//vis styling
-	this.width = ScaleTreeCanvas.WIDTH;
-	this.height = ScaleTreeCanvas.HEIGHT;
+	this.width = width;
+	this.height = height;
 
 	this.nodeHeight = 40;
-	this.div = "#ScaleTreeCanvasView";
 
 	this.treeMarginX = 30;
 
@@ -16,7 +15,7 @@ ScaleTreeCanvas = function(){
 	this.scaleBoundFlag = true;
 	//vis styling
 
-	this.canvas = null;
+	this.canvas = canvas;
 
 	this.scaleBounds = [];
 
@@ -25,15 +24,7 @@ ScaleTreeCanvas = function(){
 }
 
 ScaleTreeCanvas.prototype.init = function() {
-	
-	var that = this;
 
-	this.canvas = d3.select(that.div)
-			    	.append("svg")
-			    	.attr("id", "ScaleTreeCanvasSvg")
-			    	.attr("width", that.width)
-			    	.attr("height", that.height)
-			    	;
 };
 
 ScaleTreeCanvas.prototype.setBbox = function(treeNode){
@@ -65,7 +56,8 @@ ScaleTreeCanvas.prototype.drawRect = function(id, bbox){
 	                            .attr("y", bbox.getTop())
 	                            .attr("width", bbox.getWidth())
 	                            .attr("height", bbox.getHeight())
-	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
+	                            .attr("stroke", "#000")
+  								.attr("stroke-width", 0.5)
 	                            .attr("fill", "none")
 	                            .on("click", function(){
 
@@ -97,8 +89,8 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 	                            .attr("cx", bbox.getCenter().x)
 	                            .attr("cy", bbox.getCenter().y)
 	                            .attr("r", 3)
-	                            .attr("stroke", ScaleTreeCanvas.nodeStroke)
-	                            .attr("stroke-width", 1)
+	                            .attr("stroke", "#000")
+  								.attr("stroke-width", 0.5)
 	                            .attr("fill", "none")
 	                            .on("click", function(){
 	                            	alert(this.id);
@@ -175,9 +167,8 @@ ScaleTreeCanvas.prototype.drawBCurve = function(pid, cid, pts){
     							.attr("id", "link__"+pid+"__"+cid)
     							.attr("class", "treeLinkage")
 		                        .attr("d", lineFunction(pts))
-		                        .attr("stroke", ScaleTreeCanvas.linkStroke)
-		                        .attr("stroke-width", 1)
 		                        .attr("fill", "none")
+		                        .attr("stroke-opacity", 0.8)
 		                        .attr("opacity", 1);
 
 };
@@ -351,8 +342,7 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 	var defaultOpac = 0.3;
 	var hlOpac = 1.0;
 
-	var defaultFill = "#fff";
-	var highlightFill = "#ece7f2"
+	var defaultFill = TreeCanvas.dfNodeFill;
 
 	// d3.selectAll(".treeNode")
 	// 	.attr("stroke-opacity", defaultOpac)
@@ -365,13 +355,14 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 	// 		.attr("fill-opacity", hlOpac);
 	// });
 	d3.selectAll(".treeNode")
-		.attr("fill", defaultFill)
 		.attr("fill", defaultFill);
 
 	acNodes.forEach(function(val){
 		
+		var level = val.split("_")[0];
+		var highlightFill = contourColorFill()(parseInt(level));
+
 		d3.select("#node_"+val)
-			.attr("fill", highlightFill)
 			.attr("fill", highlightFill);
 	});
 
@@ -390,7 +381,7 @@ ScaleTreeCanvas.prototype.drawLinkage = function(treeNode){
 
 	if( this.TREE_TYPE == ScaleTreeCanvas.TREE_TYPE_MODE.NODELINK ){
 		treeNode.drawLinkage();
-		//this.hoverLinkage();
+		this.hoverLinkage();
 	}
 	
 };
@@ -400,30 +391,30 @@ ScaleTreeCanvas.prototype.hoverLinkage = function(){
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
 
-	var defaultOpac = 0.3;
-	var hlOpac = 1.0;
+	var defaultStroke = TreeCanvas.dfEdgeStroke;
+	var hilightedStroke = TreeCanvas.hlEdgeStroke;
 
 	d3.selectAll(".treeLinkage")
-		.attr("stroke-opacity", function(){
+		.attr("stroke", function(){
 			
 			var tks = this.id.split("__");
 			var pid = tks[1];
 			var cid = tks[2];
 			if( acNodes.indexOf(pid) != -1 && acNodes.indexOf(cid) != -1 )
-				return hlOpac;
+				return hilightedStroke;
 			else
-				return defaultOpac;
+				return defaultStroke;
 
 		})
-		.attr("fill-opacity", function(d){
+		.attr("stroke-width", function(d){
 
 			var tks = this.id.split("__");
 			var pid = tks[1];
 			var cid = tks[2];
 			if( acNodes.indexOf(pid) != -1 && acNodes.indexOf(cid) != -1 )
-				return hlOpac;
+				return TreeCanvas.hlEdgeStrokeWidth;
 			else
-				return defaultOpac;
+				return TreeCanvas.dfEdgeStrokeWidth;
 		});
 
 };
@@ -453,19 +444,6 @@ ScaleTreeCanvas.prototype.update = function(){
 };
 
 /*******************global variables that define the view-level properties*******************/
-ScaleTreeCanvas.WIDTH = 700;
-ScaleTreeCanvas.HEIGHT = 500;
-
-ScaleTreeCanvas.hLNodeStroke = "#313695";
-ScaleTreeCanvas.hLNodeFill = "#abd9e9";
-
-ScaleTreeCanvas.nodeStroke = "#4575b4";
-ScaleTreeCanvas.nodeFill = "#e0f3f8";
-
-ScaleTreeCanvas.deAcNodeStroke = "#737373";
-ScaleTreeCanvas.deAcNodeFill = "#f7f7f7";
-
-ScaleTreeCanvas.linkStroke = "#b2182b";
 ScaleTreeCanvas.linkType = 1; // 0 for B curve, 1 for linear line;
 
 ScaleTreeCanvas.NODE_VIS_MODE = { GEO_FILTER:0, STAT:1 };
