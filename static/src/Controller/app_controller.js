@@ -570,7 +570,7 @@ twittNavApp.controller('FDTreeCtrl', function($rootScope, $scope) {
 	$scope.init = function(){
 
 		$rootScope.fdtc = new FDTreeCanvas();
-		$scope.update();
+		$scope.updateLayout();
 	};
 
 	$scope.getFDTreeCanvas = function(){
@@ -579,6 +579,10 @@ twittNavApp.controller('FDTreeCtrl', function($rootScope, $scope) {
 
 	$scope.update = function(){
 		$rootScope.fdtc.update();
+	};
+
+	$scope.updateLayout = function(){
+		$rootScope.fdtc.updateLayout();
 	};
 
 	$scope.init();
