@@ -333,7 +333,7 @@ CTreeNode.prototype.setBbox = function(bbox){
 
 CTreeNode.prototype.drawNodes = function(){
 
-	$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawTreeNode(this.cluster.clusterId, this.vis.getVisBbox(), this.vis.getBbox());
+	$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas().drawTreeNode(this.cluster.clusterId, this.vis.getVisBbox(), this.vis.getBbox());
 
 	this.children.forEach(function(val){
 		val.drawNodes();
@@ -376,7 +376,7 @@ CTreeNode.prototype.drawLinkage = function(){
 		var p175 = [_bbox.getCenter().x, midY ];
 
 		var cid = val.cluster.clusterId;
-		$('[ng-controller="ScaleTreeCtrl"]').scope().getScaleTreeCanvas().drawBCurve(pid, cid, [p1, p125, p175, p2]);
+		$('[ng-controller="treeCanvasCtrl"]').scope().getCanvas().drawBCurve(pid, cid, [p1, p125, p175, p2]);
 		
 		val.drawLinkage();
 
