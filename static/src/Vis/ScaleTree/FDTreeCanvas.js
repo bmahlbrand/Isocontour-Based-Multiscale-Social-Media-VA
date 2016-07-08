@@ -97,27 +97,34 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges, treeNode){
 	// 				    .force("center", d3.forceCenter(that.width / 2, that.height / 2));
 
 	var link = svg.append("g")
-					.attr("class", "edges")
+					//.attr("class", "FDEdges")
 					.selectAll("line")
 					.data(edges)
 					.enter().append("line")
+					.attr("id", function(i){
+						return "FDEdges__"+ i.source.id + "__" + i.target.id;
+					})
+					.attr("class", "FDEdges")
 					.attr("stroke-width", 1)
-					.attr("stroke-opacity", 0.5)
-					.attr("stroke", "#d6604d");
+					.attr("stroke-opacity", 0.8)
+					.attr("stroke", "#aaa");
 	
 	var node = svg.append("g")
-					.attr("class", "nodes")
+					//.attr("class", "FDNodes")
 					.selectAll("circle")
 					.data(nodes)
 					.enter().append("circle")
+					.attr("id", function(i){
+						return "FDNodes_"+ i.id;
+					})
+					.attr("class", "FDNodes")
 					.attr("r", function(i){
 						return nodeSize(i.vol);
 					})
 					.attr("stroke", "#000")
   					.attr("stroke-width", 0.5)
 					.attr("fill", function(i){
-						var level = i.id.split("_")[0];
-						return contourColorFill()(parseInt(level));
+						return "#eee";
 					})
 					.style("cursor", "hand")
 					.call(force.drag);
@@ -139,7 +146,7 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges, treeNode){
 
 }
 
-FDTreeCanvas.prototype.update = function(){
+FDTreeCanvas.prototype.updateLayout = function(){
 
 	//clear canvas;
 	this.canvas.selectAll("*").remove();
@@ -150,5 +157,67 @@ FDTreeCanvas.prototype.update = function(){
 
 	this.forceLayout(nodeEdge[0], nodeEdge[1], treeNode);
 
+
+};
+
+
+/***************************************************************/
+FDTreeCanvas.prototype.hoverNode = function(){
+
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+
+	var defaultFill = "#eee";
+
+	d3.selectAll(".FDNodes")
+		.attr("fill", defaultFill);
+
+	acNodes.forEach(function(val){
+		
+		var level = val.split("_")[0];
+		var highlightFill = contourColorFill()(parseInt(level));
+
+		d3.select("#FDNodes_"+val)
+			.attr("fill", highlightFill);
+	});
+
+};
+
+FDTreeCanvas.prototype.hoverEdges = function(){
+	
+	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+
+	var defaultStroke = "#aaa";
+	var hilightedStroke = "#fdbb84";
+
+	d3.selectAll(".FDEdges")
+		.attr("stroke", function(){
+			
+			var tks = this.id.split("__");
+			var source = tks[1];
+			var target = tks[2];
+			if( acNodes.indexOf(source) != -1 && acNodes.indexOf(target) != -1 )
+				return hilightedStroke;
+			else
+				return defaultStroke;
+
+		})
+		.attr("stroke-width", function(){
+			
+			var tks = this.id.split("__");
+			var source = tks[1];
+			var target = tks[2];
+			if( acNodes.indexOf(source) != -1 && acNodes.indexOf(target) != -1 )
+				return 3;
+			else
+				return 1;
+
+		});
+
+};
+
+FDTreeCanvas.prototype.update = function(){
+
+	this.hoverEdges();
+	this.hoverNode();
 
 };
