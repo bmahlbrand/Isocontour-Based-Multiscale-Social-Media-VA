@@ -352,7 +352,7 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 	$scope.masterUpdate = function(){
 		
 		//$('[ng-controller="ScaleTreeCtrl"]').scope().update();
-		$('[ng-controller="FDTreeCtrl"]').scope().update();
+		$('[ng-controller="treeCanvasCtrl"]').scope().update();
 		$('[ng-controller="map_controller"]').scope().update();
 	};
 
@@ -543,51 +543,76 @@ twittNavApp.controller('dataedit_controller', function($rootScope, $scope) {
 
 });
 
-/* controller for scale tree view */
-twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
+// /* controller for scale tree view */
+// twittNavApp.controller('ScaleTreeCtrl', function($rootScope, $scope) {
+	
+// 	$scope.init = function(){
+
+// 		$rootScope.stc = new ScaleTreeCanvas();
+// 		$scope.update();
+// 	};
+
+// 	$scope.getScaleTreeCanvas = function(){
+// 		return $rootScope.stc;
+// 	};
+
+// 	$scope.update = function(){
+// 		$rootScope.stc.update();
+// 	};
+// 	//have getScaleTreeCanvas() defined before calling init function
+// 	$scope.init();
+
+// });
+
+//  controller for fd tree view 
+// twittNavApp.controller('FDTreeCtrl', function($rootScope, $scope) {
+	
+// 	$scope.init = function(){
+
+// 		$rootScope.fdtc = new FDTreeCanvas();
+// 		$scope.updateLayout();
+// 	};
+
+// 	$scope.getFDTreeCanvas = function(){
+// 		return $rootScope.fdtc;
+// 	};
+
+// 	$scope.update = function(){
+// 		$rootScope.fdtc.update();
+// 	};
+
+// 	$scope.updateLayout = function(){
+// 		$rootScope.fdtc.updateLayout();
+// 	};
+
+// 	$scope.init();
+
+// });
+
+twittNavApp.controller('treeCanvasCtrl', function($rootScope, $scope) {
 	
 	$scope.init = function(){
-
-		$rootScope.stc = new ScaleTreeCanvas();
-		$scope.update();
+		$rootScope.treeC = new TreeCanvas();
 	};
 
-	$scope.getScaleTreeCanvas = function(){
-		return $rootScope.stc;
+	$scope.getCanvas = function(type){
+		return $rootScope.treeC.getCanvas(type);
 	};
 
 	$scope.update = function(){
-		$rootScope.stc.update();
+		$rootScope.treeC.update();
 	};
-	//have getScaleTreeCanvas() defined before calling init function
+
+	$scope.switchCanvas = function(mode){
+		$rootScope.treeC.switchCanvas(mode);
+	};
+
+
 	$scope.init();
 
 });
 
-/* controller for fd tree view */
-twittNavApp.controller('FDTreeCtrl', function($rootScope, $scope) {
-	
-	$scope.init = function(){
 
-		$rootScope.fdtc = new FDTreeCanvas();
-		$scope.updateLayout();
-	};
-
-	$scope.getFDTreeCanvas = function(){
-		return $rootScope.fdtc;
-	};
-
-	$scope.update = function(){
-		$rootScope.fdtc.update();
-	};
-
-	$scope.updateLayout = function(){
-		$rootScope.fdtc.updateLayout();
-	};
-
-	$scope.init();
-
-});
 
 twittNavApp.controller('table_controller', function($rootScope, $scope) {
 
