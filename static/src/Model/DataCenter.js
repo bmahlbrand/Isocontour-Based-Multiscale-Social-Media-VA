@@ -18,7 +18,6 @@ DataCenter = function(){
 	this.keywordCate = {};
 
 	this.root = null;
-	this.filterRoot = null;
 	
 };
 
@@ -31,8 +30,9 @@ DataCenter.prototype.init = function(){
 	//init tree
 	this.root = this.initTree();
 
-	this.filterRoot = this.filterTree(this.root);
-	this.filterRoot.sortChildren();
+	this.filterTree();
+
+	this.root.sortChildren();
 
 }
 
@@ -43,6 +43,9 @@ DataCenter.prototype.init = function(){
 DataCenter.prototype.setRange = function(min, max){
 
 	this.volRange = [min, max];
+
+	this.filterTree();
+	$('[ng-controller="app_controller"]').scope().masterUpdate();
 
 };
 
@@ -66,11 +69,10 @@ DataCenter.prototype.setFocusCate = function(cates){
 
 //current only have volume range filter, will add other filters later
 //not decided whether we need to copy the tree
-DataCenter.prototype.filterTree = function(root){
+DataCenter.prototype.filterTree = function(){
 
-	//copy tree for org root;
-	//only copy the nodes that pass the filter
-	return root;
+	this.root.filterTree(this.volRange[0], this.volRange[1]);
+
 
 };
 
