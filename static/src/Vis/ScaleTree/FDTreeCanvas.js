@@ -118,7 +118,11 @@ FDTreeCanvas.prototype.forceLayout = function(nodes, edges, treeNode){
 						return "#eee";
 					})
 					.style("cursor", "hand")
-					.call(force.drag);
+					.call(force.drag)
+					.on("click", function(i){
+						var dist = DataCenter.instance().getTree().getNodeById(i.id).stat.calCateDist(DataCenter.instance().focusCates);
+						alert(JSON.stringify(dist));
+					});
 
 	force.nodes(nodes)
 			.links(edges)
@@ -206,9 +210,30 @@ FDTreeCanvas.prototype.hoverEdges = function(){
 
 };
 
+FDTreeCanvas.prototype.renderEdgeByVariace = function(){
+
+	d3.selectAll(".FDEdges")
+		.attr("stroke", function(){
+			
+			var tks = this.id.split("__");
+			var source = tks[1];
+			var target = tks[2];
+			
+			var rst = StatComponent.vecDist(source, target);
+			console.log(rst);
+
+			return variaceColor()(rst);
+
+		})
+		.attr("stroke-width", 2);
+};
+
+
 FDTreeCanvas.prototype.update = function(){
 
 	this.hoverEdges();
 	this.hoverNode();
+
+	this.renderEdgeByVariace();
 
 };
