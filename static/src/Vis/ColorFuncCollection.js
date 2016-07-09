@@ -26,7 +26,7 @@ function contourColorFill(){
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
 		color = ["#9ecae1"];
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL || ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE )
-		color = greys;
+		color = blues;
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
 
@@ -63,6 +63,19 @@ function divergentColorList(){
 	//dark
 	//return ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'];
 
+	//modified:
+	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"]
+	var color = ["#e41a1c", "#ff7f00", "#f781bf", "#4daf4a"];
 	//https://bl.ocks.org/mbostock/5577023
-	return colorbrewer['Set1'][8];
+	//return colorbrewer['Set3'][8];
+	return color;
+}
+
+//two normalized vectors (the sum of array is 1), their distance is less or equal to 1
+//0 maps to light color, 1 maps to 
+function variaceColor(){
+
+	return d3.scale.linear()
+					.domain([0, 0.3, 1])
+					.range(['#fff5f0', '#fee0d2', '#ef3b2c']);
 }
