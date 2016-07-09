@@ -284,8 +284,8 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 
 	/***************************************************render the boundary*************************************************/
 	var selectedCate = DataCenter.instance().focusCates;
-	var categories = DataCenter.instance().categories;
-	var cateVol = selectedCate.map(function(val){ return node.stat.getCateDist()[val]; });
+	var dist = node.stat.calCateDist(selectedCate);
+	var cateVol = selectedCate.map(function(val){ return dist[val]; });
 	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
 	this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor, isChild);
@@ -946,7 +946,7 @@ ContourVis.hullOverlapViewport = function(hull, flagForMinOlp){
 
 	//too small
 	var aabb = PolyK.GetAABB(hull);
-	if(aabb.width < 5 || aabb.height < 5 )
+	if(aabb.width < 10 || aabb.height < 10 )
 		return false;
 
 	//area two small
