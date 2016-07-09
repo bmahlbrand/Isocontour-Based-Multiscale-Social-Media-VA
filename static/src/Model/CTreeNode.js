@@ -462,5 +462,3 @@ CTreeNode.prototype.getNodeEdge = function(){
 
 CTreeNode.SORTMODE = { VOLUME:0, GEO:1, STAT:2 };
 CTreeNode.SORT = CTreeNode.SORTMODE.GEO;
-
-CTreeNode.statVariable = ['T04', 'O02'];
