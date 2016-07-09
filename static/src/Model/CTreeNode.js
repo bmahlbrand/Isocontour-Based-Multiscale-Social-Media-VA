@@ -1,6 +1,9 @@
 CTreeNode = function(cluster){
 	this.cluster = cluster;
 	this.children = [];
+	//store all the children in the allChildren list;
+	//this design avoids copying the whole tree for filter option.
+	this.allChildren = [];
 	this.vis = new VisComponent();
 	this.stat = new StatComponent(cluster['ids']);
 };
@@ -16,6 +19,8 @@ CTreeNode.prototype.addChild = function(clusterArr){
 			var c = new CTreeNode(clusterArr[val]);
 			c.addChild(clusterArr);
 			that.children.push(c);
+			//duplicate children array in the allChildren array;
+			that.allChildren.push(c);
 		});
 	}
 };
@@ -119,6 +124,23 @@ CTreeNode.prototype.toList = function(){
 
 CTreeNode.prototype.getVol = function(){
 	return this.cluster.ids.length;
+};
+
+//only have volume for now, atually only filter out based on min value;
+CTreeNode.prototype.filterTree = function(min, max){
+	
+	this.children = [];
+
+	var that = this;
+	this.allChildren.forEach(function(val){
+		if(val.getVol() >= min)
+			that.children.push(val);
+	});
+
+	this.children.forEach(function(val){
+		val.filterTree(min, max);
+	});
+
 };
 
 /*****************************************************************************/
