@@ -4,7 +4,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 
-import sys, json, re
+import sys, json, re, time
 
 # Go to http://apps.twitter.com and create an app.
 # The consumer key and secret will be generated for you after
@@ -22,29 +22,39 @@ class StdOutListener(StreamListener):
     """
     def __init__(self):
         self.msgCount = 0
-        self.log = open('log.txt', 'a')
+        self.log = open('log.txt', 'a', encoding="utf8")
 
     def on_data(self, data):
 
+        data_back = data
         try:
             data = json.loads(data)
             tweet = []
-            tweet.append(str(data['id']))
+            tweet.append(str(data['id_str']))
             tweet.append(str(data['user']['id']))
-            tweet.append(str(data['created_at']))
-            tweet.append(re.sub('\s+', ' ', data['text']))
-            tweet.append(str(",".join(str(x) for x in data['geo']['coordinates'])))
-            tweet.append(data['lang'])
 
-            print('\t'.join(tweet)+"\n")
-            self.log.write('\t'.join(tweet)+"\n")
-            self.log.flush()
+            ts = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(data['created_at'],'%a %b %d %H:%M:%S +0000 %Y'))
 
-            self.msgCount += 1
+            tweet.append(ts)
+            tweet.append(re.sub('\s+', ' ', data['text']) + " " +data['lang'] )
+
+            if data['geo'] is not None and data['geo']['coordinates'] is not None:
+                tweet.append(str(data['geo']['coordinates'][0]))
+                tweet.append(str(data['geo']['coordinates'][1]))
+
+                print('\t'.join(tweet)+"\n")
+                self.log.write('\t'.join(tweet)+"\n")
+                self.log.flush()
+
+                self.msgCount += 1
+            else:
+                data_back = data_back
+                # print("geo is none")
 
         except:
             placeholder = 0
-            # print("Unexpected error:", sys.exc_info())
+            print("Unexpected error:", sys.exc_info())
+            print("data string: ", data_back)
 
     def on_error(self, status):
         print(status)
