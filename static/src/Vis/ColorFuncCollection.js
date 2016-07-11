@@ -66,6 +66,7 @@ function divergentColorList(){
 	//modified:
 	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"]
 	var color = ["#e41a1c", "#ff7f00", "#f781bf", "#4daf4a"];
+	var color = ['#e41a1c', '#fc8d62', '#762a83', '#1b7837'];
 	//https://bl.ocks.org/mbostock/5577023
 	//return colorbrewer['Set3'][8];
 	return color;
@@ -76,6 +77,6 @@ function divergentColorList(){
 function variaceColor(){
 
 	return d3.scale.linear()
-					.domain([0, 0.3, 1])
-					.range(['#fff5f0', '#fee0d2', '#ef3b2c']);
+					.domain([0, 1])
+					.range(['#fee0d2', '#de2d26']);
 }
