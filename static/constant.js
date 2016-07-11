@@ -79,7 +79,6 @@ var tweetDataFile = dir + globalName + "/" + globalName +".json";
 
 var clusterTreeFile = dir + globalName + "/" + globalName +"_clustertree.json";
 var profileFile = dir + globalName + "/" + globalName +"_profile.json";
-var cateCluster = dir + globalName + "/" + globalName +"_catecluster.json";
 
 var profile;
 
