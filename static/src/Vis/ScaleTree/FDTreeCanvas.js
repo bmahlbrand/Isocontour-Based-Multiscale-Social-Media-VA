@@ -234,6 +234,7 @@ FDTreeCanvas.prototype.update = function(){
 	this.hoverEdges();
 	this.hoverNode();
 
-	this.renderEdgeByVariace();
+	//
+	//this.renderEdgeByVariace();
 
 };
