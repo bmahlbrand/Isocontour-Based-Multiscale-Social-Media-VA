@@ -261,7 +261,7 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 			$('#cateList').append(
 				'<label><input type="checkbox" name="cates" value="'+val+'" />' 
 				//+ '<span style="background-color:' + divergentColorList()[cates.indexOf(val)] + ';">'
-				+ '<span id="' +val+ '">'
+				+ '<span style="color:#" id="' +val+ '">'
 				+ val
 				+ ': ' + EMCateTitle[val]
 				+ '</span></label>'
@@ -283,7 +283,7 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 						if( index != -1){
 							d3.select("span#"+val.id).style('color', divergentColorList()[index]);
 						}else{
-							d3.select("span#"+val.id).style('color', "#000");
+							d3.select("span#"+val.id).style('color', "#aaa");
 						}
 					}
 				);
