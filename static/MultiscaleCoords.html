@@ -32,6 +32,9 @@
 		};
 	</script>
 
+	<!--download function-->
+	<script type="text/javascript" src="lib/download/download.js"></script>
+	
 	<!--external resources-->
 	<!-- jquery ui-->
 	<script type="text/javascript" src="lib/jQuery/jquery-2.1.3.min.js"></script>
@@ -65,9 +68,9 @@
 	<script type="text/javascript">
 
 	OlMapViewHelper.startLevel = 0;
-	OlMapViewHelper.endLevel = 6;
+	OlMapViewHelper.endLevel = 4;
 
-	var name = 'keene';
+	var name = 'world';
 	var mapView;
 	var tweets;
 	var mapViewHelper;
@@ -138,10 +141,7 @@
 
 		var output = JSON.stringify(profile);
 
-		var element = document.createElement('a');
-		element.setAttribute('href', 'data:text/text;charset=utf-8,' + encodeURI(output));
-		element.setAttribute('download', name+'_profile.json');
-		element.click();
+		download(output, name+'_profile.json', 'application/json');
 	}
 
 	</script>

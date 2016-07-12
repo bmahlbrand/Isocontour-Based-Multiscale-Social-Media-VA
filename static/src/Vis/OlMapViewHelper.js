@@ -81,9 +81,10 @@ OlMapViewHelper.prototype.genMultiScaleCoords = function(tweets, name){
 
 	var output = JSON.stringify(layers);
 
-	var element = document.createElement('a');
-	element.setAttribute('href', 'data:text/text;charset=utf-8,' +      encodeURI(output));
-	element.setAttribute('download', name);
-	element.click();
+	// var element = document.createElement('a');
+	// element.setAttribute('href', 'data:text/text;charset=utf-8,' + encodeURI(output));
+	// element.setAttribute('download', name);
+	// element.click();
+	download(output, name, 'application/json');
 
 };
