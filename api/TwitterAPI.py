@@ -22,7 +22,7 @@ class StdOutListener(StreamListener):
     """
     def __init__(self):
         self.msgCount = 0
-        self.log = open('log.txt', 'a', encoding="utf8")
+        self.log = open('world.txt', 'a', encoding="utf8")
 
     def on_data(self, data):
 
@@ -68,6 +68,6 @@ if __name__ == '__main__':
     # stream.filter(track=['basketball'])
 
     try:
-        stream.filter(locations=[-180, 0, 180, 90])
+        stream.filter(locations=[-180, -90, 180, 90])
     except:
         print("Unexpected error in out loop:", sys.exc_info().join(", "))
