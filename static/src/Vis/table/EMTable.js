@@ -45,10 +45,10 @@ EMTable.prototype.display = function(tweets){
 
 				rgb = hexToRgb(c);
 				//background color;
-				rgba = rgb.r + "," + rgb.g + "," + rgb.b + "," + 0.9;
-				text[index] = "<span style=\"background-color:rgba(" + rgba + ")\">" + text[index] + "</span>";
+				//rgba = rgb.r + "," + rgb.g + "," + rgb.b + "," + 0.9;
+				//text[index] = "<span style=\"background-color:rgba(" + rgba + ")\">" + text[index] + "</span>";
 				//font color
-				//text[index] = "<font color=\"" + c + ")\">" + text[index] + "</font>";
+				text[index] = "<font color='" + c + "'>" + text[index] + "</font>";
 				//assign color to the background of text;
 				visFlag = true;
 			}
