@@ -3,11 +3,16 @@ StatComponent = function(tweets){
 };
 
 //normalized distribution;
-StatComponent.prototype.calCateDist = function(cate){
+//threshold is used to remove the cate which volume is lower than the threshold
+//if threshold is not defined, then every cate is kept in the result
+StatComponent.prototype.calCateDist = function(cates, threshold){
+
+	if(cates.length == 0)
+		return {};
 
 	var cateDup = [];
 	this.tweets.forEach(function(id){
-		cate = intersect_arrays( DataCenter.instance().focusCates, Object.keys(DataCenter.instance().tweets[id].cate) );
+		cate = intersect_arrays( cates, Object.keys(DataCenter.instance().tweets[id].cate) );
 		cateDup = cateDup.concat(cate);
 	});
 	
@@ -27,8 +32,14 @@ StatComponent.prototype.calCateDist = function(cate){
 	if(sum <= 0)
 		return dist;
 
-	for(var c in dist)
+	for(var c in dist){
 		dist[c] = dist[c] / sum;
+		//only remove those not equal to zero, but has low volume
+		if( threshold !== null && threshold !== undefined && dist[c] < threshold && dist[c] > 0 ){
+			console.log("remove low vol component:" + dist[c] + " " + sum);
+			dist[c] = 0;
+		}
+	}
 
 	return dist;
 };
