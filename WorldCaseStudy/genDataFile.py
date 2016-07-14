@@ -9,8 +9,8 @@ with open('world_large.json', encoding="utf8") as data_file:
     rst = []
     for tweet in tweets:
 
-        # if randint(0, 9) >= 1:
-        #     continue
+        if randint(0, 9) >= 3:
+            continue
 
         tweet['text'] = tweet['tokens']
         tokens = tweet['text'].split()
@@ -20,8 +20,8 @@ with open('world_large.json', encoding="utf8") as data_file:
             print('undefined lang')
             continue
         # skip english
-        if lang == 'en':
-            continue
+        # if lang == 'en':
+        #     continue
 
         tweet['tweet_id'] = str(tweet['tweet_id'])
         tweet['cate'] = [lang]
@@ -36,13 +36,16 @@ with open('world_large.json', encoding="utf8") as data_file:
 
         lat = float(tweet['geolocation']['lat'])
         lon = float(tweet['geolocation']['lon'])
+
         # US: 50.908018, -134.559077, 21.885955, -53.764995
-        if lat > 50 or lat < 20 or lon > -53 or lon < -134:
+        # EURO: 70.642718, -23.889952, 35.962543, 43.082705
+        # if lat > 50 or lat < 20 or lon > -53 or lon < -134:
+        if lat > 70 or lat < 35 or lon > 43 or lon < -23:
             continue
 
         del tweet['user_id']
 
         rst.append(tweet)
 
-    with open('us.json', 'w', encoding="utf8") as outfile:
+    with open('euro.json', 'w', encoding="utf8") as outfile:
         json.dump({'tweets': rst}, outfile)
