@@ -224,7 +224,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 			    	.attr("class", "concaveHull "+"hull_"+id)
 			    	.attr("d", curLineFunc)
 			    	.attr("fill", _fillColor)
-			    	.attr("fill-opacity", 0.6)
+			    	.attr("fill-opacity", 0.7)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	.on("click", function(){
 
@@ -284,7 +284,8 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 
 	/***************************************************render the boundary*************************************************/
 	var selectedCate = DataCenter.instance().focusCates;
-	var dist = node.stat.calCateDist(selectedCate);
+	var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0; 
+	var dist = node.stat.calCateDist(selectedCate, threshold);
 	var cateVol = selectedCate.map(function(val){ return dist[val]; });
 	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
@@ -405,9 +406,6 @@ ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, 
 	var offset = 0;
 	cateVol.forEach(function(cate, idx){
 
-		if(cate < 0.1)
-			return;
-
 		var dashArray = cate + ", " + (sum-cate);
 		var dashOffset = offset;
 		offset += cate;
@@ -466,6 +464,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 		//val here is the index of the cateVol;
 		var pos = curPath.getPointAtLength(idx*unitLength);
 
+		//only render points that are inside the viewport
 		if(ContourVis.inViewPort(pos.x, pos.y)){
 
 			svg.append("circle")
@@ -723,8 +722,9 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		startOffs.forEach(function(val, j){
 
 			var c;
-			if(val.word == "*")
+			if(val.word == "*"){
 				c = "#000";
+			}
 			else{
 				var tCates = Object.keys(DataCenter.instance().keywordCate[val.word]);
 				var inter = intersect_arrays(selectedCate, tCates);
@@ -841,8 +841,10 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 			//get color;
 			var c;
-			if(word == "*")
+			if(word == "*"){
 				c = "#000";
+				word = "\u00A0" + word + "\u00A0";
+			}
 			else{
 				var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
 				var inter = intersect_arrays(selectedCate, tCates);
@@ -853,17 +855,18 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			}
 
 			//render text;
-			svg.append("text")
-				.attr("x", aabb.x + dx)
-				.attr("y", aabb.y + dy)
-				.attr("font-size", fontSize+"px")
-				.attr("font-family", "consolas")
-				.attr("fill", c)
-				.attr("alignment-baseline", "hanging")
-				.attr("clip-path", "url(#textclip_" +id+ ")")
-				.text(word);
+			var textEle = svg.append("text")
+								.attr("x", aabb.x + dx)
+								.attr("y", aabb.y + dy)
+								.attr("font-size", fontSize+"px")
+								.attr("font-family", "consolas")
+								.attr("fill", c)
+								.attr("alignment-baseline", "hanging")
+								.attr("clip-path", "url(#textclip_" +id+ ")")
+								.text(word);
 
-			dx += word.length*letterW;
+			// dx += word.length*letterW;
+			dx += textEle.node().getComputedTextLength();
 			idx++;
 
 		}while(dx < aabb.width);
@@ -895,7 +898,7 @@ ContourVis.hullInViewport = function(hull){
 
 	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
-	if(aabb.width < 6 || aabb.height < 6 )
+	if(aabb.width < 5 || aabb.height < 5 )
 		return [false, hull, true];
 		// return [false, ContourVis.extendHull(hull), true];
 
