@@ -234,53 +234,59 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 	                    console.log(node.stat.getCateDist());
 
 			    	})
-			    	.on("mouseover", function(){
+			    // 	.on("mouseover", function(){
+
+			    // 		return;
 			    		
-			    		/*************************************draw optimized dots************************************/
-			    		var cluster_id = this.id.substring(5, this.id.length);
-			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
-			    		for(var i=0; i<dots.length/2; i++){
-			    			svg.append("circle")
-			    				.attr('class', 'control_point')
-			    				.attr('cx', dots[2*i])
-			    				.attr('cy', dots[2*i+1])
-			    				.attr('r', 5)
-			    				.attr('fill', 'red');
-			    		}
-
-			    		/*************************************draw actual tweet dots************************************/
-			    		// //tweets inside the hull;
-			    		// var cluster_id = this.id.substring(5, this.id.length);
-			    		// console.log(cluster_id);
-
-			    		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
-			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    // 		var cluster_id = this.id.substring(5, this.id.length);
+			    // 		/*************************************draw optimized dots************************************/
 			    		
-			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    // 		// var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    // 		// for(var i=0; i<dots.length/2; i++){
+			    // 		// 	svg.append("circle")
+			    // 		// 		.attr('class', 'control_point')
+			    // 		// 		.attr('cx', dots[2*i])
+			    // 		// 		.attr('cy', dots[2*i+1])
+			    // 		// 		.attr('r', 5)
+			    // 		// 		.attr('fill', 'red');
+			    // 		// }
 
-			    		// //cate distribution
-			    		// console.log(DataCenter.instance().distOfCate(tweets));
+			    // 		/*************************************draw actual tweet dots************************************/
+			    // 		// //tweets inside the hull;
+			    // 		// var cluster_id = this.id.substring(5, this.id.length);
+			    // 		// console.log(cluster_id);
 
-			    		//tweets on the boundary:
-			    		var ids = [];
-			    		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hullIds'].forEach(function(idlist){
-			    			ids = ids.concat(idlist);
-			    		});
-
-			    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    // 		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
+			    // 		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue");
+			    // 		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-		  			}).on("mouseout", function(){
+			    // 		// //cate distribution
+			    // 		// console.log(DataCenter.instance().distOfCate(tweets));
 
-		  				/*************************************draw optimized dots************************************/
-			    		svg.selectAll(".control_point").remove();
+			    // 		//tweets on the boundary:
+			    // 		var ids = [];
+			    // 		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
+			    // 			ids = ids.concat(idlist);
+			    // 		});
 
-			    		/*************************************draw actual tweet dots************************************/
+			    // 		var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		
+			    // 		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-		  				$('[ng-controller="map_controller"]').scope().clear_dots();
+		  			// }).on("mouseout", function(){
 
-		  			});
+		  			// 	return;
+
+		  			// 	/*************************************draw optimized dots************************************/
+			    // 		svg.selectAll(".control_point").remove();
+
+			    // 		/*************************************draw actual tweet dots************************************/
+
+		  			// 	$('[ng-controller="map_controller"]').scope().clear_dots();
+
+		  			// })
+		  			.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 	/***************************************************render the boundary*************************************************/
 	var selectedCate = DataCenter.instance().focusCates;
@@ -296,6 +302,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 	var svg = this.map_svg;
+	var that = this;
 
 	svg.append('defs')
 		.call(function (defs){
@@ -317,13 +324,48 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
     	});
 
 	svg.append("path")
-			.attr("class", "haloline_" + id + "_0")
+			.attr("id", "haloline_" + id)
 			.attr("d", lineFunc)
 	    	.attr("stroke", "#aaa")
 	    	.attr("stroke-width", 0)
 	    	.attr("fill", "white")
 	    	.style("filter", "url(#halo)")
 	    	.attr('mask', 'url(#halo_mask'+id+')')
+	    	.style("cursor", "hand")
+	   //  	.on("mouseover", function(){
+
+	   //  		return;
+
+	   //  		var cluster_id = this.id.substring(9, this.id.length);
+				// var ids = [];
+	   //  		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
+	   //  			ids = ids.concat(idlist);
+	   //  		});
+
+	   //  		var tweets = DataCenter.instance().getTweetsByIds(ids);
+	    		
+	   //  		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+	   //  	})
+	   //  	.on("mouseout", function(){
+
+	   //  		return;
+
+	   //  		/*************************************draw actual tweet dots************************************/
+
+  		// 		$('[ng-controller="map_controller"]').scope().clear_dots();
+
+  		// 	})
+  		// 	.on("click", function(){
+
+  		// 		return;
+
+	   //  		var id = this.id.substring(9, this.id.length);
+    //             $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
+    //             console.log(id);
+    //             console.log(node.stat.getCateDist());
+
+	   //  	})
+	    	.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 
 };
@@ -375,6 +417,9 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 	}catch(err){
 
+		if(err.toString().indexOf("error code") == -1)
+			throw err;
+
 		console.error(err);
 		//just draw regular line, do not add strip
 
@@ -397,7 +442,7 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
 
 	var svg = this.map_svg;
-	var unitLength = 5;
+	var unitLength = 10;
 
 	//multiply by unit length;
 	cateVol = cateVol.map(function(val){ return val*unitLength; });
@@ -483,6 +528,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 
 ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
+	var that = this;
 	var svg = this.map_svg;
 	
 	//generate path;
@@ -735,14 +781,26 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 			}
 
 			svg.append("text")
-				.attr("id", "text_"+id+"_"+i+"_"+j)
+				//.attr("id", "text_"+id+"_"+i+"_"+j)
+				.attr("class", val.word == "*"?"keyword":"keyword keyword_" + val.word )
 			    .attr("x", 0)
 			    .attr("dy", 0)
 			    .style("font-size", fontSize+"px")
 			    .style("font-family", "consolas")
 			    .attr("dominant-baseline", baseline)
 				.style("fill", c)
-			  .append("textPath")
+				.on("mouseover", function(){
+					//get the keyword of this text element;
+					var cls = d3.select(this).attr("class");
+					var keyword = cls.split("_")[1];
+
+					//hover the same keyword;
+					that.hoverKeywords(keyword);
+			    })
+			    .on("mouseout", function(){
+			    	that.hoverKeywords();
+			    })
+			  	.append("textPath")
 			    .attr("class", "textpath")
 			    .attr("startOffset", val.start+"px")
 			    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
@@ -855,7 +913,9 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			}
 
 			//render text;
+			var that = this;
 			var textEle = svg.append("text")
+								.attr("class", word == "*"?"keyword":"keyword keyword_" + word)
 								.attr("x", aabb.x + dx)
 								.attr("y", aabb.y + dy)
 								.attr("font-size", fontSize+"px")
@@ -863,7 +923,17 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 								.attr("fill", c)
 								.attr("alignment-baseline", "hanging")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
-								.text(word);
+								.text(word)
+								.on("mouseover", function(){
+									
+									//get the keyword of this text element;
+									var cls = d3.select(this).attr("class");
+									var keyword = cls.split("_")[1];
+
+									//hover the same keyword;
+									that.hoverKeywords(keyword);
+
+								});
 
 			// dx += word.length*letterW;
 			dx += textEle.node().getComputedTextLength();
@@ -879,6 +949,41 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	}
 
 }
+
+ContourVis.prototype.hoverKeywords = function(word){
+
+	//reset if no word
+	if(word == null || word == undefined){
+
+		d3.selectAll(".keyword")
+			.style("font-weight", 'normal')
+			.style("opacity", 1);
+
+
+	}
+	else{
+
+		d3.selectAll(".keyword")
+			.style("font-weight", function(){
+				var cls = d3.select(this).attr("class");
+				var keyword = cls.split("_")[1];
+				if(keyword == word)
+					return 'bolder';
+				else
+					return 'normal';
+			})
+			.style("opacity", function(){
+				var cls = d3.select(this).attr("class");
+				var keyword = cls.split("_")[1];
+				if(keyword == word)
+					return 1;
+				else
+					return 0.3;
+
+			});
+	}
+
+};
 
 // the difference between hullInViewport(O) and hullOverlapViewport(V) is:
 // O require that part of the poly should be inside the viewport
@@ -1040,6 +1145,60 @@ ContourVis.getPixelCoords = function(ids){
 
 // 	return poly;
 // };
+
+
+/*********************************************context menu**************************************************/
+
+ContourVis.prototype.get_menu = function(id){
+
+	var that = this;
+
+	var menu = [
+		{
+			title: 'Show Dots',
+			action: function() {
+
+				var ids = [];
+				DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
+	    			ids = ids.concat(idlist);
+	    		});
+
+	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+	    		
+	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			}
+		},
+		{
+			title: 'Clear Dots',
+			action: function() {
+				$('[ng-controller="map_controller"]').scope().clear_dots();
+			}
+		},
+		{
+			title: 'Show Messages',
+			action: function() {
+				$('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
+			}
+		},
+		{
+			title: 'null',
+			action: function() {
+			}
+		},
+		{
+			title: 'Cancel',
+			action: function() {
+			}
+		}
+	];
+
+	return menu;
+
+};
+
+
+
+
 
 /******************  parameter setup  **********************/
 ContourVis.tension = 0.7;
