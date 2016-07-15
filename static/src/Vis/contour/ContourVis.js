@@ -951,13 +951,11 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 ContourVis.prototype.hoverKeywords = function(word){
 
 	//reset if no word
-	if(word == null || word == undefined){
+	if(word == null || word == undefined || word == '*'){
 
 		d3.selectAll(".keyword")
 			.style("font-weight", 'normal')
 			.style("opacity", 1);
-
-
 	}
 	else{
 
@@ -977,7 +975,6 @@ ContourVis.prototype.hoverKeywords = function(word){
 					return 1;
 				else
 					return 0.3;
-
 			});
 	}
 
