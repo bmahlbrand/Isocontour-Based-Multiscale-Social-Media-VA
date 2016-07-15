@@ -76,25 +76,6 @@ OlMapView.prototype.init = function(div) {
  //        }
  //    });
 
-	/*
-	init dot layer:
-	*/
-	this.dotLayer = new OpenLayers.Layer.Vector('Tweet Dot Layer',
-			{
-                styleMap: new OpenLayers.StyleMap({
-					pointRadius: "${radius}",
-					fillColor: "${color}",
-					fillOpacity: "${opacity}",
-					strokeOpacity: 0.5,
-					strokeWidth: 1,
-  					strokeColor: '#777777'
-                })//,  
-				//renderers: renderer 
-			});
-
-	this.dotLayer.setZIndex(99999999);
-	this.map.addLayer(this.dotLayer);
-
 	//start example
 	// this.strategy = new OpenLayers.Strategy.Cluster();
 	// this.strategy.distance = 100;
@@ -172,6 +153,26 @@ OlMapView.prototype.init = function(div) {
 	// });
 
 };
+
+OlMapView.prototype.addDotLayer = function(){
+
+	this.dotLayer = new OpenLayers.Layer.Vector('TweetDotLayer',
+			{
+                styleMap: new OpenLayers.StyleMap({
+					pointRadius: "${radius}",
+					fillColor: "${color}",
+					fillOpacity: "${opacity}",
+					strokeOpacity: 0.5,
+					strokeWidth: 1,
+  					strokeColor: '#777777'
+                })//,  
+				//renderers: renderer 
+			});
+
+	this.map.addLayer(this.dotLayer);
+	return this.dotLayer;
+};
+
 
 OlMapView.prototype.toggleGlyphMode = function() {
 	Canvas_manager.instance().set_visibility(true);
