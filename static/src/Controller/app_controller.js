@@ -406,10 +406,14 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 		/************************************************************************************/
 
 		//initialize polygon selection:
-		$rootScope.polygon_layer = new PolygonLayerManager($rootScope.mapView.getMap());
+		//$rootScope.polygon_layer = new PolygonLayerManager($rootScope.mapView.getMap());
 
 		//initialize canvas manager:
 		Canvas_manager.instance().init(document.getElementById("mapView"), $rootScope.mapView.getMap());
+
+		//init dot map;
+		var dotLayer = $rootScope.mapView.addDotLayer();
+		$(dotLayer.div).css("pointer-events", "none")
 		
 	};
 
