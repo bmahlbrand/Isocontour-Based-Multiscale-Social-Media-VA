@@ -85,11 +85,14 @@ OlMapView.prototype.init = function(div) {
 					pointRadius: "${radius}",
 					fillColor: "${color}",
 					fillOpacity: "${opacity}",
-					strokeOpacity: 0
+					strokeOpacity: 0.5,
+					strokeWidth: 1,
+  					strokeColor: '#777777'
                 })//,  
 				//renderers: renderer 
 			});
 
+	this.dotLayer.setZIndex(99999999);
 	this.map.addLayer(this.dotLayer);
 
 	//start example
@@ -219,9 +222,9 @@ OlMapView.prototype.render_dots = function(tweets, color){
 		var feature = new OpenLayers.Feature.Vector(point);
 
 		if(color == "blue")
-			feature.attributes = {color: color, opacity:0.8, radius:8};
+			feature.attributes = {color: color, opacity:0.8, radius:2};
 		else
-			feature.attributes = {color: color, opacity:0.8, radius:1};
+			feature.attributes = {color: color, opacity:0.8, radius:2};
 
 		features_array.push(feature);
 		
