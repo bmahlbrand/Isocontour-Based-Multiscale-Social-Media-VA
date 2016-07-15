@@ -218,21 +218,21 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
     	});
 
 
+	var that = this;
 	/*******************************************render area inside the hull*******************************************/
     var hull = svg.append("path")
     				.attr("id", "hull_" + id)
-			    	.attr("class", "concaveHull "+"hull_"+id)
+			    	.attr("class", "concaveHull")
 			    	.attr("d", curLineFunc)
 			    	.attr("fill", _fillColor)
 			    	.attr("fill-opacity", 0.7)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
-			    	.on("click", function(){
-
+			    	.on("mouseover", function(){
 			    		var id = this.id.substring(5,this.id.length);
-	                    $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
-	                    console.log(id);
-	                    console.log(node.stat.getCateDist());
-
+			    		that.hoverCluster(id);
+			    	})
+			    	.on("mouseout", function(){
+			    		that.hoverCluster();
 			    	})
 			    // 	.on("mouseover", function(){
 
@@ -319,7 +319,7 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 	  				.attr('fill', '#ffffff');
 				mask.append('path')
 					.attr("d", lineFunc)
-            		.attr('fill', '#000000');
+            		.attr('fill', '#000');
 	        });
     	});
 
@@ -332,43 +332,41 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 	    	.style("filter", "url(#halo)")
 	    	.attr('mask', 'url(#halo_mask'+id+')')
 	    	.style("cursor", "hand")
-	   //  	.on("mouseover", function(){
-
-	   //  		return;
-
-	   //  		var cluster_id = this.id.substring(9, this.id.length);
-				// var ids = [];
-	   //  		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
-	   //  			ids = ids.concat(idlist);
-	   //  		});
-
-	   //  		var tweets = DataCenter.instance().getTweetsByIds(ids);
-	    		
-	   //  		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
-	   //  	})
-	   //  	.on("mouseout", function(){
-
-	   //  		return;
-
-	   //  		/*************************************draw actual tweet dots************************************/
-
-  		// 		$('[ng-controller="map_controller"]').scope().clear_dots();
-
-  		// 	})
-  		// 	.on("click", function(){
-
-  		// 		return;
-
-	   //  		var id = this.id.substring(9, this.id.length);
-    //             $('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
-    //             console.log(id);
-    //             console.log(node.stat.getCateDist());
-
-	   //  	})
+			.on("mouseover", function(){
+	    		var id = this.id.substring(9, this.id.length);
+	    		that.hoverCluster(id);
+	    	})
+	    	.on("mouseout", function(){
+	    		that.hoverCluster();
+	    	})
 	    	.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 
 };
+
+ContourVis.prototype.hoverCluster = function(id){
+
+	// d3.select(".concaveHull").attr("fill-opacity", 0.7);
+
+	// if(id == null || id == undefined)
+	// 	return;
+	// else
+	// 	d3.select("#hull_"+id).attr("fill-opacity", 0.95);
+	d3.selectAll(".concaveHull").attr("fill", function(){
+
+		//id = "hull_..."
+		var id = this.id;
+		var zoom = parseInt(id.substring(5, id.length).split("_")[0]);
+		return contourColorFill()(zoom);
+	});
+
+	if(id == null || id == undefined)
+		return;
+	else
+		d3.select("#hull_"+id).attr("fill", "#fee0b6");
+
+};
+
 
 ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol, cateColor, isChild){
 
