@@ -179,16 +179,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
 
-	var _fillColor = null;
-	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
-		_fillColor = "none";
-	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE || ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL)
-		_fillColor = contourColorFill()(zoom);
-	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE)
-		//disabled for now
-		_fillColor = contourColorFill()(zoom);
-
-	var _stroke = contourColorStroke()(zoom);
+	var _fillColor = contourColorFill()(zoom)
 
 	/*******************************************create mask for children area*******************************************/
 	// create mask function:
@@ -346,29 +337,39 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 ContourVis.prototype.hoverCluster = function(id){
 
+	//reset all
+	if(id == null || id == undefined){
+		
+		d3.selectAll(".concaveHull").attr("fill", function(){
+			var id = this.id;
+			id = id.substring(5, id.length);
+			var zoom = parseInt(id.split("_")[0]);
+			return contourColorFill()(zoom);
+		});
+
+		return;
+	}
+
+
 	var curId = id;
 	var curLevel = id.split("_")[0];
 
-	if(id == null || id == undefined)
-		return;
-	else{
-			//highlight only this cluster;
-			//d3.select("#hull_"+id).attr("fill", "#fee0b6");
-			d3.selectAll(".concaveHull").attr("fill", function(){
-				var id = this.id;
-				id = id.substring(5, id.length);
-				var zoom = parseInt(id.split("_")[0]);
-				
-				// if(id == curId)
-				// 	return "#fee0b6";
-				//highlight clusters of the same scale;
-				if(zoom == curLevel)
-					return "#fee0b6";
-				else
-					return contourColorFill()(zoom);
+	//highlight only this cluster;
+	//d3.select("#hull_"+id).attr("fill", "#fee0b6");
+	d3.selectAll(".concaveHull").attr("fill", function(){
+		var id = this.id;
+		id = id.substring(5, id.length);
+		var zoom = parseInt(id.split("_")[0]);
+		
+		// if(id == curId)
+		// 	return "#fee0b6";
+		//highlight clusters of the same scale;
+		if(zoom == curLevel)
+			return "#fee0b6";
+		else
+			return contourColorFill()(zoom);
 
-			});
-	}
+	});
 
 };
 
@@ -1208,7 +1209,7 @@ ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
 ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
 
-ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, STATSCORE:3 };
+ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4 }
