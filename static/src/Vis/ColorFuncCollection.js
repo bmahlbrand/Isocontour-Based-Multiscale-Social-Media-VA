@@ -19,14 +19,26 @@ function contourColorStroke(){
 
 function contourColorFill(){
 
-	var greys = colorbrewer['Greys'][7];
+	var numOfLevels = profile.endLevel - profile.startLevel + 1;
+
+	var greys = colorbrewer['Greys'][numOfLevels];
 	var blues = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#084594'];
+	
+	//super divergent
+	var divergent = colorbrewer['Set1'][numOfLevels];
+	//from green to red
+	// var divergent = colorbrewer['RdYlBu'][7].reverse();
+	var divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
+	divergent.reverse();
+
 
 	var color = null;
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
 		color = ["#9ecae1"];
-	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL || ContourVis.CONTOUR == ContourVis.CONTOURMODE.STATSCORE )
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL )
 		color = blues;
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DIVERGENT )
+		color = divergent;
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
 
@@ -54,7 +66,7 @@ function contourColorFill(){
 // 	return q;
 // }
 
-
+//https://bl.ocks.org/mbostock/5577023
 function divergentColorList(){
 	//light
 	// return ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9'];
@@ -66,7 +78,6 @@ function divergentColorList(){
 	//modified:
 	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"]
 	var color = ['#e41a1c', '#1b7837', '#762a83', '#8c564b', '#ff7f0e'];
-	//https://bl.ocks.org/mbostock/5577023
 	//return colorbrewer['Set3'][8];
 	return color;
 }
