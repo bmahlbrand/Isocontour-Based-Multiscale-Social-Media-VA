@@ -78,4 +78,4 @@ TreeCanvas.hlEdgeStrokeWidth = 3;
 
 
 TreeCanvas.MODES = { SCALETREE:0, FDTREE:1 };
-TreeCanvas.MODE = TreeCanvas.MODES.FDTREE;
+TreeCanvas.MODE = TreeCanvas.MODES.SCALETREE;
