@@ -691,7 +691,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		//http://bl.ocks.org/eweitnauer/7325338
 
 		var pathLen = curPath[0][0].getTotalLength();
-		var fontSize = 14;
+		var fontSize = 16;
 		var letterW = fontSize*0.55;
 		
 		//get keywords from the tree node;
@@ -798,6 +798,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 			    .on("mouseout", function(){
 			    	that.hoverKeywords();
 			    })
+			    .attr("pointer-events", val.word == "*"?"none":"visiblePainted")
 			  	.append("textPath")
 			    .attr("class", "textpath")
 			    .attr("startOffset", val.start+"px")
@@ -919,6 +920,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 								.attr("font-size", fontSize+"px")
 								.attr("font-family", "consolas")
 								.attr("fill", c)
+								.attr("pointer-events", word == "*"?"none":"visiblePainted")
 								.attr("alignment-baseline", "hanging")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
 								.text(word)
@@ -951,7 +953,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 ContourVis.prototype.hoverKeywords = function(word){
 
 	//reset if no word
-	if(word == null || word == undefined || word == '*'){
+	if(word == null || word == undefined || word.indexOf("*") != -1){
 
 		d3.selectAll(".keyword")
 			.style("font-weight", 'normal')
