@@ -346,24 +346,29 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 ContourVis.prototype.hoverCluster = function(id){
 
-	// d3.select(".concaveHull").attr("fill-opacity", 0.7);
-
-	// if(id == null || id == undefined)
-	// 	return;
-	// else
-	// 	d3.select("#hull_"+id).attr("fill-opacity", 0.95);
-	d3.selectAll(".concaveHull").attr("fill", function(){
-
-		//id = "hull_..."
-		var id = this.id;
-		var zoom = parseInt(id.substring(5, id.length).split("_")[0]);
-		return contourColorFill()(zoom);
-	});
+	var curId = id;
+	var curLevel = id.split("_")[0];
 
 	if(id == null || id == undefined)
 		return;
-	else
-		d3.select("#hull_"+id).attr("fill", "#fee0b6");
+	else{
+			//highlight only this cluster;
+			//d3.select("#hull_"+id).attr("fill", "#fee0b6");
+			d3.selectAll(".concaveHull").attr("fill", function(){
+				var id = this.id;
+				id = id.substring(5, id.length);
+				var zoom = parseInt(id.split("_")[0]);
+				
+				// if(id == curId)
+				// 	return "#fee0b6";
+				//highlight clusters of the same scale;
+				if(zoom == curLevel)
+					return "#fee0b6";
+				else
+					return contourColorFill()(zoom);
+
+			});
+	}
 
 };
 
