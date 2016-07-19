@@ -831,7 +831,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 	curPath = curPath[0][0];
 
-	var step = 5;
+	var step = 10;
 	var segs = Math.floor(curPath.getTotalLength() / step);
 
 	/*******************************discrete path into a series of points************************************/
@@ -859,7 +859,6 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
 	var str = keywords.join("*");
 
-
 	//generate string of enough length for textpath;
 	var repeat = Math.ceil(aabb.width / (str.length*letterW));
 	var entireStr = Array(repeat).fill(str).join("*");
@@ -873,28 +872,38 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			    	.attr("stroke", "none")
 			    	.attr("fill", "none");
 
-	//sequential layout of text with fixed length offset;
-	//render using the same color;
-	// for(var i=0; i<Math.ceil(aabb.height/fontSize); i++){
-
-	// 	var xShiftText = Math.floor(aabb.width / Math.ceil(aabb.height/fontSize) * i / letterW);
-
-	// 	var y = aabb.y + i*fontSize;
-	// 	svg.append("text")
-	// 		.attr("x", aabb.x)
-	// 		.attr("y", y)
-	// 		.attr("font-size", fontSize+"px")
-	// 		.attr("font-family", "consolas")
-	// 		.attr("alignment-baseline", "hanging")
-	// 		.attr("clip-path", "url(#textclip_" +id+ ")")
-	// 		.text(entireStr.substr(xShiftText) + entireStr.substr(0, xShiftText));
-	// }
+	/**********************************************line segments of the polygon*********************************************/
+	var lineSegs = [];
+	for(var i=0; i<pts.length; i++){
+		lineSegs.push([pts[i], pts[(i+1)%segs]]);
+	}
 
 	//render individual text;
 	for(var i=0; i<Math.ceil(aabb.height/fontSize); i++){
 
-		var dy = i*fontSize;
-		var dx = 0;
+		/********calculate intersection points of the sweep line and polygon*********/
+		var interPts = [];
+		lineSegs.forEach(function(val){
+			var rst = intersetLines(val[0][0]-aabb.x, val[0][1]-aabb.y, val[1][0]-aabb.x, val[1][1]-aabb.y, 
+									0, i*fontSize, aabb.width, i*fontSize);
+			if(rst != null)
+				interPts.push(rst);
+		});
+
+		/****************************order intersection points by x value*********************************/
+		interPts = interPts.sort(function(a,b){
+									if (a[0] < b[0]) return -1;
+									if (a[0] > b[0]) return 1;
+								   	return 0;
+								});
+		/*************for simplification, we assume there are only two intersetion points, i.e., convex polygon**************/
+		//skip the case when more than 2 intersection points or the intersetion length is too short
+		if(interPts.length != 2 || Math.abs(interPts[0][0]-interPts[1][0]) < 2 )
+			continue;
+
+		var dy = i*fontSize - 0.5*fontSize;
+		var dx = interPts[0][0] + 5;
+		// var dx = 0;
 		var idx = 0;
 			
 		var words = entireStr.split(/(\*)/g);
@@ -946,7 +955,8 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			dx += textEle.node().getComputedTextLength();
 			idx++;
 
-		}while(dx < aabb.width);
+		}while(dx < interPts[1][0]);
+		// }while(dx < aabb.width);
 
 		//shift string
 		var shiftOffset = entireStr.indexOf("*", Math.floor(entireStr.length / 3));
