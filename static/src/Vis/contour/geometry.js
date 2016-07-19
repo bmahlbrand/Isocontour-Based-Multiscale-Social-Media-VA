@@ -2,7 +2,7 @@ Geometry = function(){};
 
 //this version can also return the intersection point;
 //http://jsfiddle.net/justin_c_rounds/Gd2S2/
-function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+function intersetLines(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
     // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
     var denominator, a, b, numerator1, numerator2, result = {
         x: null,
@@ -12,7 +12,7 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
     };
     denominator = ((line2EndY - line2StartY) * (line1EndX - line1StartX)) - ((line2EndX - line2StartX) * (line1EndY - line1StartY));
     if (denominator == 0) {
-        return result;
+        return null;
     }
     a = line1StartY - line2StartY;
     b = line1StartX - line2StartX;
@@ -38,7 +38,11 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
         result.onLine2 = true;
     }
     // if line1 and line2 are segments, they intersect if both of the above are true
-    return result;
+    if(result.onLine1 && result.onLine2)
+    	return [result.x, result.y];
+
+    return null;
+
 };
 
 //this version also check if the point intersets or not;
