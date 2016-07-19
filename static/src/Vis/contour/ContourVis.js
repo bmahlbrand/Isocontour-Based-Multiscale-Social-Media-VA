@@ -337,6 +337,8 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 
 ContourVis.prototype.hoverCluster = function(id){
 
+	// var highlightColor = "#fee0b6";
+	var highlightColor = "#af8dc3";
 	//reset all
 	if(id == null || id == undefined){
 		
@@ -349,7 +351,6 @@ ContourVis.prototype.hoverCluster = function(id){
 
 		return;
 	}
-
 
 	var curId = id;
 	var curLevel = id.split("_")[0];
@@ -365,7 +366,7 @@ ContourVis.prototype.hoverCluster = function(id){
 		// 	return "#fee0b6";
 		//highlight clusters of the same scale;
 		if(zoom == curLevel)
-			return "#fee0b6";
+			return highlightColor;
 		else
 			return contourColorFill()(zoom);
 
@@ -1210,7 +1211,7 @@ ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
 ContourVis.DIMENSION = 1024;
 
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
-ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
+ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
