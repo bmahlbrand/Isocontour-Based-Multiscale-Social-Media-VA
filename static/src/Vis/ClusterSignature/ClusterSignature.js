@@ -57,8 +57,6 @@ ClusterSignature.prototype.getArea = function(clusterPoints) {
 
 	return sum / 2;
 
-	//return angular.controller('map_controller').$scope.createDummyPath(clusters[i].hulls).;
-
 };
 
 //grab the minimap view
