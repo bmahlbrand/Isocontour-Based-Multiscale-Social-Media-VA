@@ -126,7 +126,17 @@ HullLayout._moveOutsidePtsBiDir = function(parent, child){
 		var x = child[2*i];
 		var y = child[2*i+1];
 
-		if( !PolyK.ContainsPoint(parent, x, y) ){
+		var needToMove = !PolyK.ContainsPoint(parent, x, y);
+		var rst = PolyK.ClosestEdge(parent, x, y);
+		//on the edge, need to move a little bit
+		if(rst.dist == 0){
+			var angle = Math.random()*2*Math.PI;
+			x += Math.cos(angle);
+			y += Math.sin(angle);
+			needToMove = true;
+		}
+
+		if(needToMove){
 
 			var rst = PolyK.ClosestEdge(parent, x, y);
 			var closedP = rst.point;
@@ -224,9 +234,12 @@ HullLayout._forceDirectedMove = function(parent, child){
 			var rst = PolyK.ClosestEdge(parent, x, y);
 			
 			if (rst.dist < HullLayout.pointEdgeDisThres) {
-				childCand.push([i, rst.norm]);
 
-				farEnough = false;
+				//check norm is valid, in other words, rst.dist != 0
+				if(!isNaN(rst.norm.x) && !isNaN(rst.norm.y)){
+					childCand.push([i, rst.norm]);
+					farEnough = false;
+				}
 			}
 		}
 		
@@ -291,17 +304,37 @@ HullLayout._forceDirectedMove = function(parent, child){
 };
 
 //check that after the optimization, the child is inclusive in the parent scope.
+// HullLayout._validateOpt = function(parent, child){
+	
+// 	for(var i=0; i<child.length/2; i++){
+		
+// 		var x = child[2*i];
+// 		var y = child[2*i+1];
+
+// 		if( !PolyK.ContainsPoint(parent, x, y) ){
+// 			return {p:parent, c:[]};
+// 		}
+// 	}
+
+// 	return {p:parent, c:child};
+
+// }
+
 HullLayout._validateOpt = function(parent, child){
 	
+	//remove points that are outside the parent hull;
 	for(var i=0; i<child.length/2; i++){
 		
 		var x = child[2*i];
 		var y = child[2*i+1];
 
 		if( !PolyK.ContainsPoint(parent, x, y) ){
-			return {p:parent, c:[]};
+			child[2*i] = Number.NaN;
+			child[2*i+1] = Number.NaN;
 		}
 	}
+
+	child = child.filter(function(val){ return !isNaN(val); });
 
 	return {p:parent, c:child};
 
@@ -310,20 +343,20 @@ HullLayout._validateOpt = function(parent, child){
 HullLayout.minimizeOverlap = function(parent, child){
 
 	var parentChild = {p:parent, c:child};
+	// return parentChild;
+
 	if(parent.length <= 0 || child.length <= 0)
 		return parentChild;
+
 
 	parentChild = HullLayout._moveOutsidePtsBiDir(parentChild.p, parentChild.c);
 	//child = HullLayout._shrinkPartialPoly(parent, child);
 	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
 	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
-
+	// parentChild.c = simplifyWrapper(parentChild.c, 5, false);
 	return parentChild;
 
 };
-
-
-
 
 HullLayout.samplePathThreshold = 30; //pixel distance
 HullLayout.pointEdgeDisThres = 10; //pixel distance?
