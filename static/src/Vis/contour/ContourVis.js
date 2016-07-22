@@ -96,12 +96,18 @@ ContourVis.prototype.createLineFunc = function(pts){
 						.x(function(d) { return d[0]; })
                         .y(function(d) { return d[1]; })
                         .interpolate("basis-closed");
-	}else{
+	}else if(ContourVis.MODE == ContourVis.INTERMODE.CARDINAL){
 		lineFunction = d3.svg.line()
 						.x(function(d) { return d[0]; })
                         .y(function(d) { return d[1]; })
                         .interpolate("cardinal-closed")
                         .tension(ContourVis.tension);
+	}else{
+		lineFunction = d3.svg.line()
+				.x(function(d) { return d[0]; })
+                .y(function(d) { return d[1]; })
+                .interpolate("linear-closed");
+
 	}
 
 	return lineFunction(pts);
@@ -218,65 +224,62 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 			    	.attr("fill", _fillColor)
 			    	.attr("fill-opacity", 0.7)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
+			    	// .on("mouseover", function(){
+			    	// 	var id = this.id.substring(5,this.id.length);
+			    	// 	that.hoverCluster(id);
+			    	// })
+			    	// .on("mouseout", function(){
+			    	// 	that.hoverCluster();
+			    	// })
 			    	.on("mouseover", function(){
-			    		var id = this.id.substring(5,this.id.length);
-			    		that.hoverCluster(id);
-			    	})
-			    	.on("mouseout", function(){
-			    		that.hoverCluster();
-			    	})
-			    // 	.on("mouseover", function(){
 
-			    // 		return;
 			    		
-			    // 		var cluster_id = this.id.substring(5, this.id.length);
-			    // 		/*************************************draw optimized dots************************************/
+			    		var cluster_id = this.id.substring(5, this.id.length);
+			    		/*************************************draw optimized dots************************************/
 			    		
-			    // 		// var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
-			    // 		// for(var i=0; i<dots.length/2; i++){
-			    // 		// 	svg.append("circle")
-			    // 		// 		.attr('class', 'control_point')
-			    // 		// 		.attr('cx', dots[2*i])
-			    // 		// 		.attr('cy', dots[2*i+1])
-			    // 		// 		.attr('r', 5)
-			    // 		// 		.attr('fill', 'red');
-			    // 		// }
+			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    		for(var i=0; i<dots.length/2; i++){
+			    			svg.append("circle")
+			    				.attr('class', 'control_point')
+			    				.attr('cx', dots[2*i])
+			    				.attr('cy', dots[2*i+1])
+			    				.attr('r', 2)
+			    				.attr('fill', 'red');
+			    		}
 
-			    // 		/*************************************draw actual tweet dots************************************/
-			    // 		// //tweets inside the hull;
-			    // 		// var cluster_id = this.id.substring(5, this.id.length);
-			    // 		// console.log(cluster_id);
+			    		/*************************************draw actual tweet dots************************************/
+			    		// //tweets inside the hull;
+			    		// var cluster_id = this.id.substring(5, this.id.length);
+			    		// console.log(cluster_id);
 
-			    // 		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
-			    // 		// var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
+			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    // 		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-			    // 		// //cate distribution
-			    // 		// console.log(DataCenter.instance().distOfCate(tweets));
+			    		// //cate distribution
+			    		// console.log(DataCenter.instance().distOfCate(tweets));
 
-			    // 		//tweets on the boundary:
-			    // 		var ids = [];
-			    // 		DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
-			    // 			ids = ids.concat(idlist);
-			    // 		});
+			    		//tweets on the boundary:
+			    		// var ids = [];
+			    		// DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
+			    		// 	ids = ids.concat(idlist);
+			    		// });
 
-			    // 		var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    // 		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-		  			// }).on("mouseout", function(){
+		  			}).on("mouseout", function(){
 
-		  			// 	return;
+		  				/*************************************draw optimized dots************************************/
+			    		svg.selectAll(".control_point").remove();
 
-		  			// 	/*************************************draw optimized dots************************************/
-			    // 		svg.selectAll(".control_point").remove();
+			    		/*************************************draw actual tweet dots************************************/
 
-			    // 		/*************************************draw actual tweet dots************************************/
+		  				// $('[ng-controller="map_controller"]').scope().clear_dots();
 
-		  			// 	$('[ng-controller="map_controller"]').scope().clear_dots();
-
-		  			// })
+		  			})
 		  			.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 	/***************************************************render the boundary*************************************************/
@@ -336,6 +339,8 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 };
 
 ContourVis.prototype.hoverCluster = function(id){
+
+	return;
 
 	// var highlightColor = "#fee0b6";
 	var highlightColor = "#af8dc3";
@@ -418,7 +423,6 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 			else
 				this.drawTextArea(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
 		}
-
 
 	}catch(err){
 
@@ -1111,7 +1115,6 @@ ContourVis.getPixelCoords = function(ids){
 	// var poly = hull(poly, 100);
 	// return ContourVis.smoothPoly(poly);
 
-
 	// get hull from json file;
 	var tweets = DataCenter.instance().getTweets();
 	var pts = [];
@@ -1216,8 +1219,8 @@ ContourVis.prototype.get_menu = function(id){
 
 /******************  parameter setup  **********************/
 ContourVis.tension = 0.7;
-ContourVis.INTERMODE = { BASIS:0, CARDINAL:1 };
-ContourVis.MODE = ContourVis.INTERMODE.CARDINAL;
+ContourVis.INTERMODE = { BASIS:0, CARDINAL:1, POLY:2 };
+ContourVis.MODE = ContourVis.INTERMODE.BASIS;
 ContourVis.DIMENSION = 1024;
 
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
@@ -1238,19 +1241,25 @@ ContourVis.prototype.createDummyLine = function(pts){
 	// 		            .interpolate("linear-closed");
 
 	var lineFunction = null;
+
+
+	lineFunction = d3.svg.line()
+				.x(function(d) { return d[0]; })
+                .y(function(d) { return d[1]; })
+                .interpolate("linear-closed");
 	
-	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
-		lineFunction = d3.svg.line()
-						.x(function(d) { return d[0]; })
-                        .y(function(d) { return d[1]; })
-                        .interpolate("basis-closed");
-	} else {
-		lineFunction = d3.svg.line()
-						.x(function(d) { return d[0]; })
-                        .y(function(d) { return d[1]; })
-                        .interpolate("cardinal-closed")
-                        .tension(ContourVis.tension);
-	}
+	// if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
+	// 	lineFunction = d3.svg.line()
+	// 					.x(function(d) { return d[0]; })
+ //                        .y(function(d) { return d[1]; })
+ //                        .interpolate("basis-closed");
+	// } else {
+	// 	lineFunction = d3.svg.line()
+	// 					.x(function(d) { return d[0]; })
+ //                        .y(function(d) { return d[1]; })
+ //                        .interpolate("cardinal-closed")
+ //                        .tension(ContourVis.tension);
+	// }
 
 	return lineFunction;
 
@@ -1262,23 +1271,6 @@ ContourVis.prototype.createDummyPath = function(pts){
 
 	var that = this;
 	var svg = this.map_svg;
-
-	var lineFunction = this.createDummyLine(pts);
-
-    var hull = svg.append("path")
-			    	.attr("class", "dummyPath")
-			    	.attr("d", lineFunction(pts))
-			    	.attr("stroke", "#FFF")
-			    	.attr("opacity", 0);
-	return hull;
-
-};
-
-ContourVis.prototype.createClusterSignaturePath = function(svg, pts){
-
-	pts = HullLayout.odArrTo2dArr(pts);
-
-	var that = this;
 
 	var lineFunction = this.createDummyLine(pts);
 

@@ -42,9 +42,6 @@ HullLayout.getSampledPath = function(points) {
 	return this.samplePath(this.getPath(points));
 };
 
-// HullLayout.getLine = function(points) {
-// 	return $('[ng-controller="map_controller"]').scope().createDummyLine(points);
-// };
 
 //not used for now;
 // HullLayout.sampledPath = function(path) { //actually this should be the line of the path
@@ -61,7 +58,7 @@ HullLayout.samplePath = function(pathNode) {
 	var sampledPts = [];
 	//set the termination condition to be "pathLength - HullLayout.samplePathThreshold / 2" 
 	//in order to make sure that the starting and ending points are not too close;
-	for (var scanLength = 0; scanLength <= pathLength - HullLayout.samplePathThreshold / 2; scanLength += HullLayout.samplePathThreshold) {
+	for (var scanLength = 0; scanLength <= pathLength - HullLayout.samplePathThreshold/2; scanLength += HullLayout.samplePathThreshold) {
 		var pt = this.pointAlongPath(pathNode, scanLength);
 		sampledPts.push(pt.x);
 		sampledPts.push(pt.y);
@@ -353,12 +350,22 @@ HullLayout.minimizeOverlap = function(parent, child){
 	//child = HullLayout._shrinkPartialPoly(parent, child);
 	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
 	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
-	// parentChild.c = simplifyWrapper(parentChild.c, 5, false);
+	//parentChild.p = HullLayout.getConvexHull(parentChild.p);
+	//parentChild.p = simplifyWrapper(parentChild.p, 5, false);
 	return parentChild;
 
 };
 
-HullLayout.samplePathThreshold = 30; //pixel distance
+HullLayout.getConvexHull = function(points){
+    
+    var arr = HullLayout.odArrTo2dArr(points);
+    var rst = hull(arr, Infinity);
+
+    return HullLayout.tdArrTo1dArr(rst);
+
+};
+
+HullLayout.samplePathThreshold = 15; //pixel distance
 HullLayout.pointEdgeDisThres = 10; //pixel distance?
 HullLayout.shrinkIteration = 5;
 
