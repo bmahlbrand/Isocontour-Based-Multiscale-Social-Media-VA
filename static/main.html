@@ -126,6 +126,7 @@
 	<script type="text/javascript" src="src/Model/CTreeNode.js"></script>
 	<script type="text/javascript" src="src/Model/DataCenter.js"></script>
 
+	<script type="text/javascript" src="src/Vis/contour/simplify.js"></script>
 	<script type="text/javascript" src="src/Vis/contour/geometry.js"></script>
 	<script type="text/javascript" src="src/Vis/contour/ContourVis.js"></script>
 
@@ -485,7 +486,6 @@
 			<div>
 				<input type="radio" name="treeType" onclick="treeType(0);" checked><span>dendrogram</span><br>
 				<input type="radio" name="treeType" onclick="treeType(1);" ><span>nodelink</span><br>
-
 			</div>
 
 		<h5 align="center">Filter</h5>
@@ -504,21 +504,18 @@
 				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Circle</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Text</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text &#38; Fill</span><br>
-
 			</div>
 
 		<h5 align="center">Dendrogram Type</h5>
 			<div>
 				<input type="radio" name="dendroType" onclick="dendroType(0);" ><span>icicle</span><br>
 				<input type="radio" name="dendroType" onclick="dendroType(1);" checked><span>node-link</span><br>
-
 			</div>
 		
 		<h5 align="center">Node Style</h5>
 			<div>
 				<input type="radio" name="nodeType" onclick="setNodeType(0);" checked><span>rect</span><br>
 				<input type="radio" name="nodeType" onclick="setNodeType(1);" ><span>circle</span><br>
-
 			</div>
 		
 		<h5 align="center">Node Size</h5>
@@ -527,7 +524,6 @@
 				<input type="radio" name="nodeSize" onclick="nodeSize(1);" checked><span>linear</span><br>
 				<input type="radio" name="nodeSize" onclick="nodeSize(2);" ><span>uniform</span><br>
 				<input type="radio" name="nodeSize" onclick="nodeSize(3);" ><span>poly</span>
-
 			</div>
 
 		<h5 align="center">Sort Tree</h5>
@@ -535,13 +531,13 @@
 				<input type="radio" name="sortTree" onclick="sortTree(0);" ><span>volume</span><br>
 				<input type="radio" name="sortTree" onclick="sortTree(1);" checked><span>geolocation(lon)</span><br>
 				<input type="radio" name="sortTree" onclick="sortTree(2);" ><span>stat score</span>
-
 			</div>
 		
 		<h5 align="center">Contour Layout</h5>
 			<div>
-				<input type="radio" name="mode" onclick="changemode(0);"><span>basis</span>
-				<input type="radio" name="mode" onclick="changemode(1);" checked><span>cardinal</span><br>
+				<input type="radio" name="mode" onclick="changemode(0);" checked><span>basis</span>
+				<input type="radio" name="mode" onclick="changemode(1);"><span>cardinal</span><br>
+				<input type="radio" name="mode" onclick="changemode(2);"><span>linear</span><br>
 				tension: <button onclick="changeTension(1)">+</button>
 				<button onclick="changeTension(0)">-</button>
 			</div>
@@ -559,7 +555,6 @@
 			<div>
 				<input type="radio" name="halo" onclick="turnHalo(0);" ><span>disable</span><br>
 				<input type="radio" name="halo" onclick="turnHalo(1);" checked><span>enable</span><br>
-
 			</div>
 
 	</div>
