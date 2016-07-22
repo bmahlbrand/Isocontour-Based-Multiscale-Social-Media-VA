@@ -1,5 +1,3 @@
-Geometry = function(){};
-
 //this version can also return the intersection point;
 //http://jsfiddle.net/justin_c_rounds/Gd2S2/
 function intersetLines(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
