@@ -40,7 +40,6 @@ TreeCanvas.prototype.getCanvas = function(type) {
 	}
 };
 
-
 TreeCanvas.prototype.preUpdate = function() {
 	if(TreeCanvas.MODE == TreeCanvas.MODES.FDTREE)
 		this.fdTreeCanvas.preUpdate();
@@ -63,7 +62,6 @@ TreeCanvas.prototype.switchCanvas = function(mode){
 	}
 
 }
-
 
 TreeCanvas.WIDTH = 700;
 TreeCanvas.HEIGHT = 500;
