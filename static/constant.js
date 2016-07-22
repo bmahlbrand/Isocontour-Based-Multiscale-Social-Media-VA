@@ -104,5 +104,9 @@ var EMCateTitle = {
 	"T03": "Dead",
 	"T04": "Infras",
 	"T09": "Evacuate",
-	"T11": "Update"
+	"T11": "Update",
+	"hiring":"",
+	"drink":"",
+	"rnc":"",
+	"traffic":""
 };
