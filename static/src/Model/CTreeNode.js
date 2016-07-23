@@ -202,7 +202,16 @@ CTreeNode.prototype.filterNodesForMinOlp = function(flag){
 
 	if(flag === undefined){
 
-		var rst = ContourVis.hullInViewport(this.cluster['hulls']);
+		//
+		var hullOrCenter = null;
+		if(this.cluster['hulls'].length > 0)
+			hullOrCenter = this.cluster['hulls'];
+		else{
+			var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:this.cluster['center'].lon, y:this.cluster['center'].lat});	
+			hullOrCenter = [pt.x, pt.y];
+		}
+
+		var rst = ContourVis.hullInViewport(hullOrCenter);
 
 		this.cluster['minOlpFlag'] = rst[0];
 
