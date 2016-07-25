@@ -845,6 +845,10 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 		pts.push([pos.x, pos.y]);
 	}
 
+	/***********************************calculate transformed polygon **************************************/
+	console.log(id+", longest: "+longestAxisOfPolygon(pts));
+
+
 	/*****************************************get bounding box************************************************/
 	var aabb = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts));
 	
