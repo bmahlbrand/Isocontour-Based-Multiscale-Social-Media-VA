@@ -5,7 +5,7 @@ CTreeNode = function(cluster){
 	//this design avoids copying the whole tree for filter option.
 	this.allChildren = [];
 	this.vis = new VisComponent();
-	this.stat = new StatComponent(cluster['ids']);
+	this.stat = new StatComponent(cluster['ids'], cluster['keywordsFreq']);
 };
 
 CTreeNode.prototype.addChild = function(clusterArr){
@@ -147,15 +147,7 @@ CTreeNode.prototype.filterTree = function(min, max){
 /*************************** Semantic/topic operation*************************/
 /*****************************************************************************/
 CTreeNode.prototype.getKeywords = function(cates, topK){
-	var keywords = this.cluster['keywordsFreq'];
-	var sorted = Object.keys(keywords)
-						.filter(function(val){
-							var tCates = Object.keys(DataCenter.instance().keywordCate[val]);
-							var inter = intersect_arrays(cates, tCates);
-							return inter.length>0?true:false;
-						})
-						.sort(function(a,b){return keywords[b]-keywords[a]; });
-	return sorted.length >= topK ? sorted.slice(0, topK) : sorted;
+	return this.stat.getKeywords(cates, topK);
 };
 
 /*****************************************************************************************/
@@ -309,6 +301,7 @@ CTreeNode.prototype.drawContour = function(acNodes){
 		}
 	});
 
+	//check if the current contour is leaf;
 	var isChild = childsLineFuncArr.length > 0 ? false : true;
 
 	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr, isChild);
