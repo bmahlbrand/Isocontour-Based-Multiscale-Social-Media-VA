@@ -907,11 +907,14 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	//render individual text;
 	for(var i=0; i<=Math.ceil(aabb.height/fontSize); i++){
 
+		//dy is fixed
+		var dy = i*fontSize - 0.5*fontSize;
+
 		/********calculate intersection points of the sweep line and polygon*********/
 		var interPts = [];
 		lineSegs.forEach(function(val){
-			var rst = intersetLines(val[0][0]-aabb.x, val[0][1]-aabb.y, val[1][0]-aabb.x, val[1][1]-aabb.y, 
-									0, i*fontSize, aabb.width, i*fontSize);
+			var rst = intersetLines(val[0][0]-aabb.x, val[0][1]-aabb.y, val[1][0]-aabb.x, val[1][1]-aabb.y,
+									0, dy, aabb.width, dy);
 			if(rst != null)
 				interPts.push(rst);
 		});
@@ -927,13 +930,11 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 		if(interPts.length != 2 || Math.abs(interPts[0][0]-interPts[1][0]) < 2 )
 			continue;
 
-		var dy = i*fontSize - fontSize;
+		//dx is determined by intersection
 		var dx = interPts[0][0];
-		// var dx = 0;
-		var idx = 0;
-			
+	
 		var words = entireStr.split(/(\*)/g);
-
+		var idx = 0;
 		do{
 			//get word
 			var word = words[idx];
@@ -963,7 +964,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 								.attr("font-family", "consolas")
 								.attr("fill", c)
 								.attr("pointer-events", word == "*"?"none":"visiblePainted")
-								.attr("alignment-baseline", "hanging")
+								.attr("alignment-baseline", "middle")
 								.attr("transform", "rotate(" + (-angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
 								.text(word)
@@ -975,7 +976,6 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 									//hover the same keyword;
 									that.hoverKeywords(keyword);
-
 								});
 
 			// dx += word.length*letterW;
