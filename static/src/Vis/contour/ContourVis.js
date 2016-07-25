@@ -773,7 +773,6 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		if(!subpathDir[i])
 			startOffs.push({word:"*", start:start});
 		
-
 		/********************************************draw text string***************************************/
 
 		startOffs.forEach(function(val, j){
@@ -823,6 +822,9 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 }
 
+//packing algorithm:
+//https://en.wikipedia.org/wiki/Packing_problems
+//http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu
 ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
 	var svg = this.map_svg;
@@ -863,8 +865,6 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	//overwrite the previous polygon;
 	pts = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
 
-
-
 	/*****************************************get bounding box************************************************/
 	var aabb = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts));
 	
@@ -879,14 +879,6 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	//the scale factor is set differently for text line vs area filling according to the experiment
 	var letterW = fontSize*0.49;
 	
-	//get keywords from the tree node;
-	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
-	var str = keywords.join("*");
-
-	//generate string of enough length for textpath;
-	var repeat = Math.ceil(aabb.width / (str.length*letterW));
-	var entireStr = Array(repeat).fill(str).join("*");
-
 	/***********************************************fill rect with text****************************************/
 
 	var newLineFunc = this.createLineFunc(HullLayout.tdArrTo1dArr(pts));
@@ -903,6 +895,10 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	for(var i=0; i<pts.length; i++){
 		lineSegs.push([pts[i], pts[(i+1)%segs]]);
 	}
+
+	//get keywords from the tree node;
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
+	var globalWordIdx = 0;
 
 	//render individual text;
 	for(var i=0; i<=Math.ceil(aabb.height/fontSize); i++){
@@ -932,12 +928,18 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 		//dx is determined by intersection
 		var dx = interPts[0][0];
-	
-		var words = entireStr.split(/(\*)/g);
-		var idx = 0;
+		var starFlag = false;
+
 		do{
 			//get word
-			var word = words[idx];
+			var word;
+			if(starFlag){
+				word = "*";
+			}else{
+				word = keywords[globalWordIdx];
+				globalWordIdx = (globalWordIdx + 1)%keywords.length;
+			}
+			starFlag = !starFlag;
 
 			//get color;
 			var c;
@@ -980,16 +982,10 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 			// dx += word.length*letterW;
 			dx += textEle.node().getComputedTextLength();
-			idx++;
 
 		}while(dx < interPts[1][0]);
 		// }while(dx < aabb.width);
 
-		//shift string
-		var shiftOffset = entireStr.indexOf("*", Math.floor(entireStr.length / 3));
-		if(shiftOffset > -1)
-			entireStr = entireStr.substr(shiftOffset+1) + "*" + entireStr.substr(0, shiftOffset);
-		
 	}
 
 }
