@@ -1,10 +1,13 @@
-StatComponent = function(tweets){
+StatComponent = function(tweets, keywordsFreq){
 	this.tweets = tweets;
+	this.keywordsFreq = keywordsFreq;
 };
 
 //normalized distribution;
 //threshold is used to remove the cate which volume is lower than the threshold
 //if threshold is not defined, then every cate is kept in the result
+
+
 StatComponent.prototype.calCateDist = function(cates, threshold){
 
 	if(cates.length == 0)
@@ -44,6 +47,43 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 	return dist;
 };
 
+/**************************************keywords functions*****************************************/
+StatComponent.prototype.getKeywords = function(cates, topK){
+	var keywords = Object.keys(this.keywordsFreq);
+
+	var sorted = keywords
+						// .map(function(val){
+						// 	if(val.startsWith('#'))
+						// 		return val.substring(1, val.length);
+						// 	else
+						// 		return val;
+						// })
+						.filter(function(val){
+							var tCates = Object.keys(DataCenter.instance().keywordCate[val]);
+							var inter = intersect_arrays(cates, tCates);
+							return inter.length>0?true:false;
+						})
+						.sort(function(a,b){return keywords[b]-keywords[a]; });
+	
+	//if the current word is t(#t), then if #t(t) appears earlier, then remove the current word;
+	sorted = sorted.filter(function(val, i){
+		if(val.startsWith("#")){
+			if(sorted.slice(0,i).indexOf(val.substring(1, val.length)) != -1 )
+				return false;
+			else
+				return true;
+		}
+		else{
+			if(sorted.slice(0,i).indexOf("#"+val) != -1 )
+				return false;
+			else
+				return true;
+		}
+	});
+
+	return sorted.length >= topK ? sorted.slice(0, topK) : sorted;
+}
+
 //calculate the distance between two vectors (atually two dist that has the same set of keys -- focusedCates);
 //the distance should be in the range of [0,1]
 StatComponent.vecDist = function(id1, id2){
@@ -57,3 +97,4 @@ StatComponent.vecDist = function(id1, id2){
 	return Math.sqrt(sum);
 
 };
+
