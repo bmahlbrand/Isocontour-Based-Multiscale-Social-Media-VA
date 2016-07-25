@@ -95,3 +95,28 @@ function intersetLines(line1StartX, line1StartY, line1EndX, line1EndY, line2Star
  
 //     return (val > 0)? 1: 2; // clock or counterclock wise
 // };
+
+// input [[x,y],...]
+function longestAxisOfPolygon(poly){
+
+    if(poly.length <= 2)
+        throw "invalid poly from geometry.js";
+
+    //nested loop, N sqrt; can be improved to NlgN using binary search;
+    var max = 0;
+    var ii, jj;
+    for(var i=0; i<poly.length; i++){
+        for(var j=i+1; j<poly.length; j++){
+            var tmp_max = poly[i][0]*poly[i][0]+poly[i][1]*poly[i][1];
+            if(tmp_max > max){
+                max = tmp_max;
+                ii = i;
+                jj = j;
+            }
+        }
+    }
+
+    var dx = poly[ii][0] - poly[jj][0];
+    var dy = poly[ii][1] - poly[jj][1];
+    return [dx, dy];
+}
