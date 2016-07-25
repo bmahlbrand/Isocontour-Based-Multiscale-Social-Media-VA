@@ -301,10 +301,12 @@ class EMTerms(object):
         
         def category_tweets_to_topics_vn_pair(self, tweets):
             
-            cates = ['T02', 'T03', 'T04', 'T09', 'C07', 'O02', 'E01', 'T11']
+            # cates = ['T02', 'T03', 'T04', 'T09', 'C07', 'O02', 'E01', 'T11']
 
 #             cates = ['T02', 'T03', 'T04', 'T09', 'C07', 'O01', 'O03', 'O04']
-            
+
+            cates = ["hiring", "drink", "traffic", "rnc"]
+
             for cate in cates:
                 print("processing" + cate)
                 tweets = self._category_tweets_to_topics_vn_pair(tweets, cate)
@@ -333,6 +335,18 @@ class EMTerms(object):
             adjs = data.adjective.dropna().tolist()
             num = data.number.dropna().tolist()
             reserved = data.reserved.dropna().tolist()
+
+            # processing reserved, add hashtag for each keyword #
+            tmp_reserved = []
+            for t in reserved:
+                if t.startswith("#"):
+                    tmp_reserved.append(t.lower())
+                    tmp_reserved.append(t.lower()[1:])
+                else:
+                    tmp_reserved.append(t.lower())
+                    tmp_reserved.append("#"+t.lower())
+            reserved = tmp_reserved
+            ######################################################
             
             for tweet in tweets:
                 
@@ -375,8 +389,16 @@ class EMTerms(object):
                 for v in local_vs:
                     local_vs_lemed.append(v)
                     
-                local_reserved = local_ns_lemed + local_vs_lemed + local_adjs
-                
+                # local_reserved = local_ns_lemed + local_vs_lemed + local_adjs
+                # for t in tks:
+                #     if t.startswith("#"):
+                #         local_reserved.append(t.lower())
+                #         local_reserved.append(t.lower()[1:])
+                #     else:
+                #         local_reserved.append(t.lower())
+                #         local_reserved.append("#"+t.lower())
+                local_reserved = [ t.lower() for t in tks ]
+
                 keywords = []
                 
                 flag_noun = True if len(set(local_ns_lemed).intersection(ns)) > 0 else False
