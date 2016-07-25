@@ -426,8 +426,10 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 	}catch(err){
 
-		if(err.toString().indexOf("error code") == -1)
+		if(err.toString().indexOf("error code") == -1){
+			console.error(err.stack);
 			throw err;
+		}
 
 		console.error(err);
 		//just draw regular line, do not add strip
@@ -846,7 +848,21 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	}
 
 	/***********************************calculate transformed polygon **************************************/
-	console.log(id+", longest: "+longestAxisOfPolygon(pts));
+	var longestAxis = longestAxisOfPolygon(pts);
+	var cosine = numeric.dot(longestAxis, [1,0]);
+
+	var angle;
+	if(longestAxis[1] <= 0)
+		//clockwise
+		angle = Math.acos(cosine);
+	else
+		//anti-clockwise
+		angle = -Math.acos(cosine);
+
+	// var rotatedPoly = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
+	//overwrite the previous polygon;
+	pts = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
+
 
 
 	/*****************************************get bounding box************************************************/
@@ -873,10 +889,12 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 	/***********************************************fill rect with text****************************************/
 
+	var newLineFunc = this.createLineFunc(HullLayout.tdArrTo1dArr(pts));
+
 	var clip = svg.append("clipPath")
 					.attr("id", "textclip_"+id)
 				  .append("path")
-				  	.attr("d", lineFunc)
+				  	.attr("d", newLineFunc)
 			    	.attr("stroke", "none")
 			    	.attr("fill", "none");
 
@@ -887,7 +905,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	}
 
 	//render individual text;
-	for(var i=0; i<Math.ceil(aabb.height/fontSize); i++){
+	for(var i=0; i<=Math.ceil(aabb.height/fontSize); i++){
 
 		/********calculate intersection points of the sweep line and polygon*********/
 		var interPts = [];
@@ -909,8 +927,8 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 		if(interPts.length != 2 || Math.abs(interPts[0][0]-interPts[1][0]) < 2 )
 			continue;
 
-		var dy = i*fontSize - 0.5*fontSize;
-		var dx = interPts[0][0] + 5;
+		var dy = i*fontSize - fontSize;
+		var dx = interPts[0][0];
 		// var dx = 0;
 		var idx = 0;
 			
@@ -946,6 +964,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 								.attr("fill", c)
 								.attr("pointer-events", word == "*"?"none":"visiblePainted")
 								.attr("alignment-baseline", "hanging")
+								.attr("transform", "rotate(" + (-angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
 								.text(word)
 								.on("mouseover", function(){
@@ -1017,23 +1036,23 @@ ContourVis.hullInViewport = function(hull){
 	//no points;
 	if(hull.length <= 0)
 		return [false, hull, false];
-
+	
 	//one or two points not draw for now;
 	if(hull.length < 6)
 		return [false, hull, true];
-		// return [false, ContourVis.extendHull(hull), true];
+		//return [true, ContourVis.extendHull(hull), true];
 
 	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
-	if(aabb.width < 5 || aabb.height < 5 )
+	if(aabb.width < 10 || aabb.height < 10 )
 		return [false, hull, true];
-		// return [false, ContourVis.extendHull(hull), true];
+		//return [true, ContourVis.extendHull(hull), true];
 
 	//area too small not draw for now;
 	var area = PolyK.GetArea(hull);
 	if( Math.abs(area) <= 100 )
 		return [false, hull, true];
-		// return [false, ContourVis.extendHull(hull), true];
+		//return [true, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
@@ -1062,7 +1081,7 @@ ContourVis.extendHull = function(hull){
 	xs = arrAvg(xs);
 	ys = arrAvg(ys);
 
-	var r = 3;
+	var r = 5;
 
 	return [ xs+r, ys+r, xs+r, ys-r, xs-r, ys-r, xs-r, ys+r ];
 
