@@ -717,43 +717,6 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		//split by *, but keep * in the array;
 		var words = entireStr.split(/(\*)/g);
 
-		//linear gradient won't work.
-		//we need to find the gradient along the path/stroke
-		/*********************************************construct color gradient******************************/
-		// var gradient = svg.append("defs")
-		// 				  .append("linearGradient")
-		// 				    .attr("id", "textgradient_"+id)
-		// 				    .attr("gradientUnits", "userSpaceOnUse");
-		// 				    // .attr("x1", "0%")
-		// 				    // .attr("x2", "100%");
-
-		// // var percentPerLetter = 100.0 / entireStr.length;
-		// var percentPerLetter = letterW / pathLen * 100;
-
-		// var offsetColor = [];
-		// var start = 0;
-
-		// words.forEach(function(val){
-
-		// 	offsetColor.push({offset:start, color:"#f00"});
-		// 	offsetColor.push({offset:start+val.length*percentPerLetter, color:"#f00"});
-		// 	start += val.length*percentPerLetter;
-
-		// 	offsetColor.push({offset:start, color:"#0f0"});
-		// 	offsetColor.push({offset:start+percentPerLetter, color:"#0f0"});
-		// 	start += percentPerLetter;
-
-		// });
-
-		// offsetColor.pop();
-		// offsetColor.pop();
-
-		// offsetColor.forEach(function(val){
-		// 	gradient.append("stop")
-		// 	    .attr("offset", val.offset+"%")
-		// 	    .attr("stop-color", val.color)
-		// 	    .attr("stop-opacity", 1);
-		// });
 		/**********************************calculate startoffset for each word******************************/
 		//add an extra delimiter in the end of words depending on the directionality of line;
 		if(subpathDir[i])
