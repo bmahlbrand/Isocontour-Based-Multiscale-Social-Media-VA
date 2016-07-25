@@ -107,7 +107,10 @@ function longestAxisOfPolygon(poly){
     var ii, jj;
     for(var i=0; i<poly.length; i++){
         for(var j=i+1; j<poly.length; j++){
-            var tmp_max = poly[i][0]*poly[i][0]+poly[i][1]*poly[i][1];
+            var dx = poly[i][0]-poly[j][0];
+            var dy = poly[i][1]-poly[j][1];
+
+            var tmp_max = dx*dx + dy*dy;
             if(tmp_max > max){
                 max = tmp_max;
                 ii = i;
@@ -118,5 +121,27 @@ function longestAxisOfPolygon(poly){
 
     var dx = poly[ii][0] - poly[jj][0];
     var dy = poly[ii][1] - poly[jj][1];
-    return [dx, dy];
+
+    var sqrt = Math.sqrt(dx*dx+dy*dy);
+
+    if(sqrt == 0)
+        throw "invalid vector";
+
+    return dx < 0 ? [-dx / sqrt, -dy / sqrt] : [dx / sqrt, dy / sqrt];
+}
+
+function rotatePolygon(poly, cx, cy, angle){
+    var rst = [];
+
+    for(var i=0; i<poly.length; i++){
+        var pt = rotatePt(poly[i][0], poly[i][1], cx, cy, angle);
+        rst.push(pt);
+    }
+    return rst;
+}
+
+function rotatePt(px, py, cx, cy, angle){
+    var newX = cx + (px-cx)*Math.cos(angle) - (py-cy)*Math.sin(angle);
+    var newY = cy + (px-cx)*Math.sin(angle) + (py-cy)*Math.cos(angle);
+    return [newX, newY];
 }
