@@ -657,6 +657,11 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		if(j>=subpaths.length)
 			break;
 	}
+	
+	//get keywords:
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
+	var globalWordIdx = 0;
+
 	/**********************************************render text line****************************************/
 
 	subpaths.forEach(function(val, i){
@@ -696,56 +701,35 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 				    	.attr("stroke-opacity", 0.5)
 				    	.attr("fill", "none");
 		
-		/***************************************construct text string***********************************/
-
-		var baseline = subpathDir[i] == true ? 'text-after-edge' : 'text-before-edge';
-		var baseline = 'central';
-		//how to align vertically the text along a textpath;
-		//http://bl.ocks.org/eweitnauer/7325338
-
-		var pathLen = curPath[0][0].getTotalLength();
-		var fontSize = 16;
-		var letterW = fontSize*0.55;
-		
-		//get keywords from the tree node;
-		var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
-		var str = keywords.join("*");
-
-		//generate string of enough length for textpath;
-		var repeat = Math.ceil(pathLen / (str.length*letterW));
-		var entireStr = Array(repeat).fill(str).join("*");
-		//split by *, but keep * in the array;
-		var words = entireStr.split(/(\*)/g);
-
-		/**********************************calculate startoffset for each word******************************/
-		//add an extra delimiter in the end of words depending on the directionality of line;
-		if(subpathDir[i])
-			words.unshift("*");
-
-		var startOffs = [];
-		var start = 0;
-		var spaceBetWords = 2;
-		for(var j=0; j<words.length; j++){
-			startOffs.push({word:words[j], start:start});
-			start = start + words[j].length*letterW;
-			if(start >= pathLen)
-				break;
-		}
-
-		//add an extra delimiter in the end of words depending on the directionality of line;
-		if(!subpathDir[i])
-			startOffs.push({word:"*", start:start});
 		
 		/********************************************draw text string***************************************/
+		var fontSize = 16;
+		var baseline = 'central';
+		var pathLen = curPath[0][0].getTotalLength();
+		var dx = 0;
+		var starFlag = subpathDir[i] == true ? false : true;
+		var letterW = fontSize*0.55;
 
-		startOffs.forEach(function(val, j){
+		do{
+		// startOffs.forEach(function(val, j){
+
+			//get keywords
+			var word;
+			if(starFlag){
+				word = "*";
+			}else{
+				word = keywords[globalWordIdx];
+				globalWordIdx = (globalWordIdx + 1)%keywords.length;
+			}
+			starFlag = !starFlag;
 
 			var c;
-			if(val.word == "*"){
+			if(word == "*"){
 				c = "#000";
+				// word = "\u00A0" + word + "\u00A0";
 			}
 			else{
-				var tCates = Object.keys(DataCenter.instance().keywordCate[val.word]);
+				var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
 				var inter = intersect_arrays(selectedCate, tCates);
 				if(inter.length > 0)
 					c = cateColor[selectedCate.indexOf(inter[0])];
@@ -753,33 +737,38 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 					c = "#555";
 			}
 
-			svg.append("text")
-				//.attr("id", "text_"+id+"_"+i+"_"+j)
-				.attr("class", val.word == "*"?"keyword":"keyword keyword_" + val.word )
-			    .attr("x", 0)
-			    .attr("dy", 0)
-			    .style("font-size", fontSize+"px")
-			    .style("font-family", "consolas")
-			    .attr("dominant-baseline", baseline)
-				.style("fill", c)
-				.on("mouseover", function(){
-					//get the keyword of this text element;
-					var cls = d3.select(this).attr("class");
-					var keyword = cls.split("_")[1];
+			textEle = svg.append("text")
+						//.attr("id", "text_"+id+"_"+i+"_"+j)
+						.attr("class", word == "*"?"keyword":"keyword keyword_" + word )
+					    .attr("x", 0)
+					    .attr("dy", 0)
+					    .style("font-size", fontSize+"px")
+					    .style("font-family", "consolas")
+					    .attr("dominant-baseline", baseline)
+						.style("fill", c)
+						.on("mouseover", function(){
+							//get the keyword of this text element;
+							var cls = d3.select(this).attr("class");
+							var keyword = cls.split("_")[1];
 
-					//hover the same keyword;
-					that.hoverKeywords(keyword);
-			    })
-			    .on("mouseout", function(){
-			    	that.hoverKeywords();
-			    })
-			    .attr("pointer-events", val.word == "*"?"none":"visiblePainted")
-			  	.append("textPath")
-			    .attr("class", "textpath")
-			    .attr("startOffset", val.start+"px")
-			    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
-			    .text(val.word);
-		});
+							//hover the same keyword;
+							that.hoverKeywords(keyword);
+					    })
+					    .on("mouseout", function(){
+					    	that.hoverKeywords();
+					    })
+					    .attr("pointer-events", word == "*"?"none":"visiblePainted")
+					  	.append("textPath")
+					    .attr("class", "textpath")
+					    .attr("startOffset", dx+"px")
+					    .attr("xlink:href", "#"+"textline_"+id+"_"+i)
+					    .text(word);
+		
+			// dx += textEle.node().getComputedTextLength();
+			dx += word.length*letterW;
+
+		}while(dx < pathLen);
+		// });
 
 	});
 
