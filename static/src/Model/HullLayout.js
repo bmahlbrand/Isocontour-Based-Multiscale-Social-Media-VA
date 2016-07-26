@@ -319,7 +319,7 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 HullLayout._validateOpt = function(parent, child){
 	
-	//remove points that are outside the parent hull;
+	
 	for(var i=0; i<child.length/2; i++){
 		
 		var x = child[2*i];
@@ -331,11 +331,56 @@ HullLayout._validateOpt = function(parent, child){
 		}
 	}
 
+	//remove points that are outside the parent hull;
 	child = child.filter(function(val){ return !isNaN(val); });
 
 	return {p:parent, c:child};
 
 }
+
+HullLayout._simplifyHull = function(poly){
+
+	var minDis = 2;
+	var loop = 5;
+
+	var idx = 0;
+	do{
+
+		var change = false;
+		for(var i=0; i<poly.length/2; i++)
+			for(var j=i+1; j<poly.length/2; j++){
+
+				var x1 = poly[2*i];
+				var y1 = poly[2*i+1];
+				var x2 = poly[2*j];
+				var y2 = poly[2*j+1];
+
+				var dis = (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+				if(dis < minDis*minDis){
+
+					//the distance between the two points are short, remove the points in between
+					//make sure the removed segment is the SHORTER segment;
+					if( j - i < poly.length/2 * 0.4 ){
+						poly.splice(2*i, (j-i)*2);
+						change = true;
+						break;
+					}
+					else if(poly.length - (j - i) < poly.length/2 * 0.4){
+						poly = poly.slice(2*i, 2*j);
+						change = true;
+						break;
+					}else
+						break;
+				}
+
+			}
+
+
+	}while(idx++ < loop && change);
+
+	return poly;
+
+};
 
 HullLayout.minimizeOverlap = function(parent, child){
 
@@ -350,6 +395,7 @@ HullLayout.minimizeOverlap = function(parent, child){
 	//child = HullLayout._shrinkPartialPoly(parent, child);
 	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
 	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
+	parentChild.c = HullLayout._simplifyHull(parentChild.c);
 	//parentChild.p = HullLayout.getConvexHull(parentChild.p);
 	//parentChild.p = simplifyWrapper(parentChild.p, 5, false);
 	return parentChild;
