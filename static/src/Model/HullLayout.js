@@ -369,8 +369,10 @@ HullLayout._simplifyHull = function(poly){
 						poly = poly.slice(2*i, 2*j);
 						change = true;
 						break;
-					}else
+					}else{
+						change = true;
 						break;
+					}
 				}
 
 			}
