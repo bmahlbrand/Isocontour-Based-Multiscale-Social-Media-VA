@@ -1,6 +1,6 @@
-StatComponent = function(tweets, keywordsFreq){
+StatComponent = function(tweets){
 	this.tweets = tweets;
-	this.keywordsFreq = keywordsFreq;
+	this.keywordsFreq = this.getCateKeywordsFreq(tweets);
 };
 
 //normalized distribution;
@@ -47,6 +47,22 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 	return dist;
 };
 
+StatComponent.prototype.getCateKeywordsFreq = function(ids){
+
+	var rst = [];
+
+	ids.forEach(function(id){
+		if(DataCenter.instance().tweets[id] !== null ){
+
+			rst = rst.concat(DataCenter.instance().tweets[id].keywords);
+			//rst = rst.concat( Object.keys(DataCenter.instance().tweets[id].tokens) );
+		}
+	});
+
+	return _.countBy(rst);
+
+}
+
 /**************************************keywords functions*****************************************/
 StatComponent.prototype.getKeywords = function(cates, topK){
 	var keywords = Object.keys(this.keywordsFreq);
@@ -59,6 +75,15 @@ StatComponent.prototype.getKeywords = function(cates, topK){
 						// 		return val;
 						// })
 						.filter(function(val){
+							
+							//general keywords;
+							if(cates == null)
+								return true;
+
+							//keywords of specific cates;
+							if(!DataCenter.instance().keywordCate.hasOwnProperty(val))
+								return false;
+
 							var tCates = Object.keys(DataCenter.instance().keywordCate[val]);
 							var inter = intersect_arrays(cates, tCates);
 							return inter.length>0?true:false;
