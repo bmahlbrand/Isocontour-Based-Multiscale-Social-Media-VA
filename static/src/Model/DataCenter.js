@@ -193,7 +193,22 @@ DataCenter.prototype.loadTweets = function(){
 			t.created_at = entry.created_at;
 
 			t.cate = {};
-			t.lemmed_text = entry.lemmed_text;
+			t.lemmed_text = entry.lemmed_text.split(" ");
+
+			//rules for keywords;
+			t.keywords = t.lemmed_text.filter(function(val){
+													if(stopList.hasOwnProperty(val.toLowerCase()))
+														return false;
+													if( !isNaN(parseInt(val)) || !isNaN(parseFloat(val)))
+														return false;
+													if(val.startsWith("http"))
+														return false;
+													//no letters
+													if(!/[a-zA-Z]/.test(val))
+														return false;
+													return true;
+												});
+
 			t.text = entry.text;
 			t.tokens = entry.tokens;
 
