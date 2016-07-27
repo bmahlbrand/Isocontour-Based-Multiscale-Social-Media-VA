@@ -658,7 +658,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 	}
 	
 	//get keywords:
-	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
 	var globalWordIdx = 0;
 
 	/**********************************************render text line****************************************/
@@ -728,10 +728,10 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 				// word = "\u00A0" + word + "\u00A0";
 			}
 			else{
-				if(!DataCenter.instance().keywordCate.hasOwnProperty(word))
+				if(!DataCenter.instance().keywordAnalyzer.hasKeyword(word))
 					c = "#555";
 				else{
-					var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
+					var tCates = DataCenter.instance().keywordAnalyzer.getCates(word);
 					var inter = intersect_arrays(selectedCate, tCates);
 					if(inter.length > 0)
 						c = cateColor[selectedCate.indexOf(inter[0])];
@@ -852,7 +852,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	}
 
 	//get keywords from the tree node;
-	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 10);
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
 	var globalWordIdx = 0;
 
 	//render individual text;
@@ -903,11 +903,11 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 				word = "\u00A0" + word + "\u00A0";
 			}
 			else{
-				//not cate specific keywords
-				if(!DataCenter.instance().keywordCate.hasOwnProperty(word))
+
+				if(!DataCenter.instance().keywordAnalyzer.hasKeyword(word))
 					c = "#555";
 				else{
-					var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
+					var tCates = DataCenter.instance().keywordAnalyzer.getCates(word);
 					var inter = intersect_arrays(selectedCate, tCates);
 					if(inter.length > 0)
 						c = cateColor[selectedCate.indexOf(inter[0])];

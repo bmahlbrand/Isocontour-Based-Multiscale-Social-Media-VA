@@ -209,16 +209,21 @@ DataCenter.prototype.loadTweets = function(){
 			tweets[entry.tweet_id] = t;
 
 			//initialize global keywordCate;
-			for(var word in entry.tokens){
-				if(that.keywordCate[word] == null)
-					that.keywordCate[word] = {};
+			// for(var word in entry.tokens){
+			// 	if(that.keywordCate[word] == null)
+			// 		that.keywordCate[word] = {};
 
-				var cates = entry.tokens[word];
-				cates.forEach(function(val){
-					that.keywordCate[word][val] = true;
-				});
-			}
+			// 	var cates = entry.tokens[word];
+			// 	cates.forEach(function(val){
+			// 		that.keywordCate[word][val] = true;
+			// 	});
+			// }
 			//end
+
+			t.keywords.forEach(function(word){
+				that.keywordAnalyzer.addKeyword(word, Object.keys(t.cate));
+			});
+			//that.keywordAnalyzer.addKeyword();
 
 		});
 

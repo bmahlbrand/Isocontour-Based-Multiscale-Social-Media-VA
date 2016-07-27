@@ -1,6 +1,5 @@
-StatComponent = function(tweets){
-	this.tweets = tweets;
-	this.keywordsFreq = this.getCateKeywordsFreq(tweets);
+StatComponent = function(tweetsId){
+	this.tweetsId = tweetsId;
 };
 
 //normalized distribution;
@@ -14,7 +13,7 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 		return {};
 
 	var cateDup = [];
-	this.tweets.forEach(function(id){
+	this.tweetsId.forEach(function(id){
 		cate = intersect_arrays( cates, Object.keys(DataCenter.instance().tweets[id].cate) );
 		cateDup = cateDup.concat(cate);
 	});
@@ -47,17 +46,22 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 	return dist;
 };
 
-StatComponent.prototype.getCateKeywordsFreq = function(ids){
+
+StatComponent.prototype.getKeywordsFreqByCates = function(cates){
 
 	var rst = [];
 
-	ids.forEach(function(id){
-		if(DataCenter.instance().tweets[id] !== null ){
+	this.tweetsId.forEach(function(id){
+							if(DataCenter.instance().tweets[id] !== null ){
 
-			rst = rst.concat(DataCenter.instance().tweets[id].keywords);
-			//rst = rst.concat( Object.keys(DataCenter.instance().tweets[id].tokens) );
-		}
-	});
+								var tweetCates = Object.keys(DataCenter.instance().tweets[id].cate);
+								var inter = intersect_arrays(cates, tweetCates);
+
+								if(inter.length > 0)
+									rst = rst.concat(DataCenter.instance().tweets[id].keywords);
+								//rst = rst.concat( Object.keys(DataCenter.instance().tweets[id].tokens) );
+							}
+						});
 
 	return _.countBy(rst);
 
@@ -65,7 +69,9 @@ StatComponent.prototype.getCateKeywordsFreq = function(ids){
 
 /**************************************keywords functions*****************************************/
 StatComponent.prototype.getKeywords = function(cates, topK){
-	var keywords = Object.keys(this.keywordsFreq);
+	
+	var keywordsFreq = this.getKeywordsFreqByCates(cates);
+	var keywords = Object.keys(keywordsFreq);
 
 	var sorted = keywords
 						// .map(function(val){
@@ -75,16 +81,8 @@ StatComponent.prototype.getKeywords = function(cates, topK){
 						// 		return val;
 						// })
 						.filter(function(val){
-							
-							//general keywords;
-							if(cates == null)
-								return true;
 
-							//keywords of specific cates;
-							if(!DataCenter.instance().keywordCate.hasOwnProperty(val))
-								return false;
-
-							var tCates = Object.keys(DataCenter.instance().keywordCate[val]);
+							var tCates = DataCenter.instance().keywordAnalyzer.getCates(val);
 							var inter = intersect_arrays(cates, tCates);
 							return inter.length>0?true:false;
 						})
