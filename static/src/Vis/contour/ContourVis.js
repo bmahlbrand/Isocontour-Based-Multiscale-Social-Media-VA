@@ -222,7 +222,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 			    	.attr("class", "concaveHull")
 			    	.attr("d", curLineFunc)
 			    	.attr("fill", _fillColor)
-			    	.attr("fill-opacity", 0.7)
+			    	.attr("fill-opacity", 0.6)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	// .on("mouseover", function(){
 			    	// 	var id = this.id.substring(5,this.id.length);
@@ -232,7 +232,6 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 			    	// 	that.hoverCluster();
 			    	// })
 			    	.on("mouseover", function(){
-
 			    		
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		/*************************************draw optimized dots************************************/
@@ -729,12 +728,16 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 				// word = "\u00A0" + word + "\u00A0";
 			}
 			else{
-				var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
-				var inter = intersect_arrays(selectedCate, tCates);
-				if(inter.length > 0)
-					c = cateColor[selectedCate.indexOf(inter[0])];
-				else
+				if(!DataCenter.instance().keywordCate.hasOwnProperty(word))
 					c = "#555";
+				else{
+					var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
+					var inter = intersect_arrays(selectedCate, tCates);
+					if(inter.length > 0)
+						c = cateColor[selectedCate.indexOf(inter[0])];
+					else
+						c = "#555";
+				}
 			}
 
 			textEle = svg.append("text")
@@ -900,12 +903,17 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 				word = "\u00A0" + word + "\u00A0";
 			}
 			else{
-				var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
-				var inter = intersect_arrays(selectedCate, tCates);
-				if(inter.length > 0)
-					c = cateColor[selectedCate.indexOf(inter[0])];
-				else
+				//not cate specific keywords
+				if(!DataCenter.instance().keywordCate.hasOwnProperty(word))
 					c = "#555";
+				else{
+					var tCates = Object.keys(DataCenter.instance().keywordCate[word]);
+					var inter = intersect_arrays(selectedCate, tCates);
+					if(inter.length > 0)
+						c = cateColor[selectedCate.indexOf(inter[0])];
+					else
+						c = "#555";
+				}
 			}
 
 			//render text;
@@ -1043,7 +1051,7 @@ ContourVis.hullOverlapViewport = function(hull, flagForMinOlp){
 
 	//too small
 	var aabb = PolyK.GetAABB(hull);
-	if(aabb.width < 10 || aabb.height < 10 )
+	if(aabb.width < 15 || aabb.height < 15 )
 		return false;
 
 	//area two small
