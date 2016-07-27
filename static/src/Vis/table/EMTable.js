@@ -27,7 +27,7 @@ EMTable.prototype.display = function(tweets){
 		var date = new XDate(tweet.created_at);
 		date = date.toString("MM-dd HH:mm");
 
-		var lemmed_text = tweet.lemmed_text.split(" ");
+		var lemmed_text = tweet.lemmed_text;
 		var text = tweet.text.split(" ");
 
 		var tokens = tweet.tokens;

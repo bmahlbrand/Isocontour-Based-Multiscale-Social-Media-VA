@@ -5,7 +5,7 @@ CTreeNode = function(cluster){
 	//this design avoids copying the whole tree for filter option.
 	this.allChildren = [];
 	this.vis = new VisComponent();
-	this.stat = new StatComponent(cluster['ids'], cluster['keywordsFreq']);
+	this.stat = new StatComponent(cluster['ids']);
 };
 
 CTreeNode.prototype.addChild = function(clusterArr){
