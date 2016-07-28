@@ -78,6 +78,7 @@
 	function init(){
 		mapView =  new OlMapView();
 		mapView.init(document.getElementById("mapView"));
+		mapView.addDotLayer();
 
 		tweets = getTweets();
 		mapView.render_dots(tweets, 'red');
