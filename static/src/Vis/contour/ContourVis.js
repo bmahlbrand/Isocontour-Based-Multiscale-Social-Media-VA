@@ -386,10 +386,6 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 	try{
 
-		//draw halo first;
-		if(ContourVis.enableHalo)
-			this.drawHalo(id, lineFunc);
-
 		//calculate category distribution;
 		if(cateVol.length <= 0)
 			throw "error code [1]; no cates selected";
@@ -408,19 +404,29 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 		//up to this point, the cateVol has been normalized already;
 		//draw contour
-		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT)
+		if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DEFAULT){
 			throw "error code [3]; default contour";
-		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP)
+		}
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP){
+			this.drawHalo(id, lineFunc);
 			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
-		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE)
+		}
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE){
+			this.drawHalo(id, lineFunc);
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
-		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT)
+		}
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT){
+			//do not draw halo if text on the boundary
 			this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT_FILL){
-			if(!isChild)
+			if(!isChild){
+				//do not draw halo if text on the boundary
 				this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
-			else
+			}else{
+				this.drawHalo(id, lineFunc);
 				this.drawTextArea(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+			}
 		}
 
 	}catch(err){
@@ -432,6 +438,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 
 		console.error(err);
 		//just draw regular line, do not add strip
+
+		this.drawHalo(id, lineFunc);
 
 		var defaultColor = "#2b8cbe";
 		var grey = "#777";
