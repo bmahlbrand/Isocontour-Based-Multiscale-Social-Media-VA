@@ -108,5 +108,8 @@ var EMCateTitle = {
 	"hiring":"",
 	"drink":"",
 	"rnc":"",
-	"traffic":""
+	"traffic":"",
+	"protest":"",
+	"response":"",
+	"rnc_neutral":""
 };
