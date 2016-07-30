@@ -283,7 +283,8 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 
 	/***************************************************render the boundary*************************************************/
 	var selectedCate = DataCenter.instance().focusCates;
-	var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0; 
+
+	var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0;
 	var dist = node.stat.calCateDist(selectedCate, threshold);
 	var cateVol = selectedCate.map(function(val){ return dist[val]; });
 	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
@@ -679,6 +680,9 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		if(subarray.length <= 5)
 			return;
 
+		// if(!ContourVis.inViewPort(subarray[0][0], subarray[0][1])&&!ContourVis.inViewPort(subarray[subarray.length-1][0], subarray[subarray.length-1][1]))
+		// 	return;
+
 		//reverse the path that goes left direction
 		if(subpathDir[i] == false)
 			subarray.reverse();
@@ -718,12 +722,19 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		var letterW = fontSize*0.55;
 
 		do{
-		// startOffs.forEach(function(val, j){
+			//check if the current location is within the viewport
+			var p1 = curPath[0][0].getPointAtLength(dx+10*letterW)
+			var p2 = curPath[0][0].getPointAtLength(dx-10*letterW);
+			if(!ContourVis.inViewPort(p1.x, p1.y)&&!ContourVis.inViewPort(p2.x, p2.y)){
+				dx += 10*letterW;
+				continue;
+			}
+
 
 			//get keywords
 			var word;
 			if(starFlag){
-				word = "*";
+				word = ContourVis.textDelimiter;
 			}else{
 				word = keywords[globalWordIdx];
 				globalWordIdx = (globalWordIdx + 1)%keywords.length;
@@ -731,7 +742,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 			starFlag = !starFlag;
 
 			var c;
-			if(word == "*"){
+			if(word == ContourVis.textDelimiter){
 				c = "#000";
 				// word = "\u00A0" + word + "\u00A0";
 			}
@@ -750,7 +761,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 			textEle = svg.append("text")
 						//.attr("id", "text_"+id+"_"+i+"_"+j)
-						.attr("class", word == "*"?"keyword":"keyword keyword_" + word )
+						.attr("class", word == ContourVis.textDelimiter?"keyword":"keyword keyword_" + word )
 					    .attr("x", 0)
 					    .attr("dy", 0)
 					    .style("font-size", fontSize+"px")
@@ -768,7 +779,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 					    .on("mouseout", function(){
 					    	that.hoverKeywords();
 					    })
-					    .attr("pointer-events", word == "*"?"none":"visiblePainted")
+					    .attr("pointer-events", word == ContourVis.textDelimiter?"none":"visiblePainted")
 					  	.append("textPath")
 					    .attr("class", "textpath")
 					    .attr("startOffset", dx+"px")
@@ -861,6 +872,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 	//get keywords from the tree node;
 	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
+
 	var globalWordIdx = 0;
 
 	//render individual text;
@@ -897,7 +909,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			//get word
 			var word;
 			if(starFlag){
-				word = "*";
+				word = ContourVis.textDelimiter;
 			}else{
 				word = keywords[globalWordIdx];
 				globalWordIdx = (globalWordIdx + 1)%keywords.length;
@@ -906,7 +918,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 			//get color;
 			var c;
-			if(word == "*"){
+			if(word == ContourVis.textDelimiter){
 				c = "#000";
 				word = "\u00A0" + word + "\u00A0";
 			}
@@ -927,13 +939,13 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 			//render text;
 			var that = this;
 			var textEle = svg.append("text")
-								.attr("class", word == "*"?"keyword":"keyword keyword_" + word)
+								.attr("class", word == ContourVis.textDelimiter?"keyword":"keyword keyword_" + word)
 								.attr("x", aabb.x + dx)
 								.attr("y", aabb.y + dy)
 								.attr("font-size", fontSize+"px")
 								.attr("font-family", "consolas")
 								.attr("fill", c)
-								.attr("pointer-events", word == "*"?"none":"visiblePainted")
+								.attr("pointer-events", word == ContourVis.textDelimiter?"none":"visiblePainted")
 								.attr("alignment-baseline", "middle")
 								.attr("transform", "rotate(" + (-angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
@@ -961,7 +973,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 ContourVis.prototype.hoverKeywords = function(word){
 
 	//reset if no word
-	if(word == null || word == undefined || word.indexOf("*") != -1){
+	if(word == null || word == undefined || word.indexOf(ContourVis.textDelimiter) != -1){
 
 		d3.selectAll(".keyword")
 			.style("font-weight", 'normal')
@@ -1003,20 +1015,20 @@ ContourVis.hullInViewport = function(hull){
 	
 	//one or two points not draw for now;
 	if(hull.length < 6)
-		return [false, hull, true];
-		//return [true, ContourVis.extendHull(hull), true];
+		// return [false, hull, true];
+		return [true, ContourVis.extendHull(hull), true];
 
 	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
 	if(aabb.width < 10 || aabb.height < 10 )
-		return [false, hull, true];
-		//return [true, ContourVis.extendHull(hull), true];
+		// return [false, hull, true];
+		return [true, ContourVis.extendHull(hull), true];
 
 	//area too small not draw for now;
 	var area = PolyK.GetArea(hull);
 	if( Math.abs(area) <= 100 )
-		return [false, hull, true];
-		//return [true, ContourVis.extendHull(hull), true];
+		// return [false, hull, true];
+		return [true, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
@@ -1216,6 +1228,8 @@ ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
+
+ContourVis.textDelimiter = "\u22C6";
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
