@@ -303,8 +303,9 @@ CTreeNode.prototype.drawContour = function(acNodes){
 
 	//check if the current contour is leaf;
 	var isChild = childsLineFuncArr.length > 0 ? false : true;
+	var drawBoundaryFlag = this.cluster['minOlpFlag'];
 
-	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr, isChild);
+	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr, isChild, drawBoundaryFlag);
 
 	this.children.forEach(function(val){
 		val.drawContour(acNodes);

@@ -178,14 +178,14 @@ ContourVis.prototype.initHalo = function(){
 
 //use mask to exlude children hull area when rendering the current hull;
 //only draw hulls which ['visFlag'] == true;
-ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr, isChild){
+ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr, isChild, drawBoundaryFlag){
 
 	var that = this;
 	var svg = this.map_svg;
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
 
-	var _fillColor = contourColorFill()(zoom)
+	var _fillColor = contourColorFill()(zoom);
 
 	/*******************************************create mask for children area*******************************************/
 	// create mask function:
@@ -282,14 +282,18 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 		  			.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 	/***************************************************render the boundary*************************************************/
-	var selectedCate = DataCenter.instance().focusCates;
+	//draw boundary only if part of the boundary is inside the viewport
+	if(drawBoundaryFlag){
+		var selectedCate = DataCenter.instance().focusCates;
 
-	var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0;
-	var dist = node.stat.calCateDist(selectedCate, threshold);
-	var cateVol = selectedCate.map(function(val){ return dist[val]; });
-	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
+		var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0;
+		var dist = node.stat.calCateDist(selectedCate, threshold);
+		var cateVol = selectedCate.map(function(val){ return dist[val]; });
+		var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-	this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor, isChild);
+		this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor, isChild);
+	}
+
 
 };
 
@@ -837,7 +841,23 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 
 	// var rotatedPoly = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
 	//overwrite the previous polygon;
-	pts = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
+
+	var viewPort = [[0,0],[0,ContourVis.DIMENSION],[ContourVis.DIMENSION,ContourVis.DIMENSION],[ContourVis.DIMENSION,0]];
+
+	var intersectedPoly = intersectPolyWrapper(pts, viewPort);
+	// var intersectedPoly = pts;
+
+	pts = rotatePolygon(intersectedPoly, intersectedPoly[0][0], intersectedPoly[0][1], angle);
+
+			    		// for(var i=0; i<intersectedPoly.length/2; i++){
+			    		// 	svg.append("circle")
+			    		// 		.attr('class', 'control_point')
+			    		// 		.attr('cx', intersectedPoly[2*i])
+			    		// 		.attr('cy', intersectedPoly[2*i+1])
+			    		// 		.attr('r', 15)
+			    		// 		.attr('fill', 'red')
+			    		// 		.attr("transform", "rotate(" + (-angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")");
+			    		// }
 
 	/*****************************************get bounding box************************************************/
 	var aabb = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts));
@@ -867,7 +887,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	/**********************************************line segments of the polygon*********************************************/
 	var lineSegs = [];
 	for(var i=0; i<pts.length; i++){
-		lineSegs.push([pts[i], pts[(i+1)%segs]]);
+		lineSegs.push([pts[i], pts[(i+1)%pts.length]]);
 	}
 
 	//get keywords from the tree node;
