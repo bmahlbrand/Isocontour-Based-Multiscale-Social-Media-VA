@@ -845,6 +845,9 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 	var viewPort = [[0,0],[0,ContourVis.DIMENSION],[ContourVis.DIMENSION,ContourVis.DIMENSION],[ContourVis.DIMENSION,0]];
 
 	var intersectedPoly = intersectPolyWrapper(pts, viewPort);
+
+	if(intersectedPoly.length <= 0)
+		return;
 	// var intersectedPoly = pts;
 
 	pts = rotatePolygon(intersectedPoly, intersectedPoly[0][0], intersectedPoly[0][1], angle);
