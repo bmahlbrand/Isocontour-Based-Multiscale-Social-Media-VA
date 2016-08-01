@@ -15,7 +15,8 @@ DataCenter = function(){
 	// tweet dictionary, key: tweet id
 	this.tweets = {};
 	this.categories = [];
-	this.keywordCate = {};
+	//this.keywordCate = {};
+	this.keywordAnalyzer = new KeywordAnalyzer();
 
 	this.root = null;
 };
@@ -180,22 +181,11 @@ DataCenter.prototype.loadTweets = function(){
 			t.cate = {};
 			t.lemmed_text = entry.lemmed_text.split(" ");
 
-			//rules for keywords;
-			t.keywords = t.lemmed_text.filter(function(val){
-													if(stopList.hasOwnProperty(val.toLowerCase()))
-														return false;
-													if( !isNaN(parseInt(val)) || !isNaN(parseFloat(val)))
-														return false;
-													if(val.startsWith("http"))
-														return false;
-													//no letters
-													if(!/[a-zA-Z]/.test(val))
-														return false;
-													return true;
-												});
-
 			t.text = entry.text;
 			t.tokens = entry.tokens;
+
+			//tfidf -> dict {word:tfidf value}
+			t.tfidf = entry.tfidf;
 
 			entry.cate.forEach(function(val){
 				t.cate[val] = true;
@@ -208,17 +198,42 @@ DataCenter.prototype.loadTweets = function(){
 			
 			tweets[entry.tweet_id] = t;
 
-			//initialize global keywordCate;
-			// for(var word in entry.tokens){
-			// 	if(that.keywordCate[word] == null)
-			// 		that.keywordCate[word] = {};
+			//keyword options:
+			/*****************1: cate keywords******************/
+			t.keywords = Object.keys(entry.tokens);
 
-			// 	var cates = entry.tokens[word];
-			// 	cates.forEach(function(val){
-			// 		that.keywordCate[word][val] = true;
-			// 	});
-			// }
-			//end
+			/****************2: keyword rule*********************/
+			// t.keywords = t.lemmed_text.filter(function(val){
+			// 										if(stopList.hasOwnProperty(val.toLowerCase()))
+			// 											return false;
+			// 										if( !isNaN(parseInt(val)) || !isNaN(parseFloat(val)))
+			// 											return false;
+			// 										if(val.startsWith("http"))
+			// 											return false;
+			// 										if(val.startsWith("@"))
+			// 											return false;
+			// 										//no letters
+			// 										if(!/[a-zA-Z]/.test(val))
+			// 											return false;
+			// 										return true;
+			// 									});
+
+			/****************3 tf-idf value*********************/
+			// t.keywords = Object.keys(t.tfidf)
+			// 								.filter(function(val){
+			// 									if(stopList.hasOwnProperty(val.toLowerCase()))
+			// 										return false;
+			// 									if( !isNaN(parseInt(val)) || !isNaN(parseFloat(val)))
+			// 										return false;
+			// 									if(val.startsWith("http"))
+			// 										return false;
+			// 									if(val.startsWith("@"))
+			// 										return false;
+			// 									//no letters
+			// 									if(!/[a-zA-Z]/.test(val))
+			// 										return false;
+			// 									return true;
+			// 								});
 
 			t.keywords.forEach(function(word){
 				that.keywordAnalyzer.addKeyword(word, Object.keys(t.cate));
