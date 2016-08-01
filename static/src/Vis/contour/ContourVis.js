@@ -222,7 +222,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 			    	.attr("class", "concaveHull")
 			    	.attr("d", curLineFunc)
 			    	.attr("fill", _fillColor)
-			    	.attr("fill-opacity", 0.6)
+			    	.attr("fill-opacity", 0.5)
 			    	.attr('mask', 'url(#' +mask_id+ ')')
 			    	// .on("mouseover", function(){
 			    	// 	var id = this.id.substring(5,this.id.length);
@@ -286,7 +286,8 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 	if(drawBoundaryFlag){
 		var selectedCate = DataCenter.instance().focusCates;
 
-		var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0;
+		// var threshold = Math.min( 1 / selectedCate.length / 2, 0.1) || 0;
+		var threshold = 0;
 		var dist = node.stat.calCateDist(selectedCate, threshold);
 		var cateVol = selectedCate.map(function(val){ return dist[val]; });
 		var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
