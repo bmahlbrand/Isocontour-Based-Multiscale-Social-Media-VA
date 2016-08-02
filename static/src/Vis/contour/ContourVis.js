@@ -292,7 +292,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 		var cateVol = selectedCate.map(function(val){ return dist[val]; });
 		var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-		this.drawOutLine(id, curLineFunc, selectedCate, cateVol, cateColor, isChild);
+		this.drawOutLine(id, curLineFunc, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild);
 	}
 
 
@@ -385,7 +385,7 @@ ContourVis.prototype.hoverCluster = function(id){
 };
 
 
-ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol, cateColor, isChild){
+ContourVis.prototype.drawOutLine = function(id, lineFunc, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild){
 
 	var svg = this.map_svg;
 	var lineWidth = 6;
@@ -431,9 +431,15 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, selectedCate, cateVol,
 				this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
 			}else{
 				this.drawHalo(id, lineFunc);
-				this.drawTextArea(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
+				this.drawTextArea(id, lineFunc, ChildsLineFuncArr, cateVol.slice(), cateColor, lineWidth, selectedCate);
 			}
+		}else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT_FILL_ALL){
+
+			this.drawHalo(id, lineFunc);
+			this.drawTextArea(id, lineFunc, ChildsLineFuncArr, cateVol.slice(), cateColor, lineWidth, selectedCate);
+
 		}
+
 
 	}catch(err){
 
@@ -804,7 +810,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 //packing algorithm:
 //https://en.wikipedia.org/wiki/Packing_problems
 //http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu
-ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
+ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, cateVol, cateColor, lineWidth, selectedCate){
 
 	var svg = this.map_svg;
 	
@@ -887,6 +893,38 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 				  	.attr("d", newLineFunc)
 			    	.attr("stroke", "none")
 			    	.attr("fill", "none");
+
+	var mask_id = 'lense_text_mask_' + id;
+	
+	svg.append('defs')
+		.call(function (defs){
+
+	    defs.append('mask')
+	        .attr('id', mask_id)
+	        .call(function(mask){
+		          
+		        mask.append('rect')
+	          		.attr('width', svg.attr("width"))
+	  				.attr('height', svg.attr("height"))
+	  				.attr('x', 0)
+	  				.attr('y', 0)
+	  				.attr('fill', '#ffffff');
+
+				ChildsLineFuncArr.forEach(function(c){
+
+					// c = rotatePolygon(c, pts[0][0], pts[0][1], angle);
+
+					mask.append('path')
+						.attr("d", c)
+						.attr("transform", "rotate(" + (angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")")
+	            		.attr('fill', '#000000')
+	            		.attr('stroke', '#000000')
+	            		.attr('stroke-width', 10)
+	            		;
+				});
+	        
+	        });
+    	});
 
 	/**********************************************line segments of the polygon*********************************************/
 	var lineSegs = [];
@@ -973,6 +1011,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, cateVol, cateColor, l
 								.attr("alignment-baseline", "middle")
 								.attr("transform", "rotate(" + (-angle*180/Math.PI) + "," + pts[0][0] + "," + pts[0][1] + ")")
 								.attr("clip-path", "url(#textclip_" +id+ ")")
+								.attr('mask', 'url(#' +mask_id+ ')')
 								.text(word)
 								.on("mouseover", function(){
 									
@@ -1249,7 +1288,7 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
-ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4 }
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4, TEXT_FILL_ALL:5 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
