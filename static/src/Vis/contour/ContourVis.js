@@ -140,17 +140,17 @@ ContourVis.prototype.initHalo = function(){
 	// height=130% so that the shadow is not clipped
 	var filter = defs.append("filter")
 	    .attr("id", "halo")
-	    .attr("x", "-50%")
-		.attr("y", "-50%")
-	    .attr("height", "200%")
-		.attr("width", "200%");
+	    .attr("x", "-100%")
+		.attr("y", "-100%")
+	    .attr("height", "300%")
+		.attr("width", "300%");
 
 	// SourceAlpha refers to opacity of graphic that this filter will be applied to
 	// convolve that with a Gaussian with standard deviation 3 and store result
 	// in blur
 	filter.append("feGaussianBlur")
 	    .attr("in", "SourceAlpha")
-	    .attr("stdDeviation", 5)
+	    .attr("stdDeviation", 8)
 	    .attr("result", "blur");
 
 	// translate output of Gaussian blur to the right and downwards with 2px
