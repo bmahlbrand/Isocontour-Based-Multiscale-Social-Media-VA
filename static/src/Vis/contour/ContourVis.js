@@ -501,9 +501,10 @@ ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, 
 ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
 
 	var svg = this.map_svg;
-	var unitLength = lineWidth;
 	var margin = 1;
-	var circleR = ( unitLength - margin*2 ) * 0.7;
+	var circleR = lineWidth / 2 + 1;
+
+	var unitLength = circleR*2 + margin;
 
 	//generate path;
 	var curPath = svg.append("path")
