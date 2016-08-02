@@ -851,13 +851,13 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 
 	var viewPort = [[0,0],[0,ContourVis.DIMENSION],[ContourVis.DIMENSION,ContourVis.DIMENSION],[ContourVis.DIMENSION,0]];
 
-	var intersectedPoly = intersectPolyWrapper(pts, viewPort);
+	var pts = intersectPolyWrapper(pts, viewPort);
 
-	if(intersectedPoly.length <= 0)
+	if(pts.length <= 0)
 		return;
 	// var intersectedPoly = pts;
 
-	pts = rotatePolygon(intersectedPoly, intersectedPoly[0][0], intersectedPoly[0][1], angle);
+	pts = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
 
 			    		// for(var i=0; i<intersectedPoly.length/2; i++){
 			    		// 	svg.append("circle")
@@ -883,7 +883,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 	//the scale factor is set differently for text line vs area filling according to the experiment
 	var letterW = fontSize*0.49;
 	
-	/***********************************************fill rect with text****************************************/
+	/*********************************create clip and mask object for latering render**************************/
 
 	var newLineFunc = this.createLineFunc(HullLayout.tdArrTo1dArr(pts));
 
