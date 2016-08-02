@@ -372,6 +372,8 @@
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
 			else if(parseInt(val) == 4)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
+			else if(parseInt(val) == 5)
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL_ALL;
 
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -508,6 +510,7 @@
 				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Circle</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Text</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text &#38; Fill</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(5);"><span>Text &#38; Fill All</span><br>
 			</div>
 
 		<h5 align="center">Dendrogram Type</h5>
