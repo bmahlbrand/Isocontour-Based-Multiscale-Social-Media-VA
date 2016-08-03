@@ -97,6 +97,7 @@
 
 	<script type="text/javascript" src="lib/geometry/myPolygonLib.js"></script>
 	<script type="text/javascript" src="lib/geometry/polygonIntersection.js"></script>
+	<script type="text/javascript" src="lib/geometry/enlargePolygon.js"></script>
 
 	<script type="text/javascript" src="stoplist.js"></script>
 	<script type="text/javascript" src="src/Model/nlp.js"></script>
@@ -369,10 +370,12 @@
 			else if(parseInt(val) == 2)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.CIRCLE;
 			else if(parseInt(val) == 3)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STACKLINE;
 			else if(parseInt(val) == 4)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
 			else if(parseInt(val) == 5)
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
+			else if(parseInt(val) == 6)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL_ALL;
 
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
@@ -508,9 +511,10 @@
 				<input type="radio" name="outlineType" onclick="outlineType(0);" checked><span>Default</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(1);"><span>Strip</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Circle</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Text</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text &#38; Fill</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(5);"><span>Text &#38; Fill All</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Stack line</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(5);"><span>Text &#38; Fill</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(6);"><span>Text &#38; Fill All</span><br>
 			</div>
 
 		<h5 align="center">Dendrogram Type</h5>
