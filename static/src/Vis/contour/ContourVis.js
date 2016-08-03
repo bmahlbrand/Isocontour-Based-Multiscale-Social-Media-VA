@@ -150,7 +150,7 @@ ContourVis.prototype.initHalo = function(){
 	// in blur
 	filter.append("feGaussianBlur")
 	    .attr("in", "SourceAlpha")
-	    .attr("stdDeviation", 8)
+	    .attr("stdDeviation", 5)
 	    .attr("result", "blur");
 
 	// translate output of Gaussian blur to the right and downwards with 2px
@@ -178,7 +178,7 @@ ContourVis.prototype.initHalo = function(){
 
 //use mask to exlude children hull area when rendering the current hull;
 //only draw hulls which ['visFlag'] == true;
-ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncArr, isChild, drawBoundaryFlag){
+ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLineFuncArr, isChild, drawBoundaryFlag){
 
 	var that = this;
 	var svg = this.map_svg;
@@ -292,7 +292,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, ChildsLineFuncAr
 		var cateVol = selectedCate.map(function(val){ return dist[val]; });
 		var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
 
-		this.drawOutLine(id, curLineFunc, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild);
+		this.drawOutLine(id, curLineFunc, poly, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild);
 	}
 
 
@@ -384,11 +384,10 @@ ContourVis.prototype.hoverCluster = function(id){
 
 };
 
-
-ContourVis.prototype.drawOutLine = function(id, lineFunc, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild){
+ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild){
 
 	var svg = this.map_svg;
-	var lineWidth = 6;
+	var lineWidth = 8;
 
 	try{
 
@@ -420,6 +419,10 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, ChildsLineFuncArr, sel
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE){
 			this.drawHalo(id, lineFunc);
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+		}
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STACKLINE){
+			this.drawHalo(id, lineFunc);
+			this.drawStackLine(id, lineFunc, poly, cateVol.slice(), cateColor, lineWidth);
 		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT){
 			//do not draw halo if text on the boundary
@@ -556,6 +559,87 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 	});
 
 }
+
+
+ContourVis.prototype.drawStackLine = function(id, lineFunc, poly, cateVol, cateColor, lineWidth){
+
+	var that = this;
+	var svg = this.map_svg;
+
+	var lineWidth = lineWidth;
+
+	var sum = cateVol.reduce(function(a, b){return a+b;});
+	var widthColor = cateVol.map(function(val, idx){ return [Math.floor(val/sum * lineWidth), cateColor[idx]]; });
+
+	widthColor = widthColor.sort(function(a,b){ return a[0]-b[0]; });
+
+	var clip = svg.append("clipPath")
+					.attr("id", "stackline_"+id)
+				  .append("path")
+				  	.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	var entireWidth = widthColor.map(function(val){ return val[0]; }).reduce(function(a,b){ return a+b; });
+
+	widthColor.forEach(function(val, idx){
+
+		color = val[1];
+
+		//option 3, using different line width, mask the inner-polygon region;
+		svg.append("path")
+			.attr("class", "stackline_" + id + "_" + idx)
+			.attr("d", lineFunc)
+	    	.attr("stroke", color)
+	    	.attr("stroke-width", entireWidth*2)
+	    	.attr("fill", "none")
+	    	// .attr('mask', 'url(#' +mask_id+ ')');
+	    	.attr("clip-path", "url(#stackline_" +id+ ")");
+
+	    entireWidth -= val[0];
+		//option 2: using polygon enflation/deflation, not working well;
+		// var loc_poly = enlargePolygon(HullLayout.odArrTo2dArr(poly), spacing);
+		// var loc_lf = that.createLineFunc(HullLayout.tdArrTo1dArr(loc_poly));
+
+		// svg.append("path")
+		// 	.attr("class", "stackline_" + id + "_" + idx)
+		// 	.attr("d", loc_lf)
+	    // 	.attr("stroke", cateColor[idx])
+	    // 	.attr("stroke-width", lineWidth/cateVol.length)
+	    // 	.attr("fill", "none");
+
+	    // spacing += lineWidth/cateVol.length;
+
+	    //option 1, using svg scaling, not working well;
+		// if(idx == 0){
+		// 	var ele =svg.append("path")
+		// 				.attr("class", "stackline_" + id + "_" + idx)
+		// 				.attr("d", lineFunc)
+		// 		    	.attr("stroke", cateColor[idx])
+		// 		    	.attr("stroke-width", cate)
+		// 		    	.attr("fill", "none");
+
+		// 	var bbox = ele.node().getBBox();
+		// 	centroid = [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+		// }else{
+
+		// 	var scale_factor = 0.9;
+		// 	var transform = "translate(" + centroid[0] + "," + centroid[1] + ")"
+		// 			        + "scale(" + scale_factor + ")"
+		// 			        + "translate(" + -centroid[0] + "," + -centroid[1] + ")";
+
+		// 	var ele =svg.append("path")
+		// 				.attr("class", "stackline_" + id + "_" + idx)
+		// 				.attr("d", lineFunc)
+		// 		    	.attr("stroke", cateColor[idx])
+		// 		    	.attr("stroke-width", cate)
+		// 		    	.attr("transform", transform)
+		// 		    	.attr("fill", "none");
+		// }
+	});
+
+};
+
 
 ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
@@ -1289,7 +1373,7 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
-ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, TEXT:3, TEXT_FILL:4, TEXT_FILL_ALL:5 }
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, STACKLINE:3, TEXT:4, TEXT_FILL:5, TEXT_FILL_ALL:6 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
