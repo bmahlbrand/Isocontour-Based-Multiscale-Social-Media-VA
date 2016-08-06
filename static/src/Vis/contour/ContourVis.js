@@ -1329,7 +1329,21 @@ ContourVis.prototype.get_menu = function(id){
 
 	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 	    		
-	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "grey", 0.2);
+			}
+		},
+		{
+			title: 'Highlight Dots',
+			action: function() {
+
+				var ids = [];
+				DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
+	    			ids = ids.concat(idlist);
+	    		});
+
+	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+	    		
+	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red", 0.8);
 			}
 		},
 		{
