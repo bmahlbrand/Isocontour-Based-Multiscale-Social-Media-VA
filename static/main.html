@@ -357,6 +357,8 @@
 				ContourVis.CONTOUR = ContourVis.CONTOURMODE.FILLSEQUENTIAL;
 			else if(parseInt(val) == 3)
 				ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
+			else if(parseInt(val) == 4)
+				ContourVis.CONTOUR = ContourVis.CONTOURMODE.QUANT;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -560,6 +562,7 @@
 				<input type="radio" name="conVis" onclick="changeContourFill(1);" ><span>single hue</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(2);" ><span>sequential</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(3);" checked><span>divergent</span><br>
+				<input type="radio" name="conVis" onclick="changeContourFill(4);"><span>quantitative</span><br>
 			</div>
 
 		<h5 align="center">Contour Halo</h5>

@@ -23,14 +23,22 @@ function contourColorFill(){
 
 	var greys = colorbrewer['Greys'][numOfLevels];
 	var blues = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#084594'];
-	
-	//super divergent
-	var divergent = colorbrewer['Set1'][numOfLevels];
-	//from green to red
-	// var divergent = colorbrewer['RdYlBu'][7].reverse();
+
+	//for case study;
+	// var divergent
+	// if(globalName == 'rnc_l1')
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels+3].slice(3, numOfLevels+3);
+	// else if(globalName == 'rnc_l2')
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels+5].slice(0, numOfLevels);
+	// else
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
+
+	// divergent.reverse();
+
 	var divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
 	divergent.reverse();
 
+	var quant = colorbrewer['Set2'][numOfLevels];
 
 	var color = null;
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
@@ -39,6 +47,8 @@ function contourColorFill(){
 		color = blues;
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DIVERGENT )
 		color = divergent;
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.QUANT )
+		color = quant;
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
 
@@ -77,7 +87,7 @@ function divergentColorList(){
 
 	//modified:
 	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"]
-	var color = ['#e41a1c', '#1b7837', '#762a83', '#8c564b', '#ff7f0e'];
+	var color = ['#1b7837', '#984ea3', '#e41a1c', '#a65628'];
 	//return colorbrewer['Set3'][8];
 	return color;
 }
