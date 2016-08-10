@@ -47,6 +47,7 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 };
 
 
+//get all keywords with its frequency which the cate of tweet is within the cates
 StatComponent.prototype.getKeywordsFreqByCates = function(cates){
 
 	var rst = [];
@@ -67,11 +68,60 @@ StatComponent.prototype.getKeywordsFreqByCates = function(cates){
 
 }
 
+StatComponent.prototype.getKeywordsTFIDFCates = function(cates){
+
+	var rst = {};
+
+	this.tweetsId.forEach(function(id){
+							if(DataCenter.instance().tweets[id] !== null ){
+
+								var tweetCates = Object.keys(DataCenter.instance().tweets[id].cate);
+								var inter = intersect_arrays(cates, tweetCates);
+
+								if(inter.length > 0){
+
+									DataCenter.instance().tweets[id].keywords.forEach(function(val){
+
+										if(!rst.hasOwnProperty(val))
+											rst[val] = [];
+
+										//for each word, store its tfidf value in the array;							
+										rst[val].push(DataCenter.instance().tweets[id].tfidf[val]);
+
+									});
+								}
+							}
+						});
+
+	//do not consider words with freq lower than thres
+	var thres = 3;
+	var keys = Object.keys(rst);
+
+	keys.forEach(function(key){
+		if(rst[key].length <= thres)
+			delete rst[key];
+		else
+			//calculate avg tf-idf score
+			rst[key] = arrAvg(rst[key]);
+	});
+
+	return rst;
+
+}
+
+
 /**************************************keywords functions*****************************************/
 StatComponent.prototype.getKeywords = function(cates, topK){
 	
-	var keywordsFreq = this.getKeywordsFreqByCates(cates);
-	var keywords = Object.keys(keywordsFreq);
+	//freq high --> importance high
+	// var keywordsScore = this.getKeywordsFreqByCates(cates);
+	var keywordsScore = this.getKeywordsTFIDFCates(cates);
+
+	//no keywords due to thres filtering;
+	if(Object.keys(keywordsScore).length === 0)
+		return [];
+
+	var keywords = Object.keys(keywordsScore);
 
 	var sorted = keywords
 						.filter(function(val){
@@ -80,7 +130,7 @@ StatComponent.prototype.getKeywords = function(cates, topK){
 							var inter = intersect_arrays(cates, tCates);
 							return inter.length>0?true:false;
 						})
-						.sort(function(a,b){return keywordsFreq[b]-keywordsFreq[a]; });
+						.sort(function(a,b){return keywordsScore[b]-keywordsScore[a]; });
 	
 	//if the current word is t(#t), then if #t(t) appears earlier, then remove the current word;
 	sorted = sorted.filter(function(val, i){
