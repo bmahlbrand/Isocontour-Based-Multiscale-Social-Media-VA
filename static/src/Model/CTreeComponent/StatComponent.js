@@ -74,19 +74,13 @@ StatComponent.prototype.getKeywords = function(cates, topK){
 	var keywords = Object.keys(keywordsFreq);
 
 	var sorted = keywords
-						// .map(function(val){
-						// 	if(val.startsWith('#'))
-						// 		return val.substring(1, val.length);
-						// 	else
-						// 		return val;
-						// })
 						.filter(function(val){
 
 							var tCates = DataCenter.instance().keywordAnalyzer.getCates(val);
 							var inter = intersect_arrays(cates, tCates);
 							return inter.length>0?true:false;
 						})
-						.sort(function(a,b){return keywords[b]-keywords[a]; });
+						.sort(function(a,b){return keywordsFreq[b]-keywordsFreq[a]; });
 	
 	//if the current word is t(#t), then if #t(t) appears earlier, then remove the current word;
 	sorted = sorted.filter(function(val, i){
