@@ -414,11 +414,11 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STRIP){
 			this.drawHalo(id, lineFunc);
-			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, ContourVis.segmented);
 		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE){
 			this.drawHalo(id, lineFunc);
-			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth);
+			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, ContourVis.segmented);
 		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.STACKLINE){
 			this.drawHalo(id, lineFunc);
@@ -472,14 +472,45 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 
 };
 
-ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
+
+	var pixelLengthMin = 30;
+	var pixelLengthMax = 200;
 
 	var svg = this.map_svg;
-	var unitLength = 10;
+	var unitLength, sum;
 
-	//multiply by unit length;
-	cateVol = cateVol.map(function(val){ return val*unitLength; });
-	var sum = cateVol.reduce(function(a, b){return a+b;});
+	//generate fake path;
+	var curPath = svg.append("path")
+					// .attr("class", "stripline_" + id + "_" + idx)
+					.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	curPath = curPath[0][0];
+
+	//multiple segments of the same color;
+	if(isSegmented){
+
+		sum = cateVol.reduce(function(a, b){return a+b;});
+		
+		unitLength = curPath.getTotalLength() / sum;
+		cateVol = cateVol.map(function(val){ return val*unitLength; });
+
+		while(cateVol.min() >= pixelLengthMin && cateVol.max() >= pixelLengthMax )
+			cateVol = cateVol.map(function(val){ return val/2; });
+
+		sum = cateVol.reduce(function(a, b){return a+b;});
+
+	}else{
+
+		//only one segment for each color;
+		sum = cateVol.reduce(function(a, b){return a+b;});
+		
+		unitLength = curPath.getTotalLength() / sum;
+		cateVol = cateVol.map(function(val){ return val*unitLength; });
+		sum *= unitLength;
+	}
 
 	var offset = 0;
 	cateVol.forEach(function(cate, idx){
@@ -501,13 +532,16 @@ ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, 
 
 };
 
-ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor, lineWidth){
+ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
+
+	var pixelLengthMin = 30;
+	var pixelLengthMax = 200;
 
 	var svg = this.map_svg;
 	var margin = 1;
 	var circleR = lineWidth / 2 + 1;
 
-	var unitLength = circleR*2 + margin;
+	var circleLength = circleR*2 + margin;
 
 	//generate path;
 	var curPath = svg.append("path")
@@ -518,10 +552,28 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 
 	curPath = curPath[0][0];
 
-	//multiply by unit length;
-	var sum = cateVol.reduce(function(a, b){return a+b;});
+	var numOfCircle = Math.ceil(curPath.getTotalLength() / circleLength);
 
-	var numOfCircle = Math.ceil(curPath.getTotalLength() / unitLength);
+	//need the save n here, cause the cateVol will be rewritted later;
+	var numOfCate = cateVol.length;
+
+	if(isSegmented){
+
+		var unitLengthMin = Math.ceil(pixelLengthMin / circleLength);
+		var unitLengthMax = Math.ceil(pixelLengthMax / circleLength);
+
+		var sum = cateVol.reduce(function(a, b){return a+b;});
+		cateVol = cateVol.map(function(val){ return val / sum * numOfCircle; });
+
+		while(cateVol.min() >= unitLengthMin && cateVol.max() >= unitLengthMax){
+			cateVol = cateVol.map(function(val){ return val/2; });
+		}
+
+	}else{
+
+		var sum = cateVol.reduce(function(a, b){return a+b;});
+		cateVol = cateVol.map(function(val){ return val / sum * numOfCircle; });
+	}
 
 	var localCount = 0;
 	var curIdx = 0;
@@ -531,7 +583,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 
 		if(localCount>= cateVol[curIdx]){
 			localCount = 0;
-			curIdx = (curIdx + 1) % cateVol.length;
+			curIdx = (curIdx + 1) % numOfCate;
 		}
 		renderArr.push(curIdx);
 		localCount++;
@@ -541,7 +593,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 	renderArr.forEach(function(val, idx){
 
 		//val here is the index of the cateVol;
-		var pos = curPath.getPointAtLength(idx*unitLength);
+		var pos = curPath.getPointAtLength(idx*circleLength);
 
 		//only render points that are inside the viewport
 		if(ContourVis.inViewPort(pos.x, pos.y)){
@@ -764,6 +816,9 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 	
 	//get keywords:
 	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
+	if(keywords.length == 0)
+		throw "[error code] no keywords";
+
 	var globalWordIdx = 0;
 
 	/**********************************************render text line****************************************/
@@ -1019,6 +1074,8 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 
 	//get keywords from the tree node;
 	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
+	if(keywords.length == 0)
+		throw "[error code] no keywords";
 
 	var globalWordIdx = 0;
 
@@ -1384,7 +1441,7 @@ ContourVis.INTERMODE = { BASIS:0, CARDINAL:1, POLY:2 };
 ContourVis.MODE = ContourVis.INTERMODE.BASIS;
 ContourVis.DIMENSION = 1024;
 
-ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3 };
+ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3, QUANT:4 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, STACKLINE:3, TEXT:4, TEXT_FILL:5, TEXT_FILL_ALL:6 }
@@ -1392,6 +1449,8 @@ ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
 ContourVis.textDelimiter = "\u22C6";
+
+ContourVis.segmented = true;
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
