@@ -434,13 +434,15 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 				//do not draw halo if text on the boundary
 				this.drawTextLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, selectedCate);
 			}else{
-				this.drawHalo(id, lineFunc);
+				
 				this.drawTextArea(id, lineFunc, ChildsLineFuncArr, cateVol.slice(), cateColor, lineWidth, selectedCate);
+				//put this function after drawTextArea(). if no keywords, drawTextArea() just throw and do not call halo (avoid calling draw halo twice)
+				this.drawHalo(id, lineFunc);
 			}
 		}else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.TEXT_FILL_ALL){
 
-			this.drawHalo(id, lineFunc);
 			this.drawTextArea(id, lineFunc, ChildsLineFuncArr, cateVol.slice(), cateColor, lineWidth, selectedCate);
+			this.drawHalo(id, lineFunc);
 
 		}
 
@@ -460,7 +462,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 		var defaultColor = "#2b8cbe";
 		var grey = "#777";
 
-		var color = err.indexOf("[3]") > -1 ? defaultColor : grey;
+		// var color = err.indexOf("[3]") > -1 ? defaultColor : grey;
+		var color = grey;
 		var defaultWidth = 2;
 
 		svg.append("path")
