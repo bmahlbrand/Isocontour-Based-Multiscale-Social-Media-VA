@@ -330,7 +330,8 @@ ContourVis.prototype.drawHalo = function(id, lineFunc){
 	    	.attr("fill", "white")
 	    	.style("filter", "url(#halo)")
 	    	.attr('mask', 'url(#halo_mask'+id+')')
-	    	.style("cursor", "hand")
+	    	.attr("pointer-events", "none")
+	    	// .style("cursor", "hand")
 			.on("mouseover", function(){
 	    		var id = this.id.substring(9, this.id.length);
 	    		that.hoverCluster(id);
