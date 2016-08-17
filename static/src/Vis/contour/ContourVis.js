@@ -699,6 +699,11 @@ ContourVis.prototype.drawStackLine = function(id, lineFunc, poly, cateVol, cateC
 
 ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, lineWidth, selectedCate){
 
+	//get keywords:
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
+	if(keywords.length == 0)
+		throw "[error code] no keywords";
+
 	var that = this;
 	var svg = this.map_svg;
 	
@@ -934,6 +939,15 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 					    .on("mouseout", function(){
 					    	that.hoverKeywords();
 					    })
+					    .on("click", function(){
+
+							//get the keyword of this text element;
+							var cls = d3.select(this).attr("class");
+							var keyword = cls.split("_")[1];
+							
+							$('[ng-controller="table_controller"]').scope().displayMsgByKeyword(keyword); 
+
+						})
 					    .attr("pointer-events", word == ContourVis.textDelimiter?"none":"visiblePainted")
 					  	.append("textPath")
 					    .attr("class", "textpath")
@@ -955,6 +969,11 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 //https://en.wikipedia.org/wiki/Packing_problems
 //http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu
 ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, cateVol, cateColor, lineWidth, selectedCate){
+
+	//get keywords from the tree node;
+	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
+	if(keywords.length == 0)
+		throw "[error code] no keywords";
 
 	var svg = this.map_svg;
 	
@@ -1167,6 +1186,18 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 
 									//hover the same keyword;
 									that.hoverKeywords(keyword);
+								})
+								.on("mouseout", function(){
+									that.hoverKeywords();
+								})
+								.on("click", function(){
+
+									//get the keyword of this text element;
+									var cls = d3.select(this).attr("class");
+									var keyword = cls.split("_")[1];
+
+									$('[ng-controller="table_controller"]').scope().displayMsgByKeyword(keyword); 
+
 								});
 
 			// dx += word.length*letterW;
