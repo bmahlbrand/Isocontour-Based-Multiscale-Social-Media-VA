@@ -236,15 +236,15 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		/*************************************draw optimized dots************************************/
 			    		
-			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
-			    		for(var i=0; i<dots.length/2; i++){
-			    			svg.append("circle")
-			    				.attr('class', 'control_point')
-			    				.attr('cx', dots[2*i])
-			    				.attr('cy', dots[2*i+1])
-			    				.attr('r', 2)
-			    				.attr('fill', 'red');
-			    		}
+			    		// var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    		// for(var i=0; i<dots.length/2; i++){
+			    		// 	svg.append("circle")
+			    		// 		.attr('class', 'control_point')
+			    		// 		.attr('cx', dots[2*i])
+			    		// 		.attr('cy', dots[2*i+1])
+			    		// 		.attr('r', 2)
+			    		// 		.attr('fill', 'red');
+			    		// }
 
 			    		/*************************************draw actual tweet dots************************************/
 			    		// //tweets inside the hull;
@@ -451,7 +451,6 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 
 		if(err.toString().indexOf("error code") == -1){
 			console.error(err.stack);
-			throw err;
 		}
 
 		console.error(err);
@@ -822,11 +821,6 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 		if(j>=subpaths.length)
 			break;
 	}
-	
-	//get keywords:
-	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
-	if(keywords.length == 0)
-		throw "[error code] no keywords";
 
 	var globalWordIdx = 0;
 
@@ -1094,11 +1088,6 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 	for(var i=0; i<pts.length; i++){
 		lineSegs.push([pts[i], pts[(i+1)%pts.length]]);
 	}
-
-	//get keywords from the tree node;
-	var keywords = DataCenter.instance().getTree().getNodeById(id).getKeywords(selectedCate, 20);
-	if(keywords.length == 0)
-		throw "[error code] no keywords";
 
 	var globalWordIdx = 0;
 
