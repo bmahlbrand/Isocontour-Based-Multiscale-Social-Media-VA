@@ -630,6 +630,13 @@ twittNavApp.controller('table_controller', function($rootScope, $scope) {
 
 	};
 
+	$scope.displayMsgByKeyword = function(keyword){
+
+		var tweets = DataCenter.instance().getTweetsByKeyword(keyword);
+		$scope.table.display(tweets);
+
+	};
+
 });
 
 twittNavApp.controller('ClusterSignatureCtrl', function($rootScope, $scope) {
