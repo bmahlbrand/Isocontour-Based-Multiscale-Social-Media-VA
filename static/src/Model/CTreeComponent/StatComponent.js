@@ -68,6 +68,24 @@ StatComponent.prototype.getKeywordsFreqByCates = function(cates){
 
 }
 
+StatComponent.prototype.getVolByCate = function(cates){
+
+	var cnt = 0;
+	this.tweetsId.forEach(function(id){
+							if(DataCenter.instance().tweets[id] !== null ){
+
+								var tweetCates = Object.keys(DataCenter.instance().tweets[id].cate);
+								var inter = intersect_arrays(cates, tweetCates);
+
+								if(inter.length > 0)
+									cnt++;
+							}
+						});
+
+	return cnt;
+
+}
+
 StatComponent.prototype.getKeywordsTFIDFCates = function(cates){
 
 	var rst = {};
@@ -98,11 +116,10 @@ StatComponent.prototype.getKeywordsTFIDFCates = function(cates){
 	var keys = Object.keys(rst);
 
 	keys.forEach(function(key){
-		if(rst[key].length <= thres)
-			delete rst[key];
-		else
-			//calculate avg tf-idf score
-			rst[key] = arrAvg(rst[key]);
+		//calculate importance score based on both frequency and tf-idf;
+		//the idea is reduce the score if the word appear very rearly;
+		rst[key] =  rst[key].length > thres ? arrAvg(rst[key]) : Math.min(0.5, arrAvg(rst[key]));
+
 	});
 
 	return rst;
@@ -149,7 +166,35 @@ StatComponent.prototype.getKeywords = function(cates, topK){
 	});
 
 	return sorted.length >= topK ? sorted.slice(0, topK) : sorted;
-}
+
+};
+
+
+StatComponent.prototype.generateAndNormalizeCateAndColorForVis = function(){
+
+	var selectedCate = DataCenter.instance().focusCates;
+
+	var threshold = 0;
+	var dist = this.calCateDist(selectedCate, threshold);
+	var cateVol = selectedCate.map(function(val){ return dist[val]; });
+	var cateColor = selectedCate.map(function(val, idx){ return divergentColorList()[idx] });
+
+	//remove zero
+	selectedCate = selectedCate.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
+	cateColor = cateColor.filter(function(val, i){ return cateVol[i] > 0 ? true : false; });
+	cateVol = cateVol.filter(function(val){ return val > 0 ? true : false; });
+
+	if(cateVol.length <= 0)
+		return null;
+
+	var min = cateVol.min();
+	//normalize the array based on the non-zero min value;
+	cateVol = cateVol.map(function(val){ return Math.round(val / min); });
+
+	return [cateVol, cateColor];
+
+};
+
 
 //calculate the distance between two vectors (atually two dist that has the same set of keys -- focusedCates);
 //the distance should be in the range of [0,1]
