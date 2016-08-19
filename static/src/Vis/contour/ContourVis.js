@@ -937,7 +937,7 @@ ContourVis.prototype.drawTextLine = function(id, lineFunc, cateVol, cateColor, l
 
 							//get the keyword of this text element;
 							var cls = d3.select(this).attr("class");
-							var keyword = cls.split("_")[1];
+							var keyword = cls.substring(16, cls.length);
 							
 							$('[ng-controller="table_controller"]').scope().displayMsgByKeyword(keyword); 
 
@@ -1006,15 +1006,37 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 	// var rotatedPoly = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
 	//overwrite the previous polygon;
 
-	var viewPort = [[0,0],[0,ContourVis.DIMENSION],[ContourVis.DIMENSION,ContourVis.DIMENSION],[ContourVis.DIMENSION,0]];
+	var viewPort = [[0,0],[0,ContourVis.DIMENSION],
+					[ContourVis.DIMENSION,ContourVis.DIMENSION],[ContourVis.DIMENSION,0]];
 
 	var pts = intersectPolyWrapper(pts, viewPort);
+
+	// for(var i=0; i<pts.length; i++){
+	// 	svg.append("circle")
+	// 		.attr('class', 'control_point')
+	// 		.attr('cx', pts[i][0])
+	// 		.attr('cy', pts[i][1])
+	// 		.attr('r', 2)
+	// 		.attr('fill', 'red');
+	// }
 
 	if(pts.length <= 0)
 		return;
 	// var intersectedPoly = pts;
 
 	pts = rotatePolygon(pts, pts[0][0], pts[0][1], angle);
+
+	// for(var i=0; i<pts.length; i++){
+
+	// 	var x = pts[i][0] > ContourVis.DIMENSION ? 2*ContourVis.DIMENSION - pts[i][0] : pts[i][0] ;
+
+	// 	svg.append("circle")
+	// 		.attr('class', 'control_point')
+	// 		.attr('cx', x)
+	// 		.attr('cy', pts[i][1])
+	// 		.attr('r', 2)
+	// 		.attr('fill', 'blue');
+	// }
 
 			    		// for(var i=0; i<intersectedPoly.length/2; i++){
 			    		// 	svg.append("circle")
@@ -1028,7 +1050,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 
 	/*****************************************get bounding box************************************************/
 	var aabb = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts));
-	
+	var largerAABB = PolyK.GetAABB(HullLayout.tdArrTo1dArr(pts.concat(viewPort)));
 	// var aabbVis = svg.append("rect")
 	//                    .attr("x", aabb.x)
 	//                    .attr("y", aabb.y)
@@ -1061,10 +1083,10 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 	        .call(function(mask){
 		          
 		        mask.append('rect')
-	          		.attr('width', svg.attr("width"))
-	  				.attr('height', svg.attr("height"))
-	  				.attr('x', 0)
-	  				.attr('y', 0)
+	          		.attr('width', largerAABB.width)
+	  				.attr('height', largerAABB.height)
+	  				.attr('x', largerAABB.x)
+	  				.attr('y', largerAABB.y)
 	  				.attr('fill', '#ffffff');
 
 				ChildsLineFuncArr.forEach(function(c){
@@ -1183,7 +1205,7 @@ ContourVis.prototype.drawTextArea = function(id, lineFunc, ChildsLineFuncArr, ca
 
 									//get the keyword of this text element;
 									var cls = d3.select(this).attr("class");
-									var keyword = cls.split("_")[1];
+									var keyword = cls.substring(16, cls.length);
 
 									$('[ng-controller="table_controller"]').scope().displayMsgByKeyword(keyword); 
 
