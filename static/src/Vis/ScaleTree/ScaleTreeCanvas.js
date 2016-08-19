@@ -12,7 +12,7 @@ ScaleTreeCanvas = function(width, height, canvas){
 	this.node_vis = ScaleTreeCanvas.NODE_VIS_MODE.GEO_FILTER;
 	this.NODE_TYPE = ScaleTreeCanvas.NODE_TYPE_MODE.RECT;
 
-	this.scaleBoundFlag = true;
+	this.scaleBoundFlag = false;
 	//vis styling
 
 	this.canvas = canvas;
@@ -81,6 +81,9 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 
 	var that = this;
 
+	var margin = 1;
+	var radius = bbox.getHeight() / 2 - margin;
+
 	var node = DataCenter.instance().getTree().getNodeById(id);
 	//draw node;
 	var rectangle = this.canvas.append("circle")
@@ -88,7 +91,7 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 								.attr("class", "treeNode")
 	                            .attr("cx", bbox.getCenter().x)
 	                            .attr("cy", bbox.getCenter().y)
-	                            .attr("r", 3)
+	                            .attr("r", radius)
 	                            .attr("stroke", "#000")
   								.attr("stroke-width", 0.5)
 	                            .attr("fill", "none")
@@ -102,7 +105,56 @@ ScaleTreeCanvas.prototype.drawCircle = function(id, bbox){
 	                            // 	$('[ng-controller="app_controller"]').scope().removeHlNode(id);
 	                            // })
 	                            .on('contextmenu', d3.contextMenu(that.get_menu(id)) );
+	
+	this.drawPieChart(id, [bbox.getCenter().x, bbox.getCenter().y], radius);
+
 };
+
+
+ScaleTreeCanvas.prototype.drawPieChart = function(id, center, radius) {
+
+	var node = DataCenter.instance().getTree().getNodeById(id);
+	var rst = node.stat.generateAndNormalizeCateAndColorForVis();
+
+	if(rst == null)
+		return;
+	
+	var arc = d3.svg.arc().outerRadius( function(d){ return radius; } ).innerRadius(0);
+
+	var pie_svg = this.canvas.append("g")
+    				   .attr("id", "cluster_pie_chart_"+id)
+    				   .attr("class", "cluster_pie_chart")
+      			 	   //.attr("transform", "translate(" + (clusters[i].vis_bbox.center.x - pixel_bbox.center.x) + "," + (clusters[i].vis_bbox.center.y - pixel_bbox.center.y) + ")");
+      			 	   .attr("transform", "translate(" + center[0] + "," + center[1] + ")");
+
+	var pie = d3.layout.pie()
+							.sort(null)
+							.value(function(d) { return d; });
+
+  	var pie_chart = pie_svg.selectAll(".arc")
+							   .data(pie(rst[0]))
+							   .enter().append("g")
+							   .attr("class", "arc");
+
+	pie_chart.append("path")
+				 .attr("d", arc)
+				 //.attr("id", function(d, i) { return "cluster_pie_chart_"+id+"_topic_sector_"+i; })
+				 .attr("id", function(d, i) { return "cluster_pie_chart_"+id; })
+				 .attr("opacity", 1)
+				 .style("fill", function(d, i) { return rst[1][i]; })
+				 .style("stroke-width", 0.5)
+				 .style("stroke", "#aaa")
+				 .on("click", function(){
+
+				 	var id = this.id.substring(18, this.id.length);
+				 	var node = DataCenter.instance().getTree().getNodeById(id);
+					var rst = node.stat.generateAndNormalizeCateAndColorForVis();
+					alert(rst[0]);
+
+				 });
+
+};
+
 
 ScaleTreeCanvas.prototype.get_menu = function(id){
 
@@ -228,7 +280,7 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 	                  .attr("stroke", color)
 	                  .attr("fill", color)
 	                  .attr("stroke-width", 1)
-	                  .attr("opacity", 0.3);
+	                  .attr("opacity", 1);
 
 	    this.canvas.append("rect")
 	                  .attr("x", boxRight.getLeft())
@@ -238,7 +290,7 @@ ScaleTreeCanvas.prototype.drawScaleBound = function(treeNode){
 	                  .attr("stroke", color)
 	                  .attr("fill", color)
 	                  .attr("stroke-width", 1)
-	                  .attr("opacity", 0.3);
+	                  .attr("opacity", 1);
 		
 		/**************************************************/
 		/***********mode 3: color gradient******************/
@@ -335,6 +387,9 @@ ScaleTreeCanvas.prototype.drawNodes = function(treeNode){
 
 /***************************************************************/
 ScaleTreeCanvas.prototype.hoverNode = function(){
+
+	if(this.node_vis == ScaleTreeCanvas.NODE_TYPE_MODE.CIRC)
+		return;
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 	var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
