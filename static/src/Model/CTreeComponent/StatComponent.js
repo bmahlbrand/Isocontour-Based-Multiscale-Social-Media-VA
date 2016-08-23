@@ -1,11 +1,20 @@
-StatComponent = function(tweetsId){
+StatComponent = function(tweetsId, treeNode){
 	this.tweetsId = tweetsId;
+	this.treeNode = treeNode;
 };
 
 //normalized distribution;
 //threshold is used to remove the cate which volume is lower than the threshold
 //if threshold is not defined, then every cate is kept in the result
 
+StatComponent.prototype.getDensity = function(){
+
+	var area = this.treeNode.getArea();
+	if(area <= 0)
+		return 0;
+	return this.getVolByCate(DataCenter.instance().focusCates) / area;
+
+};
 
 StatComponent.prototype.calCateDist = function(cates, threshold){
 

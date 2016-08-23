@@ -51,6 +51,9 @@ function contourColorFill(){
 		color = quant;
 	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
 		color = ["none"];
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DENSITY){
+		return densityColor(ContourVis.densityMin, ContourVis.densityMax);
+	}
 
 	//diverging from blue to red;
 	//var color = ["#034e7b", "#3690c0", "#66ccff", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"];
@@ -86,10 +89,25 @@ function divergentColorList(){
 	//return ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'];
 
 	//modified:
-	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"]
+	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"];
 	var color = ['#1b7837', '#984ea3', '#e41a1c', '#a65628'];
 	//return colorbrewer['Set3'][8];
 	return color;
+}
+
+//for density
+function densityColor(min, max){
+	
+	if(min >= max)
+		if(max == 0)
+			return function() { return "#fff"; };
+		else
+			return function() { return "#faa"; };
+
+	return d3.scale.linear()
+					.domain([min, max])
+					.range(['#fee8c8', '#e34a33']);
+
 }
 
 //two normalized vectors (the sum of array is 1), their distance is less or equal to 1

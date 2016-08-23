@@ -351,9 +351,11 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
 	$scope.masterUpdate = function(){
 		
-		//$('[ng-controller="ScaleTreeCtrl"]').scope().update();
-		$('[ng-controller="treeCanvasCtrl"]').scope().update();
+		//calculate density min max here;
+		Canvas_manager.instance().cv.updateDensityRange();
+		//update two views;
 		$('[ng-controller="map_controller"]').scope().update();
+		$('[ng-controller="treeCanvasCtrl"]').scope().update();
 	};
 
 

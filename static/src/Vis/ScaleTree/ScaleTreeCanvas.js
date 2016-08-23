@@ -412,13 +412,21 @@ ScaleTreeCanvas.prototype.hoverNode = function(){
 	d3.selectAll(".treeNode")
 		.attr("fill", defaultFill);
 
-	acNodes.forEach(function(val){
+	acNodes.forEach(function(id){
 		
-		var level = val.split("_")[0];
-		var highlightFill = contourColorFill()(parseInt(level));
+		var level = id.split("_")[0];
 
-		d3.select("#node_"+val)
-			.attr("fill", highlightFill);
+		var _fillColor;
+		if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DENSITY){
+			var density = DataCenter.instance().getTree().getNodeById(id).stat.getDensity();
+			_fillColor = contourColorFill()(density);
+		}
+		else{
+			_fillColor = contourColorFill()(level);
+		}
+
+		d3.select("#node_"+id)
+			.attr("fill", _fillColor);
 	});
 
 	// hlNodes = intersect_arrays(acNodes, hlNodes);

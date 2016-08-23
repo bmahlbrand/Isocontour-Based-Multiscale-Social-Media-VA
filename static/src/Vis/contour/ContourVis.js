@@ -22,16 +22,32 @@ ContourVis.prototype.updateGeoBbox = function(){
 	//for the concept of activenode, please find it in the app_controller file;
 	tree.filterNodesForVis();
 
-	var clist = tree.toList();
+	var activeNodes = tree.toList().filter(function(val){
+										return val.cluster['visFlag'];
+									})
+									.map(function(val){
+										return val.cluster['clusterId'];
+									});
 
-	clist = clist.filter(function(val){
-		return val.cluster['visFlag'];
-	});
+	//calculate density min max here; the reason why put it here is that we need the global min, max for the color scheme;
+	
 
-	var activeNodes = clist.map(function(val){ return val.cluster['clusterId']; });
-
-	//acNode list;
+	//acNode list, this function will trigger the masterupdate;
 	$('[ng-controller="app_controller"]').scope().setAcNodes(activeNodes);
+
+};
+
+ContourVis.prototype.updateDensityRange = function(){
+
+	var activeNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
+
+	var densities = activeNodes.map(function(id){
+									return DataCenter.instance().getTree().getNodeById(id).stat.getDensity();
+								});
+	densities.sort(function(a,b){ return a-b; });
+
+	ContourVis.densityMin = densities[0] || 0;
+	ContourVis.densityMax = densities[densities.length-1] || 0;
 
 };
 
@@ -55,6 +71,8 @@ ContourVis.prototype.update = function(){
 		var level = parseInt(id.split("_")[0]);
 		return level <= levelForFilter;
 	});
+
+	console.log("active nodes: "+acNodes.length);
 
 	tree.drawContour(acNodes);
 
@@ -185,7 +203,17 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 
 	var node = DataCenter.instance().getTree().getNodeById(id);
 
-	var _fillColor = contourColorFill()(zoom);
+	// specially deal with density;
+	var _fillColor;
+
+	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DENSITY){
+		var density = DataCenter.instance().getTree().getNodeById(id).stat.getDensity();
+		_fillColor = contourColorFill()(density);
+	}
+	else{
+		_fillColor = contourColorFill()(zoom);
+	}
+
 
 	/*******************************************create mask for children area*******************************************/
 	// create mask function:
@@ -1487,7 +1515,7 @@ ContourVis.INTERMODE = { BASIS:0, CARDINAL:1, POLY:2 };
 ContourVis.MODE = ContourVis.INTERMODE.BASIS;
 ContourVis.DIMENSION = 1024;
 
-ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3, QUANT:4 };
+ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3, QUANT:4, DENSITY:5 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
 ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, STACKLINE:3, TEXT:4, TEXT_FILL:5, TEXT_FILL_ALL:6 }
@@ -1497,6 +1525,9 @@ ContourVis.enableHalo = true;
 ContourVis.textDelimiter = "\u22C6";
 
 ContourVis.segmented = true;
+
+ContourVis.densityMin = null;
+ContourVis.densityMax = null;
 
 /******************  parameter setup  **********************/
 ContourVis.prototype.createDummyLine = function(pts){
