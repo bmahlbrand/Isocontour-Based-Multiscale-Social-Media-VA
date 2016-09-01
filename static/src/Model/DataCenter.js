@@ -19,6 +19,9 @@ DataCenter = function(){
 	this.keywordAnalyzer = new KeywordAnalyzer();
 
 	this.root = null;
+
+	this.clusterDensityMax = null;
+	this.clusterDensityMin = null;
 };
 
 DataCenter.prototype.init = function(){
@@ -35,6 +38,43 @@ DataCenter.prototype.init = function(){
 	this.root.sortChildren();
 
 }
+
+//for User Study:
+DataCenter.prototype.reInit = function(rootId, focusCates, tweets, clusters) {
+
+	//hard coded for now
+	this.rootID = rootId;
+	
+	//filter options:
+	this.volRange = [Number.MIN_VALUE, Number.MAX_VALUE];
+	this.focusID = this.rootID;
+	this.focusCates = focusCates;
+
+	//cluster dictionary, key: cluster id
+	this.clusters = {};
+	this.filterClusters = {};
+
+	// tweet dictionary, key: tweet id
+	this.tweets = {};
+	this.categories = [];
+	//this.keywordCate = {};
+	this.keywordAnalyzer = new KeywordAnalyzer();
+
+	this.root = null;
+
+	this.clusterDensityMax = null;
+	this.clusterDensityMin = null;
+
+	this.tweets = tweets;
+	this.loadClusters(clusters);
+	//init tree
+	this.root = this.initTree();
+
+	this.filterTree();
+
+	this.root.sortChildren();
+
+};
 
 /*************************************************************************************/
 /**************************** cluster filter operation *******************************/
@@ -72,7 +112,6 @@ DataCenter.prototype.setFocusCate = function(cates){
 DataCenter.prototype.filterTree = function(){
 
 	this.root.filterTree(this.volRange[0], this.volRange[1]);
-
 
 };
 
@@ -124,6 +163,20 @@ DataCenter.prototype.getTweetsByIds = function(ids){
 		if(that.tweets[id] !== null )
 			rst.push(that.tweets[id]);
 	});
+
+	return rst;
+};
+
+DataCenter.prototype.getTweetsByKeyword = function(keyword){
+
+	var that = this;
+	var rst = [];
+
+	for(var id in that.tweets){
+		var keywords = that.tweets[id].keywords;
+		if(keywords.indexOf(keyword) != -1)
+			rst.push(that.tweets[id]);
+	}
 
 	return rst;
 };
@@ -200,7 +253,7 @@ DataCenter.prototype.loadTweets = function(){
 
 			//keyword options:
 			/*****************1: cate keywords******************/
-			t.keywords = Object.keys(entry.tokens);
+			//t.keywords = Object.keys(entry.tokens);
 
 			/****************2: keyword rule*********************/
 			// t.keywords = t.lemmed_text.filter(function(val){
@@ -246,7 +299,32 @@ DataCenter.prototype.loadTweets = function(){
 	});
 };
 
-DataCenter.prototype.loadClusters = function(){
+DataCenter.prototype.loadClusters = function(dataObj){
+
+
+	/*****************only for user study*******************/
+	var that = this;
+	if(dataObj != null){
+
+		dataObj.forEach(function(cluster){
+			
+			that.clusters[cluster['clusterId']] = cluster;
+
+			//calculate central position of the cluster;
+			var lats = [], lons = [];
+
+			cluster['ids'].forEach(function(val){
+				lats.push(that.tweets[val].lat);
+				lons.push(that.tweets[val].lon);
+			});
+
+			cluster['center'] = { lat:arrAvg(lats), lon:arrAvg(lons) };
+
+		});
+
+		return;
+	}
+
 
 	var that = this;
 

@@ -12,12 +12,17 @@ ContourVis.prototype.updateGeoBbox = function(){
 
 	//perform minimizing overlapping algorithm;
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
+	
 	tree.resetFlags();
-	tree.getPixelCoords();
+
+	if(userStudyController == null)
+		tree.getPixelCoords();
+	else
+		tree.getPixelCoords(true);
+
 	tree.samplePoints();
 	tree.filterNodesForMinOlp();
 	tree.minOlp();
-
 	//update activenode list;
 	//for the concept of activenode, please find it in the app_controller file;
 	tree.filterNodesForVis();
@@ -38,6 +43,9 @@ ContourVis.prototype.updateGeoBbox = function(){
 };
 
 ContourVis.prototype.updateDensityRange = function(){
+
+	if(userStudyController != null)
+		return;
 
 	var activeNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
@@ -264,15 +272,15 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    		var cluster_id = this.id.substring(5, this.id.length);
 			    		/*************************************draw optimized dots************************************/
 			    		
-			    		// var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
-			    		// for(var i=0; i<dots.length/2; i++){
-			    		// 	svg.append("circle")
-			    		// 		.attr('class', 'control_point')
-			    		// 		.attr('cx', dots[2*i])
-			    		// 		.attr('cy', dots[2*i+1])
-			    		// 		.attr('r', 2)
-			    		// 		.attr('fill', 'red');
-			    		// }
+			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    		for(var i=0; i<dots.length/2; i++){
+			    			svg.append("circle")
+			    				.attr('class', 'control_point')
+			    				.attr('cx', dots[2*i])
+			    				.attr('cy', dots[2*i+1])
+			    				.attr('r', 2)
+			    				.attr('fill', 'red');
+			    		}
 
 			    		/*************************************draw actual tweet dots************************************/
 			    		// //tweets inside the hull;
@@ -323,10 +331,11 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 		this.drawOutLine(id, curLineFunc, poly, ChildsLineFuncArr, selectedCate, cateVol, cateColor, isChild);
 	}
 
-
 };
 
 ContourVis.prototype.drawHalo = function(id, lineFunc){
+
+	return;
 
 	var svg = this.map_svg;
 	var that = this;
@@ -445,6 +454,10 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 			this.drawHalo(id, lineFunc);
 			this.drawStripLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, ContourVis.segmented);
 		}
+		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.DASH){
+			this.drawHalo(id, lineFunc);
+			this.drawDashLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, ContourVis.segmented);
+		}
 		else if(ContourVis.OUTLINE == ContourVis.OUTLINEMODE.CIRCLE){
 			this.drawHalo(id, lineFunc);
 			this.drawCircleLine(id, lineFunc, cateVol.slice(), cateColor, lineWidth, ContourVis.segmented);
@@ -505,8 +518,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 
 ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
 
-	var pixelLengthMin = 30;
-	var pixelLengthMax = 200;
+	var pixelLengthMin = 15;
+	var pixelLengthMax = 100;
 
 	var svg = this.map_svg;
 	var unitLength, sum;
@@ -635,8 +648,8 @@ ContourVis.prototype.drawDashLine = function(id, lineFunc, cateVol, cateColor, l
 
 ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
 
-	var pixelLengthMin = 30;
-	var pixelLengthMax = 200;
+	var pixelLengthMin = 15;
+	var pixelLengthMax = 100;
 
 	var svg = this.map_svg;
 	var margin = 1;
@@ -703,7 +716,7 @@ ContourVis.prototype.drawCircleLine = function(id, lineFunc, cateVol, cateColor,
 				.attr('class', 'outlintpoint_'+id)
 				.attr('cx', pos.x)
 				.attr('cy', pos.y)
-				.attr('r', circleR)
+				.attr('r', circleR-0.5)
 				.attr('stroke', "#aaa")
 				.attr('stroke-width', "1")
 				.attr('fill', cateColor[val]);
@@ -1453,7 +1466,7 @@ ContourVis.hullOverlapViewport = function(hull, flagForMinOlp){
 };
 
 //if not valid, return [];
-ContourVis.getPixelCoords = function(ids){
+ContourVis.getPixelCoords = function(ids, doNotConvert){
 
 	// get hull using js function. input: poly.
 	// if(poly.length < 3)
@@ -1467,7 +1480,13 @@ ContourVis.getPixelCoords = function(ids){
 	var tweets = DataCenter.instance().getTweets();
 	var pts = [];
 	ids.forEach(function(id){
-		var pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
+
+		var pt;
+		if(doNotConvert == null || doNotConvert == false)
+			pt = Canvas_manager.instance().geo_p_to_pixel_p({x:tweets[id].lon, y:tweets[id].lat});	
+		else
+			pt = {x:tweets[id].lon, y:tweets[id].lat};
+
 		pts.push(pt.x);
 		pts.push(pt.y)
 	});
@@ -1560,8 +1579,18 @@ ContourVis.prototype.get_menu = function(id){
 			}
 		},
 		{
-			title: 'null',
+			title: 'Add to user study',
 			action: function() {
+
+	    		var dots = DataCenter.instance().getTree().getNodeById(id).cluster['hulls'];
+	    		
+	    		var poly = [];
+	    		for(var i=0; i<dots.length/2; i++){
+	    			poly.push(dots[2*i]);
+	    			poly.push(dots[2*i+1]);
+	    		}
+	    		helper.addCoords(poly);
+
 			}
 		},
 		{
@@ -1588,7 +1617,7 @@ ContourVis.DIMENSION = 1024;
 ContourVis.CONTOURMODE = { BOUND:0, FILLSINGLE:1, FILLSEQUENTIAL:2, DIVERGENT:3, QUANT:4, DENSITY:5 };
 ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 
-ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, CIRCLE:2, STACKLINE:3, TEXT:4, TEXT_FILL:5, TEXT_FILL_ALL:6 }
+ContourVis.OUTLINEMODE = { DEFAULT:0, STRIP:1, DASH:2, CIRCLE:3, STACKLINE:4, TEXT:5, TEXT_FILL:6, TEXT_FILL_ALL:7 }
 ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DEFAULT;
 ContourVis.enableHalo = true;
 
