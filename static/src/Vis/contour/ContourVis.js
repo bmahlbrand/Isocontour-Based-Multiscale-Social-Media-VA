@@ -15,19 +15,26 @@ ContourVis.prototype.updateGeoBbox = function(){
 	
 	tree.resetFlags();
 
-	if(userStudyController == null)
+	if(userStudyController == null){
 		tree.getPixelCoords();
+		tree.samplePoints();
+		tree.filterNodesForMinOlp();
+		tree.minOlp();
+	}
 	else
 		tree.getPixelCoords(true);
 
-	tree.samplePoints();
-	tree.filterNodesForMinOlp();
-	tree.minOlp();
+	
 	//update activenode list;
 	//for the concept of activenode, please find it in the app_controller file;
 	tree.filterNodesForVis();
 
 	var activeNodes = tree.toList().filter(function(val){
+
+										if(userStudyController != null){
+											val.cluster['visFlag'] = true;
+											val.cluster['minOlpFlag'] = true;
+										}
 										return val.cluster['visFlag'];
 									})
 									.map(function(val){
@@ -73,6 +80,9 @@ ContourVis.prototype.update = function(){
 
 	//showing all levels;
 	var levelForFilter = 20;
+
+	if(userStudyController != null)
+		levelForFilter = OlMapView.zoomLevel;
 
 	acNodes = acNodes.filter(function(id){
 
@@ -205,6 +215,10 @@ ContourVis.prototype.initHalo = function(){
 //use mask to exlude children hull area when rendering the current hull;
 //only draw hulls which ['visFlag'] == true;
 ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLineFuncArr, isChild, drawBoundaryFlag){
+
+	if(userStudyController != null && zoom != OlMapView.zoomLevel)
+		return;
+
 
 	var that = this;
 	var svg = this.map_svg;

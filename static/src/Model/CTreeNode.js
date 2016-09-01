@@ -5,7 +5,8 @@ CTreeNode = function(cluster){
 	//this design avoids copying the whole tree for filter option.
 	this.allChildren = [];
 	this.vis = new VisComponent();
-	this.stat = new StatComponent(cluster['ids']);
+	this.stat = new StatComponent(cluster['ids'], this);
+
 };
 
 CTreeNode.prototype.addChild = function(clusterArr){
@@ -126,6 +127,12 @@ CTreeNode.prototype.getVol = function(){
 	return this.cluster.ids.length;
 };
 
+//screen space area, can be 0 
+CTreeNode.prototype.getArea = function(){
+	return PolyK.GetArea(this.cluster['hulls']);
+};
+
+
 //only have volume for now, atually only filter out based on min value;
 CTreeNode.prototype.filterTree = function(min, max){
 	
@@ -134,6 +141,7 @@ CTreeNode.prototype.filterTree = function(min, max){
 	var that = this;
 	this.allChildren.forEach(function(val){
 		if(val.getVol() >= min)
+		// if(val.stat.getVolByCate(DataCenter.instance().focusCates) >= min)
 			that.children.push(val);
 	});
 
@@ -164,12 +172,12 @@ CTreeNode.prototype.resetFlags = function(){
 
 };
 
-CTreeNode.prototype.getPixelCoords = function(){
+CTreeNode.prototype.getPixelCoords = function(doNotConvert){
 
-	this.cluster['hulls'] = ContourVis.getPixelCoords(this.cluster['hullIds']);
+	this.cluster['hulls'] = ContourVis.getPixelCoords(this.cluster['hullIds'], doNotConvert);
 	
 	this.children.forEach(function(val){
-		val.getPixelCoords();
+		val.getPixelCoords(doNotConvert);
 	});
 
 };
@@ -305,7 +313,7 @@ CTreeNode.prototype.drawContour = function(acNodes){
 	var isChild = childsLineFuncArr.length > 0 ? false : true;
 	var drawBoundaryFlag = this.cluster['minOlpFlag'];
 
-	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, childsLineFuncArr, isChild, drawBoundaryFlag);
+	$('[ng-controller="map_controller"]').scope().getCV().drawHull(id, zoom, currLineFunc, hull, childsLineFuncArr, isChild, drawBoundaryFlag);
 
 	this.children.forEach(function(val){
 		val.drawContour(acNodes);
