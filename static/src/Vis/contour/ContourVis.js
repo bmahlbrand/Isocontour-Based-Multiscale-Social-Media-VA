@@ -547,6 +547,76 @@ ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, 
 	cateVol.forEach(function(cate, idx){
 
 		var dashArray = cate + ", " + (sum-cate);
+
+		var dashOffset = offset;
+		offset += cate;
+
+		svg.append("path")
+			.attr("class", "stripline_" + id + "_" + idx)
+			.attr("d", lineFunc)
+	    	.attr("stroke", cateColor[idx])
+	    	.attr("stroke-width", lineWidth)
+	    	.style("stroke-dasharray", dashArray)
+	    	//the offset is the reverse direction of the common thinking.
+	    	.style("stroke-dashoffset", dashOffset*(-1))
+	    	.attr("fill", "none");
+	});
+
+};
+
+ContourVis.prototype.drawDashLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
+
+	var pixelLengthMin = 15;
+	var pixelLengthMax = 100;
+
+	var svg = this.map_svg;
+	var unitLength, sum;
+
+	//generate fake path;
+	var curPath = svg.append("path")
+					// .attr("class", "stripline_" + id + "_" + idx)
+					.attr("d", lineFunc)
+			    	.attr("stroke", "none")
+			    	.attr("fill", "none");
+
+	curPath = curPath[0][0];
+
+	//multiple segments of the same color;
+	if(isSegmented){
+
+		sum = cateVol.reduce(function(a, b){return a+b;});
+		
+		unitLength = curPath.getTotalLength() / sum;
+		cateVol = cateVol.map(function(val){ return val*unitLength; });
+
+		while(cateVol.min() >= pixelLengthMin && cateVol.max() >= pixelLengthMax )
+			cateVol = cateVol.map(function(val){ return val/2; });
+
+		sum = cateVol.reduce(function(a, b){return a+b;});
+
+	}else{
+
+		//only one segment for each color;
+		sum = cateVol.reduce(function(a, b){return a+b;});
+		
+		unitLength = curPath.getTotalLength() / sum;
+		cateVol = cateVol.map(function(val){ return val*unitLength; });
+		sum *= unitLength;
+	}
+
+	var offset = 0;
+	cateVol.forEach(function(cate, idx){
+
+		var width = 4;
+		var space = 2;
+		var num = Math.floor(cate / (width+space));
+		var cateStr = "";
+		for(var i=0;i<num-1;i++)
+			cateStr += width +"," + space + ",";
+
+		cateStr += width + "," + ( sum - num*width - (num-1)*space );
+		var dashArray = cateStr;
+
 		var dashOffset = offset;
 		offset += cate;
 
