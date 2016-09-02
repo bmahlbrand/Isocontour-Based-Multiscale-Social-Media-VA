@@ -20,14 +20,14 @@ UserStudyController.prototype.genZoom = function(){
 
 UserStudyController.prototype.getStudy2ImageWrapper = function(){
 
-	var numOfCate = 4;
-	var numOfCluster = 2;
+	var numOfCate = 3;
+	var numOfCluster = 1;
 
 	//vis type;
 	//ContourVis.OUTLINE = ContourVis.OUTLINEMODE.CIRCLE;
 	ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STRIP;
-	//ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DASH;
-	//ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STACKLINE;
+	// ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DASH;
+	// ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STACKLINE;
 
 	this.getStudy2Image(numOfCate, numOfCluster);
 
@@ -60,50 +60,79 @@ UserStudyController.prototype.getStudy2Image = function(numOfCate, numOfCluster)
 	var tweets = [];
 	var tweetIndex = 0;
 
-	for(var k=0;k<numOfCluster;k++){
+	var collision = true;
+	do{
 
-		var poly = us_polys[Math.floor(Math.random()*us_polys.length)];
+		var clusters = [];
 
-		//normalize poly;
-		var aabb = PolyK.GetAABB(poly);
-		var scale = (128*Math.random() + 128 ) / Math.max(aabb.width, aabb.height);
+		for(var k=0;k<numOfCluster;k++){
 
-		var randomCenter = [512 + (Math.random()-0.5)*200,512 + (Math.random()-0.5)*200];
+			var poly = us_polys[Math.floor(Math.random()*us_polys.length)];
 
-		var normalizedPoly = poly.map(function(val,i){
-			if(i%2==0){
-				//x axis:
-				return (val-(aabb.x+aabb.width*0.5))*scale + randomCenter[0];
-			}else{
-				//y axis:
-				return (val-(aabb.y+aabb.height*0.5))*scale + randomCenter[1];
-			}
-		});
+			//normalize poly;
+			var aabb = PolyK.GetAABB(poly);
+			var scale = (128*Math.random() + 128 ) / Math.max(aabb.width, aabb.height);
 
-		
-		var obj = {};
-		obj['zoom'] = zoom;
-		obj["clusterId"] = zoom +"_"+k;
-		obj['children'] = [];
-		obj['hullIds'] = [];
-		obj['ids'] = [];
+			var randomCenter = [512 + (Math.random()-0.5)*200,512 + (Math.random()-0.5)*200];
 
-		obj['category'] = {"c0":10, "c1":20, "c2":30, "c3":10, "c4":50};
-
-		for(var i=0; i<normalizedPoly.length/2; i++){
-
-			var px = {x:normalizedPoly[2*i], y:normalizedPoly[2*i+1]};
+			var normalizedPoly = poly.map(function(val,i){
+				if(i%2==0){
+					//x axis:
+					return (val-(aabb.x+aabb.width*0.5))*scale + randomCenter[0];
+				}else{
+					//y axis:
+					return (val-(aabb.y+aabb.height*0.5))*scale + randomCenter[1];
+				}
+			});
 			
-			tweets.push({tweet_id:tweetIndex, lon:px.x, lat:px.y});
-			obj['hullIds'].push(tweetIndex);
-			obj['ids'].push(tweetIndex);
-			tweetIndex++;
+			var obj = {};
+			obj['zoom'] = zoom;
+			obj["clusterId"] = zoom +"_"+k;
+			obj['children'] = [];
+			obj['hullIds'] = [];
+			obj['ids'] = [];
+			obj['bound'] = [];
+
+			// obj['category'] = {"c0":10, "c1":20, "c2":30, "c3":10, "c4":50};
+			obj['category'] = UserStudyController.cate3[Math.floor(Math.random()*UserStudyController.cate3.length)];
+
+
+			for(var i=0; i<normalizedPoly.length/2; i++){
+
+				var px = {x:normalizedPoly[2*i], y:normalizedPoly[2*i+1]};
+				
+				tweets.push({tweet_id:tweetIndex, lon:px.x, lat:px.y});
+				obj['bound'].push([px.x, px.y]);
+
+				obj['hullIds'].push(tweetIndex);
+				obj['ids'].push(tweetIndex);
+				tweetIndex++;
+			}
+
+			// clusterTree[0]['children'].push(zoom +"_"+k);
+			// clusterTree.push(obj);
+			clusters.push(obj);
+
 		}
 
-		clusterTree[0]['children'].push(zoom +"_"+k);
-		clusterTree.push(obj);
+		if(numOfCluster == 2){
+			var interset = intersectPolyWrapper(clusters[0]['bound'], clusters[1]['bound']);
+			var dis = shortestDis(clusters[0]['bound'], clusters[1]['bound']);
+			if(interset.length == 0 && dis > 10 ){
+				collision = false;
+				clusterTree[0]['children'].push(clusters[0]['clusterId']);
+				clusterTree[0]['children'].push(clusters[1]['clusterId']);
+				clusterTree.push(clusters[0]);
+				clusterTree.push(clusters[1]);
+			}
+		}else{
 
-	}
+			clusterTree[0]['children'].push(clusters[0]['clusterId']);
+			clusterTree.push(clusters[0]);
+		}
+	
+
+	}while(numOfCluster > 1 && collision == true);
 
 	DataCenter.instance().reInit(zoom-1 +"_0", focusCates, tweets, clusterTree);
 
@@ -125,3 +154,24 @@ Helper.prototype.addCoords = function(poly){
 };
 
 var helper = new Helper();
+
+UserStudyController.cate2 = [{"c0":9, "c1":1},
+							{"c0":8, "c1":2},
+							{"c0":7, "c1":3},
+							{"c0":6, "c1":4},
+							{"c0":5, "c1":5},
+							{"c0":4, "c1":6},
+							{"c0":3, "c1":7},
+							{"c0":2, "c1":8},
+							{"c0":1, "c1":9}];
+
+
+UserStudyController.cate3 = [{"c0":9, "c1":1, "c2":2},
+							{"c0":8, "c1":2, "c2":2},
+							{"c0":7, "c1":3, "c2":3},
+							{"c0":6, "c1":4, "c2":4},
+							{"c0":5, "c1":5, "c2":5},
+							{"c0":4, "c1":6, "c2":4},
+							{"c0":3, "c1":7, "c2":3},
+							{"c0":2, "c1":8, "c2":2},
+							{"c0":1, "c1":9, "c2":2}];
