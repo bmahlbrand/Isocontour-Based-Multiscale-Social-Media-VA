@@ -19,6 +19,12 @@ function contourColorStroke(){
 
 function contourColorFill(){
 
+	if(userStudyController != null)
+		return d3.scale.quantize().domain([ 1, 20 ])
+								.range(["#ffffcc", "#ffffcc"]);
+
+
+
 	var numOfLevels = profile.endLevel - profile.startLevel + 1;
 
 	var greys = colorbrewer['Greys'][numOfLevels];
@@ -91,7 +97,14 @@ function divergentColorList(){
 	//modified:
 	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"];
 	var color = ['#1b7837', '#984ea3', '#e41a1c', '#a65628'];
-	//return colorbrewer['Set3'][8];
+	var color = colorbrewer['Set3'][4];
+
+	//for 3 cates, this is good;
+	var color = ["#fb6a4a", "#8856a7", "#2b8cbe"];
+
+	//for 2 cates, this is good;
+	var color = ["#fb6a4a", "#2b8cbe"];
+
 	return color;
 }
 
