@@ -39,7 +39,7 @@ DataCenter.prototype.init = function(){
 
 }
 
-//for User Study:
+//for User Study2 :
 DataCenter.prototype.reInit = function(rootId, focusCates, tweets, clusters) {
 
 	//hard coded for now
@@ -73,6 +73,40 @@ DataCenter.prototype.reInit = function(rootId, focusCates, tweets, clusters) {
 	this.filterTree();
 
 	this.root.sortChildren();
+
+};
+
+//for User Study1:
+DataCenter.prototype.reInit1 = function(rootId, tree, totalDepth, zoom) {
+
+	removeNodes = [];
+	//hard coded for now
+	this.rootID = rootId;
+	
+	//filter options:
+	this.volRange = [1, Number.MAX_VALUE];
+	this.focusID = this.rootID;
+	this.focusCates = [];
+
+	//cluster dictionary, key: cluster id
+	this.clusters = {};
+	this.filterClusters = {};
+
+	// tweet dictionary, key: tweet id
+	this.tweets = {};
+	this.categories = [];
+	//this.keywordCate = {};
+	this.keywordAnalyzer = new KeywordAnalyzer();
+
+	this.root = null;
+
+	this.clusterDensityMax = null;
+	this.clusterDensityMin = null;
+
+	DataCenter.levelCount = {};
+
+	this.root = new CTreeNode({clusterId:rootId, ids:[], zoom:zoom});
+	this.root.genRandomBoundary([], totalDepth, 1, tree, zoom, []);
 
 };
 
@@ -253,7 +287,7 @@ DataCenter.prototype.loadTweets = function(){
 
 			//keyword options:
 			/*****************1: cate keywords******************/
-			//t.keywords = Object.keys(entry.tokens);
+			t.keywords = Object.keys(entry.tokens);
 
 			/****************2: keyword rule*********************/
 			// t.keywords = t.lemmed_text.filter(function(val){
@@ -291,7 +325,6 @@ DataCenter.prototype.loadTweets = function(){
 			t.keywords.forEach(function(word){
 				that.keywordAnalyzer.addKeyword(word, Object.keys(t.cate));
 			});
-			//that.keywordAnalyzer.addKeyword();
 
 		});
 

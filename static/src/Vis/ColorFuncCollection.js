@@ -19,10 +19,9 @@ function contourColorStroke(){
 
 function contourColorFill(){
 
-	if(userStudyController != null)
+	if(userStudyController != null && userStudyController.constructor.name == 'UserStudyController')
 		return d3.scale.quantize().domain([ 1, 20 ])
-								.range(["#ffffcc", "#ffffcc"]);
-
+								.range(["#ffffff", "#ffffff"]);
 
 
 	var numOfLevels = profile.endLevel - profile.startLevel + 1;
@@ -44,7 +43,11 @@ function contourColorFill(){
 	var divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
 	divergent.reverse();
 
-	var quant = colorbrewer['Set2'][numOfLevels];
+	var quant;
+	if(numOfLevels< 9)
+		quant = colorbrewer['Set2'][numOfLevels];
+	else
+		quant = colorbrewer['Set3'][numOfLevels];
 
 	var color = null;
 	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
@@ -74,6 +77,62 @@ function contourColorFill(){
 	return q;
 }
 
+
+function contourColorForUS1(){
+
+	var numOfLevels = profile.endLevel - profile.startLevel + 1;
+
+	var greys = colorbrewer['Greys'][numOfLevels];
+	var blues = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#084594'];
+
+	//for case study;
+	// var divergent
+	// if(globalName == 'rnc_l1')
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels+3].slice(3, numOfLevels+3);
+	// else if(globalName == 'rnc_l2')
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels+5].slice(0, numOfLevels);
+	// else
+	// 	divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
+
+	// divergent.reverse();
+
+	var divergent = colorbrewer['RdYlBu'][numOfLevels].slice();
+	divergent.reverse();
+
+	var quant;
+	if(numOfLevels< 9)
+		quant = colorbrewer['Set2'][numOfLevels];
+	else
+		quant = colorbrewer['Set3'][numOfLevels];
+
+	var color = null;
+	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSINGLE)
+		color = ["#9ecae1"];
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.FILLSEQUENTIAL )
+		color = blues;
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DIVERGENT )
+		color = divergent;
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.QUANT )
+		color = quant;
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
+		color = ["none"];
+	else if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.DENSITY){
+		return densityColor(ContourVis.densityMin, ContourVis.densityMax);
+	}
+
+	//diverging from blue to red;
+	//var color = ["#034e7b", "#3690c0", "#66ccff", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"];
+	//sequential;
+	//var color = ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c'];
+	//constant color;
+	//var color = ["#9ecae1"];
+
+	// var q = d3.scale.quantize().domain([ profile.startLevel + profile.zoom,
+	// 									profile.endLevel + profile.zoom ])
+	// 							.range(color);
+	return color;
+}
+
 // function statColor(){
 
 // 	//divergent color scheme
@@ -87,6 +146,14 @@ function contourColorFill(){
 
 //https://bl.ocks.org/mbostock/5577023
 function divergentColorList(){
+
+
+	if(userStudyController != null && UserStudyController.numOfCate == 2)
+		return ["#fb6a4a", "#2b8cbe"];
+	if(userStudyController != null && UserStudyController.numOfCate == 4)
+		//return ["#33a02c", '#ff7f00', "#6a3d9a", "#ff0000"];
+		return ['#1f78b4','#e31a1c','#33a02c','#ff7f00'];
+
 	//light
 	// return ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9'];
 	//lighter
@@ -96,14 +163,14 @@ function divergentColorList(){
 
 	//modified:
 	//var set3 = ["#ffffb3", "#fb8072", "#8dd3c7", "#bc80bd"];
-	var color = ['#1b7837', '#984ea3', '#e41a1c', '#a65628'];
-	var color = colorbrewer['Set3'][4];
+	var color = ['#1f78b4','#e31a1c','#33a02c','#ff7f00'];
+	// var color = colorbrewer['Set3'][4];
 
 	//for 3 cates, this is good;
-	var color = ["#fb6a4a", "#8856a7", "#2b8cbe"];
+	//var color = ["#33a02c", '#ff7f00', "#6a3d9a"];
 
 	//for 2 cates, this is good;
-	var color = ["#fb6a4a", "#2b8cbe"];
+	//var color = ["#fb6a4a", "#2b8cbe"];
 
 	return color;
 }

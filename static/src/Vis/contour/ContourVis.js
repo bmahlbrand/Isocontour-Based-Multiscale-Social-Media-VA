@@ -17,12 +17,20 @@ ContourVis.prototype.updateGeoBbox = function(){
 
 	if(userStudyController == null){
 		tree.getPixelCoords();
-		tree.samplePoints();
+		//tree.samplePoints();
 		tree.filterNodesForMinOlp();
 		tree.minOlp();
 	}
-	else
+	else if(userStudyController.constructor.name == "UserStudyController"){
+		//user study 2
 		tree.getPixelCoords(true);
+	}
+	else{
+		//tree.samplePoints();
+		//tree.filterNodesForMinOlp();
+		//tree.minOlp();
+		//user study 1
+	}
 
 	
 	//update activenode list;
@@ -34,6 +42,7 @@ ContourVis.prototype.updateGeoBbox = function(){
 										if(userStudyController != null){
 											val.cluster['visFlag'] = true;
 											val.cluster['minOlpFlag'] = true;
+
 										}
 										return val.cluster['visFlag'];
 									})
@@ -76,12 +85,16 @@ ContourVis.prototype.update = function(){
 
 	var acNodes = $('[ng-controller="app_controller"]').scope().getAcNodes();
 
+	if(userStudyController != null)
+		acNodes = DataCenter.instance().getTree().toList().filter(function(val){ return removeNodes.indexOf(val.cluster['clusterId']) != -1 ? false : true; })
+															.map(function(val){ return val.cluster['clusterId']; });
+
 	var tree = DataCenter.instance().getTree().getNodeById(DataCenter.instance().focusID);
 
 	//showing all levels;
 	var levelForFilter = 20;
 
-	if(userStudyController != null)
+	if(userStudyController != null && userStudyController.constructor.name == "UserStudyController")
 		levelForFilter = OlMapView.zoomLevel;
 
 	acNodes = acNodes.filter(function(id){
@@ -97,9 +110,63 @@ ContourVis.prototype.update = function(){
 	//hover hull
 	//var hlNodes = $('[ng-controller="app_controller"]').scope().getHlNodes();
 	//this.hoverHull(hlNodes);
-
+	if(ContourVis.CONTOUR == ContourVis.CONTOURMODE.BOUND)
+		this.drawLegend(false);
+	else
+		this.drawLegend(false);
 };
 
+
+ContourVis.prototype.drawLegend = function(flag){
+
+	if(!flag){
+		this.map_svg.selectAll(".legend").remove();
+		return;
+	}
+
+
+	var numOfLevels = profile.endLevel - profile.startLevel + 1;
+	var name = [];
+	for(var i=0;i<numOfLevels; i++)
+		name.push(" - "+(i+profile.zoom));
+// 		if(i == 0)
+// 			name.push("- " +(i+profile.zoom) + " - high");
+// 		else if(i == numOfLevels-1)
+// 			name.push("- " +(i+profile.zoom) + " - low");
+// 		else
+// 			name.push("- "+(i+profile.zoom));
+	// var sampleCategoricalData = ["Something","Something Else", "Another", "This", "That", "Etc"]
+	// var sampleOrdinal = d3.scale.category20().domain(sampleCategoricalData);
+	var color = contourColorForUS1();
+	//scale.domain(name);
+
+	var q = d3.scale.ordinal().domain(name)
+								.range(color);
+
+	var verticalLegend = d3.svg.legend().labelFormat("none").cellPadding(0).orientation("vertical").units("").cellWidth(25).cellHeight(18).inputScale(q);
+
+	this.map_svg.selectAll(".legend").remove();
+
+	this.map_svg.append("g").attr("transform", "translate(900,50)").attr("class", "legend").call(verticalLegend);
+	
+	
+	this.map_svg.append("g")
+			.attr("transform", "translate(900,40)")
+			.append("text")
+            .text("high level")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "20px")
+            .attr("fill", "black");
+	
+	this.map_svg.append("g")
+			.attr("transform", "translate(900,130)")
+			.append("text")
+            .text("low level")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "20px")
+            .attr("fill", "black");
+
+}
 
 //if clusterIdlist is empty, reset;
 // ContourVis.prototype.hoverHull = function(clusterIdlist){
@@ -216,9 +283,8 @@ ContourVis.prototype.initHalo = function(){
 //only draw hulls which ['visFlag'] == true;
 ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLineFuncArr, isChild, drawBoundaryFlag){
 
-	if(userStudyController != null && zoom != OlMapView.zoomLevel)
+	if(userStudyController != null && userStudyController.constructor.name == 'UserStudyController' && zoom != OlMapView.zoomLevel)
 		return;
-
 
 	var that = this;
 	var svg = this.map_svg;
@@ -278,9 +344,20 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    	// 	var id = this.id.substring(5,this.id.length);
 			    	// 	that.hoverCluster(id);
 			    	// })
-			    	// .on("mouseout", function(){
-			    	// 	that.hoverCluster();
-			    	// })
+			    	.on("click", function(){
+
+			    		// var cluster_id = this.id.substring(5, this.id.length);
+			    		// targetCluster = DataCenter.instance().getTree().getNodeById(cluster_id);
+
+			    	})
+			    	.on("dblclick", function(){
+
+			    		$('[ng-controller="map_controller"]').scope().getMap().cacheLocation();
+
+			    		var cluster_id = this.id.substring(5, this.id.length);
+			    		var node = DataCenter.instance().getTree().getNodeById(cluster_id);
+			    		$('[ng-controller="map_controller"]').scope().getMap().moveTo(node.cluster.center.lon, node.cluster.center.lat, node.cluster.zoom+4);
+			    	})
 			    	.on("mouseover", function(){
 			    		
 			    		var cluster_id = this.id.substring(5, this.id.length);
@@ -292,7 +369,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    				.attr('class', 'control_point')
 			    				.attr('cx', dots[2*i])
 			    				.attr('cy', dots[2*i+1])
-			    				.attr('r', 2)
+			    				.attr('r', 4)
 			    				.attr('fill', 'red');
 			    		}
 
@@ -319,7 +396,8 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    		
 			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-		  			}).on("mouseout", function(){
+		  			})
+		  			.on("mouseout", function(){
 
 		  				/*************************************draw optimized dots************************************/
 			    		svg.selectAll(".control_point").remove();
@@ -330,6 +408,23 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 
 		  			})
 		  			.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
+
+	/********************draw letter (only for user study)********************/
+	if(userStudyController != null && userStudyController.constructor.name == "UserStudyController"){
+
+		var letter = DataCenter.instance().getTree().getNodeById(id).cluster['letter'];
+		var center = DataCenter.instance().getTree().getNodeById(id).cluster['center'];
+
+		svg.append("text")
+			.attr("x", function(d) { return center.lon; })
+            .attr("y", function(d) { return center.lat; })
+            .text(letter)
+            .attr("font-family", "sans-serif")
+            .attr("font-weight", "bolder")
+            .attr("font-size", "24px")
+            .attr("fill", "black");
+
+	}
 
 	/***************************************************render the boundary*************************************************/
 	//draw boundary only if part of the boundary is inside the viewport
@@ -348,8 +443,6 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 };
 
 ContourVis.prototype.drawHalo = function(id, lineFunc){
-
-	return;
 
 	var svg = this.map_svg;
 	var that = this;
@@ -457,7 +550,9 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 
 		var min = cateVol.min();
 		//normalize the array based on the non-zero min value;
-		cateVol = cateVol.map(function(val){ return Math.round(val / min); });
+
+		if(userStudyController == null)
+			cateVol = cateVol.map(function(val){ return Math.round(val / min); });
 
 		//up to this point, the cateVol has been normalized already;
 		//draw contour
@@ -532,8 +627,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 
 ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
 
-	var pixelLengthMin = 15;
-	var pixelLengthMax = 100;
+	var pixelLengthMin = 10;
+	var pixelLengthMax = 80;
 
 	var svg = this.map_svg;
 	var unitLength, sum;
@@ -593,8 +688,8 @@ ContourVis.prototype.drawStripLine = function(id, lineFunc, cateVol, cateColor, 
 
 ContourVis.prototype.drawDashLine = function(id, lineFunc, cateVol, cateColor, lineWidth, isSegmented){
 
-	var pixelLengthMin = 15;
-	var pixelLengthMax = 100;
+	var pixelLengthMin = 10;
+	var pixelLengthMax = 80;
 
 	var svg = this.map_svg;
 	var unitLength, sum;
@@ -748,10 +843,13 @@ ContourVis.prototype.drawStackLine = function(id, lineFunc, poly, cateVol, cateC
 
 	var lineWidth = lineWidth;
 
+	if(userStudyController != null && UserStudyController.numOfCate == 4)
+		lineWidth = 10;
+
 	var sum = cateVol.reduce(function(a, b){return a+b;});
 	var widthColor = cateVol.map(function(val, idx){ return [Math.floor(val/sum * lineWidth), cateColor[idx]]; });
 
-	widthColor = widthColor.sort(function(a,b){ return a[0]-b[0]; });
+	//widthColor = widthColor.sort(function(a,b){ return a[0]-b[0]; });
 
 	var clip = svg.append("clipPath")
 					.attr("id", "stackline_"+id)
@@ -1552,20 +1650,29 @@ ContourVis.prototype.get_menu = function(id){
 	var that = this;
 
 	var menu = [
-		{
-			title: 'Show Dots',
-			action: function() {
+		// {
+		// 	title: 'hide cluster',
+		// 	action: function() {
 
-				var ids = [];
-				DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
-	    			ids = ids.concat(idlist);
-	    		});
+		// 		removeNodes.push(id);
 
-	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+	 //    		$('[ng-controller="app_controller"]').scope().masterUpdate();
+		// 	}
+		// },
+		// {
+		// 	title: 'Show Dots',
+		// 	action: function() {
+
+		// 		var ids = [];
+		// 		DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
+	 //    			ids = ids.concat(idlist);
+	 //    		});
+
+	 //    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 	    		
-	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "grey", 0.2);
-			}
-		},
+	 //    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "grey", 0.2);
+		// 	}
+		// },
 		{
 			title: 'Highlight Dots',
 			action: function() {
@@ -1577,7 +1684,7 @@ ContourVis.prototype.get_menu = function(id){
 
 	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 	    		
-	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "red", 0.8);
+	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "blue", 0.5);
 			}
 		},
 		{
@@ -1592,21 +1699,21 @@ ContourVis.prototype.get_menu = function(id){
 				$('[ng-controller="table_controller"]').scope().displayMsgByClusterId(id);
 			}
 		},
-		{
-			title: 'Add to user study',
-			action: function() {
+		// {
+		// 	title: 'Add to user study',
+		// 	action: function() {
 
-	    		var dots = DataCenter.instance().getTree().getNodeById(id).cluster['hulls'];
+	 //    		var dots = DataCenter.instance().getTree().getNodeById(id).cluster['hulls'];
 	    		
-	    		var poly = [];
-	    		for(var i=0; i<dots.length/2; i++){
-	    			poly.push(dots[2*i]);
-	    			poly.push(dots[2*i+1]);
-	    		}
-	    		helper.addCoords(poly);
+	 //    		var poly = [];
+	 //    		for(var i=0; i<dots.length/2; i++){
+	 //    			poly.push(dots[2*i]);
+	 //    			poly.push(dots[2*i+1]);
+	 //    		}
+	 //    		helper.addCoords(poly);
 
-			}
-		},
+		// 	}
+		// },
 		{
 			title: 'Cancel',
 			action: function() {
