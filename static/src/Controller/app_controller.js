@@ -351,6 +351,12 @@ twittNavApp.controller('app_controller', function($rootScope, $scope) {
 
 	$scope.masterUpdate = function(){
 		
+		if(userStudyController != null){
+
+			$('[ng-controller="map_controller"]').scope().update();
+			return;
+		}
+
 		//calculate density min max here;
 		Canvas_manager.instance().cv.updateDensityRange();
 		//update two views;
@@ -385,7 +391,8 @@ twittNavApp.controller('cp_controller', function($rootScope, $scope) {
 	//init range:
 	var list = DataCenter.instance().getTree().toList();
 	var vol = list.map(function(val){ return val.getVol(); });
-	$scope.initRange(vol.min(), vol.max());
+	$scope.initRange(vol.min(), 200);
+	// $scope.initRange(0, 100);
 
 });
 
@@ -415,7 +422,16 @@ twittNavApp.controller('map_controller', function($rootScope, $scope) {
 
 		//init dot map;
 		var dotLayer = $rootScope.mapView.addDotLayer();
-		$(dotLayer.div).css("pointer-events", "none")
+		$(dotLayer.div).css("pointer-events", "none");
+
+		//init contentlens layer;
+		$rootScope.mapView.addContentlensLayer();
+
+		document.getElementById('mapView').oncontextmenu = function(e){
+												 e = e?e:window.event;
+												 if (e.preventDefault) e.preventDefault(); // For non-IE browsers.
+												 else return false; // For IE browsers.
+												};
 		
 	};
 

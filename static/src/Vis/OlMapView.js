@@ -6,6 +6,7 @@ OlMapView = function(){
 
 	this.baseLayer = null;
 	this.dotLayer = null;
+	this.contentlensManager = null;
 
 	//example
 	// this.strategy = null;
@@ -17,6 +18,9 @@ OlMapView = function(){
 
 	//polygon selection:
 	this.polygon_layer = null;
+
+	this.cachedCenter = [];
+	this.cachedZoom = null;
 
 };
 
@@ -30,6 +34,13 @@ OlMapView.prototype.init = function(div) {
                     displayProjection: new OpenLayers.Projection("EPSG:4326")
                 });
 
+	//disable double clicking -> zooming feature;
+	var nav = new OpenLayers.Control.Navigation({
+					  defaultDblClick: function(event) { return; }
+					});
+
+	this.map.addControl(nav);
+
 	//this.baseLayer = new OpenLayers.Layer.OSM("OSM base layer");
 
 	//grey-scale map;
@@ -42,7 +53,7 @@ OlMapView.prototype.init = function(div) {
 	                var pix = imgd.data;
 	                for (var i = 0, n = pix.length; i < n; i += 4) {
 	                	var tmp = (3 * pix[i] + 4 * pix[i + 1] + pix[i + 2]) / 8;
-	                    pix[i] = pix[i + 1] = pix[i + 2] = Math.sqrt( tmp / 256.0 ) * 256;
+	                    pix[i] = pix[i + 1] = pix[i + 2] = Math.sqrt( tmp / 256.0 ) * 256 * 1.05;
 	                }
 	                ctx.putImageData(imgd, 0, 0);
 	                evt.tile.imgDiv.removeAttribute("crossorigin");
@@ -125,13 +136,35 @@ OlMapView.prototype.init = function(div) {
 
 	this.map.events.register("moveend", copyThis.map, function(e) {
 
-		try{
-			$('[ng-controller="map_controller"]').scope().updateGeoBbox();
-			console.log("zoom level: "+copyThis.map.getZoom())
-		}catch(e){
-
-		}
+		$('[ng-controller="map_controller"]').scope().updateGeoBbox();
+		console.log("zoom level: "+copyThis.map.getZoom())
 	});
+
+	this.map.events.register("click", copyThis.map, function(e) {
+
+		if(!enableContentlens)
+			return;
+
+		copyThis.contentlensManager.addMultiContentlens();
+		console.log("zoom level: "+copyThis.map.getZoom())
+	});
+
+	this.map.events.register("mousemove", copyThis.map, function(e) {
+
+		if(!enableContentlens)
+			return;
+		
+		var pixel = this.events.getMousePosition(e);
+		copyThis.contentlensManager.renderbyPixelCoordinates(pixel.x, pixel.y);
+	});
+
+	// this.map.events.register("rightclick", copyThis.map, function(e) {
+
+	// 	if(!enableContentlens)
+	// 		return;
+
+	// 	tweetsContentlensManager.deleteMulContentlens(e.xy.x, e.xy.y);
+	// });
 
 	// this.map.events.register("zoomend", copyThis.map,  function(e) {
 		
@@ -173,6 +206,14 @@ OlMapView.prototype.addDotLayer = function(){
 	return this.dotLayer;
 };
 
+OlMapView.prototype.addContentlensLayer = function(){
+
+	var that = this;
+	this.contentlensManager = new TweetsContentlensManager(this.map);
+	this.map.addLayer(this.contentlensManager.getLayer());
+	$(that.contentlensManager.getLayer().div).css("pointer-events", "none");
+
+}
 
 OlMapView.prototype.toggleGlyphMode = function() {
 	Canvas_manager.instance().set_visibility(true);
@@ -206,11 +247,39 @@ OlMapView.prototype.clear_dots = function(){
 	this.dotLayer.removeAllFeatures();
 }
 
-OlMapView.prototype.render_dots = function(tweets, color){
+OlMapView.prototype.getFilteredArray = function(px, py){
+
+	var that = this;
+	var filterArray = [];
+
+	this.dotLayer.features.forEach(function(val){
+
+		var pixel = that.map.getPixelFromLonLat(new OpenLayers.LonLat(val.geometry.x, val.geometry.y));
+		pixel = [pixel.x, pixel.y];
+
+		if( (pixel[0]-px)*(pixel[0]-px) + (pixel[1]-py)*(pixel[1]-py) <= 30*30 ){
+			filterArray.push(val.data.keywords.join(" "));
+			val.attributes.color = "red";
+			val.attributes.opacity = 0.8;
+		}else{
+			val.attributes.color = "blue";
+			val.attributes.opacity = 0.5;
+		}
+
+	});
+
+	that.dotLayer.redraw();
+
+	console.log("contentlens: " + filterArray.length);
+	return filterArray;
+
+}
+
+OlMapView.prototype.render_dots = function(tweets, color, opac){
 
 	//this.dotLayer.removeAllFeatures();
 
-	var geo_arr = tweets.map(function(t){ return [t.lon, t.lat]; });
+	var geo_arr = tweets.map(function(t){ return [t.lon, t.lat, t.keywords]; });
 
 	//this.dotLayer.removeAllFeatures();
 
@@ -219,13 +288,14 @@ OlMapView.prototype.render_dots = function(tweets, color){
 	for(var i = 0; i < geo_arr.length; i++) {
 
 		var point = new OpenLayers.Geometry.Point(geo_arr[i][0], geo_arr[i][1]).transform(this.fromProjection, this.toProjection);
+		// var pixelPoint = this.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
 
-		var feature = new OpenLayers.Feature.Vector(point);
+		var feature = new OpenLayers.Feature.Vector(point, {keywords:geo_arr[i][2]});
 
 		if(color == "blue")
-			feature.attributes = {color: color, opacity:0.8, radius:2};
+			feature.attributes = {color: color, opacity:opac, radius:2};
 		else
-			feature.attributes = {color: color, opacity:0.8, radius:2};
+			feature.attributes = {color: color, opacity:opac, radius:2};
 
 		features_array.push(feature);
 		
@@ -290,6 +360,22 @@ OlMapView.prototype.render_heatmap = function(){
 	this.tweetsHeatmapManager.refreshMap(geo_points);
 };
 
+OlMapView.prototype.cacheLocation = function() {
+	
+	this.cachedCenter = new OpenLayers.LonLat(this.map.center.lon, this.map.center.lat).transform(this.toProjection, this.fromProjection);
+	this.cachedZoom = this.map.zoom;
+};
+
+OlMapView.prototype.moveToCacheLocation = function(){
+	
+	var lon = this.cachedCenter.lon;
+	var lat = this.cachedCenter.lat;
+	var zoom = this.cachedZoom;
+
+	this.map.panTo(new OpenLayers.LonLat(lon, lat).transform(this.fromProjection, this.toProjection));
+	this.map.zoomTo(zoom);
+
+};
 
 OlMapView.prototype.moveTo = function(lon, lat, zoom){
 	
@@ -297,6 +383,8 @@ OlMapView.prototype.moveTo = function(lon, lat, zoom){
 	this.map.zoomTo(zoom);
 
 };
+
+
 
 // OlMapView.prototype.reset = function() {
 //     // console.log(distance);

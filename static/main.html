@@ -35,9 +35,12 @@
 
 	<script type="text/javascript" src="lib/contextmenu/d3-context-menu.js"></script>
 	<script type="text/javascript" src="lib/xDate.js"></script>
+	<script type="text/javascript" src="lib/legend.js"></script>
 	<script type="text/javascript" src="lib/bootstrap/bootstrap.js"></script>
 
 	<script type="text/javascript" src="lib/colorbrewer/colorbrewer.js"></script>	
+
+	<script type="text/javascript" src="lib/random.js"></script>
 
 	<!--d3 tooltip-->
 	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -49,9 +52,13 @@
 	<!-- spatial analysis toolkit: TURF.JS -->
 	<!--<script type="text/javascript" src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
 	
+	<!--download image-->
+	<script src="http://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
+
 	<!-- user study thing-->
 	<script type="text/javascript" src="src/UserStudy/polys.js"></script>
 	<script type="text/javascript" src="src/UserStudy/UserStudyController.js"></script>
+	<script type="text/javascript" src="src/UserStudy/UserStudyController2.js"></script>
 
 
 	<script type="text/javascript">
@@ -128,6 +135,8 @@
 
 	<script type="text/javascript" src="src/Vis/TweetsHeatmapManager.js"></script>
 	<script type="text/javascript" src="src/Vis/PolygonLayerManager.js"></script>
+
+	<script type="text/javascript" src="src/Vis/contour/TweetsContentlensManager.js"></script>
 
 	<script type="text/javascript" src="src/Vis/Canvas_manager.js"></script>
 
@@ -259,9 +268,94 @@
 	}
 	/**********************multiple select****************************/
 
+	.legend {
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+		font-size: 16px;
+	}
+
+	.legend text {
+		padding-top: 5px;
+	}
+
 	</style>
 
 	<script type="text/javascript">
+
+
+	/*************************************for user study only*****************************************/
+
+	var enableContentlens = false;
+
+	var targetCluster = null;
+	var removeNodes = [];
+
+	function leftOrRight(flag, delta){
+		if(targetCluster == null)
+			return;
+
+		nodes = targetCluster.toList();
+
+		nodes.forEach(function(node){
+
+			node.cluster['hulls'] = node.cluster['hulls'].map(function(val,i){
+				if(i%2!=0)
+					return val;
+				else
+					return flag ? val - delta : val + delta;
+			});
+		});
+
+		
+		$('[ng-controller="app_controller"]').scope().masterUpdate();
+	}
+
+	function upOrDown(flag, delta){
+		if(targetCluster == null)
+			return;
+
+		nodes = targetCluster.toList();
+
+		nodes.forEach(function(node){
+
+			node.cluster['hulls'] = node.cluster['hulls'].map(function(val,i){
+				if(i%2==0)
+					return val;
+				else
+					return flag ? val - delta : val + delta;
+			});
+		});
+
+		$('[ng-controller="app_controller"]').scope().masterUpdate();
+	}
+
+	function enlargePoly(delta){
+
+		if(targetCluster == null)
+			return;
+
+		// nodes = targetCluster.toList();
+		nodes = [targetCluster];
+
+		nodes.forEach(function(node){
+
+			poly = enlargePolygon(HullLayout.odArrTo2dArr(node.cluster['hulls']), delta);
+			node.cluster['hulls'] = HullLayout.tdArrTo1dArr(poly);
+		});
+
+		$('[ng-controller="app_controller"]').scope().masterUpdate();
+
+	}
+
+	function getImg(){
+
+		if(!confirm("are you sure?"))
+			return;
+	 	userStudyController.getStudy2ImageWrapper();
+	}
+	function saveImg(){
+		UserStudyController2.downloadImgWrapper();
+	}
+
 
 		/*************************************************************************************/
 		$(function() {
@@ -365,6 +459,8 @@
 				ContourVis.CONTOUR = ContourVis.CONTOURMODE.DIVERGENT;
 			else if(parseInt(val) == 4)
 				ContourVis.CONTOUR = ContourVis.CONTOURMODE.QUANT;
+			else if(parseInt(val) == 5)
+				ContourVis.CONTOUR = ContourVis.CONTOURMODE.DENSITY;
 			
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
 		}
@@ -376,14 +472,16 @@
 			else if(parseInt(val) == 1)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STRIP;
 			else if(parseInt(val) == 2)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.CIRCLE;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.DASH;
 			else if(parseInt(val) == 3)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STACKLINE;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.CIRCLE;
 			else if(parseInt(val) == 4)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.STACKLINE;
 			else if(parseInt(val) == 5)
-				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT;
 			else if(parseInt(val) == 6)
+				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL;
+			else if(parseInt(val) == 7)
 				ContourVis.OUTLINE = ContourVis.OUTLINEMODE.TEXT_FILL_ALL;
 
 			$('[ng-controller="app_controller"]').scope().masterUpdate();
@@ -467,6 +565,18 @@
 
 		}
 
+		function changeSegment(ele){
+			ContourVis.segmented = ele.checked;
+			$('[ng-controller="app_controller"]').scope().masterUpdate();
+		}
+
+		function changeContentlensMode(ele){
+			enableContentlens = ele.checked;
+			$('[ng-controller="map_controller"]').scope().getMap().contentlensManager.clearFeatures();
+		}
+
+
+
 	</script>
 
 </head>
@@ -489,6 +599,28 @@
 	<!-- <div id="mapViewHelper" style="height:2048px;width:2048px;position:absolute;display:none;"></div> -->
 	<!-- <div id="mapViewHelper" style="height:200%;width:200%;position:relative;z-index:99999;"></div> -->
 
+	<div id="tmpPanel" style="display: none; position: absolute;left: 1800px;top: 15px;width: 100px; height: 300px; z-index: 99999">
+		
+			<div>
+				<button onclick="upOrDown(true ,30)">&nbsp;&nbsp;up&nbsp;&nbsp;</button><br>
+				<button onclick="leftOrRight(true, 30)">left&nbsp;&nbsp;&nbsp;</button>
+				<button onclick="leftOrRight(false, 30)">right</button><br>
+				<button onclick="upOrDown(false, 30)">&nbsp;&nbsp;down&nbsp;&nbsp;</button><br><br>
+				<button onclick="enlargePoly(10)">&nbsp;&nbsp;enlarge&nbsp;&nbsp;</button><br><br>
+				<button onclick="enlargePoly(-10)">&nbsp;&nbsp;decrease&nbsp;&nbsp;</button><br><br>
+				<button onclick="getImg()">getImg</button>
+				<button onclick="saveImg()">saveImg</button>
+			</div>
+			<br>
+			<div>
+				<button onclick="upOrDown(true, 3)">&nbsp;&nbsp;up&nbsp;&nbsp;</button><br>
+				<button onclick="leftOrRight(true, 3)">left&nbsp;&nbsp;&nbsp;</button>
+				<button onclick="leftOrRight(false, 3)">right</button><br>
+				<button onclick="upOrDown(false, 3)">&nbsp;&nbsp;down&nbsp;&nbsp;</button><br><br>
+			</div>
+
+	</div>
+
 	<div id="controlpanel" style="left:5px;top:15px;width:140px;height:550px;position:absolute;z-index:99999;border:2px solid #999;text-align:center;overflow-y:scroll;overflow-x:hidden;margin:0 auto;" ng-controller="cp_controller">
 		<!-- onmouseover="$('#controlpanel').css('overflow-y', 'scroll');" onmouseout="$('#controlpanel').css('overflow-y', 'hidden');" -->
 		<h4 align="center" style="cursor: pointer">Control Panel</h4>
@@ -498,6 +630,8 @@
 				<input type="radio" name="dataViewer" onclick="showDataViewer();" ><span>Open</span>
 				<input type="radio" name="dataViewer" onclick="$('#dataEditContainer').hide();" checked><span>Close</span><br>
 			</div> -->
+
+		<div><h5><input type="checkbox" name="contentlensmode" onclick="changeContentlensMode(this)">Contenlens</h5></div>
 
 		<h5 align="center">Tree Type</h5>
 			<div>
@@ -515,14 +649,16 @@
 			<div id="cateList" class="multiselect"></div>
 
 		<h5 align="center">Outline Type</h5>
+			<!-- <div><input type="checkbox" name="segmented" onclick="changeSegment(this)" checked>segmented</div><br> -->
 			<div>
 				<input type="radio" name="outlineType" onclick="outlineType(0);" checked><span>Default</span><br>
 				<input type="radio" name="outlineType" onclick="outlineType(1);"><span>Strip</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Circle</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Stack line</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Text</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(5);"><span>Text &#38; Fill</span><br>
-				<input type="radio" name="outlineType" onclick="outlineType(6);"><span>Text &#38; Fill All</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(2);"><span>Dash</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(3);"><span>Circle</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(4);"><span>Stack line</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(5);"><span>Text</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(6);"><span>Text &#38; Fill</span><br>
+				<input type="radio" name="outlineType" onclick="outlineType(7);"><span>Text &#38; Fill All</span><br>
 			</div>
 
 		<h5 align="center">Dendrogram Type</h5>
@@ -569,6 +705,7 @@
 				<input type="radio" name="conVis" onclick="changeContourFill(2);" ><span>sequential</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(3);" checked><span>divergent</span><br>
 				<input type="radio" name="conVis" onclick="changeContourFill(4);"><span>quantitative</span><br>
+				<input type="radio" name="conVis" onclick="changeContourFill(5);"><span>density</span><br>
 			</div>
 
 		<h5 align="center">Contour Halo</h5>
