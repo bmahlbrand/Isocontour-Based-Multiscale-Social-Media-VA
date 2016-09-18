@@ -256,24 +256,60 @@ CTreeNode.prototype.minOlp = function(){
 
 	var p = this;
 
-	if( p.cluster['minOlpFlag'] == true ){
-
-		this.children.forEach(function(val){
-			if( val.cluster['minOlpFlag'] == true ){
-
-				var rst = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
-				
-				p.cluster['hulls'] = rst.p;
-				val.cluster['hulls'] = rst.c;
-			}
-		});
-	}
-
 	this.children.forEach(function(val){
 		val.minOlp();
 	});
 
+
+	if( false && p.cluster['clusterId'] == '7_1')
+		console.log();
+
+	if( p.cluster['minOlpFlag'] == true ){
+
+		var childHulls = [];
+		this.children.forEach(function(val){
+			if( val.cluster['minOlpFlag'] == true ){
+
+				// var rst = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+				
+				// p.cluster['hulls'] = rst.p;
+				// val.cluster['hulls'] = rst.c;
+				childHulls.push(val.cluster['hulls']);
+			}
+		});
+
+		//var childHulls = this.children.map(function(val){ return val.cluster['hulls']; });
+		p.cluster['hulls'] = HullLayout.minimizeOverlap(p.cluster['hulls'], childHulls);
+
+	}
+
 };
+
+
+// CTreeNode.prototype.minOlp_bk = function(){
+
+// 	//only if both the parent and children are having 'minOlpFlag' field turned on, we perform the overlapping minimization;
+
+// 	var p = this;
+
+// 	if( p.cluster['minOlpFlag'] == true ){
+
+// 		this.children.forEach(function(val){
+// 			if( val.cluster['minOlpFlag'] == true ){
+
+// 				var rst = HullLayout.minimizeOverlap(p.cluster['hulls'], val.cluster['hulls']);
+				
+// 				p.cluster['hulls'] = rst.p;
+// 				val.cluster['hulls'] = rst.c;
+// 			}
+// 		});
+// 	}
+
+// 	this.children.forEach(function(val){
+// 		val.minOlp();
+// 	});
+
+// };
 
 CTreeNode.prototype.filterNodesForVis = function(){
 
