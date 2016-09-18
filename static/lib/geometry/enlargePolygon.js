@@ -1,4 +1,65 @@
 //wrapper function; spacing: positive enlarge, negative. shrink;
+
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+//stable function adapted from https://cdnjs.cloudflare.com/ajax/libs/jsts/1.2.1/jsts.min.js;
+function inflatePolyWrapper(poly1d, spacing){
+
+    var poly = HullLayout.odArrTo2dArr(poly1d);
+    var poly = poly.map(function(val){ return {x:val[0], y:val[1]}; });
+    poly = inflatePolygon(poly, spacing);
+    poly = poly.map(function(val){ return [val.x, val.y]});
+    return HullLayout.tdArrTo1dArr(poly);
+
+}
+
+function inflatePolygon(poly, spacing)
+{
+  var geoInput = vectorCoordinates2JTS(poly);
+  geoInput.push(geoInput[0]);
+
+  var geometryFactory = new jsts.geom.GeometryFactory();
+
+  var shell = geometryFactory.createPolygon(geoInput);
+  var polygon = shell.buffer(spacing, jsts.operation.buffer.BufferParameters.CAP_FLAT);
+
+  var inflatedCoordinates = [];
+  var oCoordinates;
+  oCoordinates = polygon.shell.points.coordinates;
+  for (i = 0; i < oCoordinates.length; i++) {
+    var oItem;
+    oItem = oCoordinates[i];
+    // inflatedCoordinates.push(new Vector2(Math.ceil(oItem.x), Math.ceil(oItem.y)));
+    inflatedCoordinates.push({x:Math.ceil(oItem.x), y:Math.ceil(oItem.y)});
+  }
+  return inflatedCoordinates;
+}
+
+function vectorCoordinates2JTS (polygon) {
+  var coordinates = [];
+
+  for (var i = 0; i < polygon.length; i++) {
+    coordinates.push(new jsts.geom.Coordinate(polygon[i].x, polygon[i].y));
+  }
+  return coordinates;
+}
+
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+/*********************************************************************************************************/
+
+function enlargePolygon1D(poly1d, spacing){
+
+    var poly = HullLayout.odArrTo2dArr(poly1d);
+    var poly = poly.map(function(val){ return {x:val[0], y:val[1]}; });
+    poly = straight_skeleton(poly, spacing);
+    poly = poly.map(function(val){ return [val.x, val.y]});
+    return HullLayout.tdArrTo1dArr(poly);
+}
+
 function enlargePolygon(poly, spacing){
 
     var poly = poly.map(function(val){ return {x:val[0], y:val[1]}; });

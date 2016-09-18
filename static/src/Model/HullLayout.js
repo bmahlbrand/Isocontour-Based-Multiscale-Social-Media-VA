@@ -11,6 +11,9 @@ HullLayout.tdArrTo1dArr = function(hull){
 
 HullLayout.odArrTo2dArr = function(poly){
 
+	if(poly == null || poly.length == 0)
+		return [];
+
 	var rst = [];
 	for(var i=0;i<poly.length/2;i++){
 		rst.push([poly[2*i], poly[2*i+1]]);
@@ -211,6 +214,30 @@ HullLayout.lineCenter = function(x1, y1, x2, y2){
 
 // };
 
+HullLayout.overlappingPoints = function(parent, children){
+
+	var points = [];
+	
+	for(var i=0;i<parent.length/2;i++){
+
+		var px = parent[i*2];
+		var py = parent[i*2+1];
+
+		for(var j=0;j<children.length;j++){
+			var rst = PolyK.ClosestEdge(children[j], px, py);
+			if(rst.dist < 5){
+				points.push(px);
+				points.push(py);
+				break;
+			}
+		}
+
+	};
+
+	return points;
+
+}
+
 HullLayout._forceDirectedMove = function(parent, child){
 
 	var iteration = 0;
@@ -250,7 +277,7 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 			var rst = PolyK.ClosestEdge(child, x, y);
 			
-			if (rst.dist < HullLayout.pointEdgeDisThres) {
+			if (rst.dist < HullLayout.pointEdgeDisThres){
 				parentCand.push([i, rst.norm]);
 
 				farEnough = false;
@@ -295,7 +322,7 @@ HullLayout._forceDirectedMove = function(parent, child){
 
 	} while ( farEnough == false && iteration < HullLayout.shrinkIteration );
 
-	console.log("iteration time: "+iteration);
+	// console.log("iteration time: "+iteration);
 	return {p:parent, c:child};
 
 };
@@ -340,7 +367,7 @@ HullLayout._validateOpt = function(parent, child){
 
 HullLayout._simplifyHull = function(poly){
 
-	var minDis = 2;
+	var minDis = 3;
 	var loop = 5;
 
 	var idx = 0;
@@ -384,26 +411,88 @@ HullLayout._simplifyHull = function(poly){
 
 };
 
-HullLayout.minimizeOverlap = function(parent, child){
+HullLayout.minimizeOverlap = function(parent, children){
 
-	var parentChild = {p:parent, c:child};
+	var spacing = 8;
+	//update parent convex hull based on children's updated hull;
+	if(children.length > 0){
+
+		var updatedPoints = [];
+		children.forEach(function(val){
+			updatedPoints = updatedPoints.concat(val);
+		});
+		parent = parent.concat(updatedPoints);
+		parent = HullLayout.getConvexHull(parent);
+
+		var olPoints = HullLayout.overlappingPoints(parent, children);
+
+		var largerParent = inflatePolyWrapper(parent, spacing);
+
+		var newCPs = [];
+
+		for(var i=0;i<largerParent.length/2;i++){
+
+			for(var j=0;j<olPoints.length/2;j++){
+
+				var dis = (largerParent[2*i]-olPoints[2*j])*(largerParent[2*i]-olPoints[2*j])
+							+(largerParent[2*i+1]-olPoints[2*j+1])*(largerParent[2*i+1]-olPoints[2*j+1]);
+
+				if(dis >= spacing*spacing){
+					newCPs.push(largerParent[2*i]);
+					newCPs.push(largerParent[2*i+1]);
+					break;
+				}
+			}
+		}
+
+		parent = parent.concat(newCPs);
+		parent = HullLayout.getConvexHull(parent);
+
+	}
+
+	// var parentChild = {p:parent, c:child};
 	// return parentChild;
 
-	if(parent.length <= 0 || child.length <= 0)
-		return parentChild;
+	// if(parent.length <= 0 || children.length <= 0)
+	// 	return parentChild;
 
-
-	parentChild = HullLayout._moveOutsidePtsBiDir(parentChild.p, parentChild.c);
-	//child = HullLayout._shrinkPartialPoly(parent, child);
-	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
-	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
-	parentChild.c = HullLayout._simplifyHull(parentChild.c);
-	//parentChild.p = HullLayout.getConvexHull(parentChild.p);
+	// parentChild = HullLayout._moveOutsidePtsBiDir(parentChild.p, parentChild.c);
+	// //child = HullLayout._shrinkPartialPoly(parent, child);
+	// parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
+	// parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
+	// parentChild.c = HullLayout._simplifyHull(parentChild.c);
+	else{
+		parent = HullLayout.getConvexHull(parent);
+	}
+	// parentChild.c = HullLayout.getConvexHull(parentChild.c);
 	//parentChild.p = simplifyWrapper(parentChild.p, 5, false);
-	return parentChild;
+	parent = HullLayout.getSampledPath(parent);
+
+	return parent;
 
 };
 
+// HullLayout.minimizeOverlap_bk = function(parent, child){
+
+// 	var parentChild = {p:parent, c:child};
+// 	// return parentChild;
+
+// 	if(parent.length <= 0 || child.length <= 0)
+// 		return parentChild;
+
+
+// 	parentChild = HullLayout._moveOutsidePtsBiDir(parentChild.p, parentChild.c);
+// 	//child = HullLayout._shrinkPartialPoly(parent, child);
+// 	parentChild = HullLayout._forceDirectedMove(parentChild.p, parentChild.c);
+// 	parentChild = HullLayout._validateOpt(parentChild.p, parentChild.c);
+// 	parentChild.c = HullLayout._simplifyHull(parentChild.c);
+// 	//parentChild.p = HullLayout.getConvexHull(parentChild.p);
+// 	//parentChild.p = simplifyWrapper(parentChild.p, 5, false);
+// 	return parentChild;
+
+// };
+
+//one dimension to one dimension
 HullLayout.getConvexHull = function(points){
     
     var arr = HullLayout.odArrTo2dArr(points);
