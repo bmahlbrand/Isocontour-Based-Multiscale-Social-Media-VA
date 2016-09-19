@@ -13,14 +13,36 @@ Its complexity is O(n^2). 4*n1*n2, to be more precise, where n1 is number of poi
 With a few tweaks, the algorithm could be optimized, but with the same general idea in place, it is impossible to get rid of n^2 complexity.
 */
 
+
+function shortestDis(poly1, poly2){
+
+    var min = Number.MAX_VALUE;
+
+    for(var i=0;i<poly1.length;i++)
+        for(var j=0;j<poly2.length;j++){
+            dis = (poly1[i][0]-poly2[j][0])*(poly1[i][0]-poly2[j][0])+(poly1[i][1]-poly2[j][1])*(poly1[i][1]-poly2[j][1]);
+            min = Math.min(dis, min);
+        }
+
+    return Math.sqrt(min);
+
+}
+
 //modify the input and output 2d array <--> x,y attribute
 function intersectPolyWrapper(poly1, poly2){
 
-    var poly1 = poly1.map(function(val){ return {x:val[0], y:val[1]}; });
-    var poly2 = poly2.map(function(val){ return {x:val[0], y:val[1]}; });
+    try{
+        var poly1 = poly1.map(function(val){ return {x:val[0], y:val[1]}; });
+        var poly2 = poly2.map(function(val){ return {x:val[0], y:val[1]}; });
 
-    var poly = intersectionPolygons(poly1, poly2);
-    return poly.map(function(val){ return [val.x, val.y]});
+        var poly = intersectionPolygons(poly1, poly2);
+        return poly.map(function(val){ return [val.x, val.y]});
+    }catch(e){
+
+        console.err("debug in [intersectionPolygons], manually change result");
+        return [0,0];
+    }
+
 
 }
 

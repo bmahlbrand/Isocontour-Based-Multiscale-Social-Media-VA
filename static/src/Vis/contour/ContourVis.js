@@ -190,11 +190,10 @@ ContourVis.prototype.drawLegend = function(flag){
 
 ContourVis.prototype.createLineFunc = function(pts){
 
-	pts = HullLayout.odArrTo2dArr(pts);
-
 	var lineFunction = null;
 
 	if(ContourVis.MODE == ContourVis.INTERMODE.BASIS){
+
 		lineFunction = d3.svg.line()
 						.x(function(d) { return d[0]; })
                         .y(function(d) { return d[1]; })
@@ -213,7 +212,8 @@ ContourVis.prototype.createLineFunc = function(pts){
 
 	}
 
-	return lineFunction(pts);
+	pts2d = HullLayout.odArrTo2dArr(pts);
+	return lineFunction(pts2d);
 
 }
 
@@ -346,6 +346,7 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    	// })
 			    	.on("click", function(){
 
+			    		console.log(this.id.substring(5, this.id.length));
 			    		// var cluster_id = this.id.substring(5, this.id.length);
 			    		// targetCluster = DataCenter.instance().getTree().getNodeById(cluster_id);
 
@@ -358,55 +359,55 @@ ContourVis.prototype.drawHull = function(id, zoom, curLineFunc, poly, ChildsLine
 			    		var node = DataCenter.instance().getTree().getNodeById(cluster_id);
 			    		$('[ng-controller="map_controller"]').scope().getMap().moveTo(node.cluster.center.lon, node.cluster.center.lat, node.cluster.zoom+4);
 			    	})
-			    	.on("mouseover", function(){
+			    // 	.on("mouseover", function(){
 			    		
-			    		var cluster_id = this.id.substring(5, this.id.length);
-			    		/*************************************draw optimized dots************************************/
+			    // 		var cluster_id = this.id.substring(5, this.id.length);
+			    // 		/*************************************draw optimized dots************************************/
 			    		
-			    		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
-			    		for(var i=0; i<dots.length/2; i++){
-			    			svg.append("circle")
-			    				.attr('class', 'control_point')
-			    				.attr('cx', dots[2*i])
-			    				.attr('cy', dots[2*i+1])
-			    				.attr('r', 4)
-			    				.attr('fill', 'red');
-			    		}
+			    // 		var dots = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['hulls'];
+			    // 		for(var i=0; i<dots.length/2; i++){
+			    // 			svg.append("circle")
+			    // 				.attr('class', 'control_point')
+			    // 				.attr('cx', dots[2*i])
+			    // 				.attr('cy', dots[2*i+1])
+			    // 				.attr('r', 4)
+			    // 				.attr('fill', 'red');
+			    // 		}
 
-			    		/*************************************draw actual tweet dots************************************/
-			    		// //tweets inside the hull;
-			    		// var cluster_id = this.id.substring(5, this.id.length);
-			    		// console.log(cluster_id);
+			    // 		/*************************************draw actual tweet dots************************************/
+			    // 		// //tweets inside the hull;
+			    // 		// var cluster_id = this.id.substring(5, this.id.length);
+			    // 		// console.log(cluster_id);
 
-			    		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
-			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    // 		// var ids = DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'];
+			    // 		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    // 		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-			    		// //cate distribution
-			    		// console.log(DataCenter.instance().distOfCate(tweets));
+			    // 		// //cate distribution
+			    // 		// console.log(DataCenter.instance().distOfCate(tweets));
 
-			    		//tweets on the boundary:
-			    		// var ids = [];
-			    		// DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
-			    		// 	ids = ids.concat(idlist);
-			    		// });
+			    // 		//tweets on the boundary:
+			    // 		// var ids = [];
+			    // 		// DataCenter.instance().getTree().getNodeById(cluster_id).cluster['ids'].forEach(function(idlist){
+			    // 		// 	ids = ids.concat(idlist);
+			    // 		// });
 
-			    		// var tweets = DataCenter.instance().getTweetsByIds(ids);
+			    // 		// var tweets = DataCenter.instance().getTweetsByIds(ids);
 			    		
-			    		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
+			    // 		// $('[ng-controller="map_controller"]').scope().render_dots(tweets, "red");
 
-		  			})
-		  			.on("mouseout", function(){
+		  			// })
+		  			// .on("mouseout", function(){
 
-		  				/*************************************draw optimized dots************************************/
-			    		svg.selectAll(".control_point").remove();
+		  			// 	/*************************************draw optimized dots************************************/
+			    // 		svg.selectAll(".control_point").remove();
 
-			    		/*************************************draw actual tweet dots************************************/
+			    // 		/*************************************draw actual tweet dots************************************/
 
-		  				// $('[ng-controller="map_controller"]').scope().clear_dots();
+		  			// 	// $('[ng-controller="map_controller"]').scope().clear_dots();
 
-		  			})
+		  			// })
 		  			.on('contextmenu', d3.contextMenu(that.get_menu(id)) );
 
 	/********************draw letter (only for user study)********************/
@@ -612,7 +613,8 @@ ContourVis.prototype.drawOutLine = function(id, lineFunc, poly, ChildsLineFuncAr
 		var grey = "#777";
 
 		// var color = err.indexOf("[3]") > -1 ? defaultColor : grey;
-		var color = grey;
+		// var color = "#08519c";
+		var color = "grey";
 		var defaultWidth = 2;
 
 		svg.append("path")
@@ -1489,20 +1491,21 @@ ContourVis.hullInViewport = function(hull){
 	
 	//one or two points not draw for now;
 	if(hull.length < 6)
-		// return [false, hull, true];
-		return [true, ContourVis.extendHull(hull), true];
+		return [false, hull, true];
+		// return [true, ContourVis.extendHull(hull), true];
 
 	//too small not draw for now;
 	var aabb = PolyK.GetAABB(hull);
 	if(aabb.width < 10 || aabb.height < 10 )
-		// return [false, hull, true];
-		return [true, ContourVis.extendHull(hull), true];
+		return [false, hull, true];
+		// return [true, ContourVis.extendHull(hull), true];
 
 	//area too small not draw for now;
-	var area = PolyK.GetArea(hull);
-	if( Math.abs(area) <= 100 )
-		// return [false, hull, true];
-		return [true, ContourVis.extendHull(hull), true];
+	//polyK.getarea has some bug that produce negative values!!!!!!!!!!
+	// var area = PolyK.GetArea(hull);
+	// if( Math.abs(area) <= 100 )
+	// 	// return [false, hull, true];
+	// 	return [true, ContourVis.extendHull(hull), true];
 
 	//check vertices in the viewport
 	for(var i=0; i<hull.length/2; i++){
@@ -1549,9 +1552,10 @@ ContourVis.hullOverlapViewport = function(hull, flagForMinOlp){
 		return false;
 
 	//area two small
-	var area = PolyK.GetArea(hull);
-	if( Math.abs(area) <= 100 )
-		return false;
+	//polyK.getarea has some bug that produce negative values!!!!!!!!!!
+	// var area = PolyK.GetArea(hull);
+	// if( Math.abs(area) <= 100 )
+	// 	return false;
 
 	//check overlapping [dirty codes, need improvement later;]
 	var s = ContourVis.DIMENSION;
@@ -1659,20 +1663,20 @@ ContourVis.prototype.get_menu = function(id){
 	 //    		$('[ng-controller="app_controller"]').scope().masterUpdate();
 		// 	}
 		// },
-		// {
-		// 	title: 'Show Dots',
-		// 	action: function() {
+		{
+			title: 'Show Dots',
+			action: function() {
 
-		// 		var ids = [];
-		// 		DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
-	 //    			ids = ids.concat(idlist);
-	 //    		});
+				var ids = [];
+				DataCenter.instance().getTree().getNodeById(id).cluster['ids'].forEach(function(idlist){
+	    			ids = ids.concat(idlist);
+	    		});
 
-	 //    		var tweets = DataCenter.instance().getTweetsByIds(ids);
+	    		var tweets = DataCenter.instance().getTweetsByIds(ids);
 	    		
-	 //    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "grey", 0.2);
-		// 	}
-		// },
+	    		$('[ng-controller="map_controller"]').scope().render_dots(tweets, "grey", 0.2);
+			}
+		},
 		{
 			title: 'Highlight Dots',
 			action: function() {

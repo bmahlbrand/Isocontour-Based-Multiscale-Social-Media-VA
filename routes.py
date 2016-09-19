@@ -383,33 +383,50 @@ def query():
 
 
 #########################################################################################
-
+from NLP import mytfidf
 
 if __name__ == '__main__':
     wg_manager = WordGraphManager.WordGraphManager(search)
     srl_manager = SRLGraphManager.SRLGraphManager(search)
     awg_manager = AugmentedWordGraphManager.AugmentedWordGraphManager(search)
     run(app, host='localhost', port=9006, debug=True)
-#     rst = []
-#     rst = json.load(codecs.open('boston_ori.json', 'r', 'utf-8-sig'))
-#          
-#     tweets = []
-#     for t in rst:
-#         tweet = {}
-#         tweet['tweet_id'] = str(t['tweet_id'])
-#               
-#         tweet['created_at'] = t['created_at']
-#         tweet['geolocation'] = {}
-#         tweet['geolocation']['lon'] = t['geolocation'].split(',')[1]
-#         tweet['geolocation']['lat'] = t['geolocation'].split(',')[0]
-#         tweet['text'] = t['tokens']
-#         tweet['token_tags'] = t['token_tags']
-#               
-#         tweets.append(tweet)
-#               
-#         print("num of tweets", len(tweets))
-#               
-#     rst = EMTerms().category_tweets_to_topics_vn_pair(tweets)
-#          
-#     with open("boston.json", "w") as text_file:
-#         text_file.write(rst)
+
+    # rst = []
+    # rst = json.load(codecs.open('rnc_raw.json', 'r', 'utf-8-sig'))
+    # rst = rst['tweets']
+    #
+    # tweets = []
+    # for t in rst:
+    #     tweet = {}
+    #     tweet['tweet_id'] = str(t['tweet_id'])
+    #
+    #     tweet['created_at'] = t['created_at']
+    #     tweet['geolocation'] = {}
+    #     tweet['geolocation']['lon'] = t['geolocation'].split(',')[1]
+    #     tweet['geolocation']['lat'] = t['geolocation'].split(',')[0]
+    #     tweet['text'] = t['tokens']
+    #     tweet['token_tags'] = t['token_tags']
+    #
+    #     tweet['keywords'] = ' '.join(mytfidf.getTweetKeywords(tweet['text'].split(' ')))
+    #
+    #     tweets.append(tweet)
+    #
+    # print("num of tweets", len(tweets))
+    #
+    # # calculate TF-IDF value
+    # # tweets_text = [tweet['text'].split(' ') for tweet in tweets]
+    # tweets_text = [tweet['keywords'] for tweet in tweets]
+    # scores = mytfidf.tfidfWrapper(tweets_text)
+    #
+    # print('tf-idf finished1')
+    #
+    # for idx, t in enumerate(tweets):
+    #     tweets[idx]['tfidf'] = scores[idx]
+    #     tweets[idx].pop("keywords", None)
+    #
+    # print('tf-idf finished2')
+    #
+    # rst = EMTerms().category_tweets_to_topics_vn_pair(tweets)
+    #
+    # with open("rnc_post.json", "w") as text_file:
+    #     text_file.write(rst)

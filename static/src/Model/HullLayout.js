@@ -415,7 +415,7 @@ HullLayout.minimizeOverlap = function(parent, children){
 
 	var spacing = 8;
 	//update parent convex hull based on children's updated hull;
-	if(children.length > 0){
+	if( children.length > 0){
 
 		var updatedPoints = [];
 		children.forEach(function(val){

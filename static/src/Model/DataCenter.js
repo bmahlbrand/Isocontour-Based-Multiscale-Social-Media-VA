@@ -371,6 +371,9 @@ DataCenter.prototype.loadClusters = function(dataObj){
 	})
 	.done(function( msg ) {
 		msg.forEach(function(cluster){
+
+			// if(cluster['ids'].length < 5)
+			// 	return;
 			
 			that.clusters[cluster['clusterId']] = cluster;
 
@@ -389,6 +392,9 @@ DataCenter.prototype.loadClusters = function(dataObj){
 			//since we disabled to simplifying polygon feature in the server side, we do not have multiple polygons for a simple cluster.
 			//hence, the length of cluster['hullIds'] is guaranteed to be 1
 			cluster['hullIds'] = cluster['hullIds'][0] || [];
+
+			//test version;
+			cluster['hullIds'] = cluster['ids'];
 
 		});
 		

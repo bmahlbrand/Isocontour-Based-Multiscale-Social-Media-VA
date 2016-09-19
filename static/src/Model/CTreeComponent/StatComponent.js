@@ -21,7 +21,6 @@ StatComponent.prototype.calCateDist = function(cates, threshold){
 	if(userStudyController != null)
 		return this.treeNode.cluster['category'];
 
-
 	if(cates.length == 0)
 		return {};
 

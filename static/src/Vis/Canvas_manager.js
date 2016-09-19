@@ -23,7 +23,7 @@ Canvas_manager.prototype.init = function(map_div, map) {
     var height = $("#"+this.map_div.id).height();
 
     this.map_svg.attr("width", width)
-        	.attr("height", height);
+    			.attr("height", height);
 
 };
 

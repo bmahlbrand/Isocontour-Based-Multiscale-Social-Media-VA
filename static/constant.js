@@ -74,7 +74,10 @@
 //var ip_address = "128.46.137.79:9006";
 
 var dir = 'data/'
-var globalName = 'boston';
+
+var globalName = 'rnc_l1';
+// var globalName = 'boston';
+
 var tweetDataFile = dir + globalName + "/" + globalName +".json";
 
 var clusterTreeFile = dir + globalName + "/" + globalName +"_clustertree.json";

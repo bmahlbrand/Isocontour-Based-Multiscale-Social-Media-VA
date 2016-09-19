@@ -134,6 +134,7 @@ function rotatePolygon(poly, cx, cy, angle){
     var rst = [];
 
     for(var i=0; i<poly.length; i++){
+
         var pt = rotatePt(poly[i][0], poly[i][1], cx, cy, angle);
         rst.push(pt);
     }

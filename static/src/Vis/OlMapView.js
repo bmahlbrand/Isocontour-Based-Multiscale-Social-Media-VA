@@ -279,7 +279,7 @@ OlMapView.prototype.render_dots = function(tweets, color, opac){
 
 	//this.dotLayer.removeAllFeatures();
 
-	var geo_arr = tweets.map(function(t){ return [t.lon, t.lat, t.keywords]; });
+	var geo_arr = tweets.map(function(t){ return [t.lon, t.lat, t.keywords, t.tweet_id]; });
 
 	//this.dotLayer.removeAllFeatures();
 
@@ -290,7 +290,7 @@ OlMapView.prototype.render_dots = function(tweets, color, opac){
 		var point = new OpenLayers.Geometry.Point(geo_arr[i][0], geo_arr[i][1]).transform(this.fromProjection, this.toProjection);
 		// var pixelPoint = this.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
 
-		var feature = new OpenLayers.Feature.Vector(point, {keywords:geo_arr[i][2]});
+		var feature = new OpenLayers.Feature.Vector(point, {keywords:geo_arr[i][2], id:geo_arr[i][3]});
 
 		if(color == "blue")
 			feature.attributes = {color: color, opacity:opac, radius:2};
@@ -298,7 +298,6 @@ OlMapView.prototype.render_dots = function(tweets, color, opac){
 			feature.attributes = {color: color, opacity:opac, radius:2};
 
 		features_array.push(feature);
-		
 	}
 	
 	//draw bounding box;

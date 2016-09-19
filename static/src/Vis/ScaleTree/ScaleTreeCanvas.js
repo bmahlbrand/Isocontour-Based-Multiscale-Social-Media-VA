@@ -482,7 +482,6 @@ ScaleTreeCanvas.prototype.hoverLinkage = function(){
 
 };
 
-
 ScaleTreeCanvas.prototype.update = function(){
 
 	//clear canvas;
