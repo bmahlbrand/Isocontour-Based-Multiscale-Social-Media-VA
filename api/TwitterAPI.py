@@ -68,6 +68,6 @@ if __name__ == '__main__':
     # stream.filter(track=['basketball'])
 
     try:
-        stream.filter(locations=[-180, -90, 180, 90])
+        stream.filter(locations=[-81.91, 41.38, -81.51, 41.62])
     except:
         print("Unexpected error in out loop:", sys.exc_info().join(", "))

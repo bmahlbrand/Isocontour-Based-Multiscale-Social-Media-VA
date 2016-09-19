@@ -71,7 +71,7 @@ def genProfileWrapper():
     with open('configus2.json', 'w') as outfile:
         json.dump(rst, outfile, indent=4)
 
-def getCorrectness(user):
+def getCorrectness(user, userId):
 
     correctAnswer = []
     type = []
@@ -93,23 +93,26 @@ def getCorrectness(user):
         else:
             print("error")
 
-    print(correctAnswer)
-
-
     with open(user) as data_file:
         profile = json.load(data_file)
     userAnswer = profile['answers']
     userTime = profile['time']
 
+    print(correctAnswer)
     print(userAnswer)
+    print([ str(e) for e in type])
 
     correctness = [[],[],[]]
     timeSpan = [[],[],[]]
 
+    visName = { 0:'st', 1:'ds', 2:'sk' }
+
+    csvOutput = []
     for idx, ans in enumerate(userAnswer):
         t = 1 if ans == correctAnswer[idx] else 0
         correctness[type[idx]].append(t)
         timeSpan[type[idx]].append(userTime[idx])
+        csvOutput.append(['id'+str(userId if userId >= 10 else '0'+str(userId)), visName[type[idx]], userTime[idx], t])
 
     # print(correctness[0], timeSpan[0], avg(timeSpan[0]))
     # print(correctness[1], timeSpan[1], avg(timeSpan[1]))
@@ -119,17 +122,27 @@ def getCorrectness(user):
     print(correctness[2], avg(correctness[2]), timeSpan[2], avg(timeSpan[2]))
     print()
 
+    return csvOutput
+
 def getCorrectnessWrapper():
 
     dir = "us2answer//"
 
+    csvOutput = []
+
     files = [file for file in os.listdir(dir)]
-    for file in files:
+    for idx, file in enumerate(files):
         if '.json' in file:
             print(file)
-            getCorrectness(dir+file)
+            # getCorrectness(dir+file, idx)
+            csvOutput += getCorrectness(dir+file, idx)
 
-
+    fout = open('us2data.csv', 'w')
+    writer = csv.writer(fout, lineterminator='\n', quotechar='\"',)
+    writer.writerow(['subject', 'vis', 'time', 'correct'])
+    for val in csvOutput:
+        writer.writerow(val)
+    fout.close()
 
 def avg(l):
     return sum(l) / len(l)

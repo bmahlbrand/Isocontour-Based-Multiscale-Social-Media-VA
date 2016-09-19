@@ -1,0 +1,344 @@
+[
+    [
+        "images/c1/01_us2_1_c0_strip_easy_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/02_us2_2_c2_stack_easy_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/03_us2_2_c3_strip_easy_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/04_us2_0_c2_dash_easy_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/05_us2_1_c0_stack_easy_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/06_us2_7_c0_dash_easy_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/07_us2_3_c1_strip_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/08_us2_4_c2_stack_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/09_us2_3_c1_stack_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/10_us2_5_c1_strip_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/11_us2_12_c2_dash_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/12_us2_9_c1_dash_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/13_us2_5_c1_stack_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c1/14_us2_6_c2_strip_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/15_us2_4_c1_strip_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/16_us2_10_c2_dash_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/17_us2_6_c0_stack_hard_4_1.png",
+        "In the image, among the four categories, which one has the highest value?",
+        [
+            "<font color='#1f78b4'><b>Blue</b></font>",
+            "<font color='#e31a1c'><b>Red</b></font>",
+            "<font color='#33a02c'><b>Green</b></font>",
+            "<font color='#ff7f00'><b>Orange</b></font>",
+            "At least two of them have the same highest value"
+        ]
+    ],
+    [
+        "images/c1/18_us2_11_c1_dash_hard_2_1.png",
+        "In the image, between the two categories, which one has a higher value?",
+        [
+            "<font color='#fb6a4a'><b>Orange</b></font>",
+            "<font color='#2b8cbe'><b>Blue</b></font>",
+            "They have the same value."
+        ]
+    ],
+    [
+        "images/c2/01_us2_14_c2_A_stack_easy_4_2.png",
+        "In the below image, in which cluster is the <font color='#33a02c'><b>Green</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/02_us2_2_c2_B_strip_easy_4_2.png",
+        "In the below image, in which cluster is the <font color='#33a02c'><b>Green</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/03_us2_1_c0_A_strip_easy_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/04_us2_8_c0_B_dash_easy_4_2.png",
+        "In the below image, in which cluster is the <font color='#1f78b4'><b>Blue</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/05_us2_13_c0_A_stack_easy_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/06_us2_7_c0_B_dash_easy_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/07_us2_16_c1_B_stack_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#e31a1c'><b>Red</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/08_us2_5_c0_B_strip_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/09_us2_9_c0_B_dash_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/10_us2_17_c0_B_stack_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/11_us2_11_c0_A_dash_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/12_us2_4_c0_A_strip_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#1f78b4'><b>Blue</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/13_us2_12_c1_A_dash_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#e31a1c'><b>Red</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/14_us2_3_c0_B_strip_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/15_us2_18_c2_A_stack_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#33a02c'><b>Green</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/16_us2_15_c0_B_stack_hard_2_2.png",
+        "In the below image, in which cluster is the <font color='#fb6a4a'><b>Orange</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/17_us2_6_c1_B_strip_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#e31a1c'><b>Red</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ],
+    [
+        "images/c2/18_us2_10_c1_A_dash_hard_4_2.png",
+        "In the below image, in which cluster is the <font color='#e31a1c'><b>Red</b></font> category more prominent",
+        [
+            "A",
+            "B",
+            "The category has the same proportion in A and B"
+        ]
+    ]
+]

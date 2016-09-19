@@ -1,0 +1,458 @@
+[
+    [
+        "images/EASY/01_nul_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/11_div_2_z.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/02_seq_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/16_nul_2_z.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/02_nul_1_b.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/07_qua_1_b.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/06_seq_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/10_qua_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/04_qua_1_b.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/10_seq_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/EASY/05_nul_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/03_qua_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/14_div_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/EASY/04_seq_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/08_div_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/03_div_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/11_nul_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/15_div_2_z.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/08_nul_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/14_qua_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/EASY/12_div_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/07_qua_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/15_div_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/14_nul_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/EASY/16_seq_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/11_seq_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/16_qua_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/06_seq_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/05_qua_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/13_nul_2_x.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/05_nul_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/15_qua_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/01_nul_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/12_seq_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/10_qua_2_n.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/13_seq_2_n.jpg",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/09_nul_2_z.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/12_div_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/HARD/01_seq_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/MID/03_div_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/13_nul_2_y.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/09_seq_2_x.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/EASY/06_seq_1_b.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/08_div_1_s.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/09_qua_2_x.JPG",
+        "In the below image, among X, Y and Z, which cluster contains T?",
+        [
+            "X",
+            "Y",
+            "Z",
+            "None of them contains T"
+        ]
+    ],
+    [
+        "images/MID/07_div_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/EASY/02_div_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ],
+    [
+        "images/HARD/04_qua_1_a.JPG",
+        "In the below image, between the two clusters, are they at the same level? If not, which one is at a higher level?",
+        [
+            "A",
+            "B",
+            "They are at the same level."
+        ]
+    ]
+]

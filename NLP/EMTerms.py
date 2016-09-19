@@ -305,7 +305,8 @@ class EMTerms(object):
 
 #             cates = ['T02', 'T03', 'T04', 'T09', 'C07', 'O01', 'O03', 'O04']
 
-            cates = ["hiring", "drink", "traffic", "rnc"]
+            # cates = ["hiring", "drink", "traffic", "rnc"]
+            cates = ["protest", "response", "rnc_neutral"]
 
             for cate in cates:
                 print("processing" + cate)
@@ -356,9 +357,9 @@ class EMTerms(object):
                 lemmed_tks = []
                 
                 for idx, tk in enumerate(tks):
-                    if tags[idx] == 'V' or tags[idx] == 'N':
-                        lemmed_tks.append(nlp.lemmatize(tks[idx], tags[idx].lower()))
-                    else:
+                    # if tags[idx] == 'V' or tags[idx] == 'N':
+                    #     lemmed_tks.append(nlp.lemmatize(tks[idx], tags[idx].lower()))
+                    # else:
                         lemmed_tks.append(tks[idx])
                 
                 tweet['lemmed_text'] = ' '.join(lemmed_tks)
@@ -370,16 +371,16 @@ class EMTerms(object):
                 local_adjs = []
                 local_reserved = []
                 
-                for idx, tk in enumerate(tks):
-                    if tags[idx] == 'V':
-                        local_vs.append(lemmed_tks[idx].lower())
-                    elif tags[idx] == 'N':
-                        local_ns.append(lemmed_tks[idx].lower())
-                    elif tags[idx] == '$':
-                        local_num.append(tks[idx].lower())
-                    elif tags[idx] == 'A':
-                        local_adjs.append(tks[idx].lower())
-                        
+                # for idx, tk in enumerate(tks):
+                #     if tags[idx] == 'V':
+                #         local_vs.append(lemmed_tks[idx].lower())
+                #     elif tags[idx] == 'N':
+                #         local_ns.append(lemmed_tks[idx].lower())
+                #     elif tags[idx] == '$':
+                #         local_num.append(tks[idx].lower())
+                #     elif tags[idx] == 'A':
+                #         local_adjs.append(tks[idx].lower())
+                #
                 local_ns_lemed = []
                 local_vs_lemed = []
                 

@@ -9,7 +9,7 @@ from sklearn import metrics
 from sklearn.datasets.samples_generator import make_blobs
 from sklearn.preprocessing import StandardScaler
 
-os.chdir('E:\Jiawei\Research\Projects\IsoContour_Multiscale_Social_Media_VA')
+os.chdir('E://Jiawei//Research//Projects//IsoContour_Multiscale_Social_Media_VA//static//data//rnc_l2//')
 
 class SpatialClustering:
 
@@ -101,13 +101,13 @@ def intersetPoly(polys):
 if __name__ == '__main__':
 
     # ########### parameter setup ############### #
-    cluster_eps = 10
+    cluster_eps = 8
     cluster_min_sample = 5
     initial_concavity = 0
     incConcavity = 0.01
     simplify = 0  # 1.5
 
-    name = 'keene'
+    name = 'rnc_l2'
     intputFile = name + '_multiscale.json'
     outputFile = name + '_clustertree.json'
     ##############################################
@@ -160,7 +160,7 @@ if __name__ == '__main__':
                     ids.append(id)
 
                 # alpha decrease, concave -> convex
-                # concave_hull and ids are arrays that can contain mulitple polygons
+                # concave_hull and ids are arrays that can contain multiple polygons
 
                 # adapt rdp epsilon based on zoom level;
                 # simplify = 2*pow(2, 10-zoom)

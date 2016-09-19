@@ -58,7 +58,7 @@ def genProfileWrapper():
     # with open('configus1.json', 'w') as outfile:
     #     json.dump(rst, outfile, indent=4)
 
-def getCorrectness(user):
+def getCorrectness(user, userId):
 
     correctAnswer = []
     visType = []
@@ -126,23 +126,31 @@ def getCorrectness(user):
         else:
             print("error")
 
-    print(correctAnswer)
+    print("correct:", correctAnswer)
 
     with open(user) as data_file:
         profile = json.load(data_file)
     userAnswer = profile['answers']
     userTime = profile['time']
-    print(userAnswer)
+    print("user:", userAnswer)
+
+    print("vis type:", visType)
+    print("task type:", taskType)
 
     correctness = [[], [], [], []]
     timeSpan = [[],[],[],[]]
     taskTypeHere = [[],[],[],[]]
+
+    csvOutput = []
+
+    visName = { 0:'nul', 1:'seq', 2:'div', 3:'qua' }
 
     for idx, ans in enumerate(userAnswer):
         t = 1 if int(ans) == (correctAnswer[idx]) else 0
         correctness[visType[idx]].append(t)
         timeSpan[visType[idx]].append(userTime[idx])
         taskTypeHere[visType[idx]].append(taskType[idx])
+        csvOutput.append(['id'+str(userId if userId >= 10 else '0'+str(userId)), visName[visType[idx]], userTime[idx], taskType[idx]])
 
     print(correctness[0], timeSpan[0], avg(timeSpan[0], taskTypeHere[0]))
     print(taskTypeHere[0])
@@ -154,16 +162,29 @@ def getCorrectness(user):
     print(taskTypeHere[3])
     print()
 
+    return csvOutput
+
+import csv
 
 def getCorrectnessWrapper():
 
     dir = "us1answer//"
+    csvOutput = []
 
     files = [file for file in os.listdir(dir)]
-    for file in files:
+    for idx, file in enumerate(files):
         if '.json' in file:
             print(file)
-            getCorrectness(dir+file)
+            csvOutput += getCorrectness(dir+file, idx)
+
+    fout = open('us1data.csv', 'w')
+    writer = csv.writer(fout, lineterminator='\n', quotechar='\"',)
+    writer.writerow(['subject', 'vis', 'time', 'task'])
+
+    for val in csvOutput:
+        writer.writerow(val)
+
+    fout.close()
 
 
 def avg(l):
@@ -189,3 +210,4 @@ if __name__ == '__main__':
 
     # genProfileWrapper()
     getCorrectnessWrapper()
+
